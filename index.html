@@ -389,6 +389,15 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:rgba(200,34,34,0.1);
   box-shadow:0 0 20px rgba(200,34,34,0.3);
 }
+.splash-btn:disabled{
+  border-color:#5a3a3a;
+  color:#5a3a3a;
+  cursor:default;
+}
+.splash-btn:disabled:hover{
+  background:transparent;
+  box-shadow:none;
+}
 .splash-footer{
   font-family:'Share Tech Mono',monospace;
   font-size:8px;color:#2a1a1a;
@@ -794,7 +803,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
     <div class="splash-line"></div>
     <div class="splash-warning">⚠ 인가된 요원만 접속 가능합니다</div>
   </div>
-  <button class="splash-btn" onclick="enterSystem()">▶ 시스템 접속</button>
+  <button class="splash-btn" id="splashBtn" onclick="enterSystem()" disabled>로딩중... 0%</button>
   <div class="splash-footer">NCI SECURE NETWORK v2.7.1</div>
 </div>
 </div>
@@ -1095,6 +1104,28 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="unlock-toast lock-toast" id="lockToast">🔒 LOCKED</div>
 
 <script>
+// ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
+const ASSET_LIST=['call_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp'];
+(function preloadAssets(){
+  const btn=document.getElementById('splashBtn');
+  const total=ASSET_LIST.length;
+  let loaded=0;
+  if(total===0){btn.disabled=false;btn.textContent='▶ 시스템 접속';return;}
+  ASSET_LIST.forEach(name=>{
+    const img=new Image();
+    img.onload=img.onerror=()=>{
+      loaded++;
+      const pct=Math.round(loaded/total*100);
+      btn.textContent='로딩중... '+pct+'%';
+      if(loaded===total){
+        btn.disabled=false;
+        btn.textContent='▶ 시스템 접속';
+      }
+    };
+    img.src='assets/'+name;
+  });
+})();
+
 // ===== 파일 데이터 (#2 ~ #15) =====
 // 잠금 시스템: 각 파일의 unlockCode = 이전 파일의 정답
 // answer = 이 파일을 풀어서 야외에서 알아내는 정답 (다음 파일 잠금 해제용)
