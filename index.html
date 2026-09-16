@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>NCI_SYS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -236,7 +236,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .detail-section-title{font-size:9px;color:#3a5a7a;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
 
 /* 문의 버튼 (기본: 왼쪽 하단 고정) — Safe Mode 미니 버튼과 동일 스타일 */
-.support-btn{position:fixed;bottom:20px;left:16px;width:38px;height:38px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+.support-btn{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:calc(16px + env(safe-area-inset-left));width:38px;height:38px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .support-btn:hover{background:#3a2020;}
 .support-btn.show{display:flex;}
 
@@ -1378,7 +1378,7 @@ function goTo(id, addHistory=true){
   // 카메라 버튼: S4(프로필), S6(스토리지)에서 표시
   const cameraBtn = document.getElementById('cameraBtn');
   if(cameraBtn){
-    if(['s4','s6'].includes(id)) cameraBtn.classList.add('show');
+    if(['s6'].includes(id)) cameraBtn.classList.add('show');
     else cameraBtn.classList.remove('show');
   }
   // S0/S4/S5/S6/S7/S8: topbar 숨김 (배경 이미지에 자체 헤더 포함 — 테스트 중)
