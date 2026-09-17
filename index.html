@@ -275,6 +275,19 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .modal{width:100%;max-width:340px;background:#0d1830;border:2px solid #3a6a9a;padding:18px;position:relative;}
 .modal.shake{animation:shake 0.4s;}
 .modal-close{position:absolute;top:6px;right:10px;background:none;border:none;color:#5a7a9a;font-size:20px;cursor:pointer;}
+
+/* ===== 미션 확대 모달 ===== */
+.mission-zoom-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:300;padding:20px;}
+.mission-zoom-bg.on{display:flex;}
+.mission-zoom-card{
+  width:100%;max-width:380px;background:#fdf1e1;border-radius:6px;
+  padding:26px 22px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  transform:scale(0.7);opacity:0;transition:transform 0.25s ease,opacity 0.25s ease;
+}
+.mission-zoom-bg.on .mission-zoom-card{transform:scale(1);opacity:1;}
+.mission-zoom-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:22px;color:#8a5a10;cursor:pointer;}
+.mission-zoom-label{font-family:'VT323',monospace;font-size:22px;color:#8a5a10;letter-spacing:3px;margin-bottom:12px;}
+.mission-zoom-text{font-size:15px;color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:500;line-height:1.85;}
 .modal h3{font-family:'VT323',monospace;font-size:20px;color:#8aaac8;letter-spacing:3px;margin-bottom:5px;}
 .modal-sub{font-size:10px;color:#5a7a9a;letter-spacing:1px;margin-bottom:16px;}
 .code-display{display:flex;gap:5px;justify-content:center;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
@@ -484,7 +497,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-repeat:no-repeat;
   background-position:top center;
   background-size:100% auto;
-  padding:1.5% 4.5% 24px;
+  padding:1.5% 4.5% 10px;
   position:relative;
   flex:none;
 }
@@ -498,6 +511,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:url('assets/profile_card_v2.webp') center/100% 100% no-repeat;
   display:block;
   box-sizing:border-box;
+  cursor:pointer;
 }
 #s4 .profile-photo{display:none!important;}
 #s4 .profile-mission-text{color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;line-height:1.6;overflow-wrap:anywhere;}
@@ -529,7 +543,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:url('assets/myprofile_mystorage_button.webp') center/100% 100% no-repeat;
   border:none;color:transparent;
   display:block;width:52%;aspect-ratio:797/232;height:auto;
-  margin:16px 0 0 auto;
+  margin:4px 0 0 auto;
 }
 
 .support-btn.paper-style{
@@ -789,7 +803,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body ontouchstart="">
-<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-15</div>
+<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-16</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -927,7 +941,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </div>
 
 <!-- N07 프로필 카드 -->
-<div class="profile-card">
+<div class="profile-card" onclick="openMissionZoom()">
 <div class="profile-photo">
 <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
 <defs>
@@ -1058,6 +1072,15 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <button class="camera-btn" id="cameraBtn" onclick="openARCamera()">📸</button>
 <!-- 문의 버튼 -->
 <button class="support-btn" id="supportBtn" onclick="openSupport()">📞</button>
+
+<!-- 미션 확대 모달 -->
+<div class="mission-zoom-bg" id="modalMissionZoom" onclick="if(event.target===this)closeMissionZoom()">
+<div class="mission-zoom-card">
+<button class="mission-zoom-close" onclick="closeMissionZoom()">✕</button>
+<div class="mission-zoom-label">▶ MISSION</div>
+<div class="mission-zoom-text" id="missionZoomText"></div>
+</div>
+</div>
 
 <!-- 정답 입력 모달 -->
 <div class="modal-bg" id="modalCode">
@@ -1856,6 +1879,14 @@ function revealMissionData(data){
 
 function closeModal(id){
   document.getElementById(id).classList.remove('on');
+}
+
+function openMissionZoom(){
+  document.getElementById('missionZoomText').innerHTML=document.querySelector('#s4 .profile-mission-text').innerHTML;
+  document.getElementById('modalMissionZoom').classList.add('on');
+}
+function closeMissionZoom(){
+  document.getElementById('modalMissionZoom').classList.remove('on');
 }
 
 // ===== 파일 상세 =====
