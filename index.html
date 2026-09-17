@@ -471,14 +471,18 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .slot{
   aspect-ratio:0.72;background-color:transparent;border:none;opacity:1;
   background-repeat:no-repeat;background-size:100% 100%;position:relative;
-  transition:transform 0.12s ease, filter 0.12s ease, box-shadow 0.6s ease;
-  border-radius:6px;box-shadow:0 0 0 0 rgba(200,168,64,0);
+  transition:transform 0.12s ease, filter 0.12s ease;
+  border-radius:6px;
 }
 #s6 .slot:active{transform:scale(0.93);filter:brightness(0.9);}
 #s6 .slot::before{display:none;}
 #s6 .slot.locked{background-image:url('assets/file_locked.webp');}
 #s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');}
-#s6 .slot.latest-unlock{box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
+#s6 .slot.latest-unlock{animation:slotGlowIn 0.8s ease forwards;}
+@keyframes slotGlowIn{
+  from{box-shadow:0 0 0 0 rgba(200,168,64,0);}
+  to{box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
+}
 #s6 .slot.empty{background:transparent;}
 #s6 .slot:hover{background-color:transparent;border-color:transparent;}
 #s6 .slot .cn{display:none;}
@@ -812,6 +816,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body ontouchstart="">
+<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-23</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
