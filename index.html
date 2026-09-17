@@ -476,7 +476,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .slot:active{transform:scale(0.93);filter:brightness(0.9);}
 #s6 .slot::before{display:none;}
 #s6 .slot.locked{background-image:url('assets/file_locked.webp');}
-#s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');border-radius:6px;box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
+#s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');}
+#s6 .slot.latest-unlock{border-radius:6px;box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
 #s6 .slot.empty{background:transparent;}
 #s6 .slot:hover{background-color:transparent;border-color:transparent;}
 #s6 .slot .cn{display:none;}
@@ -1693,7 +1694,8 @@ function renderInventory(){
     if(i<visibleFiles.length){
       const f=visibleFiles[i];
       const realIdx=files.indexOf(f);
-      slot.className='slot'+(f.unlocked?' unlocked':' locked');
+      const isLatest=f.unlocked&&(i+1>=visibleFiles.length||!visibleFiles[i+1].unlocked);
+      slot.className='slot'+(f.unlocked?' unlocked':' locked')+(isLatest?' latest-unlock':'');
       slot.dataset.idx=realIdx;
       slot.innerHTML=`
         <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
