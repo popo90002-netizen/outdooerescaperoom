@@ -1709,19 +1709,6 @@ function renderInventory(){
   document.getElementById('progressNum').textContent=visibleFiles.filter(f=>f.unlocked).length;
   const totalEl=document.getElementById('totalNum');
   if(totalEl) totalEl.textContent=visibleFiles.length;
-
-  const reportBtn=document.querySelector('#s6 .report-nav-btn');
-  if(reportBtn){
-    const emptyRows=4-Math.ceil(visibleFiles.length/4);
-    if(emptyRows>0){
-      const slots=grid.querySelectorAll('.slot');
-      const rowH=slots[0].getBoundingClientRect().height;
-      const gap=parseFloat(getComputedStyle(grid).rowGap||getComputedStyle(grid).gap)||0;
-      reportBtn.style.marginTop=(10-emptyRows*(rowH+gap))+'px';
-    } else {
-      reportBtn.style.marginTop='';
-    }
-  }
 }
 
 function selectSlot(i){
