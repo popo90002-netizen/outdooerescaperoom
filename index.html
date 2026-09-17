@@ -487,7 +487,14 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s6 .slot.locked .slot-name{color:#4a3a24;}
 #s6 .slot-num{display:none;}
-#s6 .report-nav-btn{margin:18px 4.5% 4px;}
+#s6{flex:none;}
+#s6 .report-nav-btn{
+  margin:10px 4.5% 4px;
+  background:#f3e6cc;border:none;border-radius:2px;
+  color:#5a3a1a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;
+  box-shadow:inset 0 0 0 1px #c8a880,2px 2px 0 rgba(90,58,26,0.15);
+}
+#s6 .report-nav-btn:hover{background:#ecdcb8;}
 
 /* ---- S4: 프로필/메시지 ---- */
 #s4{flex:none;}
@@ -803,7 +810,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body ontouchstart="">
-<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-16</div>
+<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-17</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
