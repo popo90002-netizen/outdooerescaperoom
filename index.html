@@ -458,7 +458,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s6 .storage-head h2{display:none;}
 #s6 .storage-progress{
-  margin:14px 5% 8px;text-align:right;
+  margin:14px 5% 4px;text-align:right;
   font-family:'Share Tech Mono',monospace;font-weight:bold;font-size:15px;color:#3a2a18;letter-spacing:0.5px;
 }
 #s6 .storage-progress span{color:#a02020;}
@@ -466,8 +466,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   position:absolute;top:0;left:0;width:24%;height:100%;
   background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
 }
-#s6 .inv-grid-wrap{padding:4px 2px 0;}
-#s6 .inv-grid{gap:8px;}
+#s6 .inv-grid-wrap{padding:2px 2px 0;}
+#s6 .inv-grid{gap:8px 8px;row-gap:5px;}
 #s6 .slot{
   aspect-ratio:0.72;background-color:transparent;border:none;opacity:1;
   background-repeat:no-repeat;background-size:100% 100%;position:relative;
@@ -489,7 +489,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .slot-num{display:none;}
 #s6{flex:none;}
 #s6 .report-nav-btn{
-  margin:2px 4.5% 4px;
+  margin:16px 4.5% 4px;
   background:#f3e6cc;border:none;border-radius:2px;
   color:#5a3a1a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;
   box-shadow:inset 0 0 0 1px #c8a880,2px 2px 0 rgba(90,58,26,0.15);
@@ -1306,7 +1306,7 @@ const files = [
   {num:13,name:'FILE_12',sub:'푸른바다 가챠샵',icon:'🎰',unlocked:true,hidden:true,
    isTypewriter:true,typed:false,
    typewriterText:'기억이 돌아오고 있다.\n\n저 얼굴이다.\n노란 머리. 마스크.\n\n그 자가 보스다.\n\n기억이 났다. 전부.\n지금 가지고 있는 코인으로\n가챠샵에서 물약을 빼낼 수 있다.\n\n푸른바다 가챠샵.\n지금 바로 가보자.',
-   content:`<div id="gacha-content"><div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:15px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div></div>
+   content:`<div id="gacha-content"><div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div></div>
    <div id="gacha-arrival" style="display:none;">
    <div class="detail-section" style="margin-top:14px;border:1px solid #c8a840;background:#1a1810;padding:14px;">
    <div style="color:#c8a840;font-size:10px;letter-spacing:2px;margin-bottom:10px;">▶ 가챠샵 도착</div>
@@ -1322,7 +1322,7 @@ const files = [
   {num:14,name:'FILE_13',sub:'본거지 — 최종 보고',icon:'🏢',unlocked:true,hidden:true,
    isTypewriter:true,typed:false,
    typewriterText:'NULL-Z 샘플을 확보했다.\nRED. 틀림없다.\n\n이제 본거지로 향한다.\n\n저 자가 있는 곳.\n\n모든 기억이 돌아왔다.\n이제 끝낼 시간이다.\n\n최종 보고서를 작성하고\n본부에 제출한다.',
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget2" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:15px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget2" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div>`,
    hints:['본거지 건물을 찾아가세요.','(미정)'],answerText:'BLANK IN YOUR AREA'}
 ];
 
