@@ -476,7 +476,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .slot:active{transform:scale(0.93);filter:brightness(0.9);}
 #s6 .slot::before{display:none;}
 #s6 .slot.locked{background-image:url('assets/file_locked.webp');}
-#s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');}
+#s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');border-radius:6px;box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
 #s6 .slot.empty{background:transparent;}
 #s6 .slot:hover{background-color:transparent;border-color:transparent;}
 #s6 .slot .cn{display:none;}
@@ -1918,10 +1918,11 @@ function openDetail(idx){
       }
     }else if(!f.typed){
       f.typed=true;
+      f.savedText=f.typewriterText;
+      if(f.num===13) f.arrivalShown=true;
+      saveGameState();
       typewriterEffect(target,f.typewriterText,()=>{
-        f.savedText=f.typewriterText;saveGameState();
         if(f.num===13){
-          f.arrivalShown=true;saveGameState();
           setTimeout(()=>{const arr=document.getElementById('gacha-arrival');if(arr){arr.style.display='block';arr.scrollIntoView({behavior:'smooth'});}},800);
         }
       });
