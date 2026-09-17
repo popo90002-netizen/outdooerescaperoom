@@ -478,6 +478,17 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .slot.locked{background-image:url('assets/file_locked.webp');}
 #s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');}
 #s6 .slot.empty{background:transparent;}
+#s6 .slot.new-unlock{animation:slotNewGlow 1.4s ease-in-out infinite;border-radius:6px;}
+@keyframes slotNewGlow{
+  0%,100%{box-shadow:0 0 0 2px rgba(200,168,64,0.9),0 0 10px 3px rgba(200,168,64,0.6);}
+  50%{box-shadow:0 0 0 2px rgba(200,168,64,0.5),0 0 18px 7px rgba(200,168,64,0.35);}
+}
+#s6 .slot-new-badge{
+  position:absolute;top:-8px;right:-6px;z-index:6;
+  background:#a02020;color:#fff;font-family:'Noto Sans KR',sans-serif;font-weight:900;
+  font-size:9px;letter-spacing:0.5px;padding:2px 6px;border-radius:10px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.3);
+}
 #s6 .slot:hover{background-color:transparent;border-color:transparent;}
 #s6 .slot .cn{display:none;}
 #s6 .slot .slot-icon{display:none;}
@@ -1693,10 +1704,12 @@ function renderInventory(){
     if(i<visibleFiles.length){
       const f=visibleFiles[i];
       const realIdx=files.indexOf(f);
-      slot.className='slot'+(f.unlocked?' unlocked':' locked');
+      const isNew=f.unlocked&&!f.seen;
+      slot.className='slot'+(f.unlocked?' unlocked':' locked')+(isNew?' new-unlock':'');
       slot.dataset.idx=realIdx;
       slot.innerHTML=`
         <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
+        ${isNew?'<div class="slot-new-badge">NEW</div>':''}
         <div class="slot-icon">${f.unlocked?f.icon:'🔒'}</div>
         <div class="slot-name">${f.name}</div>
         <div class="slot-num">#${f.num}</div>`;
@@ -1719,6 +1732,7 @@ function selectSlot(i){
   if(slotEl) slotEl.classList.add('selected');
   // 잠겨있으면 UNLOCK 모달, 열렸으면 OPEN
   if(f.unlocked){
+    if(!f.seen){ f.seen=true; saveGameState(); renderInventory(); }
     openDetail(i);
   } else {
     // 이전 파일이 열려있어야 이 파일을 풀 수 있음
@@ -2074,7 +2088,7 @@ function enterSystem(){
 
 
 function saveGameState(){
-  const state={files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,savedText:f.savedText||''})),memoryTriggered:window.memoryTriggered||false};
+  const state={files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,savedText:f.savedText||'',seen:f.seen||false})),memoryTriggered:window.memoryTriggered||false};
   try{sessionStorage.setItem('nciGameState',JSON.stringify(state));}catch(e){}
 }
 function loadGameState(){
@@ -2089,6 +2103,7 @@ function loadGameState(){
       f.hintsRevealed=saved.hintsRevealed||0;f.answerRevealed=saved.answerRevealed||false;
       f.typed=saved.typed||false;f.colorSelected=saved.colorSelected||false;
       f.arrivalShown=saved.arrivalShown||false;f.savedText=saved.savedText||'';
+      f.seen=saved.seen||false;
     });
     window.memoryTriggered=state.memoryTriggered||false;
   }catch(e){}
