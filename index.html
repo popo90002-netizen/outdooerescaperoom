@@ -810,7 +810,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body ontouchstart="">
-<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-18</div>
+<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-19</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1689,7 +1689,8 @@ function renderInventory(){
   const grid=document.getElementById('invGrid');
   grid.innerHTML='';
   const visibleFiles=files.filter(f=>!f.hidden);
-  for(let i=0;i<16;i++){
+  const totalSlots=Math.ceil(visibleFiles.length/4)*4;
+  for(let i=0;i<totalSlots;i++){
     const slot=document.createElement('div');
     if(i<visibleFiles.length){
       const f=visibleFiles[i];
