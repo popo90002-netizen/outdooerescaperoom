@@ -466,7 +466,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   position:absolute;top:0;left:0;width:24%;height:100%;
   background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
 }
-#s6 .inv-grid-wrap{padding:14px 2px 0;}
+#s6 .inv-grid-wrap{padding:4px 2px 0;}
 #s6 .inv-grid{gap:8px;}
 #s6 .slot{
   aspect-ratio:0.72;background-color:transparent;border:none;opacity:1;
@@ -810,7 +810,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body ontouchstart="">
-<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-19</div>
+<div style="position:fixed;top:0;left:0;width:100%;background:#ff0000;color:#fff;font-size:16px;font-weight:900;text-align:center;padding:10px;z-index:99999;">TEST-VERSION-20</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1689,8 +1689,7 @@ function renderInventory(){
   const grid=document.getElementById('invGrid');
   grid.innerHTML='';
   const visibleFiles=files.filter(f=>!f.hidden);
-  const totalSlots=Math.ceil(visibleFiles.length/4)*4;
-  for(let i=0;i<totalSlots;i++){
+  for(let i=0;i<16;i++){
     const slot=document.createElement('div');
     if(i<visibleFiles.length){
       const f=visibleFiles[i];
@@ -1711,6 +1710,19 @@ function renderInventory(){
   document.getElementById('progressNum').textContent=visibleFiles.filter(f=>f.unlocked).length;
   const totalEl=document.getElementById('totalNum');
   if(totalEl) totalEl.textContent=visibleFiles.length;
+
+  const reportBtn=document.querySelector('#s6 .report-nav-btn');
+  if(reportBtn){
+    const emptyRows=4-Math.ceil(visibleFiles.length/4);
+    if(emptyRows>0){
+      const slots=grid.querySelectorAll('.slot');
+      const rowH=slots[0].getBoundingClientRect().height;
+      const gap=parseFloat(getComputedStyle(grid).rowGap||getComputedStyle(grid).gap)||0;
+      reportBtn.style.marginTop=(10-emptyRows*(rowH+gap))+'px';
+    } else {
+      reportBtn.style.marginTop='';
+    }
+  }
 }
 
 function selectSlot(i){
