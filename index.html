@@ -1178,13 +1178,13 @@ const files = [
   // #2 FILE_01
   {num:2,name:'FILE_01',sub:'경의선숲길 — 기둥',icon:'📄',unlocked:true,
    answer:'102',unlockCode:null,answerLen:3,answerPrefix:'AB-',
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 13</div><div>가로수에 숫자가 새겨져 있어 위치 파악하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><div class="detail-img">[ 사진: 경의선숲길 가로수 (AB-XXX 블러) ]</div>`,
-   hints:['사진 속 가로수 주변 지형지물을 보고 해당 장소로 찾아가보자.','홍대입구역 3번 출구 근처에 위치한다.'],answerText:'가로수에 AB-102가 적혀있습니다.'},
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 13</div><div>가로등에 숫자가 새겨져 있어 위치 파악하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><div class="detail-img">[ 사진: 경의선숲길 가로등 (AB-XXX 블러) ]</div>`,
+   hints:['사진 속 가로등 주변 지형지물을 보고 해당 장소로 찾아가보자.','홍대입구역 3번 출구 근처에 위치한다.'],answerText:'가로등에 AB-102가 적혀있습니다.'},
 
   // #3 FILE_02
   {num:3,name:'FILE_02',sub:'숲길 우체통',icon:'📷',unlocked:false,
    answer:'NEONSIGN',unlockCode:'102',unlockPrefix:'AB-',answerLen:8,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 15</div><div>홍대 일대, 밤마다 약에 취한 무리들.<br>특이한 점으로는 무리 중 한 명이 항상 가로수 AB-091 옆 우체통 앞에 선다.<br>아무래도 조사해볼 필요가 있는것 같다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 15</div><div>홍대 일대, 밤마다 약에 취한 무리들.<br>특이한 점으로는 무리 중 한 명이 항상 가로등 AB-091 옆 우체통 앞에 선다.<br>아무래도 조사해볼 필요가 있는것 같다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 19</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
    <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 voice_memo_postbox.wav</div><div class="audio-time">01:24</div></div></div>
    <button class="script-toggle" onclick="toggleScript('scriptPostbox')">📝 스크립트 보기</button>
@@ -1209,7 +1209,7 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 23</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
    <div class="detail-img">[ 사진: 하트 조형물 (주변 블러) ]</div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>사진의 이 조형물.. 가로수 AB-078 근처에서 봤던 기억이 있다.<br>주변에 특이점이 보이지 않으면 현장 분석 카메라로 비춰 확인한 뒤 N32에게 메세지로 전달해줘야겠다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>주변에 특이점이 보이지 않으면 현장 분석 카메라로 비춰 확인한 뒤 N32에게 메세지로 전달해줘야겠다.</div></div>
    <div class="detail-section" style="border:1px solid #c8a840;background:#1a1810;padding:10px;"><div style="color:#c8a840;font-size:10px;letter-spacing:2px;">📸 현장 분석 모드 (구현 예정)</div><div style="font-size:10px;color:#8a7a40;margin-top:4px;">카메라로 현장을 비추면 주변 식물을 분석합니다.</div></div>`,
    hints:['하트 조형물을 찾아가보세요.','현장 분석 모드로 카메라를 켜보세요.'],answerText:'정답: 장미 (ROSE)',
    onUnlock:{drug:'NULL-Z',org:'BLANK'}},
@@ -1224,7 +1224,7 @@ const files = [
   // #7 FILE_06
   {num:7,name:'FILE_06',sub:'MEMORY TOWER — 타일벽화',icon:'📷',unlocked:false,
    answer:'KEY',unlockCode:'MEMORYTOWER',answerLen:3,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>MEMORY TOWER.. 가로수 AB-051 근처에 있는 건물이다.<br>사람들의 행복한 기억들을 그려놓은 건물에서 제조를 하고 있었다니 확실히 악랄한 녀석들이다.<br><br>NULL-Z의 효과, 단기 기억 삭제..<br>잊고 싶은 기억을 지우고, 행복한 기억만 남기고 싶다는 욕구로 사람들은 점점 중독돼 갔겠지..<br><br>벽화 앞을 서성이다 바닥에 떨어져 있는 그림 조각들을[KIT-D] 발견했다.<br>중요한 단서가 될 수 있으려나?</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>MEMORY TOWER.. 가로등 AB-051 근처에 있는 건물이다.<br>사람들의 행복한 기억들을 그려놓은 건물에서 제조를 하고 있었다니 확실히 악랄한 녀석들이다.<br><br>NULL-Z의 효과, 단기 기억 삭제..<br>잊고 싶은 기억을 지우고, 행복한 기억만 남기고 싶다는 욕구로 사람들은 점점 중독돼 갔겠지..<br><br>벽화 앞을 서성이다 바닥에 떨어져 있는 그림 조각들을[KIT-D] 발견했다.<br>중요한 단서가 될 수 있으려나?</div></div>
    <div class="detail-img">[ 사진: 어린이 타일벽화 ]</div>`,
    hints:['키트의 카드 3장을 꺼내 벽화에서 일치하는 그림을 찾으세요.','각 그림의 단어를 조합하면 정답이 나옵니다.'],answerText:'정답: KEY'},
 
@@ -1241,7 +1241,7 @@ const files = [
    <div><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
    <div><span class="script-speaker">대원1:</span> 그러니까 누가 널 제압하려 했었다는거지?</div><br>
    <div><span class="script-speaker">대원2:</span> 맞습니다. 아무래도 저희를 추격하는 세력이 있는 것 같습니다.</div><br>
-   <div style="color:#c8a840;font-style:italic;">도어락 소리: 삒— 삒— 삒— 삒—</div><br>
+   <div style="color:#c8a840;font-style:italic;">도어락 소리: 파-라-레-미</div><br>
    <div>(와장창)</div><br>
    <div><span class="script-speaker">N05:</span> 이크..!</div><br>
    <div><span class="script-speaker">대원1,2:</span> 거기 누구야! 잡아!</div><br>
@@ -1258,7 +1258,7 @@ const files = [
    <div><span class="script-speaker">대원1:</span> 추적해.</div><br>
    <div>(통화 끊기는 소리)</div>
    </div>
-   <div style="margin-top:12px;font-size:12px;color:#9abaca;line-height:1.8;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br>통화 내용에 들리는 본거지 비밀번호 소리...<br><br>마침 정보국 옆 공원 안에 있는 음표로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
+   <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br>통화 내용에 들리는 본거지 비밀번호 소리...<br><br>마침 정보국 옆 공원 안에 있는 음표로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
    </div>
 `,
    hints:['공원 안 음표판(CDEFGABC)을 찾아보세요.','N05 녹취파일의 도어락 소리와 음표를 조합하면 정답이 나옵니다.'],answerText:'정답: FADE'},
@@ -1279,11 +1279,11 @@ const files = [
    <div style="color:#6aaa6a;font-size:11px;margin-bottom:12px;">가입 혜택: 제휴 카페 5% 할인</div>
    <div style="border-top:1px solid #3a5a3a;padding-top:12px;font-size:11px;color:#7aaa7a;line-height:1.9;text-align:left;">
    안녕하세요, BLANK 멤버십 가입센터입니다.<br>가입 절차를 위해 인증이 필요합니다.<br><br>
-   작성하신 주소로 membership 문제가 발송되었습니다.<br>
+   작성하신 주소로 인증 키트가 발송되었습니다.<br>
    연남동 259-16을 시작으로 인증 절차를 진행해주세요.<br><br>
-   절차 완료 후 보이는 최종 그림을 확인하시기 바랍니다.
+   절차 완료 후 보이는 히든 심볼을 확인하시기 바랍니다.
    </div></div>
-   <div style="font-size:12px;color:#9abaca;line-height:1.9;">녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>
+   <div>녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>
    <div class="detail-img">[ 사진: 연남동 그래피티 벽 ]</div>
    <div class="detail-section"><div class="detail-section-title">▶ 단서</div><div>키트의 스티커를 이용해 그래피티 암호를 풀어라.</div></div>`,
    hints:['그래피티 벽을 자세히 살펴보세요.','키트의 스티커를 대보면 암호가 보입니다.'],answerText:'정답: 9726R513'},
@@ -1365,7 +1365,8 @@ const messages = [
   {id:3, sender:'N05', dead:true, time:'3개월 전', new:false, read:true,
    preview:'⚠ 발신인 사망 확인됨',
    attach:'⚠ N05_voice_backup.wav',
-   body:`<div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.wav</div><div class="audio-time" style="color:#7a4040;">파일 손상 — 일부 재생 불가</div></div></div>
+   body:`<div>N07! 현재 본거지 잠입까지 성공했는데 나 만약에 상황이 생길 수 있으니 백업으로 너에게 녹취파일을 보내놓을게.</div>
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.wav</div><div class="audio-time" style="color:#7a4040;">파일 손상 — 일부 재생 불가</div></div></div>
    <div style="margin-top:10px;padding:8px 12px;background:#1a0d0d;border-left:3px solid #ff4444;font-size:10px;color:#ff5555;">⚠ 발신인 사망 확인됨</div>`,
    canReply:true, thread:[], isDead:true},
 
@@ -1605,7 +1606,7 @@ function openMessage(i){
   const replyInputEl = document.getElementById('msgReplyInput');
   if(replyInputEl) replyInputEl.value = '';
 
-  document.getElementById('msgDetailBody').innerHTML = bodyHtml + threadHtml;
+  document.getElementById('msgDetailBody').innerHTML = `<div class="msg-thread-bubble from-them">${bodyHtml}</div>` + threadHtml;
   goTo('s5');
   renderMessages();
 }
