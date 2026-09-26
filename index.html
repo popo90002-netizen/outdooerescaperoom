@@ -58,6 +58,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 @keyframes sftl{0%,91%,100%{text-shadow:0 0 10px rgba(255,50,50,0.4)}93%{text-shadow:0 0 24px rgba(255,50,50,1)}}
 .hint-box{border:1px solid #3a2020;background:#0a0808;padding:9px 11px;}
 .hint-row{display:block;font-size:12px;line-height:1.85;color:#c8c8c0;}
+.hint-glint{display:inline-block;font-weight:700;color:#c8c8c0;animation:hintGlint 10s ease-in-out infinite;}
+@keyframes hintGlint{0%,90%,100%{color:#c8c8c0;text-shadow:none;}94%{color:#fff;text-shadow:0 0 6px #fff,0 0 16px #cfe8ff,0 0 26px #cfe8ff;}97%{color:#c8c8c0;text-shadow:none;}}
 .support-box{border:1px solid #3a2020;background:#0a0808;padding:14px 11px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s;}
 .support-box:hover{border-color:#5a3030;background:#120a0a;}
 .support-icon{font-size:32px;flex-shrink:0;}
@@ -880,12 +882,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="safe-section">
 <div class="safe-ttl">[ SAFE MODE ]</div>
 <div class="hint-box">
-<span class="hint-row">요청된 접근을 수행할 수 없습니다.</span>
-<span class="hint-row">원격 인증 System이 손상된 것으로 보입니다.</span>
-<span class="hint-row">배정된 요원 이외에는 접속할 수 없습니다.</span>
-<span class="hint-row">지속적인 보안 위협이 탐지되었습니다.</span>
-<span class="hint-row">접근 권한 복구가 필요합니다.</span>
-<span class="hint-row">촉각 기반의 신원 인증 절차 진행이 필요합니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0s">요</span>청된 접근을 수행할 수 없습니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.15s">원</span>격 인증 System이 손상된 것으로 보입니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.3s">배</span>정된 요원 이외에는 접속할 수 없습니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.45s">지</span>속적인 보안 위협이 탐지되었습니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.6s">접</span>근 권한 복구가 필요합니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.75s">촉</span>각 기반의 신원 인증 절차 진행이 필요합니다.</span>
 </div>
 </div>
 <div class="recover-section">
