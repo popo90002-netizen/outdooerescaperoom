@@ -234,6 +234,11 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .detail-title{font-family:'VT323',monospace;font-size:20px;color:#8aaac8;letter-spacing:2px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #1a3060;}
 .detail-content{font-size:12px;color:#9abaca;line-height:1.9;}
 .detail-img{width:100%;height:180px;background:#1a2a4a;border:1px solid #2a4a6a;display:flex;align-items:center;justify-content:center;margin:10px 0;color:#5a7a9a;font-size:10px;letter-spacing:2px;text-align:center;}
+.detail-photo{width:100%;display:block;margin:10px 0;border-radius:4px;cursor:zoom-in;}
+.photo-zoom-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:500;padding:20px;}
+.photo-zoom-bg.on{display:flex;}
+.photo-zoom-bg img{max-width:100%;max-height:100%;border-radius:6px;}
+.photo-zoom-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;}
 .detail-section{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #1a3060;}
 .detail-section:last-child{border-bottom:none;}
 .detail-section-title{font-size:9px;color:#3a5a7a;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
@@ -705,6 +710,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   color:#2a1c10;margin:0;padding:0;border:none;line-height:1.25;
 }
 #s7 .detail-content{color:#3a2a1a;padding:16px 8.6% 20px;font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:500;line-height:1.85;}
+#s7 .detail-img{background:rgba(255,255,255,0.4);border:1px solid #c8b89a;color:#8a7a5a;font-family:'Noto Sans KR',sans-serif;font-size:11px;letter-spacing:0.3px;line-height:1.6;}
 #s7 .detail-bottom-cap{
   display:block;
   aspect-ratio:941/160;
@@ -866,7 +872,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body ontouchstart="">
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#e02020;color:#fff;font-family:sans-serif;font-weight:900;font-size:13px;text-align:center;padding:6px 4px;letter-spacing:1px;">TEST-VERSION-2 (SF스타일 제거 + 정렬 수정)</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#e02020;color:#fff;font-family:sans-serif;font-weight:900;font-size:13px;text-align:center;padding:6px 4px;letter-spacing:1px;">TEST-VERSION-3 (FILE_01 사진 추가)</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1136,6 +1142,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <!-- 문의 버튼 -->
 <button class="support-btn" id="supportBtn" onclick="openSupport()">📞</button>
 
+<!-- 사진 확대 -->
+<div class="photo-zoom-bg" id="photoZoomBg" onclick="if(event.target===this)closePhotoZoom()">
+<button class="photo-zoom-close" onclick="closePhotoZoom()">✕</button>
+<img id="photoZoomImg" src="" alt="">
+</div>
+
 <!-- 미션 확대 모달 -->
 <div class="mission-zoom-bg" id="modalMissionZoom" onclick="if(event.target===this)closeMissionZoom()">
 <div class="mission-zoom-card">
@@ -1222,7 +1234,7 @@ const files = [
   // #2 FILE_01
   {num:2,name:'FILE_01',sub:'경의선숲길 — 기둥',icon:'📄',unlocked:true,
    answer:'102',unlockCode:null,answerLen:3,answerPrefix:'AB-',
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 13</div><div>가로등에 숫자가 새겨져 있어 위치 파악하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><div class="detail-img">[ 사진: 경의선숲길 가로등 (AB-XXX 블러) ]</div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 13</div><div>가로등에 숫자가 새겨져 있어 위치 파악하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><img class="detail-photo" src="assets/file01_streetlight.jpg" alt="경의선숲길 가로등" onclick="openPhotoZoom('assets/file01_streetlight.jpg')">`,
    hints:['사진 속 가로등 주변 지형지물을 보고 해당 장소로 찾아가보자.','홍대입구역 3번 출구 근처에 위치한다.'],answerText:'가로등에 AB-102가 적혀있습니다.'},
 
   // #3 FILE_02
@@ -1952,6 +1964,13 @@ function openMissionZoom(){
 }
 function closeMissionZoom(){
   document.getElementById('modalMissionZoom').classList.remove('on');
+}
+function openPhotoZoom(src){
+  document.getElementById('photoZoomImg').src=src;
+  document.getElementById('photoZoomBg').classList.add('on');
+}
+function closePhotoZoom(){
+  document.getElementById('photoZoomBg').classList.remove('on');
 }
 
 // ===== 파일 상세 =====
