@@ -318,9 +318,14 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-error{color:#ff6644;font-size:10px;text-align:center;margin-top:8px;}
 
 /* 잠금해제 토스트 */
-.unlock-toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#1a3a1a;border:1px solid #4a8a4a;color:#8ada8a;padding:9px 18px;font-family:'VT323',monospace;font-size:13px;letter-spacing:2px;z-index:400;display:none;}
+.unlock-toast{
+  position:fixed;top:60px;left:50%;transform:translateX(-50%);
+  background:#f1e8d9;border:2px solid #8a5a10;color:#3a2a1a;
+  padding:10px 22px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.3px;
+  z-index:400;display:none;border-radius:3px;box-shadow:3px 3px 0 rgba(0,0,0,0.25);
+}
 .unlock-toast.show{display:block;animation:toast 2s ease forwards;}
-.unlock-toast.lock-toast{background:#3a1a1a;border-color:#8a4a4a;color:#ffaaaa;}
+.unlock-toast.lock-toast{background:#f3e4da;border-color:#a02020;color:#7a2418;}
 @keyframes toast{0%{opacity:0;transform:translate(-50%,-10px)}10%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-10px)}}
 
 /* ===== 기억 회복 오버레이 ===== */
