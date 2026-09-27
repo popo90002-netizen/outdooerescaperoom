@@ -340,8 +340,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .report-body{flex:1;padding:20px 18px;}
 .report-section-title{font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a7aaa;letter-spacing:3px;margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid #1a2a4a;}
 .report-field{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #0e1828;}
-.report-field-label{font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a5a6a;letter-spacing:2px;flex-shrink:0;width:90px;}
-.report-input{flex:1;background:transparent;border:none;border-bottom:1px solid #2a4a6a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:14px;padding:4px 8px;outline:none;letter-spacing:1px;text-align:right;}
+.report-field-label{font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a5a6a;letter-spacing:2px;flex-shrink:0;width:90px;white-space:nowrap;}
+.report-input{flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid #2a4a6a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:14px;padding:4px 8px;outline:none;letter-spacing:1px;text-align:right;text-overflow:ellipsis;}
 .report-input:focus{border-bottom-color:#5a8aba;}
 .report-divider{height:1px;background:linear-gradient(90deg,transparent,#1a3a6a,transparent);margin:14px 0;}
 .report-submit-btn{background:#0a2010;border:2px solid #4a8a4a;color:#8ada8a;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:3px;padding:14px 28px;cursor:pointer;width:100%;margin-top:10px;}
@@ -497,19 +497,9 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .slot-num{display:none;}
 #s6{flex:none;}
 #s6 .report-nav-btn{
-  width:fit-content;margin:10px auto 4px;
-  background:#2a2a2a;border:none;border-radius:24px;
-  color:#e8dcc0;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  padding:14px 24px;position:relative;
-  box-shadow:2px 2px 0 rgba(0,0,0,0.2);
-}
-#s6 .report-nav-btn:hover{background:#333;}
-#s6 .report-nav-icon{font-size:16px;}
-#s6 .report-nav-div{width:1px;height:16px;background:#6a6a6a;}
-#s6 .report-nav-btn::after{
-  content:'📎';position:absolute;top:-10px;right:10px;font-size:20px;
-  transform:rotate(20deg);filter:grayscale(1) brightness(1.6);
+  background:url('assets/report_view_btn.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;aspect-ratio:880/220;height:auto;max-width:220px;
+  width:100%;margin:10px auto 4px;display:block;padding:0;
 }
 
 /* ---- S4: 프로필/메시지 ---- */
@@ -1032,7 +1022,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="inv-grid-wrap">
 <div class="inv-grid" id="invGrid"></div>
 </div>
-<button class="report-nav-btn" onclick="goTo('s8')"><span class="report-nav-icon">📁</span><span class="report-nav-div"></span><span class="report-nav-text">최종보고서 열람</span></button>
+<button class="report-nav-btn" onclick="goTo('s8')">최종보고서 열람</button>
 </div>
 </div>
 
@@ -1064,16 +1054,16 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="report-body">
   <div class="report-notice">수사 과정에서 획득한 정보를 직접 입력하여 보고서를 완성하라.</div>
   <div class="report-section-title">[ 약물 관련 ]</div>
-  <div class="report-field"><div class="report-field-label">약물 명칭</div><input class="report-input" id="rDrug" placeholder="_ _ _ _ _ _" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">약물 명칭</div><input class="report-input" id="rDrug" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">주 재료 ①</div><input class="report-input" id="rMat1" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">주 재료 ②</div><input class="report-input" id="rMat2" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">물약 색깔</div><input class="report-input" id="rColor" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-divider"></div>
   <div class="report-section-title">[ 조직 관련 ]</div>
-  <div class="report-field"><div class="report-field-label">조직 명칭</div><input class="report-input" id="rOrg" placeholder="_ _ _ _ _" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">조직 명칭</div><input class="report-input" id="rOrg" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">히든 심볼</div><input class="report-input" id="rBoss" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">제조 공장</div><input class="report-input" id="rTower" placeholder="입력하세요" autocomplete="off"></div>
-  <div class="report-field"><div class="report-field-label">도어락 코드</div><input class="report-input" id="rDoorCode" placeholder="_ _ _ _" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">도어락 코드</div><input class="report-input" id="rDoorCode" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-divider"></div>
   <div id="reportResult"></div>
   <button class="report-submit-btn" onclick="submitReport()">▶ 최종 보고서 제출</button></div>
