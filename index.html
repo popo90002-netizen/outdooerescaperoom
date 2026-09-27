@@ -698,7 +698,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s7 .script-toggle{margin-left:0;}
 #s7 .audio-mock{
   background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat;
-  border:none;padding:20px 20px 20px 88px;border-radius:0;
+  border:none;padding:20px 20px 20px 13%;border-radius:0;
   display:flex;align-items:center;gap:14px;
 }
 #s7 .audio-mock .play-icon{display:none;}
@@ -1959,12 +1959,11 @@ function openARCamera(){
   alert('📸 AR 카메라\n\n현재 구현 준비 중입니다.\n조형물/그래피티에 카메라를 갖다 대면\n분석이 시작됩니다.');
 }
 function playAudio(el){
-  el.style.background='#1a3a4a';
-  el.querySelector('.play-icon').textContent='⏸';
+  const icon=el.querySelector('.play-icon');
+  icon.textContent='⏸';
   alert('🎵 음성 재생 시뮬레이션\n(실제 배포 시 음성 파일 재생)');
   setTimeout(()=>{
-    el.style.background='#0d1830';
-    el.querySelector('.play-icon').textContent='▶';
+    icon.textContent='▶';
   },500);
 }
 
