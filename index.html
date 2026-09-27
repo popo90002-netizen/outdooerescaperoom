@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
 <title>NCI_SYS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -288,7 +289,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 .mission-zoom-bg.on .mission-zoom-card{transform:scale(1);opacity:1;}
 .mission-zoom-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:22px;color:#8a5a10;cursor:pointer;}
-.mission-zoom-label{font-family:'VT323',monospace;font-size:22px;color:#8a5a10;letter-spacing:3px;margin-bottom:12px;}
+.mission-zoom-label{font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:19px;color:#8a5a10;letter-spacing:1px;margin-bottom:12px;}
 .mission-zoom-text{font-size:15px;color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:500;line-height:1.85;}
 .modal h3{font-family:'VT323',monospace;font-size:20px;color:#8aaac8;letter-spacing:3px;margin-bottom:5px;}
 .modal-sub{font-size:10px;color:#5a7a9a;letter-spacing:1px;margin-bottom:16px;}
@@ -636,8 +637,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:transparent;border:none;
 }
 .hint-modal .modal-sub{
-  font-family:'Share Tech Mono',monospace;font-size:13px;font-weight:bold;color:#3a2a1a;
-  letter-spacing:0.5px;line-height:1.5;
+  font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#3a2a1a;
+  letter-spacing:0.3px;line-height:1.5;
   border-bottom:1px solid #b8a888;padding-bottom:10px;margin-bottom:12px;
 }
 .hint-modal .hint-display{background:transparent;border:none;padding:0;min-height:0;}
@@ -651,7 +652,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:rgba(255,255,255,0.35)!important;border:1px dashed #b8a888!important;
   padding:9px 10px;
 }
-.hint-modal .hint-locked-stage span{color:#6a5230!important;font-family:'Share Tech Mono',monospace;font-size:11px;}
+.hint-modal .hint-locked-stage span{color:#6a5230!important;font-family:'Noto Sans KR',sans-serif;font-size:11px;}
 .hint-modal .hint-locked-stage button{
   background:url('assets/hint_open_btn.webp') center/100% 100% no-repeat!important;
   border:none!important;color:transparent!important;
@@ -660,6 +661,23 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-modal .hint-stage[style*="border-top"]{border-top:1px dashed #b89858!important;}
 .hint-modal .hint-stage-num[style*="c8a840"]{color:#a06818!important;}
 .hint-modal .hint-stage-txt[style*="ffdd99"]{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;}
+
+/* ---- 문의(SUPPORT) 모달 — 종이 테마 ---- */
+#modalSupport .modal{
+  background:#f1e8d9;border:none;border-radius:14px;
+}
+#modalSupport .modal-close{color:#8a7a5a;}
+#modalSupport h3{color:#8a5a10!important;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:18px;letter-spacing:0.3px;}
+#modalSupport .modal-sub{
+  color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;
+  border-bottom:1px solid #b8a888;padding-bottom:10px;margin-bottom:12px;letter-spacing:0.3px;
+}
+#modalSupport div[style*="background:#0a0808"]{
+  background:rgba(255,255,255,0.5)!important;border:1px solid #c8b89a!important;
+}
+#modalSupport div[style*="color:#c8a880"]{color:#3a2a1a!important;font-family:'Noto Sans KR',sans-serif;}
+#modalSupport strong[style*="color:#cc6644"]{color:#8a5a10!important;}
+#modalSupport div[style*="color:#7a5a5a"]{color:#7a6a50!important;font-family:'Noto Sans KR',sans-serif;}
 
 /* ---- S7: 파일 상세보기(사건일지) — 종이 테마, 테스트 ---- */
 #s7 .detail-screen{
@@ -695,7 +713,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s7 .detail-section{border-bottom-color:#c8b89a;}
 #s7 .detail-section-title{font-size:13.5px;font-weight:700;color:#8a5a10;letter-spacing:1px;}
 #s7 .audio-mock{margin-left:0;margin-right:0;}
-#s7 .script-toggle{margin-left:0;}
+#s7 .script-toggle{margin-left:13%;}
 #s7 .audio-mock{
   background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat;
   border:none;padding:20px 20px 20px 13%;border-radius:0;
@@ -708,6 +726,10 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s7 .audio-mock.locked{background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat;}
 #s7 .audio-mock.locked .audio-name{color:#a02020;}
 #s7 .audio-mock.locked .audio-time{color:#8a5a40;}
+#s7 .audio-mock[style]{background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat!important;border-color:transparent!important;}
+#s7 .play-icon[style]{display:none!important;}
+#s7 .audio-name[style]{color:#a02020!important;font-family:'Noto Sans KR',sans-serif;font-weight:700;}
+#s7 .audio-time[style]{color:#8a5a40!important;font-family:'Noto Sans KR',sans-serif;}
 #s7 .script-toggle{
   background:url('assets/script_view_btn.webp') center/100% 100% no-repeat;
   border:none;color:transparent;width:150px;height:34px;padding:0;
@@ -761,6 +783,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:repeating-linear-gradient(135deg,#e9cb7e,#e9cb7e 8px,#d7bc77 8px,#d7bc77 16px);
   border:1px solid #a5811e;color:#4a3410;font-family:'Noto Sans KR',sans-serif;font-weight:700;
 }
+#s5 .audio-mock{background:#f1e8d9;border:1px solid #c8b89a;}
+#s5 .audio-mock:hover{background:#e8dcc4;}
+#s5 .play-icon{color:#8a5a10;}
+#s5 .audio-name{color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:0;}
+#s5 .audio-time{color:#7a6a50;font-family:'Noto Sans KR',sans-serif;font-size:11px;}
+#s5 .audio-mock-info{line-height:1.6;}
 #s5 .audio-mock[style]{background:#f3d8d2!important;border:1px solid #c47a6a!important;}
 #s5 .play-icon[style]{color:#a02020!important;}
 #s5 .audio-name[style]{color:#a02020!important;font-weight:700;font-family:'Noto Sans KR',sans-serif;}
@@ -818,10 +846,27 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   display:block;aspect-ratio:941/160;
   background:url('assets/report_bottom.webp') center/100% 100% no-repeat;
 }
+#s8 .mission-clear-banner{
+  background:#f6efe1;border:2px solid #8a5a10;border-radius:6px;
+  box-shadow:3px 3px 0 rgba(0,0,0,0.15);
+}
+#s8 .mission-clear-text{
+  font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:26px;color:#8a5a10;
+  letter-spacing:2px;text-shadow:none;
+}
+#s8 .mission-clear-sub{font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;color:#5a4530;letter-spacing:0;}
+#s8 .report-result-tag{font-family:'Noto Sans KR',sans-serif;font-size:11px;color:#a5811e;letter-spacing:2px;margin-bottom:12px;}
+#s8 .report-result-op{font-family:'Noto Sans KR',sans-serif;font-size:11px;color:#8a7a5a;letter-spacing:0.5px;margin-top:10px;}
+#s8 .report-error-box{
+  background:#f3d8d2;border:1px solid #c47a6a;border-left:3px solid #a02020;
+  padding:14px;margin-bottom:8px;border-radius:3px;
+}
+#s8 .report-error-title{font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:12px;color:#a02020;letter-spacing:0;margin-bottom:8px;}
+#s8 .report-error-item{font-family:'Noto Sans KR',sans-serif;font-size:12px;color:#8a3a3a;padding:3px 0;}
 </style>
 </head>
 <body ontouchstart="">
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#e02020;color:#fff;font-family:sans-serif;font-weight:900;font-size:13px;text-align:center;padding:6px 4px;letter-spacing:1px;">TEST-VERSION-1 (버튼 이미지 + 입력칸 수정)</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#e02020;color:#fff;font-family:sans-serif;font-weight:900;font-size:13px;text-align:center;padding:6px 4px;letter-spacing:1px;">TEST-VERSION-2 (SF스타일 제거 + 정렬 수정)</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -2205,24 +2250,24 @@ function submitReport(){
     const el=document.getElementById(a.id);if(!el)return;
     const val=el.value.trim().toUpperCase().replace(/\s+/g,' ');
     const isCorrect=a.correct.some(c=>val===c.toUpperCase().replace(/\s+/g,' '));
-    if(isCorrect){el.style.borderBottomColor='#4a8a4a';el.style.color='#8ada8a';}
-    else{el.style.borderBottomColor='#8a2020';el.style.color='#ff6666';allCorrect=false;wrongList.push(a.label);}
+    if(isCorrect){el.style.borderBottomColor='#4a8a3a';el.style.color='#3a6a2a';}
+    else{el.style.borderBottomColor='#a02020';el.style.color='#a02020';allCorrect=false;wrongList.push(a.label);}
   });
   const resultEl=document.getElementById('reportResult');
   if(allCorrect){
     resultEl.innerHTML=`
-    <div class="mission-clear-banner" style="animation:clearPulse 0.8s ease forwards;">
-      <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a8a4a;letter-spacing:4px;margin-bottom:12px;">— NCI HEADQUARTERS —</div>
-      <div class="mission-clear-text" style="animation:glowText 1.5s ease infinite alternate;">MISSION</div>
-      <div class="mission-clear-text" style="animation:glowText 1.5s ease 0.3s infinite alternate;">COMPLETE</div>
-      <div style="height:1px;background:linear-gradient(90deg,transparent,#4a8a4a,transparent);margin:14px 0;"></div>
+    <div class="mission-clear-banner">
+      <div class="report-result-tag">— NCI 본부 —</div>
+      <div class="mission-clear-text">임무</div>
+      <div class="mission-clear-text">완료</div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,#c8a840,transparent);margin:14px 0;"></div>
       <div class="mission-clear-sub">수사관 N07의 최종 보고서가<br>NCI 본부로 전송되었습니다.</div>
-      <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#3a6a3a;letter-spacing:2px;margin-top:10px;">OPERATION NULL-Z — TERMINATED</div>
+      <div class="report-result-op">OPERATION NULL-Z — 종결</div>
     </div>`;
     // 진동 효과
     if(navigator.vibrate) navigator.vibrate([200,100,200,100,400,100,800]);
   }else{
-    resultEl.innerHTML='<div style="background:#1a0808;border:1px solid #5a1a1a;border-left:3px solid #cc2222;padding:14px;margin-bottom:8px;"><div style="font-family:Share Tech Mono,monospace;font-size:9px;color:#cc4444;letter-spacing:2px;margin-bottom:8px;">✕ 오류 — 다음 항목을 다시 확인하세요</div>'+wrongList.map(l=>`<div style="font-size:11px;color:#ff6666;padding:3px 0;">• ${l}</div>`).join('')+'</div>';
+    resultEl.innerHTML='<div class="report-error-box"><div class="report-error-title">✕ 오류 — 다음 항목을 다시 확인하세요</div>'+wrongList.map(l=>`<div class="report-error-item">• ${l}</div>`).join('')+'</div>';
   }
   resultEl.scrollIntoView({behavior:'smooth'});
 }
