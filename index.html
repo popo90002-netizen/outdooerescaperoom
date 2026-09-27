@@ -671,6 +671,10 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   aspect-ratio:941/310;position:relative;
   background:url('assets/incidentlog_header.webp') center/100% 100% no-repeat;
 }
+#s7 .detail-head::after{
+  content:'';position:absolute;left:5%;right:5%;top:93.5%;height:3.5%;
+  background:#f6efe1;
+}
 .s7-back-overlay{
   position:absolute;top:0;left:0;width:24%;height:100%;
   background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
@@ -802,7 +806,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s8 .report-input::placeholder{color:#a89878;}
 #s8 .report-divider{background:linear-gradient(90deg,transparent,#c8b89a,transparent);}
 #s8 .report-submit-btn{
-  background:url('assets/report_submit_btn.webp') center/100% 100% no-repeat;
+  display:block;background:url('assets/report_submit_btn.webp') center/100% 100% no-repeat;
   border:none;color:transparent;aspect-ratio:860/191;height:auto;max-width:220px;margin:10px auto 0;
 }
 #s8 .report-footer{
