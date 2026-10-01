@@ -244,18 +244,19 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .detail-section-title{font-size:9px;color:#3a5a7a;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
 
 /* 문의 버튼 (기본: 왼쪽 하단 고정) — Safe Mode 미니 버튼과 동일 스타일 */
-.support-btn{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:calc(16px + env(safe-area-inset-left));width:38px;height:38px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+.support-btn{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .support-btn:hover{background:#3a2020;}
 .support-btn.show{display:flex;}
 
 /* 힌트 버튼 (기본: 오른쪽 하단) — Safe Mode 미니 버튼과 동일 스타일 */
-.hint-btn{position:fixed;bottom:20px;right:16px;width:38px;height:38px;border-radius:50%;background:#3a1a1a;border:1px solid #8a3a3a;color:#ffaa66;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+.hint-btn{position:fixed;bottom:20px;right:16px;width:48px;height:48px;border-radius:50%;background:#3a1a1a;border:1px solid #8a3a3a;color:#ffaa66;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .hint-btn:hover{background:#4a2a2a;}
 .hint-btn.show{display:flex;}
+.hint-btn.paper-style{background:url('assets/hint_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;}
 
 /* 큰 화면(데스크탑)에서는 device 영역 안쪽에 위치 */
 @media(min-width:500px){
-  .support-btn{left:calc(50% - 195px);}
+  .support-btn{left:calc(50% - 185px);}
   .hint-btn{right:calc(50% - 195px);}
 }
 
@@ -461,6 +462,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   padding:0 4.5% 10px;
   position:relative;
   flex:none;
+  min-height:100%;
 }
 #s6 .placeholder-banner{display:none;}
 /* 헤더 영역(배경 이미지의 NCI/뒤로가기/MY STORAGE/구분선 부분)만큼 자리 확보 — 이미지 실측 비율(941:376) */
@@ -524,6 +526,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   padding:1.5% 4.5% 22px;
   position:relative;
   flex:none;
+  min-height:100%;
 }
 .s4-header-imgs{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
 .s4-logo-img{width:48%;height:auto;display:block;}
@@ -693,6 +696,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-size:100% auto;
   padding:0;position:relative;
   overflow-y:visible;flex:none;
+  min-height:100%;
 }
 #s7 .detail-head{
   display:block;
@@ -705,7 +709,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s7 .detail-num-badge{display:none;}
 #s7 .detail-title{
-  position:absolute;left:5%;right:14%;top:75.3%;float:none;
+  position:absolute;left:9%;right:14%;top:75.3%;float:none;
   font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:20px;letter-spacing:0.2px;
   color:#2a1c10;margin:0;padding:0;border:none;line-height:1.25;
 }
@@ -772,7 +776,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-reply-footer{
   display:none;flex-shrink:0;align-items:center;gap:10px;
   padding:12px 6% 16px;
-  background-image:url('assets/chat_tile.webp');background-repeat:repeat-y;background-position:top center;background-size:100% auto;
+  background:#f1e9dc;border-top:1px solid #d8c8a8;
 }
 #s5 .msg-reply-input{
   flex:1;min-width:0;
@@ -811,6 +815,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-repeat:repeat-y;background-position:top center;background-size:100% auto;
   padding:0 0 24px;
   overflow-y:visible;flex:none;
+  min-height:100%;
 }
 .report-head-spacer{
   display:block;aspect-ratio:941/400;position:relative;
@@ -1205,7 +1210,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp'];
+const ASSET_LIST=['call_emoticon.webp','hint_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1264,7 +1269,7 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 23</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
    <img class="detail-photo" src="assets/file04_heart.jpg" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg')">
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>주변에 특이점이 보이지 않으면 현장 분석 카메라로 비춰 확인한 뒤 N32에게 메세지로 전달해줘야겠다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>
    <div class="detail-section" style="border:1px solid #c8a840;background:#1a1810;padding:10px;"><div style="color:#c8a840;font-size:10px;letter-spacing:2px;">📸 현장 분석 모드 (구현 예정)</div><div style="font-size:10px;color:#8a7a40;margin-top:4px;">카메라로 현장을 비추면 주변 식물을 분석합니다.</div></div>`,
    hints:['하트 조형물을 찾아가보세요.','현장 분석 모드로 카메라를 켜보세요.'],answerText:'정답: 장미 (ROSE)',
    onUnlock:{drug:'NULL-Z',org:'BLANK'}},
@@ -1272,21 +1277,19 @@ const files = [
   // #6 FILE_05
   {num:6,name:'FILE_05',sub:'대왕참나무',icon:'📷',unlocked:false,
    answer:'MEMORYTOWER',unlockCode:'059',unlockPrefix:'AB-',answerLen:11,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 27</div><div>N32가 알려준 AB-059 근처 대왕참나무 앞으로 왔다.<br>추가로 사진[KIT-C]를 주면서, 대왕참나무 QR코드 안에 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>
-   <div class="detail-img">[ 사진: 대왕참나무 QR 표지판 ]<br>Quercus palustris Muenck</div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 27</div><div>N32가 알려준 AB-059 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진[KIT-C]를 보내주면서, 대왕참나무 QR코드 안에 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
    hints:['대왕참나무의 QR코드를 통해 들어가세요.','키트 C의 알파벳 대입표를 활용하세요.'],answerText:'정답: MEMORYTOWER'},
 
   // #7 FILE_06
   {num:7,name:'FILE_06',sub:'MEMORY TOWER — 타일벽화',icon:'📷',unlocked:false,
    answer:'KEY',unlockCode:'MEMORYTOWER',answerLen:3,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>MEMORY TOWER.. 가로등 AB-051 근처에 있는 건물이다.<br>사람들의 행복한 기억들을 그려놓은 건물에서 제조를 하고 있었다니 확실히 악랄한 녀석들이다.<br><br>NULL-Z의 효과, 단기 기억 삭제..<br>잊고 싶은 기억을 지우고, 행복한 기억만 남기고 싶다는 욕구로 사람들은 점점 중독돼 갔겠지..<br><br>벽화 앞을 서성이다 바닥에 떨어져 있는 그림 조각들을[KIT-D] 발견했다.<br>중요한 단서가 될 수 있으려나?</div></div>
-   <div class="detail-img">[ 사진: 어린이 타일벽화 ]</div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>MEMORY TOWER.. AB-051 근처에 있는 건물이다.<br>사람들의 행복한 기억들을 그려놓은 건물에서 제조를 하고 있었다니 확실히 악랄한 녀석들이다.<br><br>NULL-Z의 효과, 단기 기억 삭제..<br>잊고 싶은 기억을 지우고, 행복한 기억만 남기고 싶다는 욕구로 사람들은 점점 중독돼 갔겠지..<br><br>벽화 앞을 서성이다 바닥에 떨어져 있는 그림 조각들을[KIT-D] 발견했다.<br>중요한 단서가 될 수 있으려나?</div></div>`,
    hints:['키트의 카드 3장을 꺼내 벽화에서 일치하는 그림을 찾으세요.','각 그림의 단어를 조합하면 정답이 나옵니다.'],answerText:'정답: KEY'},
 
   // #8 FILE_07
   {num:8,name:'FILE_07',sub:'어린이은행공원 — 음표',icon:'🎵',unlocked:false,
    answer:'FADE',unlockCode:'KEY',answerLen:4,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>KEY..? 아직 이것만으로는 부족한데..<br>연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처에 있는 연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 04</div><div>겉으로 볼때는 지구방범대로 알겠지만 사실 NCI 정보국이다.<br>MEMORY TOWER에서 알아낸 KEY에 대해 묻자,<br>NCI 정보요원은 그들의 본거지의 비밀번호가 영어로 만들어졌다는 정보를 얻었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 06</div><div>갑자기 N05에게 다급한 전화가 왔다.</div>
    <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;" onclick="playAudio(this)"><div class="play-icon" style="color:#cc4444;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.wav</div><div class="audio-time" style="color:#7a4040;">파일 손상</div></div></div>
@@ -1329,15 +1332,8 @@ const files = [
   {num:10,name:'FILE_09',sub:'그래피티 — 가입 인증 1',icon:'📷',unlocked:false,
    answer:'9726R513',unlockCode:'BLANK',answerLen:8,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 10</div>
-   <div style="background:#1a2a1a;border:1px solid #4a8a4a;padding:14px;margin-bottom:12px;text-align:center;">
-   <div style="color:#8ada8a;font-size:16px;font-weight:700;letter-spacing:3px;margin-bottom:8px;">🎉 BLANK MEMBERSHIP 🎉</div>
-   <div style="color:#6aaa6a;font-size:11px;margin-bottom:12px;">가입 혜택: 제휴 카페 5% 할인</div>
-   <div style="border-top:1px solid #3a5a3a;padding-top:12px;font-size:11px;color:#7aaa7a;line-height:1.9;text-align:left;">
-   안녕하세요, BLANK 멤버십 가입센터입니다.<br>가입 절차를 위해 인증이 필요합니다.<br><br>
-   작성하신 주소로 인증 키트가 발송되었습니다.<br>
-   연남동 259-16을 시작으로 인증 절차를 진행해주세요.<br><br>
-   절차 완료 후 보이는 히든 심볼을 확인하시기 바랍니다.
-   </div></div>
+   <div style="text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:11px;color:#8a5a10;letter-spacing:0.5px;margin-bottom:8px;">가입 혜택: 제휴 카페 5% 할인</div>
+   <img class="detail-photo" src="assets/file09_blank_membership.jpg" alt="BLANK 멤버십 인증 안내" onclick="openPhotoZoom('assets/file09_blank_membership.jpg')">
    <div>녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>
    <div class="detail-img">[ 사진: 연남동 그래피티 벽 ]</div>
    <div class="detail-section"><div class="detail-section-title">▶ 단서</div><div>키트의 스티커를 이용해 그래피티 암호를 풀어라.</div></div>`,
@@ -1407,9 +1403,9 @@ const messages = [
   // N32 — 생존, 하트 조형물 단서 + 부재중 시스템
   {id:2, sender:'N32', dead:false, time:'어제', new:true, read:false,
    preview:'어이~ N07! 조형물 근처 재료 확인 해줄 수 있어?',
-   attach:'⚠ damaged_file.enc',
+   attach:'⚠ expired_file.enc',
    body:`<div>어이~ N07! 아직 재료에 대해선 가진 정보가 없는 것 같던데?<br>내가 관련해서 사진을 하나 받았는데 직접 확인하기엔 거리가 멀어서 말이야.<br>사진이 흐려서 모르겠는데 조형물 근처에 보이는 재료를 확인 해줄 수 있어?<br>도와주면 내가 다른 정보도 넘겨줄게 어때?</div>
-   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">damaged_file.enc</div><div class="audio-time" style="color:#7a4040;">손상된 파일 — 열 수 없음</div></div></div>
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">expired_file.enc</div><div class="audio-time" style="color:#7a4040;">열람 기간 만료</div></div></div>
    <div class="msg-zigzag">대화를 불러올 수 없습니다.</div>`,
    canReply:true, thread:[], waitingForAnswer:true,
    correctPassword:'ROSE', altPasswords:['장미','rose','Rose'],
@@ -1466,8 +1462,8 @@ function goTo(id, addHistory=true){
   if(['s1','s7'].includes(id)) hintBtn.classList.add('show');
   else hintBtn.classList.remove('show');
   
-  // 문의 버튼: 모든 화면에서 표시 (단, 배지 스캔/인증 같은 자동 진행 화면 제외)
-  if(['s1','s4','s5','s6','s7','s8'].includes(id)) supportBtn.classList.add('show');
+  // 문의 버튼: MY STORAGE(S6)에서만 표시
+  if(['s6'].includes(id)) supportBtn.classList.add('show');
   else supportBtn.classList.remove('show');
   // S1에서는 박스 안 버튼만 사용 → 플로팅 버튼 숨김
   if(id==='s1'){ supportBtn.classList.remove('show'); hintBtn.classList.remove('show'); }
@@ -1483,8 +1479,10 @@ function goTo(id, addHistory=true){
   // topbar가 없는 화면은 inner의 상단 여백(44px)도 제거
   const innerEl = document.getElementById('inner');
   if(innerEl) innerEl.classList.toggle('no-topbar-pad', ['s4','s5','s6','s7','s8'].includes(id));
-  // 문의(전화) 버튼: 종이 테마 화면에서는 종이 테마 아이콘으로 교체
-  if(supportBtn) supportBtn.classList.toggle('paper-style', ['s4','s5','s6','s7','s8'].includes(id));
+  // 문의(전화) 버튼: MY STORAGE에서는 종이 테마 아이콘으로 교체
+  if(supportBtn) supportBtn.classList.toggle('paper-style', id==='s6');
+  // 힌트 버튼: 종이 테마 화면(S7)에서는 종이 테마 아이콘으로 교체
+  if(hintBtn) hintBtn.classList.toggle('paper-style', id==='s7');
   // 스캔라인 효과: 종이 테마 화면에서는 제거
   const scanlineEl = document.querySelector('.scanline');
   if(scanlineEl) scanlineEl.classList.toggle('paper-hide', ['s4','s5','s6','s7','s8'].includes(id));
