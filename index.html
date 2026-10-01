@@ -696,7 +696,6 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-size:100% auto;
   padding:0;position:relative;
   overflow-y:visible;flex:none;
-  min-height:100%;
 }
 #s7 .detail-head{
   display:block;
@@ -813,9 +812,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-color:#f1e9dc;
   background-image:url('assets/report_tile.webp');
   background-repeat:repeat-y;background-position:top center;background-size:100% auto;
-  padding:0 0 24px;
+  padding:0;
   overflow-y:visible;flex:none;
-  min-height:100%;
 }
 .report-head-spacer{
   display:block;aspect-ratio:941/400;position:relative;
@@ -1462,8 +1460,8 @@ function goTo(id, addHistory=true){
   if(['s1','s7'].includes(id)) hintBtn.classList.add('show');
   else hintBtn.classList.remove('show');
   
-  // 문의 버튼: MY STORAGE(S6)에서만 표시
-  if(['s6'].includes(id)) supportBtn.classList.add('show');
+  // 문의 버튼: MY PROFILE(S4)에서만 표시
+  if(['s4'].includes(id)) supportBtn.classList.add('show');
   else supportBtn.classList.remove('show');
   // S1에서는 박스 안 버튼만 사용 → 플로팅 버튼 숨김
   if(id==='s1'){ supportBtn.classList.remove('show'); hintBtn.classList.remove('show'); }
@@ -1479,8 +1477,8 @@ function goTo(id, addHistory=true){
   // topbar가 없는 화면은 inner의 상단 여백(44px)도 제거
   const innerEl = document.getElementById('inner');
   if(innerEl) innerEl.classList.toggle('no-topbar-pad', ['s4','s5','s6','s7','s8'].includes(id));
-  // 문의(전화) 버튼: MY STORAGE에서는 종이 테마 아이콘으로 교체
-  if(supportBtn) supportBtn.classList.toggle('paper-style', id==='s6');
+  // 문의(전화) 버튼: MY PROFILE에서는 종이 테마 아이콘으로 교체
+  if(supportBtn) supportBtn.classList.toggle('paper-style', id==='s4');
   // 힌트 버튼: 종이 테마 화면(S7)에서는 종이 테마 아이콘으로 교체
   if(hintBtn) hintBtn.classList.toggle('paper-style', id==='s7');
   // 스캔라인 효과: 종이 테마 화면에서는 제거
