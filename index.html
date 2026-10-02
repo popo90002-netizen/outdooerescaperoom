@@ -10,11 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{margin:0;padding:0;background:#0e1525;overflow-x:hidden;}
-html{height:100%;}
-body{overflow-y:clip;}
+html,body{margin:0;padding:0;background:#0e1525;}
 body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;}
-.device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;}
+.device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;overflow-x:hidden;}
 
 .scanline{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;height:100dvh;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.13) 2px,rgba(0,0,0,0.13) 4px);pointer-events:none;z-index:100;}
 .blackout{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;height:100dvh;background:#000;pointer-events:none;z-index:201;opacity:0;transition:opacity 0.2s;}
