@@ -244,6 +244,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .detail-section-title{font-size:9px;color:#3a5a7a;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
 
 /* 문의 버튼 (기본: 왼쪽 하단 고정) — Safe Mode 미니 버튼과 동일 스타일 */
+.support-btn,.hint-btn,.camera-btn{transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;backface-visibility:hidden;}
 .support-btn{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .support-btn:hover{background:#3a2020;}
 .support-btn.show{display:flex;}
@@ -261,8 +262,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 
 /* 카메라 버튼 (MY STORAGE 전용) */
-.camera-btn{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
-.camera-btn:hover{background:#3a2020;}
+.camera-btn{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .camera-btn.show{display:flex;}
 @media(min-width:500px){
   .camera-btn{left:calc(50% - 185px);}
@@ -748,7 +748,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* ---- S5: 채팅창 (종이 테마, 테스트) ---- */
 #s5 .msg-detail-screen{
-  background-color:#f1e9dc;display:flex;flex-direction:column;min-height:100%;
+  background-color:#ede3d3;display:flex;flex-direction:column;min-height:100%;
 }
 #s5 .msg-detail-head{
   display:block;flex-shrink:0;
@@ -763,7 +763,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-detail-sender,#s5 .msg-detail-time{display:none;}
 #s5 .msg-detail-body{
   flex:none;padding:16px 6%;
-  background-image:url('assets/msg_paper_plain.webp');background-repeat:repeat-y;background-position:top center;background-size:100% auto;
+  background:#ede3d3;
   color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:500;line-height:1.85;
   margin:0;
 }
@@ -775,7 +775,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-reply-footer{
   display:none;flex-shrink:0;align-items:center;gap:10px;
   padding:12px 6% 16px;
-  background-image:url('assets/msg_paper_plain.webp');background-repeat:repeat-y;background-position:bottom center;background-size:100% auto;
+  background:#ede3d3;
   border-top:1px solid #d8c8a8;
 }
 #s5 .msg-reply-input{
@@ -1209,7 +1209,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_emoticon.webp','hint_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp'];
+const ASSET_LIST=['call_emoticon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
