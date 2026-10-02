@@ -756,14 +756,20 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-detail-head{
   display:block;flex-shrink:0;
   aspect-ratio:941/360;position:relative;
-  background-repeat:no-repeat;background-position:top center;background-size:100% 100%;
+  background:url('assets/msg_header_generic.webp') top center no-repeat;background-size:100% 100%;
   border:none;margin:0;padding:0;
 }
 .s5-back-overlay{
   position:absolute;top:0;left:0;width:22%;height:38%;
   background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
 }
-#s5 .msg-detail-sender,#s5 .msg-detail-time{display:none;}
+#s5 .msg-detail-sender{
+  display:block;position:absolute;left:7%;top:59%;
+  font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:20px;color:#2a1c10;
+  letter-spacing:0.3px;
+}
+#s5 .msg-detail-sender.dead{color:#a02020;text-decoration:line-through;}
+#s5 .msg-detail-time{display:none;}
 #s5 .msg-detail-body{
   flex:none;padding:16px 6%;
   background:none;
@@ -879,7 +885,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;">BUILD v377</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;">BUILD v378</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1630,11 +1636,7 @@ function openMessage(i){
   document.getElementById('msgDetailSender').textContent=m.sender;
   document.getElementById('msgDetailSender').className='msg-detail-sender'+(m.dead?' dead':'');
   document.getElementById('msgDetailTime').textContent=m.time;
-  // 발신자별 종이 테마 배경 헤더 (N24/N32/N05/NCI 정보국)
-  const headerMap={'N24':'assets/chat_header_N24.webp','N32':'assets/chat_header_N32.webp','N05':'assets/chat_header_N05.webp','NCI 정보국':'assets/chat_header_infoguk.webp'};
-  const headEl=document.getElementById('msgDetailHead');
-  if(headEl && headerMap[m.sender]) headEl.style.backgroundImage=`url('${headerMap[m.sender]}')`;
-  
+
   // 본문 (잠금/해제 분기)
   let bodyHtml = m.body || '';
   if(m.bodyLocked && m.bodyUnlocked && m.unlocksWith !== undefined){
