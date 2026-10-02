@@ -260,12 +260,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   .hint-btn{right:calc(50% - 195px);}
 }
 
-/* 카메라 버튼 (AR 필요 파일에서만 표시) */
-.camera-btn{position:fixed;bottom:20px;right:16px;width:38px;height:38px;border-radius:50%;background:#1a2a1a;border:1px solid #3a6a3a;color:#6aaa6a;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
-.camera-btn:hover{background:#2a3a2a;}
+/* 카메라 버튼 (MY PROFILE 전용, 전화 아이콘 위에 고정) */
+.camera-btn{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+.camera-btn:hover{background:#3a2020;}
 .camera-btn.show{display:flex;}
 @media(min-width:500px){
-  .camera-btn{right:calc(50% - 195px);}
+  .camera-btn{left:calc(50% - 185px);}
 }
 
 /* Safe Mode 전용: outer-box 안쪽 좌우 하단 배치 — My Storage와 동일한 톤 */
@@ -762,7 +762,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s5 .msg-detail-sender,#s5 .msg-detail-time{display:none;}
 #s5 .msg-detail-body{
-  flex:1;padding:16px 6%;
+  flex:none;padding:16px 6%;
   background-image:url('assets/msg_paper_plain.webp');background-repeat:repeat-y;background-position:top center;background-size:100% auto;
   color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:500;line-height:1.85;
   margin:0;
@@ -1466,10 +1466,10 @@ function goTo(id, addHistory=true){
   else supportBtn.classList.remove('show');
   // S1에서는 박스 안 버튼만 사용 → 플로팅 버튼 숨김
   if(id==='s1'){ supportBtn.classList.remove('show'); hintBtn.classList.remove('show'); }
-  // 카메라 버튼: S4(프로필), S6(스토리지)에서 표시
+  // 카메라 버튼: MY PROFILE(S4)에서만 표시
   const cameraBtn = document.getElementById('cameraBtn');
   if(cameraBtn){
-    if(['s6'].includes(id)) cameraBtn.classList.add('show');
+    if(['s4'].includes(id)) cameraBtn.classList.add('show');
     else cameraBtn.classList.remove('show');
   }
   // S0/S4/S5/S6/S7/S8: topbar 숨김 (배경 이미지에 자체 헤더 포함 — 테스트 중)
@@ -2001,12 +2001,6 @@ function openDetail(idx){
         }
       });
     }
-  }
-  // AR 카메라 버튼 — S7에서는 FILE_04, FILE_11에서만 표시
-  const cameraBtn = document.getElementById('cameraBtn');
-  if(cameraBtn){
-    if([5,12].includes(f.num)) cameraBtn.classList.add('show');
-    else cameraBtn.classList.remove('show');
   }
 }
 
