@@ -10,7 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{margin:0;padding:0;background:#0e1525;overflow-x:hidden;height:100%;}
+html,body{margin:0;padding:0;background:#0e1525;overflow-x:hidden;}
+html{height:100%;}
+body{overflow-y:clip;}
 body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;}
 .device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;}
 
@@ -260,8 +262,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   .hint-btn{right:calc(50% - 195px);}
 }
 
-/* 카메라 버튼 (MY PROFILE 전용, 전화 아이콘 위에 고정) */
-.camera-btn{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+/* 카메라 버튼 (MY STORAGE 전용) */
+.camera-btn{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .camera-btn:hover{background:#3a2020;}
 .camera-btn.show{display:flex;}
 @media(min-width:500px){
@@ -748,7 +750,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* ---- S5: 채팅창 (종이 테마, 테스트) ---- */
 #s5 .msg-detail-screen{
-  background-color:#f1e9dc;display:flex;flex-direction:column;
+  background-color:#f1e9dc;display:flex;flex-direction:column;min-height:100%;
 }
 #s5 .msg-detail-head{
   display:block;flex-shrink:0;
@@ -1466,10 +1468,10 @@ function goTo(id, addHistory=true){
   else supportBtn.classList.remove('show');
   // S1에서는 박스 안 버튼만 사용 → 플로팅 버튼 숨김
   if(id==='s1'){ supportBtn.classList.remove('show'); hintBtn.classList.remove('show'); }
-  // 카메라 버튼: MY PROFILE(S4)에서만 표시
+  // 카메라 버튼: MY STORAGE(S6)에서만 표시
   const cameraBtn = document.getElementById('cameraBtn');
   if(cameraBtn){
-    if(['s4'].includes(id)) cameraBtn.classList.add('show');
+    if(['s6'].includes(id)) cameraBtn.classList.add('show');
     else cameraBtn.classList.remove('show');
   }
   // S0/S4/S5/S6/S7/S8: topbar 숨김 (배경 이미지에 자체 헤더 포함 — 테스트 중)
