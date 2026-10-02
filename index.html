@@ -12,7 +12,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:contain;}
 body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;}
-.device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;overflow-x:hidden;}
+.device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;overflow-x:hidden;margin-top:20px;}
 
 .scanline{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;height:100dvh;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.13) 2px,rgba(0,0,0,0.13) 4px);pointer-events:none;z-index:100;}
 .blackout{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;height:100dvh;background:#000;pointer-events:none;z-index:201;opacity:0;transition:opacity 0.2s;}
@@ -890,7 +890,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;">BUILD v382</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v383</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
