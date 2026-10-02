@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{margin:0;padding:0;background:#0e1525;}
+html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:contain;}
 body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;}
 .device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;overflow-x:hidden;}
 
@@ -245,12 +245,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* 문의 버튼 (기본: 왼쪽 하단 고정) — Safe Mode 미니 버튼과 동일 스타일 */
 .support-btn,.hint-btn,.camera-btn{transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;backface-visibility:hidden;}
-.support-btn{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+.support-btn{position:fixed;top:calc(100dvh - 82px - env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .support-btn:hover{background:#3a2020;}
 .support-btn.show{display:flex;}
 
 /* 힌트 버튼 (기본: 오른쪽 하단) — Safe Mode 미니 버튼과 동일 스타일 */
-.hint-btn{position:fixed;bottom:20px;right:16px;width:48px;height:48px;border-radius:50%;background:#3a1a1a;border:1px solid #8a3a3a;color:#ffaa66;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+.hint-btn{position:fixed;top:calc(100dvh - 68px);right:16px;width:48px;height:48px;border-radius:50%;background:#3a1a1a;border:1px solid #8a3a3a;color:#ffaa66;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .hint-btn:hover{background:#4a2a2a;}
 .hint-btn.show{display:flex;}
 .hint-btn.paper-style{background:url('assets/hint_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;}
@@ -262,7 +262,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 
 /* 카메라 버튼 (MY STORAGE 전용) */
-.camera-btn{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
+.camera-btn{position:fixed;top:calc(100dvh - 82px - env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .camera-btn.show{display:flex;}
 @media(min-width:500px){
   .camera-btn{left:calc(50% - 185px);}
