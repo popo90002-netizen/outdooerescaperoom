@@ -751,7 +751,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-color:#ede3d3;
   background-image:url('assets/msg_paper_border_tile.webp');
   background-repeat:repeat-y;background-position:top center;background-size:100% auto;
-  display:flex;flex-direction:column;min-height:100%;
+  display:flex;flex-direction:column;
 }
 #s5 .msg-detail-head{
   display:block;flex-shrink:0;
@@ -786,6 +786,11 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   padding:12px 6% 16px;
   background:none;
   border-top:1px solid #d8c8a8;
+}
+#s5 .msg-detail-bottomcap{
+  display:block;flex-shrink:0;
+  aspect-ratio:941/60;
+  background:url('assets/msg_bottom_cap.webp') top center no-repeat;background-size:100% 100%;
 }
 #s5 .msg-reply-input{
   flex:1;min-width:0;
@@ -885,7 +890,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;">BUILD v379</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;">BUILD v380</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1078,6 +1083,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <input type="text" class="msg-reply-input" id="msgReplyInput" placeholder="답장 입력..." onkeydown="if(event.key==='Enter')sendReply()">
 <button class="msg-reply-send" onclick="sendReply()">전송</button>
 </div>
+<div class="msg-detail-bottomcap"></div>
 </div>
 </div>
 
