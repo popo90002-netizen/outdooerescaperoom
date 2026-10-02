@@ -748,7 +748,9 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* ---- S5: 채팅창 (종이 테마, 테스트) ---- */
 #s5 .msg-detail-screen{
-  background:#ede3d3 url('assets/msg_paper_tile.webp') repeat top center;background-size:300px auto;
+  background-color:#ede3d3;
+  background-image:url('assets/msg_paper_border_tile.webp');
+  background-repeat:repeat-y;background-position:top center;background-size:100% auto;
   display:flex;flex-direction:column;min-height:100%;
 }
 #s5 .msg-detail-head{
@@ -764,7 +766,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-detail-sender,#s5 .msg-detail-time{display:none;}
 #s5 .msg-detail-body{
   flex:none;padding:16px 6%;
-  background:#ede3d3 url('assets/msg_paper_tile.webp') repeat top center;background-size:300px auto;
+  background:none;
   color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:500;line-height:1.85;
   margin:0;
 }
@@ -776,7 +778,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-reply-footer{
   display:none;flex-shrink:0;align-items:center;gap:10px;
   padding:12px 6% 16px;
-  background:#ede3d3 url('assets/msg_paper_tile.webp') repeat top center;background-size:300px auto;
+  background:none;
   border-top:1px solid #d8c8a8;
 }
 #s5 .msg-reply-input{
@@ -877,7 +879,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;">BUILD v376</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;">BUILD v377</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
