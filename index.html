@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:contain;}
+html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:none;}
 body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;}
 .device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;overflow-x:hidden;margin-top:20px;}
 
@@ -890,7 +890,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v389</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v390</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -2301,7 +2301,7 @@ let _ptrLastY=0;
 document.addEventListener('touchstart', e=>{ _ptrLastY = e.touches[0].clientY; }, {passive:true});
 document.addEventListener('touchmove', e=>{
   const y = e.touches[0].clientY;
-  if(window.scrollY<=0 && y > _ptrLastY) e.preventDefault();
+  if(window.scrollY<=0 && y >= _ptrLastY) e.preventDefault();
   _ptrLastY = y;
 }, {passive:false});
 // 2) 빠르게 스크롤 후 손을 뗐을 때의 관성(momentum) 스크롤: 터치가 끝난 뒤
