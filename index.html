@@ -890,7 +890,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v390</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v391</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -2296,23 +2296,12 @@ function submitReport(){
 }
 
 // iOS Safari 당겨서 새로고침 제스처 차단
-// 1) 손가락으로 직접 끄는 동작: 매 순간의 움직임이 아래 방향이면 막음
-let _ptrLastY=0;
-document.addEventListener('touchstart', e=>{ _ptrLastY = e.touches[0].clientY; }, {passive:true});
-document.addEventListener('touchmove', e=>{
-  const y = e.touches[0].clientY;
-  if(window.scrollY<=0 && y >= _ptrLastY) e.preventDefault();
-  _ptrLastY = y;
-}, {passive:false});
-// 2) 빠르게 스크롤 후 손을 뗐을 때의 관성(momentum) 스크롤: 터치가 끝난 뒤
-//    스크롤 위치가 정확히 0이 되는 순간을 감지해 1px로 밀어서, 사파리가
-//    "맨 위에 도달함"으로 인식해 당겨서 새로고침을 트리거하지 못하게 함
-let _ptrTouching=false;
-document.addEventListener('touchstart', ()=>{ _ptrTouching=true; }, {passive:true});
-document.addEventListener('touchend', ()=>{ _ptrTouching=false; }, {passive:true});
-document.addEventListener('touchcancel', ()=>{ _ptrTouching=false; }, {passive:true});
+// overscroll-behavior:none (CSS)으로 1차 차단하고, 혹시 모를 경우를 대비해
+// 스크롤 위치가 정확히 0이 되는 순간을 1px로 밀어서 "맨 위에 도달함"으로
+// 인식해 새로고침 제스처가 시작되지 않게 함. 터치 이동을 직접 가로채는
+// 방식은 스크롤 매끄러움을 해쳐서 뺐음 (overscroll-behavior만으로 충분)
 window.addEventListener('scroll', ()=>{
-  if(!_ptrTouching && window.scrollY===0 && document.documentElement.scrollHeight > window.innerHeight+2){
+  if(window.scrollY===0 && document.documentElement.scrollHeight > window.innerHeight+2){
     window.scrollTo(0,1);
   }
 }, {passive:true});
