@@ -132,7 +132,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .msg-reply-send:hover{background:#2a4a7a;}
 
 /* ===== S4: 메시지 화면 (요원 인증 직후) ===== */
-.msg-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;}
+.msg-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;position:relative;}
 .placeholder-banner{background:#1a2030;border:1px dashed #3a5a7a;padding:6px 10px;font-size:9px;color:#5a7a9a;letter-spacing:1px;text-align:center;margin:10px 14px 0;flex-shrink:0;}
 .msg-tabs{display:flex;border-bottom:1px solid #1e3a6e;background:#0a1020;flex-shrink:0;padding:8px 14px;align-items:center;gap:8px;}
 .msg-tab{flex:1;padding:11px 6px;text-align:center;font-family:'VT323',monospace;font-size:14px;letter-spacing:2px;color:#3a5a7a;cursor:pointer;border-bottom:2px solid transparent;}
@@ -188,7 +188,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .script-speaker{color:#c8a840;font-weight:bold;}
 
 /* ===== S6: MY STORAGE (인벤토리) ===== */
-.storage-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;}
+.storage-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;position:relative;}
 .storage-head{padding:10px 14px;border-bottom:1px solid #1a3060;flex-shrink:0;display:flex;align-items:center;gap:8px;}
 .storage-head h2{font-family:'VT323',monospace;font-size:18px;color:#8aaac8;letter-spacing:3px;}
 .storage-progress{margin-left:auto;font-size:10px;color:#5a7a9a;}
@@ -249,6 +249,20 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-btn:hover{background:#4a2a2a;}
 .hint-btn.show{display:flex;}
 .hint-btn.paper-style{background:url('assets/hint_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;}
+
+/* 전화 아이콘 (MY PROFILE 전용, 화면 내부 왼쪽 하단에 고정 배치 — 뷰포트 기준 고정이 아니라
+   스크롤 드리프트 버그를 피하기 위해 화면 자체의 콘텐츠 흐름 안에 절대 위치로 둠) */
+.profile-call-btn{
+  position:absolute;bottom:20px;left:20px;width:48px;height:48px;border-radius:50%;
+  background:url('assets/call_emoticon.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;cursor:pointer;z-index:10;
+}
+/* 카메라 아이콘 (MY STORAGE 전용, 동일한 방식) */
+.storage-camera-btn{
+  position:absolute;bottom:20px;left:20px;width:48px;height:48px;border-radius:50%;
+  background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;cursor:pointer;z-index:10;
+}
 
 /* 큰 화면(데스크탑)에서는 device 영역 안쪽에 위치 */
 @media(min-width:500px){
@@ -652,23 +666,6 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-modal .hint-stage-num[style*="c8a840"]{color:#a06818!important;}
 .hint-modal .hint-stage-txt[style*="ffdd99"]{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;}
 
-/* ---- 문의(SUPPORT) 모달 — 종이 테마 ---- */
-#modalSupport .modal{
-  background:#f1e8d9;border:none;border-radius:14px;
-}
-#modalSupport .modal-close{color:#8a7a5a;}
-#modalSupport h3{color:#8a5a10!important;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:18px;letter-spacing:0.3px;}
-#modalSupport .modal-sub{
-  color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;
-  border-bottom:1px solid #b8a888;padding-bottom:10px;margin-bottom:12px;letter-spacing:0.3px;
-}
-#modalSupport div[style*="background:#0a0808"]{
-  background:rgba(255,255,255,0.5)!important;border:1px solid #c8b89a!important;
-}
-#modalSupport div[style*="color:#c8a880"]{color:#3a2a1a!important;font-family:'Noto Sans KR',sans-serif;}
-#modalSupport strong[style*="color:#cc6644"]{color:#8a5a10!important;}
-#modalSupport div[style*="color:#7a5a5a"]{color:#7a6a50!important;font-family:'Noto Sans KR',sans-serif;}
-
 /* ---- S7: 파일 상세보기(사건일지) — 종이 테마, 테스트 ---- */
 #s7 .detail-screen{
   background-color:#f1e8d9;
@@ -872,7 +869,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v392</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v393</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1049,6 +1046,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <!-- My Storage 진입 버튼 -->
 <button class="storage-bottom-btn" onclick="goTo('s6')">📦 MY STORAGE 열람</button>
+<button class="profile-call-btn" onclick="openSupport()" aria-label="문의"></button>
 </div>
 </div>
 
@@ -1082,6 +1080,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="inv-grid" id="invGrid"></div>
 </div>
 <button class="report-nav-btn" onclick="goTo('s8')">최종보고서 열람</button>
+<button class="storage-camera-btn" onclick="openARCamera()" aria-label="카메라"></button>
 </div>
 </div>
 
@@ -1171,7 +1170,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <!-- 힌트 모달 -->
 <div class="modal-bg" id="modalHint">
-<div class="modal hint-modal">
+<div class="modal" id="hintModalBox">
 <button class="modal-close" onclick="closeModal('modalHint')">✕</button>
 <h3>💡 HINT</h3>
 <div class="modal-sub" id="hintModalSub">힌트를 단계별로 열어보세요</div>
@@ -1983,6 +1982,9 @@ function openDetail(idx){
   }
 }
 
+function openARCamera(){
+  alert('📸 AR 카메라\n\n현재 구현 준비 중입니다.\n조형물/그래피티에 카메라를 갖다 대면\n분석이 시작됩니다.');
+}
 function playAudio(el){
   const icon=el.querySelector('.play-icon');
   icon.textContent='⏸';
@@ -2037,6 +2039,7 @@ function openHintModal(){
   
   document.getElementById('hintModalSub').textContent = `${hintTarget.name} — ${hintTarget.sub}`;
   renderHints(hintTarget);
+  document.getElementById('hintModalBox').classList.toggle('hint-modal', currentScreen !== 's1');
   document.getElementById('modalHint').classList.add('on');
 }
 
