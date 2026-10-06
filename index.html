@@ -243,13 +243,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .detail-section:last-child{border-bottom:none;}
 .detail-section-title{font-size:9px;color:#3a5a7a;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
 
-/* 문의 버튼 (기본: 왼쪽 하단 고정) — Safe Mode 미니 버튼과 동일 스타일 */
-.support-btn,.hint-btn,.camera-btn{transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;backface-visibility:hidden;}
-.support-btn{position:fixed;top:calc(100dvh - 82px - env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:#2a1a1a;border:1px solid #6a3a3a;color:#cc8866;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
-.support-btn:hover{background:#3a2020;}
-.support-btn.show{display:flex;}
-
 /* 힌트 버튼 (기본: 오른쪽 하단) — Safe Mode 미니 버튼과 동일 스타일 */
+.hint-btn{transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;backface-visibility:hidden;}
 .hint-btn{position:fixed;top:calc(100dvh - 68px);right:16px;width:48px;height:48px;border-radius:50%;background:#3a1a1a;border:1px solid #8a3a3a;color:#ffaa66;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
 .hint-btn:hover{background:#4a2a2a;}
 .hint-btn.show{display:flex;}
@@ -257,15 +252,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* 큰 화면(데스크탑)에서는 device 영역 안쪽에 위치 */
 @media(min-width:500px){
-  .support-btn{left:calc(50% - 185px);}
   .hint-btn{right:calc(50% - 195px);}
-}
-
-/* 카메라 버튼 (MY STORAGE 전용) */
-.camera-btn{position:fixed;top:calc(100dvh - 82px - env(safe-area-inset-bottom));left:calc(30px + env(safe-area-inset-left));width:48px;height:48px;border-radius:50%;background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;}
-.camera-btn.show{display:flex;}
-@media(min-width:500px){
-  .camera-btn{left:calc(50% - 185px);}
 }
 
 /* Safe Mode 전용: outer-box 안쪽 좌우 하단 배치 — My Storage와 동일한 톤 */
@@ -571,11 +558,6 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   border:none;color:transparent;
   display:block;width:52%;aspect-ratio:797/232;height:auto;
   margin:4px 0 0 auto;
-}
-
-.support-btn.paper-style{
-  background:url('assets/call_emoticon.webp') center/100% 100% no-repeat;
-  border:none;color:transparent;
 }
 
 /* ---- 코드 입력 모달 (비밀번호창, 종이 테마) ---- */
@@ -890,7 +872,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v391</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#0f0;font-family:monospace;font-size:11px;text-align:center;padding:3px 0;height:14px;line-height:14px;">BUILD v392</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1158,10 +1140,6 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <!-- 힌트 버튼 -->
 <button class="hint-btn" id="hintBtn" onclick="openHintModal()">💡</button>
-<!-- 카메라 버튼 (AR 파일에서만) -->
-<button class="camera-btn" id="cameraBtn" onclick="openARCamera()">📸</button>
-<!-- 문의 버튼 -->
-<button class="support-btn" id="supportBtn" onclick="openSupport()">📞</button>
 
 <!-- 사진 확대 -->
 <div class="photo-zoom-bg" id="photoZoomBg" onclick="if(event.target===this)closePhotoZoom()">
@@ -1469,35 +1447,22 @@ function goTo(id, addHistory=true){
   
   const backBtn = document.getElementById('backBtn');
   const hintBtn = document.getElementById('hintBtn');
-  const supportBtn = document.getElementById('supportBtn');
-  
+
   // BACK 버튼: S5(메시지 상세), S6(스토리지), S7(파일상세)에서 표시
   if(['s5','s6','s7','s8'].includes(id)) backBtn.classList.add('show');
   else backBtn.classList.remove('show');
-  
+
   // 힌트 버튼: Safe Mode(S1)와 파일 상세(S7)에서 표시
   if(['s1','s7'].includes(id)) hintBtn.classList.add('show');
   else hintBtn.classList.remove('show');
-  
-  // 문의 버튼: MY PROFILE(S4)에서만 표시
-  if(['s4'].includes(id)) supportBtn.classList.add('show');
-  else supportBtn.classList.remove('show');
   // S1에서는 박스 안 버튼만 사용 → 플로팅 버튼 숨김
-  if(id==='s1'){ supportBtn.classList.remove('show'); hintBtn.classList.remove('show'); }
-  // 카메라 버튼: MY STORAGE(S6)에서만 표시
-  const cameraBtn = document.getElementById('cameraBtn');
-  if(cameraBtn){
-    if(['s6'].includes(id)) cameraBtn.classList.add('show');
-    else cameraBtn.classList.remove('show');
-  }
+  if(id==='s1'){ hintBtn.classList.remove('show'); }
   // S0/S4/S5/S6/S7/S8: topbar 숨김 (배경 이미지에 자체 헤더 포함 — 테스트 중)
   const topbar = document.querySelector('.topbar');
   if(topbar) topbar.style.display = ['s0','s4','s5','s6','s7','s8'].includes(id) ? 'none' : '';
   // topbar가 없는 화면은 inner의 상단 여백(44px)도 제거
   const innerEl = document.getElementById('inner');
   if(innerEl) innerEl.classList.toggle('no-topbar-pad', ['s4','s5','s6','s7','s8'].includes(id));
-  // 문의(전화) 버튼: MY PROFILE에서는 종이 테마 아이콘으로 교체
-  if(supportBtn) supportBtn.classList.toggle('paper-style', id==='s4');
   // 힌트 버튼: 종이 테마 화면(S7)에서는 종이 테마 아이콘으로 교체
   if(hintBtn) hintBtn.classList.toggle('paper-style', id==='s7');
   // 스캔라인 효과: 종이 테마 화면에서는 제거
@@ -2018,14 +1983,6 @@ function openDetail(idx){
   }
 }
 
-// ===== AR 카메라 =====
-function openARCamera(){
-  // 현재 파일 확인
-  const f = files[currentDetailIdx];
-  if(!f) return;
-  // AR 페이지 오픈 (추후 MindAR 페이지로 연결)
-  alert('📸 AR 카메라\n\n현재 구현 준비 중입니다.\n조형물/그래피티에 카메라를 갖다 대면\n분석이 시작됩니다.');
-}
 function playAudio(el){
   const icon=el.querySelector('.play-icon');
   icon.textContent='⏸';
