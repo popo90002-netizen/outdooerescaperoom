@@ -810,12 +810,14 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   overflow-y:visible;flex:none;
 }
 .report-head-spacer{
-  display:block;aspect-ratio:941/400;position:relative;
+  display:block;aspect-ratio:860/282;position:relative;
   background:url('assets/report_header.webp') center/100% 100% no-repeat;
 }
 .s8-back-overlay{
   position:absolute;top:0;left:0;width:26%;height:100%;
   background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
+  font-size:22px;color:#3a2a1a;text-align:left;padding-left:6%;
+  display:flex;align-items:center;
 }
 #s8 .report-header{display:none;}
 #s8 .report-body{padding:18px 6% 0;}
@@ -1099,7 +1101,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <!-- S8: 최종 보고서 -->
 <div class="screen" id="s8">
 <div class="report-screen">
-<div class="report-head-spacer"><button class="s8-back-overlay" onclick="goBack()" aria-label="뒤로가기"></button></div>
+<div class="report-head-spacer"><button class="s8-back-overlay" onclick="goBack()" aria-label="뒤로가기">←</button></div>
 <div class="report-header">
   <div class="report-org">NCI — 국가수사기관</div>
   <div class="report-title">수사 최종 보고서</div>
