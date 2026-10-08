@@ -1271,8 +1271,7 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 23</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
    <img class="detail-photo" src="assets/file04_heart.jpg?v=3" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=3')">
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>
-   <div class="detail-section" style="border:1px solid #c8a840;background:#1a1810;padding:10px;"><div style="color:#c8a840;font-size:10px;letter-spacing:2px;">📸 현장 분석 모드 (구현 예정)</div><div style="font-size:10px;color:#8a7a40;margin-top:4px;">카메라로 현장을 비추면 주변 식물을 분석합니다.</div></div>`,
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 26</div><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>`,
    hints:['하트 조형물을 찾아가보세요.','현장 분석 모드로 카메라를 켜보세요.'],answerText:'정답: 장미 (ROSE)',
    onUnlock:{drug:'NULL-Z',org:'BLANK'}},
 
@@ -1991,7 +1990,7 @@ function openDetail(idx){
 }
 
 function openARCamera(){
-  alert('📸 AR 카메라\n\n현재 구현 준비 중입니다.\n조형물/그래피티에 카메라를 갖다 대면\n분석이 시작됩니다.');
+  window.open('https://popo90002-netizen.github.io/heart-rose-ar/heart-rose-ar-site/', '_blank');
 }
 function playAudio(el){
   const icon=el.querySelector('.play-icon');
