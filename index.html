@@ -1207,6 +1207,19 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </div>
 </div>
 
+<!-- 현장 분석 카메라 확인 모달 -->
+<div class="modal-bg" id="modalARConfirm">
+<div class="modal">
+<button class="modal-close" onclick="closeModal('modalARConfirm')">✕</button>
+<h3 style="color:#4a9aca;">📸 AR CAMERA</h3>
+<div class="modal-sub">현장분석카메라를 실행하겠습니까?</div>
+<div style="display:flex;gap:10px;margin-top:14px;">
+<button class="modal-submit" style="margin-top:0;background:#1a3a6a;" onclick="confirmARCamera()">예</button>
+<button class="modal-submit" style="margin-top:0;background:#2a2a2a;border-color:#5a5a5a;color:#aaa;" onclick="closeModal('modalARConfirm')">아니오</button>
+</div>
+</div>
+</div>
+
 <div class="unlock-toast" id="unlockToast">🔓 FILE UNLOCKED</div>
 <div class="unlock-toast lock-toast" id="lockToast">🔒 LOCKED</div>
 
@@ -1990,6 +2003,10 @@ function openDetail(idx){
 }
 
 function openARCamera(){
+  document.getElementById('modalARConfirm').classList.add('on');
+}
+function confirmARCamera(){
+  closeModal('modalARConfirm');
   window.open('https://popo90002-netizen.github.io/heart-rose-ar/heart-rose-ar-site/', '_blank');
 }
 function playAudio(el){
