@@ -357,6 +357,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #memoryOverlay.on{display:flex;animation:glitchIn 0.3s ease;}
 @keyframes glitchIn{0%{opacity:0;filter:brightness(3) contrast(2);}30%{opacity:1;filter:brightness(0.5);}60%{filter:brightness(2);}100%{filter:brightness(1);}}
 #memoryText{font-family:'VT323',monospace;font-size:20px;color:#cc2222;letter-spacing:3px;line-height:2;text-align:center;white-space:pre-line;text-shadow:0 0 10px rgba(200,50,50,0.8);}
+#memoryText.emphasis{font-size:30px;letter-spacing:4px;color:#ff2a2a;text-shadow:0 0 22px rgba(255,40,40,1),0 0 40px rgba(255,40,40,0.6);}
+#memoryVideo{display:none;width:100%;height:100%;object-fit:contain;background:#000;}
 /* 보고서 네비 버튼 */
 .report-nav-btn{display:block;margin:12px 14px;background:#0a1828;border:1px solid #1e3a6e;border-left:3px solid #4a7aaa;color:#4a7aaa;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;padding:13px;cursor:pointer;text-align:center;}
 .report-nav-btn:hover{background:#0d2030;}
@@ -1162,6 +1164,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <!-- 기억 회복 오버레이 -->
 <div id="memoryOverlay">
+  <video id="memoryVideo" playsinline webkit-playsinline="true"></video>
   <div id="memoryText"></div>
 </div>
 
@@ -2219,25 +2222,67 @@ function submitMonalisa(){
 function triggerMemoryRecovery(){
   window.memoryTriggered=true;saveGameState();
   const overlay=document.getElementById('memoryOverlay');
-  overlay.classList.add('on');
+  const video=document.getElementById('memoryVideo');
   const txt=document.getElementById('memoryText');
-  const lines=['기억이...','','기억이 돌아오고 있다.','','저 얼굴이다.','노란 머리.','마스크.','','그 자가 보스다.','','모든 것이 기억난다.'];
-  let i=0;txt.textContent='';
+  overlay.classList.add('on');
+  txt.textContent='';txt.classList.remove('emphasis');
+
+  let started=false;
+  const startText=()=>{
+    if(started)return; started=true;
+    video.style.display='none';
+    video.onended=null;video.onerror=null;
+    runMemoryText();
+  };
+
+  video.style.display='block';
+  video.src='assets/memory_flashback.mp4';
+  video.muted=false;
+  video.currentTime=0;
+  video.onended=startText;
+  video.onerror=startText;
+  const playPromise=video.play();
+  if(playPromise && playPromise.catch){
+    playPromise.catch(()=>{
+      video.muted=true;
+      video.play().catch(startText);
+    });
+  }
+}
+
+function runMemoryText(){
+  const overlay=document.getElementById('memoryOverlay');
+  const txt=document.getElementById('memoryText');
+  const part1=['기억이..','','기억이 돌아오고있다..','','눈썹이 없고, 검은 긴 생머리에 이 여자','','BLANK의 수장이다.','','바로 이 장소에서 날 납치했고,','NULL-7을 과다복용 시켜','날 죽이려 했었다...'];
+  const part2=['실종된 비밀 요원은..,','','바로 나였다'];
+  let i=0;
   const interval=setInterval(()=>{
-    if(i<lines.length){txt.textContent+=lines[i]+'\n';i++;}
+    if(i<part1.length){txt.textContent+=part1[i]+'\n';i++;}
     else{
       clearInterval(interval);
       setTimeout(()=>{
-        overlay.classList.remove('on');
-        const gachaFile=files.find(f=>f.num===13);
-        if(gachaFile)gachaFile.hidden=false;
-        saveGameState();renderInventory();renderMessages();
-        const lt=document.getElementById('lockToast');
-        lt.textContent='📁 새로운 파일 발견 — FILE_12';
-        lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
-        setTimeout(()=>lt.classList.remove('show'),2500);
-        setTimeout(()=>goTo('s6'),1000);
-      },1200);
+        txt.textContent='';
+        txt.classList.add('emphasis');
+        let j=0;
+        const interval2=setInterval(()=>{
+          if(j<part2.length){txt.textContent+=part2[j]+'\n';j++;}
+          else{
+            clearInterval(interval2);
+            setTimeout(()=>{
+              overlay.classList.remove('on');
+              txt.classList.remove('emphasis');
+              const gachaFile=files.find(f=>f.num===13);
+              if(gachaFile)gachaFile.hidden=false;
+              saveGameState();renderInventory();renderMessages();
+              const lt=document.getElementById('lockToast');
+              lt.textContent='📁 새로운 파일 발견 — FILE_12';
+              lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
+              setTimeout(()=>lt.classList.remove('show'),2500);
+              setTimeout(()=>goTo('s6'),1000);
+            },1500);
+          }
+        },300);
+      },800);
     }
   },200);
 }
