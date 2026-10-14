@@ -146,6 +146,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .msg-head{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
 .msg-sender{font-size:11px;color:#7a9aba;letter-spacing:1px;}
 .msg-sender.dead{color:#ff5544;text-decoration:line-through;}
+.msg-dead-badge{display:inline-block;font-size:9px;color:#ff5544;text-decoration:none;letter-spacing:0;font-family:'Noto Sans KR',sans-serif;font-weight:700;}
 .msg-time{margin-left:auto;font-size:9px;color:#3a5a7a;}
 .msg-preview{font-size:10px;color:#5a7a9a;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .msg-attach{margin-top:5px;font-size:9px;color:#c8a840;letter-spacing:1px;}
@@ -168,6 +169,10 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .msg-detail-head{margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #1a3060;}
 .msg-detail-sender{font-family:'VT323',monospace;font-size:18px;color:#8aaac8;letter-spacing:2px;}
 .msg-detail-sender.dead{color:#ff5544;text-decoration:line-through;}
+.call-log-panel .call-log-entry{display:flex;align-items:center;gap:10px;background:#1a0d0d;border:1px solid #5a2020;padding:11px;margin-bottom:10px;}
+.call-log-icon{font-size:20px;color:#cc4444;}
+.call-log-title{font-size:12px;color:#cc6644;font-weight:700;}
+.call-log-sub{font-size:10px;color:#7a4040;margin-top:2px;}
 .msg-detail-time{font-size:9px;color:#3a5a7a;margin-top:3px;letter-spacing:1px;}
 .msg-detail-body{font-size:12px;color:#9abaca;line-height:1.9;margin-bottom:14px;}
 .audio-mock{background:#0d1830;border:1px solid #2a4a7a;padding:11px;display:flex;align-items:center;gap:10px;cursor:pointer;margin:10px 0;}
@@ -309,6 +314,17 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .modal-submit{margin-top:12px;width:100%;background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px;cursor:pointer;}
 .modal-submit:hover{background:#2a4a7a;}
 .modal-error{margin-top:8px;font-size:10px;color:#ff6644;letter-spacing:1px;text-align:center;min-height:14px;}
+
+/* MY STORAGE 컨셉(종이/서류함 톤)에 맞춘 현장분석 카메라 확인 모달 */
+.ar-confirm-modal{background:#f0e7da;border:2px solid #b8a888;border-radius:10px;}
+.ar-confirm-modal h3{color:#8a5a10;font-family:'Noto Sans KR',sans-serif;font-weight:900;}
+.ar-confirm-modal .modal-close{color:#8a7a5a;}
+.ar-confirm-modal .ar-confirm-eng{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:#a08860;margin-top:-8px;margin-bottom:10px;}
+.ar-confirm-modal .modal-sub{font-family:'Noto Sans KR',sans-serif;color:#3a2a1a;font-weight:700;}
+.ar-confirm-modal .ar-yes{background:#8a5a10;border:1px solid #6a4408;color:#fff8ec;font-family:'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:0;}
+.ar-confirm-modal .ar-yes:hover{background:#a06818;}
+.ar-confirm-modal .ar-no{background:#e4d6bc;border:1px solid #c8b89a;color:#5a4a30;font-family:'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:0;}
+.ar-confirm-modal .ar-no:hover{background:#d8c8a8;}
 
 .hint-modal h3{color:#c8a840;}
 .hint-num-input{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
@@ -748,6 +764,10 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   letter-spacing:0.3px;
 }
 #s5 .msg-detail-sender.dead{color:#a02020;text-decoration:line-through;}
+#s5 .msg-dead-badge{font-size:11px;color:#a02020;}
+#s5 .call-log-panel .call-log-entry{background:rgba(160,32,32,0.12);border:1px dashed #a05050;}
+#s5 .call-log-title{color:#a02020;font-family:'Noto Sans KR',sans-serif;}
+#s5 .call-log-sub{color:#8a3a3a;font-family:'Noto Sans KR',sans-serif;}
 #s5 .msg-detail-time{display:none;}
 #s5 .msg-detail-body{
   flex:1;padding:16px 6%;
@@ -1209,14 +1229,27 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <!-- 현장 분석 카메라 확인 모달 -->
 <div class="modal-bg" id="modalARConfirm">
-<div class="modal">
+<div class="modal ar-confirm-modal">
 <button class="modal-close" onclick="closeModal('modalARConfirm')">✕</button>
-<h3 style="color:#4a9aca;">📸 AR CAMERA</h3>
+<h3>📸 현장분석 카메라</h3>
+<div class="ar-confirm-eng">FIELD ANALYSIS CAMERA</div>
 <div class="modal-sub">현장분석카메라를 실행하겠습니까?</div>
 <div style="display:flex;gap:10px;margin-top:14px;">
-<button class="modal-submit" style="margin-top:0;background:#1a3a6a;" onclick="confirmARCamera()">예</button>
-<button class="modal-submit" style="margin-top:0;background:#2a2a2a;border-color:#5a5a5a;color:#aaa;" onclick="closeModal('modalARConfirm')">아니오</button>
+<button class="modal-submit ar-yes" style="margin-top:0;" onclick="confirmARCamera()">예</button>
+<button class="modal-submit ar-no" style="margin-top:0;" onclick="closeModal('modalARConfirm')">아니오</button>
 </div>
+</div>
+</div>
+
+<!-- 모나리자 현장 분석 결과 입력 모달 -->
+<div class="modal-bg" id="modalMonalisa">
+<div class="modal">
+<button class="modal-close" onclick="closeModal('modalMonalisa')">✕</button>
+<h3 style="color:#4a8aba;">🔍 ANALYSIS</h3>
+<div class="modal-sub">히든 심볼의 그림이 나타내는 인물은?</div>
+<input type="text" class="code-input" id="monalisaInput" placeholder="정답 입력..." autocomplete="off" onkeydown="if(event.key==='Enter')submitMonalisa()">
+<button class="modal-submit" onclick="submitMonalisa()">▶ 확인</button>
+<div class="modal-error" id="monalisaError"></div>
 </div>
 </div>
 
@@ -1306,8 +1339,7 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처에 있는 연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 04</div><div>겉으로 볼때는 지구방범대로 알겠지만 사실 NCI 정보국이다.<br>MEMORY TOWER에서 알아낸 KEY에 대해 묻자,<br>NCI 정보요원은 그들의 본거지의 비밀번호가 영어로 만들어졌다는 정보를 얻었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 06</div><div>갑자기 N05에게 다급한 전화가 왔다.</div>
-   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;" onclick="playAudio(this)"><div class="play-icon" style="color:#cc4444;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.wav</div><div class="audio-time" style="color:#7a4040;">파일 손상</div></div></div>
-   <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 N05_voice_backup.wav</div><div class="audio-time">정상 파일</div></div></div>
+   <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 N05_voice_backup.wav</div></div></div>
    <button class="script-toggle" onclick="toggleScript('scriptN05')">📝 스크립트 보기</button>
    <div class="script-box" id="scriptN05">
    <div><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
@@ -1330,7 +1362,7 @@ const files = [
    <div><span class="script-speaker">대원1:</span> 추적해.</div><br>
    <div>(통화 끊기는 소리)</div>
    </div>
-   <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br>통화 내용에 들리는 본거지 비밀번호 소리...<br><br>마침 정보국 옆 공원 안에 있는 음표로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
+   <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br>통화 중 들리는 비밀번호 소리..<br><br>마침 정보국 옆 공원 안에 있는 음표로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
    </div>
 `,
    hints:['공원 안 음표판(CDEFGABC)을 찾아보세요.','N05 녹취파일의 도어락 소리와 음표를 조합하면 정답이 나옵니다.'],answerText:'정답: FADE'},
@@ -1348,18 +1380,14 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 10</div>
    <div style="text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:11px;color:#8a5a10;letter-spacing:0.5px;margin-bottom:8px;">가입 혜택: 제휴 카페 5% 할인</div>
    <img class="detail-photo" src="assets/file09_blank_membership.jpg" alt="BLANK 멤버십 인증 안내" onclick="openPhotoZoom('assets/file09_blank_membership.jpg')">
-   <div>녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>
-   <div class="detail-img">[ 사진: 연남동 그래피티 벽 ]</div>
-   <div class="detail-section"><div class="detail-section-title">▶ 단서</div><div>키트의 스티커를 이용해 그래피티 암호를 풀어라.</div></div>`,
+   <div>녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>`,
    hints:['그래피티 벽을 자세히 살펴보세요.','키트의 스티커를 대보면 암호가 보입니다.'],answerText:'정답: 9726R513'},
 
   // #11 FILE_10
   {num:11,name:'FILE_10',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
    answer:'9725A785',unlockCode:'9726R513',answerLen:8,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 10</div><div>9726R513.<br><br>BLANK가 전신주로 위치를 공유한다는 건 익히 알고 있다.<br>정확한 위치는 NCI 정보국에 문의하면 된다.</div></div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 11</div><div>정보국에서 알려준 위치로 향했다.<br>두 번째 인증 문제 시작이다.</div></div>
-   <div class="detail-img">[ 사진: 전봇대 번호판 ]</div>
-   <div class="detail-section"><div class="detail-section-title">▶ 단서</div><div>전봇대에 적힌 숫자를 확인하세요.<br>숫자 순서대로 스크래치 카드를 긁으세요.</div></div>`,
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 11</div><div>정보국에서 알려준 위치로 향했다.<br>두 번째 인증 문제 시작이다.</div></div>`,
    hints:['전봇대에 적힌 숫자를 확인하세요.','숫자 순서대로 스크래치 카드를 긁으세요.'],answerText:'정답: 9725A785'},
 
   // #12 FILE_11
@@ -1367,17 +1395,7 @@ const files = [
    answer:'모나리자',unlockCode:'9725A785',answerLen:4,
    isMemoryTrigger:true,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지</div><div>두번째 전신주의 위치로 오니 써있는대로 수상한 검은색 그림이 보인다.<br>이 얼굴 어디서 많이 본것 같은데..<br><br>그리고 저 멀리 누군가 나를 쳐다보고 있는 느낌이 든다.</div></div>
-   <div class="detail-img">[ 사진: 모나리자 그래피티 ]</div>
-   <div class="detail-section" style="border:1px solid #c8a840;background:#1a1810;padding:10px;margin-bottom:14px;"><div style="color:#c8a840;font-size:10px;letter-spacing:2px;">📸 현장 분석 모드 (구현 예정)</div><div style="font-size:10px;color:#8a7a40;margin-top:4px;">카메라로 그래피티를 비추면 분석이 시작됩니다.</div></div>
-   <div class="detail-section" style="border:1px solid #3a6a9a;background:#0a1828;padding:14px;">
-   <div style="color:#4a8aba;font-size:9px;letter-spacing:2px;margin-bottom:10px;">▶ 현장 분석 결과 입력</div>
-   <div style="font-size:11px;color:#7a9aba;margin-bottom:12px;">이 그래피티의 정체를 알아냈는가?</div>
-   <div style="display:flex;gap:8px;">
-   <input type="text" id="monalisaInput" placeholder="정답 입력..." style="flex:1;background:#060e18;border:1px solid #2a4a6a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:2px;padding:10px;outline:none;" onkeydown="if(event.key==='Enter')submitMonalisa()">
-   <button onclick="submitMonalisa()" style="background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;padding:10px 14px;cursor:pointer;white-space:nowrap;">확인 ▶</button>
-   </div>
-   <div id="monalisaError" style="color:#cc4444;font-size:10px;margin-top:8px;letter-spacing:1px;"></div>
-   </div>`,
+   <button onclick="openMonalisaModal()" style="background:#fff8ec;border:2px solid #8a5a10;color:#8a5a10;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;padding:10px 16px;border-radius:6px;cursor:pointer;margin-top:4px;">🔍 분석 결과 입력</button>`,
    hints:['그래피티를 카메라로 비춰보세요.','모나리자를 닮은 이 그림.. 어디선가 본 것 같다.'],answerText:'정답: MONALISA'},
 
   // #13 FILE_12 — 가챠샵 (HIDDEN)
@@ -1419,20 +1437,20 @@ const messages = [
    preview:'어이~ N07! 조형물 근처 재료 확인 해줄 수 있어?',
    attach:'⚠ expired_file.enc',
    body:`<div>어이~ N07! 아직 재료에 대해선 가진 정보가 없는 것 같던데?<br>내가 관련해서 사진을 하나 받았는데 직접 확인하기엔 거리가 멀어서 말이야.<br>사진이 흐려서 모르겠는데 조형물 근처에 보이는 재료를 확인 해줄 수 있어?<br>도와주면 내가 다른 정보도 넘겨줄게 어때?</div>
-   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">expired_file.enc</div><div class="audio-time" style="color:#7a4040;">열람 기간 만료</div></div></div>
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">사진 열람 기간 만료</div><div class="audio-time" style="color:#7a4040;">FILE_04에 저장됨</div></div></div>
    <div class="msg-zigzag">대화를 불러올 수 없습니다.</div>`,
    canReply:true, thread:[], waitingForAnswer:true,
    correctPassword:'ROSE', altPasswords:['장미','rose','Rose'],
    answered:false, inactive:false,
    afterCorrect:'N07! 너 살아 있었구나..! 난 너무 위험해서 그 일엔 손 뗐어..<br><br>그래 장미 말고 다른 재료로 무슨 참나무였던 거 같은데.. AB-059 근처에 있었던 것만 기억나네..<br><br>아무튼 너도 이제 그 일에 그만 손떼는 게 좋을 거야..'},
 
-  // N05 — 사망, 본거지 잠입 전 녹취파일 전송
+  // N05 — 사망, 본거지 잠입 전 녹취파일 전송 (통화 이력으로 표시)
   {id:3, sender:'N05', dead:true, time:'3개월 전', new:false, read:true,
-   preview:'⚠ 발신인 사망 확인됨',
+   preview:'📞 마지막 통화 기록 — 연결 끊김',
    attach:'⚠ N05_voice_backup.wav',
-   body:`<div>N07! 현재 본거지 잠입까지 성공했는데 나 만약에 상황이 생길 수 있으니 백업으로 너에게 녹취파일을 보내놓을게.</div>
-   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.wav</div><div class="audio-time" style="color:#7a4040;">파일 손상 — 일부 재생 불가</div></div></div>
-   <div style="margin-top:10px;padding:8px 12px;background:#1a0d0d;border-left:3px solid #ff4444;font-size:10px;color:#ff5555;">⚠ 발신인 사망 확인됨</div>`,
+   isCallLog:true,
+   body:`<div class="call-log-entry"><div class="call-log-icon">📞</div><div><div class="call-log-title">마지막 통화 기록</div><div class="call-log-sub">연결 끊김 · 3개월 전</div></div></div>
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.wav</div><div class="audio-time" style="color:#7a4040;">파일 손상 — 일부 재생 불가</div></div></div>`,
    canReply:true, thread:[], isDead:true},
 
   {id:4, sender:'NCI 정보국', dead:false, time:'', new:false, read:true,
@@ -1599,7 +1617,8 @@ function renderMessages(){
     const readLabel = isUnread 
       ? '<span class="msg-status-label" style="font-size:8px;color:#ff8866;letter-spacing:1px;margin-left:auto;">● NEW</span>'
       : '<span class="msg-status-label" style="font-size:8px;color:#3a5a7a;letter-spacing:1px;margin-left:auto;">읽음</span>';
-    el.innerHTML=`<div class="msg-head">${unreadDot}<div class="msg-sender${m.dead?' dead':''}">${m.sender}</div>${readLabel}<div class="msg-time" style="margin-left:8px;">${m.time}</div></div><div class="msg-preview">${m.preview}</div>${m.attach?`<div class="msg-attach">📎 ${m.attach}</div>`:''}`;
+    const listDeadBadge = m.dead ? ' <span class="msg-dead-badge">❗사망 확인됨</span>' : '';
+    el.innerHTML=`<div class="msg-head">${unreadDot}<div class="msg-sender${m.dead?' dead':''}">${m.sender}${listDeadBadge}</div>${readLabel}<div class="msg-time" style="margin-left:8px;">${m.time}</div></div><div class="msg-preview">${m.preview}</div>${m.attach?`<div class="msg-attach">📎 ${m.attach}</div>`:''}`;
     list.appendChild(el);
   });
   const unreadCount=messages.filter(m=>!m.read).length;
@@ -1623,7 +1642,8 @@ function openMessage(i){
   m.read=true;
   m.new=false;
   currentMessageIdx = i;
-  document.getElementById('msgDetailSender').textContent=m.sender;
+  const deadBadge = m.dead ? ' <span class="msg-dead-badge">❗발신인 사망 확인됨</span>' : '';
+  document.getElementById('msgDetailSender').innerHTML=m.sender+deadBadge;
   document.getElementById('msgDetailSender').className='msg-detail-sender'+(m.dead?' dead':'');
   document.getElementById('msgDetailTime').textContent=m.time;
 
@@ -1656,7 +1676,18 @@ function openMessage(i){
   const replyInputEl = document.getElementById('msgReplyInput');
   if(replyInputEl) replyInputEl.value = '';
 
-  document.getElementById('msgDetailBody').innerHTML = `<div class="msg-thread-bubble from-them">${bodyHtml}</div>` + threadHtml;
+  // 풍선 밖으로 빼낼 전체 폭 지그재그(시스템 단절) 블록 분리
+  const bodyWrap = document.createElement('div');
+  bodyWrap.innerHTML = bodyHtml;
+  let zigzagHtml = '';
+  bodyWrap.querySelectorAll('.msg-zigzag').forEach(el=>{ zigzagHtml += el.outerHTML; el.remove(); });
+  bodyHtml = bodyWrap.innerHTML;
+
+  const mainHtml = m.isCallLog
+    ? `<div class="call-log-panel">${bodyHtml}</div>`
+    : `<div class="msg-thread-bubble from-them">${bodyHtml}</div>`;
+
+  document.getElementById('msgDetailBody').innerHTML = mainHtml + zigzagHtml + threadHtml;
   goTo('s5');
   renderMessages();
 }
@@ -2007,7 +2038,12 @@ function openARCamera(){
 }
 function confirmARCamera(){
   closeModal('modalARConfirm');
-  window.open('https://popo90002-netizen.github.io/heart-rose-ar/heart-rose-ar-site/', '_blank');
+  window.open('https://popo90002-netizen.github.io/heart-rose-ar-daynight/', '_blank');
+}
+function openMonalisaModal(){
+  document.getElementById('monalisaInput').value='';
+  document.getElementById('monalisaError').textContent='';
+  document.getElementById('modalMonalisa').classList.add('on');
 }
 function playAudio(el){
   const icon=el.querySelector('.play-icon');
@@ -2170,6 +2206,7 @@ function submitMonalisa(){
   const errEl=document.getElementById('monalisaError');
   if(input==='모나리자'){
     if(errEl)errEl.textContent='';
+    closeModal('modalMonalisa');
     const f11=files.find(f=>f.num===12);
     if(f11)f11.unlocked=true;
     saveGameState();
