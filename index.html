@@ -1339,7 +1339,7 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 02</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처에 있는 연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 04</div><div>겉으로 볼때는 지구방범대로 알겠지만 사실 NCI 정보국이다.<br>MEMORY TOWER에서 알아낸 KEY에 대해 묻자,<br>NCI 정보요원은 그들의 본거지의 비밀번호가 영어로 만들어졌다는 정보를 얻었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 06</div><div>갑자기 N05에게 다급한 전화가 왔다.</div>
-   <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 N05_voice_backup.wav</div></div></div>
+   <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 N05_voice_backup.mp3</div></div></div>
    <button class="script-toggle" onclick="toggleScript('scriptN05')">📝 스크립트 보기</button>
    <div class="script-box" id="scriptN05">
    <div><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
@@ -1446,11 +1446,11 @@ const messages = [
 
   // N05 — 사망, 본거지 잠입 전 녹취파일 전송 (통화 이력으로 표시)
   {id:3, sender:'N05', dead:true, time:'3개월 전', new:false, read:true,
-   preview:'📞 마지막 통화 기록 — 연결 끊김',
-   attach:'⚠ N05_voice_backup.wav',
+   preview:'📞 통화 기록 — 연결 끊김',
+   attach:'⚠ N05_voice_backup.mp3',
    isCallLog:true,
-   body:`<div class="call-log-entry"><div class="call-log-icon">📞</div><div><div class="call-log-title">마지막 통화 기록</div><div class="call-log-sub">연결 끊김 · 3개월 전</div></div></div>
-   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.wav</div><div class="audio-time" style="color:#7a4040;">파일 손상 — 일부 재생 불가</div></div></div>`,
+   body:`<div class="call-log-entry"><div class="call-log-icon">📞</div><div><div class="call-log-title">통화 기록</div><div class="call-log-sub">연결 끊김 · 3개월 전</div></div></div>
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.mp3</div><div class="audio-time" style="color:#7a4040;">FILE_07에 저장됨</div></div></div>`,
    canReply:true, thread:[], isDead:true},
 
   {id:4, sender:'NCI 정보국', dead:false, time:'', new:false, read:true,
@@ -1617,8 +1617,7 @@ function renderMessages(){
     const readLabel = isUnread 
       ? '<span class="msg-status-label" style="font-size:8px;color:#ff8866;letter-spacing:1px;margin-left:auto;">● NEW</span>'
       : '<span class="msg-status-label" style="font-size:8px;color:#3a5a7a;letter-spacing:1px;margin-left:auto;">읽음</span>';
-    const listDeadBadge = m.dead ? ' <span class="msg-dead-badge">❗사망 확인됨</span>' : '';
-    el.innerHTML=`<div class="msg-head">${unreadDot}<div class="msg-sender${m.dead?' dead':''}">${m.sender}${listDeadBadge}</div>${readLabel}<div class="msg-time" style="margin-left:8px;">${m.time}</div></div><div class="msg-preview">${m.preview}</div>${m.attach?`<div class="msg-attach">📎 ${m.attach}</div>`:''}`;
+    el.innerHTML=`<div class="msg-head">${unreadDot}<div class="msg-sender${m.dead?' dead':''}">${m.sender}</div>${readLabel}<div class="msg-time" style="margin-left:8px;">${m.time}</div></div><div class="msg-preview">${m.preview}</div>${m.attach?`<div class="msg-attach">📎 ${m.attach}</div>`:''}`;
     list.appendChild(el);
   });
   const unreadCount=messages.filter(m=>!m.read).length;
@@ -2002,7 +2001,7 @@ function closePhotoZoom(){
 function openDetail(idx){
   const f=files[idx];
   currentDetailIdx=idx;
-  document.getElementById('detailTitle').textContent=f.name+' — '+f.sub;
+  document.getElementById('detailTitle').textContent=f.name;
   document.getElementById('detailNum').textContent=`#${f.num}`;
   document.getElementById('detailContent').innerHTML=f.content;
   goTo('s7');
