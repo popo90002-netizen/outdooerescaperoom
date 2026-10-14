@@ -259,7 +259,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
    스크롤 드리프트 버그를 피하기 위해 화면 자체의 콘텐츠 흐름 안에 절대 위치로 둠) */
 .profile-call-btn{
   position:absolute;bottom:20px;left:20px;width:48px;height:48px;border-radius:50%;
-  background:url('assets/call_emoticon.webp') center/100% 100% no-repeat;
+  background:url('assets/call_phone_icon.webp') center/100% 100% no-repeat;
   border:none;color:transparent;cursor:pointer;z-index:10;
 }
 /* 카메라 아이콘 (MY STORAGE 전용, 동일한 방식) */
@@ -1091,7 +1091,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </div>
 <div class="msg-detail-body" id="msgDetailBody"></div>
 <div class="msg-reply-footer" id="msgReplyFooter">
-<input type="text" class="msg-reply-input" id="msgReplyInput" placeholder="답장 입력..." onkeydown="if(event.key==='Enter')sendReply()">
+<input type="text" class="msg-reply-input" id="msgReplyInput" placeholder="답장 입력..." onkeydown="if(event.key==='Enter'&&!event.isComposing)sendReply()">
 <button class="msg-reply-send" onclick="sendReply()">전송</button>
 </div>
 <div class="msg-detail-bottomcap"></div>
@@ -1251,7 +1251,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <button class="modal-close" onclick="closeModal('modalMonalisa')">✕</button>
 <h3 style="color:#4a8aba;">🔍 ANALYSIS</h3>
 <div class="modal-sub">히든 심볼의 그림이 나타내는 인물은?</div>
-<input type="text" class="code-input" id="monalisaInput" placeholder="정답 입력..." autocomplete="off" onkeydown="if(event.key==='Enter')submitMonalisa()">
+<input type="text" class="code-input" id="monalisaInput" placeholder="정답 입력..." autocomplete="off" onkeydown="if(event.key==='Enter'&&!event.isComposing)submitMonalisa()">
 <button class="modal-submit" onclick="submitMonalisa()">▶ 확인</button>
 <div class="modal-error" id="monalisaError"></div>
 </div>
@@ -1262,7 +1262,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_emoticon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1399,7 +1399,7 @@ const files = [
    answer:'모나리자',unlockCode:'9725A785',answerLen:4,
    isMemoryTrigger:true,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지</div><div>두번째 전신주의 위치로 오니 써있는대로 수상한 검은색 그림이 보인다.<br>이 얼굴 어디서 많이 본것 같은데..<br><br>그리고 저 멀리 누군가 나를 쳐다보고 있는 느낌이 든다.</div></div>
-   <button onclick="openMonalisaModal()" style="background:#fff8ec;border:2px solid #8a5a10;color:#8a5a10;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;padding:10px 16px;border-radius:6px;cursor:pointer;margin-top:4px;">🔍 분석 결과 입력</button>`,
+   <button onclick="openMonalisaModal()" style="background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 분석 결과 입력</button>`,
    hints:['그래피티를 카메라로 비춰보세요.','모나리자를 닮은 이 그림.. 어디선가 본 것 같다.'],answerText:'정답: MONALISA'},
 
   // #13 FILE_12 — 가챠샵 (HIDDEN)
@@ -1919,7 +1919,7 @@ document.getElementById('codeInput').addEventListener('input',(e)=>{
 });
 
 document.getElementById('codeInput').addEventListener('keydown',(e)=>{
-  if(e.key==='Enter') submitCode();
+  if(e.key==='Enter' && !e.isComposing) submitCode();
 });
 
 function submitCode(){
@@ -2315,7 +2315,12 @@ function runMemoryText(){
     lt.textContent='📁 새로운 파일 발견 — FILE_12';
     lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
     setTimeout(()=>lt.classList.remove('show'),2500);
-    setTimeout(()=>goTo('s6'),1000);
+    setTimeout(()=>{
+      // 사건일지(S7)에서 기억 회복이 트리거되었으므로, 보관함에서 뒤로가기 시
+      // 파일 상세가 아니라 마이프로필로 돌아가도록 기록을 정리한다.
+      history=['s1','s4'];
+      goTo('s6');
+    },1000);
   }
 }
 
