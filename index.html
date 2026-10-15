@@ -271,7 +271,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 /* 카메라 아이콘 (MY STORAGE 전용, 동일한 방식) */
 .storage-camera-btn{
-  position:absolute;bottom:20px;left:20px;width:48px;height:48px;border-radius:50%;
+  position:absolute;bottom:12px;left:20px;width:48px;height:48px;border-radius:50%;
   background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;
   border:none;color:transparent;cursor:pointer;z-index:10;
 }
@@ -324,9 +324,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* MY STORAGE 컨셉(종이/서류함 톤)에 맞춘 현장분석 카메라 확인 모달 */
 .ar-confirm-modal{background:#f0e7da;border:2px solid #b8a888;border-radius:10px;}
-.ar-confirm-modal h3{color:#8a5a10;font-family:'Noto Sans KR',sans-serif;font-weight:900;}
+.ar-confirm-modal h3{color:#8a5a10;font-family:'Share Tech Mono',monospace;font-weight:700;letter-spacing:1px;}
 .ar-confirm-modal .modal-close{color:#8a7a5a;}
-.ar-confirm-modal .ar-confirm-eng{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:#a08860;margin-top:-8px;margin-bottom:10px;}
 .ar-confirm-modal .modal-sub{font-family:'Noto Sans KR',sans-serif;color:#3a2a1a;font-weight:700;}
 .ar-confirm-modal .ar-yes{background:#8a5a10;border:1px solid #6a4408;color:#fff8ec;font-family:'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:0;}
 .ar-confirm-modal .ar-yes:hover{background:#a06818;}
@@ -539,7 +538,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .report-nav-btn{
   background:url('assets/report_view_btn.webp') center/100% 100% no-repeat;
   border:none;color:transparent;aspect-ratio:880/220;height:auto;max-width:220px;
-  width:100%;margin:10px auto 4px;display:block;padding:0;
+  width:100%;margin:2px auto 4px;display:block;padding:0;
 }
 
 /* ---- S4: 프로필/메시지 ---- */
@@ -1244,9 +1243,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="modal-bg" id="modalARConfirm">
 <div class="modal ar-confirm-modal">
 <button class="modal-close" onclick="closeModal('modalARConfirm')">✕</button>
-<h3>📸 현장분석 카메라</h3>
-<div class="ar-confirm-eng">FIELD ANALYSIS CAMERA</div>
-<div class="modal-sub">현장분석카메라를 실행하겠습니까?</div>
+<h3>📸 FIELD ANALYSIS CAMERA</h3>
+<div class="modal-sub">현장분석 카메라를 실행하시겠습니까?</div>
 <div style="display:flex;gap:10px;margin-top:14px;">
 <button class="modal-submit ar-yes" style="margin-top:0;" onclick="confirmARCamera()">예</button>
 <button class="modal-submit ar-no" style="margin-top:0;" onclick="closeModal('modalARConfirm')">아니오</button>
