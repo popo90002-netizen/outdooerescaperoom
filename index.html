@@ -1855,6 +1855,13 @@ function sendReply(){
           m.thread.push({from:'them', text:'조회를 위해 8글자를 정확하게 입력해주세요.'});
         }
         openMessage(currentMessageIdx);
+      } else if(m.infoStage === 'done'){
+        if(text.trim().toUpperCase() === '9725A785'){
+          m.thread.push({from:'them', text:'조회하신 전신주의 위치는 연남동 381-14 입니다.'});
+        } else {
+          m.thread.push({from:'them', text:'조회를 위해 8글자를 정확하게 입력해주세요.'});
+        }
+        openMessage(currentMessageIdx);
       } else {
         m.thread.push({from:'them', text:'실종'});
         openMessage(currentMessageIdx);
