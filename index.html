@@ -130,6 +130,9 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .msg-reply-input:focus{border-color:#5a8aba;}
 .msg-reply-send{background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;padding:9px 14px;cursor:pointer;}
 .msg-reply-send:hover{background:#2a4a7a;}
+.msg-choice-box{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.msg-choice-btn{background:#0a1828;border:1px solid #2a4a6a;color:#9abaca;font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.5;padding:10px 12px;text-align:left;cursor:pointer;}
+.msg-choice-btn:hover{background:#0d2238;border-color:#4a7aaa;}
 
 /* ===== S4: 메시지 화면 (요원 인증 직후) ===== */
 .msg-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;position:relative;}
@@ -783,6 +786,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-thread-bubble.from-me{background:#2a4a30;color:#eaf5ea;}
 #s5 .msg-thread-bubble.from-them{background:rgba(255,255,255,0.55);color:#2a1c10;border:1px solid #c8b89a;}
 #s5 .msg-thread-bubble.dead-no-reply{background:rgba(160,32,32,0.12);border:1px dashed #a05050;color:#8a3a3a;}
+#s5 .msg-choice-btn{background:rgba(255,255,255,0.55);border:1px solid #c8b89a;color:#2a1c10;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-radius:8px;}
+#s5 .msg-choice-btn:hover{background:rgba(255,255,255,0.8);border-color:#8a6a40;}
 #s5 .msg-reply-footer{
   display:none;flex-shrink:0;align-items:center;gap:10px;
   margin:0 2.4%;padding:12px 3.6% 16px;
@@ -1390,7 +1395,7 @@ const files = [
   // #11 FILE_10
   {num:11,name:'FILE_10',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
    answer:'9725A785',unlockCode:'9726R513',answerLen:8,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 10</div><div>9726R513.<br><br>BLANK가 전신주로 위치를 공유한다는 건 익히 알고 있다.<br>정확한 위치는 NCI 정보국에 문의하면 된다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 10</div><div>9726R513.. 이게 뭘 뜻하는거지?<br>NCI 정보국에 물어보고 싶지만 암구호가 필요해보인다.<br>NCI 본부에서 근무하는 N24에게 연락하면 알려줄 것이다.<br><br>N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 11</div><div>정보국에서 알려준 위치로 향했다.<br>두 번째 인증 문제 시작이다.</div></div>`,
    hints:['전봇대에 적힌 숫자를 확인하세요.','숫자 순서대로 스크래치 카드를 긁으세요.'],answerText:'정답: 9725A785'},
 
@@ -1430,11 +1435,15 @@ const files = [
 const messages = [
   // N24 — 생존, 암구어 시스템
   {id:1, sender:'N24', dead:false, time:'2시간 전', new:true, read:false,
-   preview:'살아있는 거지? 연락이 끊긴 지 한참이다.',
+   preview:'N07 전화 좀 받아봐 정말 무슨일 생긴거 아니지?',
    attach:null,
-   body:`<div>살아있는 거지?<br>연락이 끊긴 지 한참이다.<br><br>임무는 아직 끝나지 않았어.</div>`,
-   canReply:true, thread:[], waitingForAnswer:false,
-   correctPassword:'미정', answered:false},
+   body:`<div>N07 전화 좀 받아봐<br>정말 무슨일 생긴거 아니지?</div>`,
+   canReply:true,
+   thread:[
+     {from:'them', text:'잘못 보고된거라고 믿고 있었는데..<br>너 말고도 많은 요원들이 희생됐어.<br>대답 못하는 거 알면서 보낸다.<br>보고싶다.'}
+   ],
+   waitingForAnswer:false, waitingForChoice:false, choiceMade:false,
+   correctPassword:'도어', answered:false},
 
   // N32 — 생존, 하트 조형물 단서 + 부재중 시스템
   {id:2, sender:'N32', dead:false, time:'어제', new:true, read:false,
@@ -1675,9 +1684,18 @@ function openMessage(i){
   
   // 답장 입력 영역: 고정 푸터(paper theme) 표시/숨김만 토글, 재생성하지 않음
   const footerEl = document.getElementById('msgReplyFooter');
-  if(footerEl) footerEl.style.display = m.canReply ? 'flex' : 'none';
+  if(footerEl) footerEl.style.display = (m.canReply && !m.waitingForChoice) ? 'flex' : 'none';
   const replyInputEl = document.getElementById('msgReplyInput');
   if(replyInputEl) replyInputEl.value = '';
+
+  // N24 A/B 선택지
+  let choiceHtml = '';
+  if(m.waitingForChoice){
+    choiceHtml = `<div class="msg-choice-box">
+      <button class="msg-choice-btn" onclick="chooseN24('A')">A. 나도 모르겠어, 일단 자세한 이야기는 나중에 하자.</button>
+      <button class="msg-choice-btn" onclick="chooseN24('B')">B. 됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.</button>
+    </div>`;
+  }
 
   // 풍선 밖으로 빼낼 전체 폭 지그재그(시스템 단절) 블록 분리
   const bodyWrap = document.createElement('div');
@@ -1690,7 +1708,7 @@ function openMessage(i){
     ? `<div class="call-log-panel">${bodyHtml}</div>`
     : `<div class="msg-thread-bubble from-them">${bodyHtml}</div>`;
 
-  document.getElementById('msgDetailBody').innerHTML = mainHtml + zigzagHtml + threadHtml;
+  document.getElementById('msgDetailBody').innerHTML = mainHtml + zigzagHtml + threadHtml + choiceHtml;
   goTo('s5');
   renderMessages();
 }
@@ -1713,20 +1731,29 @@ function sendReply(){
       openMessage(currentMessageIdx);
     }, 800);
   } else if(m.sender === 'N24'){
-    // N24 암구어 시스템
+    // N24 암구호 시스템 + 이후 A/B 선택 분기
     setTimeout(()=>{
-      if(!m.answered){
-        // 첫 답장
-        m.thread.push({from:'them', text:'뭐야 살아 있구나!!? 죽은 줄 알았는데.<br><br>우리끼리 정한 암구어가 있는데 너가 맞다면 그걸 말해줘.'});
-        m.answered = true;
-        m.waitingForAnswer = true;
-      } else if(m.waitingForAnswer){
-        // 암구어 검증
-        if(text.trim().toLowerCase() === (m.correctPassword || '').toLowerCase()){
-          m.thread.push({from:'them', text:'맞았어! 너구나.'});
-          m.waitingForAnswer = false;
+      if(m.choiceMade){
+        // 선택 이후: 항상 바쁘다는 답변만 반복
+        m.thread.push({from:'them', text:'지금 중요한 일을 하고 있어.<br>근무 끝나고 얘기하자.'});
+      } else if(!m.answered){
+        // 첫 답장: 처음부터 암구호("도어")를 말하면 확인 절차를 건너뛴다
+        if(text.trim() === (m.correctPassword||'')){
+          m.thread.push({from:'them', text:'제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?'});
+          m.waitingForChoice = true;
         } else {
-          m.thread.push({from:'them', text:'우리끼리 정한 암구어가 있는데 너가 맞다면 그걸 말해줘.'});
+          m.thread.push({from:'them', text:'누구야 너?<br>설마 살아 있는 거야?<br>N07, 너가 맞다면 우리끼리 정한 암구호를 먼저 말해봐.'});
+          m.waitingForAnswer = true;
+        }
+        m.answered = true;
+      } else if(m.waitingForAnswer){
+        // 암구호 검증
+        if(text.trim() === (m.correctPassword||'')){
+          m.thread.push({from:'them', text:'제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?'});
+          m.waitingForAnswer = false;
+          m.waitingForChoice = true;
+        } else {
+          m.thread.push({from:'them', text:'누구야 너?<br>설마 살아 있는 거야?<br>N07, 너가 맞다면 우리끼리 정한 암구호를 먼저 말해봐.'});
         }
       }
       openMessage(currentMessageIdx);
@@ -1773,6 +1800,30 @@ function sendReply(){
   
   // 화면 새로고침
   openMessage(currentMessageIdx);
+}
+
+// ===== N24 A/B 선택지 =====
+function chooseN24(choice){
+  if(currentMessageIdx === null) return;
+  const m = messages[currentMessageIdx];
+  if(!m || m.sender !== 'N24' || !m.waitingForChoice) return;
+  m.waitingForChoice = false;
+  m.choiceMade = true;
+  if(choice === 'A'){
+    m.thread.push({from:'me', text:'나도 모르겠어, 일단 자세한 이야기는 나중에 하자.'});
+    openMessage(currentMessageIdx);
+    setTimeout(()=>{
+      m.thread.push({from:'them', text:"그래, 일단 정보국에 보고하는게 좋을거야.<br>혹시 모를까봐 알려준다. 금일 암구호는 '실종 / 도마'야."});
+      openMessage(currentMessageIdx);
+    }, 600);
+  } else {
+    m.thread.push({from:'me', text:'됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.'});
+    openMessage(currentMessageIdx);
+    setTimeout(()=>{
+      m.thread.push({from:'them', text:"하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도먀'야, 자세한건 나중에 얘기하자."});
+      openMessage(currentMessageIdx);
+    }, 600);
+  }
 }
 
 function switchTab(tab){
