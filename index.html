@@ -130,9 +130,9 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .msg-reply-input:focus{border-color:#5a8aba;}
 .msg-reply-send{background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;padding:9px 14px;cursor:pointer;}
 .msg-reply-send:hover{background:#2a4a7a;}
-.msg-choice-box{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
-.msg-choice-btn{background:#0a1828;border:1px solid #2a4a6a;color:#9abaca;font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.5;padding:10px 12px;text-align:left;cursor:pointer;}
-.msg-choice-btn:hover{background:#0d2238;border-color:#4a7aaa;}
+.msg-choice-box{margin-top:14px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.msg-choice-btn{max-width:85%;margin-left:auto;background:#1a3060;border:1px solid #2a4a8a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.5;padding:9px 12px;border-radius:4px;border-bottom-right-radius:1px;text-align:left;cursor:pointer;}
+.msg-choice-btn:hover{background:#24407a;}
 
 /* ===== S4: 메시지 화면 (요원 인증 직후) ===== */
 .msg-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;position:relative;}
@@ -786,8 +786,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-thread-bubble.from-me{background:#2a4a30;color:#eaf5ea;}
 #s5 .msg-thread-bubble.from-them{background:rgba(255,255,255,0.55);color:#2a1c10;border:1px solid #c8b89a;}
 #s5 .msg-thread-bubble.dead-no-reply{background:rgba(160,32,32,0.12);border:1px dashed #a05050;color:#8a3a3a;}
-#s5 .msg-choice-btn{background:rgba(255,255,255,0.55);border:1px solid #c8b89a;color:#2a1c10;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-radius:8px;}
-#s5 .msg-choice-btn:hover{background:rgba(255,255,255,0.8);border-color:#8a6a40;}
+#s5 .msg-choice-btn{background:#2a4a30;border:none;color:#eaf5ea;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-radius:10px;border-bottom-right-radius:2px;}
+#s5 .msg-choice-btn:hover{background:#345e3c;}
 #s5 .msg-reply-footer{
   display:none;flex-shrink:0;align-items:center;gap:10px;
   margin:0 2.4%;padding:12px 3.6% 16px;
@@ -1467,20 +1467,13 @@ const messages = [
    canReply:true, thread:[], isDead:true},
 
   {id:4, sender:'NCI 정보국', dead:false, time:'', new:false, read:true,
-   preview:'조회를 원하신다면 번호를 입력해주십시오.',
+   preview:'이전 대화를 불러올 수 없습니다',
    attach:null,
    body:`<div class="msg-zigzag">이전 대화를 불러올 수 없습니다</div>`,
    canReply:true,
-   thread:[
-     {from:'them', text:'조회를 원하신다면 번호를 입력해주십시오.'},
-   ],
+   thread:[],
    isDead:false,
-   isInfoguk:true,
-   infoKeywords:{
-     '9726R513':'조회 완료.\n연남동 390-94 입니다.',
-     '9725A785':'조회 완료.\n연남동 381-14 입니다.'
-   },
-   infoErrorMsg:'8글자를 정확하게 입력해주십시오.'}
+   isInfoguk:true}
 ];
 
 let history = ['s1'];
@@ -1786,14 +1779,9 @@ function sendReply(){
       openMessage(currentMessageIdx);
     }, 600);
   } else if(m.isInfoguk){
-    // NCI 정보국 전신주 검색
+    // NCI 정보국: 무엇을 보내든 "실종"만 반복
     setTimeout(()=>{
-      const userInput = text.trim().toUpperCase();
-      if(m.infoKeywords && m.infoKeywords[userInput]){
-        m.thread.push({from:'them', text:`NCI 정보국: ${m.infoKeywords[userInput]}`});
-      } else {
-        m.thread.push({from:'them', text:`NCI 정보국: ${m.infoErrorMsg || '해당 키워드를 찾을 수 없습니다.'}`});
-      }
+      m.thread.push({from:'them', text:'실종'});
       openMessage(currentMessageIdx);
     }, 600);
   }
@@ -1820,7 +1808,7 @@ function chooseN24(choice){
     m.thread.push({from:'me', text:'됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.'});
     openMessage(currentMessageIdx);
     setTimeout(()=>{
-      m.thread.push({from:'them', text:"하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도먀'야, 자세한건 나중에 얘기하자."});
+      m.thread.push({from:'them', text:"하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도마'야, 자세한건 나중에 얘기하자."});
       openMessage(currentMessageIdx);
     }, 600);
   }
