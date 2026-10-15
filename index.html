@@ -1402,7 +1402,7 @@ const files = [
 
   // #12 FILE_11 — (미정)
   {num:12,name:'FILE_11',sub:'미정',icon:'📍',unlocked:false,
-   answer:'미정',unlockCode:'381-14',unlockSeparator:{char:'-',after:3},answerLen:5,
+   answer:'미정',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지</div><div>미정</div></div>`,
    hints:['(미정)','(미정)'],answerText:'(미정)'},
 
@@ -1799,7 +1799,7 @@ function sendReply(){
         }, 1600);
       } else if(m.infoStage === 'awaiting_pole'){
         if(text.trim().toUpperCase() === '9726R513'){
-          m.thread.push({from:'them', text:'조회하신 전신주의 위치는 연남동 381-14 입니다.'});
+          m.thread.push({from:'them', text:'조회하신 전신주의 위치는 연남동 390-94 입니다.'});
           m.infoStage = 'done';
         } else {
           m.thread.push({from:'them', text:'조회를 위해 8글자를 정확하게 입력해주세요.'});
