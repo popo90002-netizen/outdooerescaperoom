@@ -1403,16 +1403,22 @@ const files = [
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 11</div><div>정보국에서 알려준 위치로 향했다.<br>두 번째 인증 문제 시작이다.</div></div>`,
    hints:['전봇대에 적힌 숫자를 확인하세요.','숫자 순서대로 스크래치 카드를 긁으세요.'],answerText:'정답: 9725A785'},
 
-  // #12 FILE_11
-  {num:12,name:'FILE_11',sub:'모나리자 — 그래피티',icon:'🎨',unlocked:false,
-   answer:'모나리자',unlockCode:'9725A785',answerLen:4,
+  // #12 FILE_11 — NCI 정보국 전신주 위치 조회
+  {num:12,name:'FILE_11',sub:'NCI 정보국 — 위치 조회',icon:'📍',unlocked:false,
+   answer:'381-14',unlockCode:'9725A785',answerLen:6,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지</div><div>9726R513을 NCI 정보국에 전달하니 전신주 위치를 조회해주겠다고 한다.<br><br>확인해보니.. 연남동 381-14.<br>가 보면 뭔가 알 수 있을 것 같다.</div></div>`,
+   hints:['NCI 정보국에게 전신주 번호(9726R513)를 알려주세요.','조회된 위치로 직접 찾아가 보세요.'],answerText:'정답: 381-14'},
+
+  // #13 FILE_12
+  {num:13,name:'FILE_12',sub:'모나리자 — 그래피티',icon:'🎨',unlocked:false,
+   answer:'모나리자',unlockCode:'381-14',unlockSeparator:{char:'-',after:3},answerLen:5,
    isMemoryTrigger:true,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지</div><div>두번째 전신주의 위치로 오니 써있는대로 수상한 검은색 그림이 보인다.<br>이 얼굴 어디서 많이 본것 같은데..<br><br>그리고 저 멀리 누군가 나를 쳐다보고 있는 느낌이 든다.</div></div>
    <button onclick="openMonalisaModal()" style="background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 분석 결과 입력</button>`,
    hints:['그래피티를 카메라로 비춰보세요.','모나리자를 닮은 이 그림.. 어디선가 본 것 같다.'],answerText:'정답: MONALISA'},
 
-  // #13 FILE_12 — 가챠샵 (HIDDEN)
-  {num:13,name:'FILE_12',sub:'푸른바다 가챠샵',icon:'🎰',unlocked:true,hidden:true,
+  // #14 FILE_13 — 가챠샵 (HIDDEN)
+  {num:14,name:'FILE_13',sub:'푸른바다 가챠샵',icon:'🎰',unlocked:true,hidden:true,
    isTypewriter:true,typed:false,
    typewriterText:'기억이 돌아오고 있다.\n\n저 얼굴이다.\n노란 머리. 마스크.\n\n그 자가 보스다.\n\n기억이 났다. 전부.\n지금 가지고 있는 코인으로\n가챠샵에서 물약을 빼낼 수 있다.\n\n푸른바다 가챠샵.\n지금 바로 가보자.',
    content:`<div id="gacha-content"><div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div></div>
@@ -1427,8 +1433,8 @@ const files = [
    </div></div></div>`,
    hints:['푸른바다 가챠샵을 찾아가세요.','모나리자 그림이 있는 가챠머신에 코인을 투입하세요.'],answerText:''},
 
-  // #14 FILE_13 — 본거지 (HIDDEN)
-  {num:14,name:'FILE_13',sub:'본거지 — 최종 보고',icon:'🏢',unlocked:true,hidden:true,
+  // #15 FILE_14 — 본거지 (HIDDEN)
+  {num:15,name:'FILE_14',sub:'본거지 — 최종 보고',icon:'🏢',unlocked:true,hidden:true,
    isTypewriter:true,typed:false,
    typewriterText:'NULL-Z 샘플을 확보했다.\nRED. 틀림없다.\n\n이제 본거지로 향한다.\n\n저 자가 있는 곳.\n\n모든 기억이 돌아왔다.\n이제 끝낼 시간이다.\n\n최종 보고서를 작성하고\n본부에 제출한다.',
    content:`<div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget2" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div>`,
@@ -1784,14 +1790,28 @@ function sendReply(){
       openMessage(currentMessageIdx);
     }, 600);
   } else if(m.isInfoguk){
-    // NCI 정보국: 암구호("도마")를 말하면 BLANK 조직 정보를 브리핑, 그 외엔 "실종"만 반복
+    // NCI 정보국: 암구호("도마") → 신원확인 딜레이 후 BLANK 브리핑 → 전신주 번호 조회 대기
     setTimeout(()=>{
-      if(text.trim() === '도마'){
-        m.thread.push({from:'them', text:"BLANK..<br>최근 홍대 일대에서 활동 중인 신종 마약 유통 조직.<br>'NULL-Z'이라는 신종 약물을 제조, 유통하고 있으며<br>카페 멤버십을 가장한 신입 포섭 루트를 운영 중이다.<br>조직원들은 동일한 복장과 마스크, 왼쪽 어깨의 원형 마크로 식별 가능하다.<br><br>[BLANK 조직 특징]<br>- 전신주 번호를 위치 기반으로 하여 서로 소통한다.<br>- 그래피티와 QR코드를 통해 신입을 포섭한다.<br>- 정기적으로 암구호를 교체해 외부 추적을 따돌린다."});
+      if(!m.infoStage && text.trim() === '도마'){
+        m.thread.push({from:'them', text:'신원 확인 중..'});
+        openMessage(currentMessageIdx);
+        setTimeout(()=>{
+          m.thread.push({from:'them', text:"현재 N07요원이 맡고 있는 임무를 기반으로 정보 전달 드립니다.<br><br>BLANK는 현재 수도권 일대에서 활동 중인 조직입니다.<br>주요 유통하는 약물로는 NULL-Z로 알려져 있으며,<br>소량 복용 시에는 5분 전까지의 기억이 삭제되며, 잠시 동안 환각 효과가 나타납니다.<br>그러나 과다 복용시 사망하게 되지만 이 사실은 BLANK에서 소비자에게 명시하지 않는 부분입니다.<br>뇌의 CT사진을 연상시키는 마크를 사용하며, 조직들은 공통적으로 눈썹이 없는 것이 특징입니다.<br><br>또한, 그들은 서울의 전신주를 기반으로 위치를 공유하며,<br>전신주 번호는 숫자와 영어를 포함한 8글자로 표현됩니다.<br>전신주 번호를 알려주시면 위치를 조회해서 알려드리겠습니다."});
+          m.infoStage = 'awaiting_pole';
+          openMessage(currentMessageIdx);
+        }, 1600);
+      } else if(m.infoStage === 'awaiting_pole'){
+        if(text.trim().toUpperCase() === '9726R513'){
+          m.thread.push({from:'them', text:'조회하신 전신주의 위치는 연남동 381-14 입니다.'});
+          m.infoStage = 'done';
+        } else {
+          m.thread.push({from:'them', text:'조회를 위해 8글자를 정확하게 입력해주세요.'});
+        }
+        openMessage(currentMessageIdx);
       } else {
         m.thread.push({from:'them', text:'실종'});
+        openMessage(currentMessageIdx);
       }
-      openMessage(currentMessageIdx);
     }, 600);
   }
   
@@ -2058,12 +2078,12 @@ function openDetail(idx){
   document.getElementById('detailContent').innerHTML=f.content;
   goTo('s7');
   if(f.isTypewriter){
-    const targetId=f.num===13?'typewriterTarget':'typewriterTarget2';
+    const targetId=f.num===14?'typewriterTarget':'typewriterTarget2';
     const target=document.getElementById(targetId);
     if(!target)return;
     if(f.typed&&f.savedText){
       target.textContent=f.savedText;
-      if(f.num===13&&f.arrivalShown){
+      if(f.num===14&&f.arrivalShown){
         const arr=document.getElementById('gacha-arrival');
         if(arr)arr.style.display='block';
         if(f.colorSelected){
@@ -2073,10 +2093,10 @@ function openDetail(idx){
     }else if(!f.typed){
       f.typed=true;
       f.savedText=f.typewriterText;
-      if(f.num===13) f.arrivalShown=true;
+      if(f.num===14) f.arrivalShown=true;
       saveGameState();
       typewriterEffect(target,f.typewriterText,()=>{
-        if(f.num===13){
+        if(f.num===14){
           setTimeout(()=>{const arr=document.getElementById('gacha-arrival');if(arr){arr.style.display='block';arr.scrollIntoView({behavior:'smooth'});}},800);
         }
       });
@@ -2258,7 +2278,7 @@ function submitMonalisa(){
   if(input==='모나리자'){
     if(errEl)errEl.textContent='';
     closeModal('modalMonalisa');
-    const f11=files.find(f=>f.num===12);
+    const f11=files.find(f=>f.num===13);
     if(f11)f11.unlocked=true;
     saveGameState();
     setTimeout(()=>triggerMemoryRecovery(),400);
@@ -2356,7 +2376,7 @@ function runMemoryText(){
   function finishMemorySequence(){
     overlay.classList.remove('on');
     txt.innerHTML='';
-    const gachaFile=files.find(f=>f.num===13);
+    const gachaFile=files.find(f=>f.num===14);
     if(gachaFile)gachaFile.hidden=false;
     saveGameState();renderInventory();renderMessages();
     const lt=document.getElementById('lockToast');
@@ -2385,9 +2405,9 @@ function typewriterEffect(element,text,callback){
 // ===== 색깔 선택 (가챠샵) =====
 function selectColor(color){
   if(color==='RED'){
-    const gachaFile=files.find(f=>f.num===13);
+    const gachaFile=files.find(f=>f.num===14);
     if(gachaFile){gachaFile.colorSelected=true;saveGameState();}
-    const ending=files.find(f=>f.num===14);
+    const ending=files.find(f=>f.num===15);
     if(ending)ending.hidden=false;
     saveGameState();renderInventory();
     document.querySelectorAll('#gacha-arrival button').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
