@@ -956,7 +956,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v14</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v15</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -2427,7 +2427,7 @@ function runMemoryText(){
     if(gachaFile)gachaFile.hidden=false;
     saveGameState();renderInventory();renderMessages();
     const lt=document.getElementById('lockToast');
-    lt.textContent='📁 새로운 파일 발견 — FILE_12';
+    lt.textContent='📁 새로운 파일 발견 — FILE_13';
     lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
     setTimeout(()=>lt.classList.remove('show'),2500);
     setTimeout(()=>{
