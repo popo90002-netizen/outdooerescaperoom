@@ -268,6 +268,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   position:absolute;bottom:20px;left:20px;width:48px;height:48px;border-radius:50%;
   background:url('assets/call_phone_icon.webp') center/100% 100% no-repeat;
   border:none;color:transparent;cursor:pointer;z-index:10;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+.profile-call-btn:active{
+  transform:scale(0.93);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
 }
 /* 카메라 아이콘 (MY STORAGE 전용, 동일한 방식) */
 .storage-bottom-row{display:flex;align-items:center;margin:7px 14px 4px;position:relative;top:-6px;}
@@ -276,6 +282,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;
   border:none;color:transparent;cursor:pointer;z-index:10;
   position:relative;top:3px;margin-left:-8px;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+.storage-camera-btn:active{
+  transform:scale(0.93);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
 }
 
 /* 큰 화면(데스크탑)에서는 device 영역 안쪽에 위치 */
@@ -516,8 +528,9 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-repeat:no-repeat;background-size:100% 100%;position:relative;
   transition:transform 0.12s ease, filter 0.12s ease;
   border-radius:6px;
+  filter:drop-shadow(0 2px 2px rgba(40,25,10,0.3));
 }
-#s6 .slot:active{transform:scale(0.93);filter:brightness(0.9);}
+#s6 .slot:active{transform:scale(0.93);filter:brightness(0.9) drop-shadow(0 1px 1px rgba(40,25,10,0.25));}
 #s6 .slot::before{display:none;}
 #s6 .slot.locked{background-image:url('assets/file_locked.webp');}
 #s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');}
@@ -541,6 +554,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:url('assets/report_view_btn.webp') center/100% 100% no-repeat;
   border:none;color:transparent;aspect-ratio:880/220;height:auto;max-width:220px;
   width:100%;margin:0 auto;display:block;padding:0;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s6 .report-nav-btn:active{
+  transform:scale(0.97) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
 }
 
 /* ---- S4: 프로필/메시지 ---- */
@@ -567,6 +586,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   display:block;
   box-sizing:border-box;
   cursor:pointer;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s4 .profile-card:active{
+  transform:scale(0.98) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
 }
 #s4 .profile-photo{display:none!important;}
 #s4 .profile-mission-text{color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;line-height:1.6;overflow-wrap:anywhere;}
@@ -576,6 +601,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background-color:transparent;background-repeat:no-repeat;background-position:center;background-size:contain;
   border:none;padding:0;margin:0 auto 12px;height:auto;position:relative;
   width:52%;aspect-ratio:2088/433;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
 }
 #s4 .msg-tab{display:none;}
 #s4 .msg-list{padding:0;overflow-y:visible;}
@@ -886,6 +912,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s8 .report-submit-btn{
   display:block;background:url('assets/report_submit_btn.webp') center/100% 100% no-repeat;
   border:none;color:transparent;aspect-ratio:860/191;height:auto;max-width:220px;margin:10px auto 18px;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s8 .report-submit-btn:active{
+  transform:scale(0.97) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
 }
 #s8 .report-footer{
   background:transparent;border-top:1px solid #d8c8a8;color:#8a7a5a;
@@ -924,7 +956,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v13</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v14</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
