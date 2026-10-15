@@ -130,8 +130,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .msg-reply-input:focus{border-color:#5a8aba;}
 .msg-reply-send{background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;padding:9px 14px;cursor:pointer;}
 .msg-reply-send:hover{background:#2a4a7a;}
-.msg-choice-box{margin-top:14px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
-.msg-choice-btn{max-width:85%;margin-left:auto;background:#1a3060;border:1px solid #2a4a8a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.5;padding:9px 12px;border-radius:4px;border-bottom-right-radius:1px;text-align:left;cursor:pointer;}
+.msg-choice-box{margin-top:14px;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+@keyframes choiceGlow{
+  0%,100%{box-shadow:0 0 6px rgba(255,205,80,0.45),0 0 2px rgba(255,205,80,0.5);}
+  50%{box-shadow:0 0 16px rgba(255,205,80,0.95),0 0 6px rgba(255,205,80,0.8);}
+}
+.msg-choice-btn{max-width:85%;margin-left:auto;background:#1a3060;border:2px solid rgba(255,205,80,0.85);color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.5;padding:9px 12px;border-radius:4px;border-bottom-right-radius:1px;text-align:left;cursor:pointer;animation:choiceGlow 1.8s ease-in-out infinite;}
 .msg-choice-btn:hover{background:#24407a;}
 
 /* ===== S4: 메시지 화면 (요원 인증 직후) ===== */
@@ -786,7 +790,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s5 .msg-thread-bubble.from-me{background:#2a4a30;color:#eaf5ea;}
 #s5 .msg-thread-bubble.from-them{background:rgba(255,255,255,0.55);color:#2a1c10;border:1px solid #c8b89a;}
 #s5 .msg-thread-bubble.dead-no-reply{background:rgba(160,32,32,0.12);border:1px dashed #a05050;color:#8a3a3a;}
-#s5 .msg-choice-btn{background:#2a4a30;border:none;color:#eaf5ea;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-radius:10px;border-bottom-right-radius:2px;}
+#s5 .msg-choice-btn{background:#2a4a30;border:2px solid rgba(255,205,80,0.85);color:#eaf5ea;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-radius:10px;border-bottom-right-radius:2px;}
 #s5 .msg-choice-btn:hover{background:#345e3c;}
 #s5 .msg-reply-footer{
   display:none;flex-shrink:0;align-items:center;gap:10px;
@@ -1697,9 +1701,10 @@ function openMessage(i){
   bodyWrap.querySelectorAll('.msg-zigzag').forEach(el=>{ zigzagHtml += el.outerHTML; el.remove(); });
   bodyHtml = bodyWrap.innerHTML;
 
-  const mainHtml = m.isCallLog
+  const bodyIsEmpty = bodyHtml.replace(/<br\s*\/?>/gi,'').trim() === '';
+  const mainHtml = bodyIsEmpty ? '' : (m.isCallLog
     ? `<div class="call-log-panel">${bodyHtml}</div>`
-    : `<div class="msg-thread-bubble from-them">${bodyHtml}</div>`;
+    : `<div class="msg-thread-bubble from-them">${bodyHtml}</div>`);
 
   document.getElementById('msgDetailBody').innerHTML = mainHtml + zigzagHtml + threadHtml + choiceHtml;
   goTo('s5');
@@ -1740,13 +1745,13 @@ function sendReply(){
         }
         m.answered = true;
       } else if(m.waitingForAnswer){
-        // 암구호 검증
+        // 암구호 검증 (두 번째부터는 짧은 재촉 멘트만 반복)
         if(text.trim() === (m.correctPassword||'')){
           m.thread.push({from:'them', text:'제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?'});
           m.waitingForAnswer = false;
           m.waitingForChoice = true;
         } else {
-          m.thread.push({from:'them', text:'누구야 너?<br>설마 살아 있는 거야?<br>N07, 너가 맞다면 우리끼리 정한 암구호를 먼저 말해봐.'});
+          m.thread.push({from:'them', text:'우리끼리 정한 암구호를 먼저 말해봐.'});
         }
       }
       openMessage(currentMessageIdx);
