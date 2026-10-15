@@ -1784,9 +1784,13 @@ function sendReply(){
       openMessage(currentMessageIdx);
     }, 600);
   } else if(m.isInfoguk){
-    // NCI 정보국: 무엇을 보내든 "실종"만 반복
+    // NCI 정보국: 암구호("도마")를 말하면 BLANK 조직 정보를 브리핑, 그 외엔 "실종"만 반복
     setTimeout(()=>{
-      m.thread.push({from:'them', text:'실종'});
+      if(text.trim() === '도마'){
+        m.thread.push({from:'them', text:"BLANK..<br>최근 홍대 일대에서 활동 중인 신종 마약 유통 조직.<br>'NULL-Z'이라는 신종 약물을 제조, 유통하고 있으며<br>카페 멤버십을 가장한 신입 포섭 루트를 운영 중이다.<br>조직원들은 동일한 복장과 마스크, 왼쪽 어깨의 원형 마크로 식별 가능하다.<br><br>[BLANK 조직 특징]<br>- 전신주 번호를 위치 기반으로 하여 서로 소통한다.<br>- 그래피티와 QR코드를 통해 신입을 포섭한다.<br>- 정기적으로 암구호를 교체해 외부 추적을 따돌린다."});
+      } else {
+        m.thread.push({from:'them', text:'실종'});
+      }
       openMessage(currentMessageIdx);
     }, 600);
   }
