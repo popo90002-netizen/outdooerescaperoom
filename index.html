@@ -734,6 +734,11 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-modal .hint-stage-txt[style*="ffdd99"]{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;}
 
 /* ---- S7: 파일 상세보기(사건일지) — 종이 테마, 테스트 ---- */
+@keyframes fileOpenReveal{
+  from{opacity:0;transform:translateY(18px) scale(0.97);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+#s7.on{animation:fileOpenReveal 0.4s cubic-bezier(0.22,0.61,0.36,1);}
 #s7 .detail-screen{
   background-color:#f1e8d9;
   background-image:url('assets/incidentlog_tile.webp');
@@ -1367,7 +1372,7 @@ const files = [
 
   // #4 FILE_03
   {num:4,name:'FILE_03',sub:'NEONSIGN — 레시피',icon:'🎵',unlocked:false,
-   answer:'NULL-Z',unlockCode:'NEONSIGN',answerLen:1,answerPrefix:'NULL-',
+   answer:'NULL-Z',unlockCode:'NEON',answerLen:1,answerPrefix:'NULL-',
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 02. 22</div><div>우체통에서 왼쪽으로 멀지 않은 곳에 5분 정원 도시 NEONSIGN이 보였다.<br>해당 장소에서 잠복 중, 약속 시간 무렵, 마스크를 쓴 누군가가 나타났다.<br>눈썹이 희미한 특이한 외모, 주변을 살피는 살짝 불안해보이는 눈빛 — 유통자가 맞아 보인다.<br><br>몇 마디 나누다 낌새를 눈치챘는지 갑자기 도주.<br>제압을 시도했으나 예상보다 거셌다.<br><br>제압 직전, 인파 속으로 사라졌다. 추격은 실패.<br><br>— 몸싸움 도중 그자가 떨어뜨린 것이 있었다. [KIT-B]<br>제조법 같아 보이는 그림, 분석이 필요하다.</div></div>`,
    hints:['KIT-B와 네온사인을 대조하여 문제를 풀어보세요.','네온사인의 색깔별 도구 개수를 세어보세요.'],
    answerText:'정답: NULL-Z'},
