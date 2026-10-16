@@ -535,10 +535,14 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s6 .slot::before{display:none;}
 #s6 .slot.locked{background-image:url('assets/file_locked.webp');}
 #s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');}
-#s6 .slot.latest-unlock{animation:slotGlowIn 0.8s ease forwards;}
+#s6 .slot.latest-unlock{animation:slotGlowIn 0.8s ease forwards, slotRevealPop 0.45s cubic-bezier(0.22,0.61,0.36,1);}
 @keyframes slotGlowIn{
   from{box-shadow:0 0 0 0 rgba(200,168,64,0);}
   to{box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
+}
+@keyframes slotRevealPop{
+  from{opacity:0;transform:scale(0.8) translateY(10px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
 }
 #s6 .slot.empty{background:transparent;}
 #s6 .slot:hover{background-color:transparent;border-color:transparent;}
@@ -734,11 +738,6 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-modal .hint-stage-txt[style*="ffdd99"]{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;}
 
 /* ---- S7: 파일 상세보기(사건일지) — 종이 테마, 테스트 ---- */
-@keyframes fileOpenReveal{
-  from{opacity:0;transform:translateY(18px) scale(0.97);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-#s7.on{animation:fileOpenReveal 0.4s cubic-bezier(0.22,0.61,0.36,1);}
 #s7 .detail-screen{
   background-color:#f1e8d9;
   background-image:url('assets/incidentlog_tile.webp');
@@ -962,7 +961,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v17</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v18</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
