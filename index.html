@@ -969,7 +969,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v22</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v23</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -2096,6 +2096,12 @@ function submitCode(){
       const slot=document.querySelector(`.slot[data-idx="${currentLockedIdx}"]`);
       if(slot) slot.classList.add('unlock-anim');
     },50);
+    // 플립 애니메이션이 끝나면 just-unlocked 클래스를 완전히 제거 —
+    // 화면을 나갔다 들어와도(display:none 토글) 다시 재생되지 않도록 함
+    setTimeout(()=>{
+      const slot=document.querySelector(`.slot[data-idx="${currentLockedIdx}"]`);
+      if(slot) slot.classList.remove('just-unlocked');
+    },700);
   } else {
     document.getElementById('modalCodeBox').classList.add('shake');
     document.getElementById('codeError').textContent='✕ ACCESS DENIED — 잘못된 코드';
