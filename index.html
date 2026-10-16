@@ -540,6 +540,18 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   from{box-shadow:0 0 0 0 rgba(200,168,64,0);}
   to{box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
 }
+/* 방금 unlock된 바로 그 순간에만(1회) 재생 — 재방문/뒤로가기 시에는 재생 안 함 */
+#s6 .slot.just-unlocked{overflow:hidden;perspective:500px;}
+#s6 .slot.just-unlocked::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:url('assets/file_locked.webp') center/100% 100% no-repeat;
+  transform-origin:left center;backface-visibility:hidden;border-radius:6px;
+  animation:coverFlip 0.6s cubic-bezier(0.65,0,0.35,1) forwards;
+}
+@keyframes coverFlip{
+  0%{transform:rotateY(0deg);}
+  100%{transform:rotateY(-130deg);}
+}
 #s6 .slot.empty{background:transparent;}
 #s6 .slot:hover{background-color:transparent;border-color:transparent;}
 #s6 .slot .cn{display:none;}
@@ -957,7 +969,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v21</div>
+<div style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;font-family:monospace;font-size:12px;text-align:center;padding:4px 0;">BUILD v22</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1915,7 +1927,9 @@ function renderInventory(){
       const f=visibleFiles[i];
       const realIdx=files.indexOf(f);
       const isLatest=f.unlocked&&(i+1>=visibleFiles.length||!visibleFiles[i+1].unlocked);
-      slot.className='slot'+(f.unlocked?' unlocked':' locked')+(isLatest?' latest-unlock':'');
+      const justUnlocked=!!f.unlockReveal;
+      if(justUnlocked) f.unlockReveal=false; // 플립은 이 렌더 한 번만 — 소비 후 재생 안 함
+      slot.className='slot'+(f.unlocked?' unlocked':' locked')+(isLatest?' latest-unlock':'')+(justUnlocked?' just-unlocked':'');
       slot.dataset.idx=realIdx;
       slot.innerHTML=`
         <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
@@ -2067,6 +2081,7 @@ function submitCode(){
   const expected = isKorean ? expectedCode : expectedCode.toUpperCase();
   if(input===expected){
     f.unlocked=true;
+    f.unlockReveal=true;
     closeModal('modalCode');
     const toast=document.getElementById('unlockToast');
     toast.classList.remove('show');
