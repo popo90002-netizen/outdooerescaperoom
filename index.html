@@ -1460,7 +1460,7 @@ const files = [
   {num:11,name:'FILE_10',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
    answer:'9725A785',unlockCode:'9726R513',answerLen:8,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 03. 10</div><div>9726R513.. 이게 뭘 뜻하는거지?<br>NCI 정보국에 물어보고 싶지만 암구호가 필요해보인다.<br>NCI 본부에서 근무하는 N24에게 연락하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>`,
-   hints:['전봇대에 적힌 숫자를 확인하세요.','숫자 순서대로 스크래치 카드를 긁으세요.'],answerText:'정답: 9725A785'},
+   hints:['전봇대에 적힌 숫자를 확인하세요.','숫자 순서대로 스크래치 카드를 긁으세요.'],answerText:''},
 
   // #12 FILE_11 — (가안: 실제 답사 후 내용 교체 필요)
   {num:12,name:'FILE_11',sub:'전신주 390-94 — 세 번째 흔적',icon:'📍',unlocked:false,
@@ -1497,7 +1497,7 @@ const files = [
    isTypewriter:true,typed:false,
    typewriterText:'NULL-Z 샘플을 확보했다.\nRED. 틀림없다.\n\n이제 본거지로 향한다.\n\n저 자가 있는 곳.\n\n모든 기억이 돌아왔다.\n이제 끝낼 시간이다.\n\n최종 보고서를 작성하고\n본부에 제출한다.',
    content:`<div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget2" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div>`,
-   hints:['본거지 건물을 찾아가세요.','건물 주변에서 BLANK의 마크(뇌 모양)가 표시된 입구를 찾아보세요.'],answerText:'BLANK IN YOUR AREA'}
+   hints:['본거지 건물을 찾아가세요.','건물 주변에서 BLANK의 마크(뇌 모양)가 표시된 입구를 찾아보세요.'],answer:'BLANK IN YOUR AREA',answerText:''}
 ];
 
 // ===== 메시지 데이터 =====
@@ -2219,9 +2219,11 @@ const safeModeHints = {
     'SAFE MODE 6줄 메시지를 자세히 살펴보세요.',
     '각 문장의 첫 글자를 모아보세요.'
   ],
-  answerText: '"요원배지접촉" — 키트에 있는 요원배지를 폰에 태깅하세요.',
+  answer: '요원배지접촉',
+  answerText: '키트에 있는 요원배지를 폰에 태깅하세요.',
   hintsRevealed: 0,
-  answerRevealed: false
+  answerRevealed: false,
+  explainRevealed: false
 };
 
 // ===== 힌트 =====
@@ -2260,15 +2262,18 @@ function renderHints(target){
   for(let i=0;i<target.hintsRevealed;i++){
     html+=`<div class="hint-stage"><div class="hint-stage-num">HINT ${i+1} / ${target.hints.length}</div><div class="hint-stage-txt">${target.hints[i]}</div></div>`;
   }
-  // 정답이 공개됐으면 정답 표시
-  const ansText = target.answerText || target.answer;
-  if(target.answerRevealed && ansText){
-    html+=`<div class="hint-stage" style="border-top:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답</div><div class="hint-stage-txt" style="color:#ffdd99;font-weight:bold;">${ansText}</div></div>`;
+  // 정답이 공개됐으면 정답 표시 (해설은 별도 버튼으로 분리)
+  const ansVal = target.answer;
+  if(target.answerRevealed && ansVal){
+    html+=`<div class="hint-stage" style="border-top:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답</div><div class="hint-stage-txt" style="color:#ffdd99;font-weight:bold;">${ansVal}</div></div>`;
+    if(target.explainRevealed && target.answerText){
+      html+=`<div class="hint-stage" style="border-top:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설</div><div class="hint-stage-txt" style="color:#d8d8d0;">${target.answerText}</div></div>`;
+    }
   }
   html+='</div>';
-  
+
   const refId = target.num !== undefined ? target.num : 'safe';
-  
+
   if(!target.answerRevealed){
     if(target.hintsRevealed < target.hints.length){
       // 다음 힌트 열기 버튼
@@ -2277,6 +2282,9 @@ function renderHints(target){
       // 힌트 다 봤으면 정답 보기 버튼
       html+=`<div class="hint-locked-stage" style="border-color:#5a3010;background:#1a0d0a;"><span style="color:#c8a840;">★ 모든 힌트 확인 — 정답 볼래?</span><button onclick="revealAnswer('${refId}')" style="background:#5a3010;border-color:#c8a840;color:#ffdd99;">▶ 정답 보기</button></div>`;
     }
+  } else if(!target.explainRevealed && target.answerText){
+    // 정답은 공개됐지만 해설은 아직 — 해설 보기 버튼
+    html+=`<div class="hint-locked-stage" style="border-color:#3a3a5a;background:#0a0a1a;"><span style="color:#8a9aba;">💡 해설도 볼래?</span><button onclick="revealExplain('${refId}')" style="background:#1a1a3a;border-color:#8a9aba;color:#d8d8f0;">▶ 해설 보기</button></div>`;
   }
   hintEl.innerHTML=html;
 }
@@ -2309,6 +2317,20 @@ function revealAnswer(ref){
   }
 }
 
+function revealExplain(ref){
+  let target;
+  if(ref === 'safe' || ref === "'safe'"){
+    target = safeModeHints;
+  } else {
+    const num = parseInt(ref);
+    target = files.find(x=>x.num===num);
+  }
+  if(target){
+    target.explainRevealed = true;
+    renderHints(target);
+  }
+}
+
 
 // ===== S0: 시스템 접속 =====
 function enterSystem(){
@@ -2322,7 +2344,7 @@ function enterSystem(){
 
 
 function saveGameState(){
-  const state={files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,savedText:f.savedText||''})),memoryTriggered:window.memoryTriggered||false};
+  const state={files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,savedText:f.savedText||''})),memoryTriggered:window.memoryTriggered||false};
   try{sessionStorage.setItem('nciGameState',JSON.stringify(state));}catch(e){}
 }
 function loadGameState(){
@@ -2334,7 +2356,7 @@ function loadGameState(){
       const f=files.find(x=>x.num===saved.num);
       if(!f)return;
       f.unlocked=saved.unlocked;f.hidden=saved.hidden;
-      f.hintsRevealed=saved.hintsRevealed||0;f.answerRevealed=saved.answerRevealed||false;
+      f.hintsRevealed=saved.hintsRevealed||0;f.answerRevealed=saved.answerRevealed||false;f.explainRevealed=saved.explainRevealed||false;
       f.typed=saved.typed||false;f.colorSelected=saved.colorSelected||false;
       f.arrivalShown=saved.arrivalShown||false;f.savedText=saved.savedText||'';
     });
@@ -2575,7 +2597,7 @@ window.addEventListener('scroll', ()=>{
 })();
 
 // 초기화
-files.forEach(f=>{f.hintsRevealed=0; f.answerRevealed=false;});
+files.forEach(f=>{f.hintsRevealed=0; f.answerRevealed=false; f.explainRevealed=false;});
 renderMessages();
 renderInventory();
 </script>
