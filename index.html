@@ -2282,11 +2282,11 @@ function renderHints(target){
       html+=`<div class="hint-locked-stage"><span>🔒 HINT ${target.hintsRevealed+1} / ${target.hints.length}</span><button onclick="revealHint('${refId}')">▶ 열기</button></div>`;
     } else {
       // 힌트 다 봤으면 정답 보기 버튼
-      html+=`<div class="hint-locked-stage" style="border-color:#5a3010;background:#1a0d0a;"><span style="color:#c8a840;">★ 모든 힌트 확인 — 정답 볼래?</span><button onclick="revealAnswer('${refId}')" style="background:#5a3010;border-color:#c8a840;color:#ffdd99;">▶ 정답 보기</button></div>`;
+      html+=`<div class="hint-locked-stage" style="border-color:#5a3010;background:#1a0d0a;"><span style="color:#c8a840;">★ 모든 힌트 확인 완료</span><button onclick="revealAnswer('${refId}')" style="background:#5a3010;border-color:#c8a840;color:#ffdd99;">▶ 정답 보기</button></div>`;
     }
   } else if(!target.explainRevealed && target.answerText){
     // 정답은 공개됐지만 해설은 아직 — 해설 보기 버튼
-    html+=`<div class="hint-locked-stage" style="border-color:#3a3a5a;background:#0a0a1a;"><span style="color:#8a9aba;">💡 해설도 볼래?</span><button onclick="revealExplain('${refId}')" style="background:#1a1a3a;border-color:#8a9aba;color:#d8d8f0;">▶ 해설 보기</button></div>`;
+    html+=`<div class="hint-locked-stage" style="border-color:#3a3a5a;background:#0a0a1a;"><span style="color:#8a9aba;">💡 상세 해설 열람 가능</span><button onclick="revealExplain('${refId}')" style="background:#1a1a3a;border-color:#8a9aba;color:#d8d8f0;">▶ 해설 보기</button></div>`;
   }
   hintEl.innerHTML=html;
 }
