@@ -744,6 +744,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-modal .hint-stage[style*="border-top"]{border-top:1px dashed #b89858!important;}
 .hint-modal .hint-stage-num[style*="c8a840"]{color:#a06818!important;}
 .hint-modal .hint-stage-txt[style*="ffdd99"]{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;}
+.hint-modal .hint-stage-num[style*="8a9aba"]{color:#2a4a6a!important;}
+.hint-modal .hint-stage-txt[style*="d8d8d0"]{color:#1c2838!important;background:rgba(138,154,186,0.22);padding:4px 6px;border-radius:3px;}
 
 /* ---- S7: 파일 상세보기(사건일지) — 종이 테마, 테스트 ---- */
 #s7 .detail-screen{
@@ -2245,7 +2247,7 @@ function openHintModal(){
     return;
   }
   
-  document.getElementById('hintModalSub').textContent = `${hintTarget.name} — ${hintTarget.sub}`;
+  document.getElementById('hintModalSub').textContent = hintTarget.name;
   renderHints(hintTarget);
   document.getElementById('hintModalBox').classList.toggle('hint-modal', currentScreen !== 's1');
   document.getElementById('modalHint').classList.add('on');
