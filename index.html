@@ -364,14 +364,14 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* 잠금해제 토스트 */
 .unlock-toast{
-  position:fixed;top:60px;left:50%;transform:translateX(-50%);
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
   background:#f1e8d9;border:2px solid #8a5a10;color:#3a2a1a;
-  padding:10px 22px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.3px;
-  z-index:400;display:none;border-radius:3px;box-shadow:3px 3px 0 rgba(0,0,0,0.25);
+  padding:14px 26px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.3px;
+  z-index:400;display:none;border-radius:4px;box-shadow:4px 4px 0 rgba(0,0,0,0.3);text-align:center;
 }
 .unlock-toast.show{display:block;animation:toast 2s ease forwards;}
 .unlock-toast.lock-toast{background:#f3e4da;border-color:#a02020;color:#7a2418;}
-@keyframes toast{0%{opacity:0;transform:translate(-50%,-10px)}10%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-10px)}}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,-50%) scale(0.85)}10%,80%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(0.85)}}
 
 /* ===== 기억 회복 오버레이 ===== */
 #memoryOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px;}
@@ -1368,15 +1368,15 @@ const files = [
   {num:3,name:'FILE_02',sub:'숲길 우체통',icon:'📷',unlocked:false,
    answer:'NEON',unlockCode:'102',unlockPrefix:'AB-',answerLen:4,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 03</div><div>홍대 일대, 밤마다 약에 취한 무리들.<br>특이한 점으로는 무리 중 한 명이 항상 가로등 AB-091 옆 우체통 앞에 선다.<br>아무래도 조사해볼 필요가 있는것 같다.</div></div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 08</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 22</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
    <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 voice_memo_postbox.wav</div><div class="audio-time">01:24</div></div></div>
    <button class="script-toggle" onclick="toggleScript('scriptPostbox')">📝 스크립트 보기</button>
    <div class="script-box" id="scriptPostbox">
    <div><span class="script-speaker">대진:</span> 아... 그 숲길 우체통 말이야... 거기가... 우리만 아는 통로라니까?<br>막 일 년에 두 번 배달하는 느린 우체통이라고 써있던데.. 또 어디서 본건 있어가지고... ....낭만 챙기기는...</div><br>
    <div><span class="script-speaker">세헌:</span> 거기에다가 걔네 조직 이름을 딱 써가지고 넣잖아? 그럼 다음날 바로 집으로 답장이 온다니까.<br>그러면 거기에 접선 날짜랑 장소를 적어줘. 안 믿기면 내일 니가 가서 넣어봐.</div>
    </div></div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 10</div><div>직접 유통자를 접선하면 정보를 알아낼 수 있지 않을까..?<br>그들이 말한대로 편지를 적어 우체통에 넣었다.</div></div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 11</div><div>오늘 바로 답신[KIT-A]이 왔다.<br><br>접선 날짜 6월 24일.. 시간 밤 10시.. 장소는.. 음..? 날 테스트 하는건가?<br><br>내일 우체통을 다시 찾아가봐야겠다.</div></div>`,
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>직접 유통자를 접선하면 정보를 알아낼 수 있지 않을까..?<br>그들이 말한대로 편지를 적어 우체통에 넣었다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>오늘 바로 답신[KIT-A]이 왔다.<br><br>접선 날짜 6월 24일.. 시간 밤 10시.. 장소는.. 음..? 날 테스트 하는건가?<br><br>내일 우체통을 다시 찾아가봐야겠다.</div></div>`,
    hints:['안내판에서 추억을 담아 공유하는 사람들을 찾으세요.','family, friends, lover or yourself'],answerText:'각 영어 단어를 KIT-A에서 찾아 연결하면 NEON이 완성됩니다.'},
 
   // #4 FILE_03
@@ -1391,15 +1391,15 @@ const files = [
    answer:'ROSE',unlockCode:'NULL-Z',unlockSeparator:{char:'-',after:4},answerLen:5,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 25</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
-   <img class="detail-photo" src="assets/file04_heart.jpg?v=5" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=5')">
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>`,
+   <img class="detail-photo" src="assets/file04_heart.jpg?v=6" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=6')">
+   <div class="detail-section"><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>`,
    hints:['MYSTORAGE 화면에서 현장 분석 카메라를 켜서 조형물을 스캔합니다.','확인된 장미를 N32에게 메세지로 전달합니다.'],answerText:'N32로부터 참나무의 위치정보를 얻습니다. (가로등 AB-059)',
    onUnlock:{drug:'NULL-Z',org:'BLANK'}},
 
   // #6 FILE_05
   {num:6,name:'FILE_05',sub:'대왕참나무',icon:'📷',unlocked:false,
    answer:'MEMORYTOWER',unlockCode:'059',unlockPrefix:'AB-',answerLen:11,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 30</div><div>N32가 알려준 AB-059 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진[KIT-C]를 보내주면서, 대왕참나무 QR코드 안에 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 02</div><div>N32가 알려준 AB-059 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진[KIT-C]를 보내주면서, 대왕참나무 QR코드 안에 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
    hints:['대왕참나무의 QR코드를 스캔하세요.','대왕참나무의 학명을 이용합니다.'],answerText:'학명에 써있는 문장을 두음절씩 끊어 KIT-C에서 대응하면 MEMORYTOWER가 완성됩니다.'},
 
   // #7 FILE_06
@@ -1411,7 +1411,7 @@ const files = [
   // #8 FILE_07
   {num:8,name:'FILE_07',sub:'어린이은행공원 — 음표',icon:'🎵',unlocked:false,
    answer:'FADE',unlockCode:'KEY',answerLen:4,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 03</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처에 있는 연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 04</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처에 있는 연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 05</div><div>겉으로 볼때는 지구방범대로 알겠지만 사실 NCI 정보국이다.<br>MEMORY TOWER에서 알아낸 KEY에 대해 묻자,<br>NCI 정보요원은 그들의 본거지의 비밀번호가 영어로 만들어졌다는 정보를 얻었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 07</div><div>갑자기 N05에게 다급한 전화가 왔다.</div>
    <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 N05_voice_backup.mp3</div></div></div>
@@ -1461,20 +1461,20 @@ const files = [
   // #11 FILE_10
   {num:11,name:'FILE_10',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
    answer:'9725A785',unlockCode:'9726R513',answerLen:8,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 11</div><div>9726R513.. 이게 뭘 뜻하는거지?<br>NCI 정보국에 물어보고 싶지만 암구호가 필요해보인다.<br>NCI 본부에서 근무하는 N24에게 연락하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 14</div><div>9726R513.. 이게 뭘 뜻하는거지?<br>NCI 정보국에 물어보고 싶지만 암구호가 필요해보인다.<br>NCI 본부에서 근무하는 N24에게 연락하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>`,
    hints:['전봇대에 적힌 숫자를 확인하세요.','숫자 순서대로 스크래치 카드를 긁으세요.'],answerText:''},
 
   // #12 FILE_11 — (가안: 실제 답사 후 내용 교체 필요)
   {num:12,name:'FILE_11',sub:'전신주 390-94 — 세 번째 흔적',icon:'📍',unlocked:false,
    answer:'현장 확인',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 12</div><div>NCI 정보국에서 알려준 전신주 위치, 연남동 390-94에 도착했다.<br>주변을 둘러보니 BLANK의 흔적으로 보이는 표식이 남아있다.<br><br>이 흔적이 다음 단서로 이어질 것 같다.</div></div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국에서 알려준 전신주 위치, 연남동 390-94에 도착했다.<br>주변을 둘러보니 BLANK의 흔적으로 보이는 표식이 남아있다.<br><br>이 흔적이 다음 단서로 이어질 것 같다.</div></div>`,
    hints:['연남동 390-94 주변 전신주와 표지판을 자세히 살펴보세요.','표식이나 스티커가 남아있는 곳을 찾아 키트와 대조해보세요.'],answerText:'정답: 현장에서 발견한 표식을 키트와 대조'},
 
   // #13 FILE_12
   {num:13,name:'FILE_12',sub:'모나리자 — 그래피티',icon:'🎨',unlocked:false,
    answer:'모나리자',unlockCode:'9725A785',answerLen:8,
    isMemoryTrigger:true,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지</div><div>두번째 전신주의 위치로 오니 써있는대로 수상한 검은색 그림이 보인다.<br>이 얼굴 어디서 많이 본것 같은데..<br><br>그리고 저 멀리 누군가 나를 쳐다보고 있는 느낌이 든다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 16</div><div>두번째 전신주의 위치로 오니 써있는대로 수상한 검은색 그림이 보인다.<br>이 얼굴 어디서 많이 본것 같은데..<br><br>그리고 저 멀리 누군가 나를 쳐다보고 있는 느낌이 든다.</div></div>
    <button onclick="openMonalisaModal()" style="background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 분석 결과 입력</button>`,
    hints:['NCI 정보국으로 받은 위치의 건물 주변에서 검정색으로 칠해져있는 심볼을 찾으세요.','심볼의 정체를 사건일지 내의 질문에 답하세요.'],answerText:'정답: MONALISA'},
 
