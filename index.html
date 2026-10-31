@@ -1510,10 +1510,11 @@ const messages = [
   {id:1, sender:'N24', dead:false, time:'2시간 전', new:true, read:false,
    preview:'N07 전화 좀 받아봐 정말 무슨일 생긴거 아니지?',
    attach:null,
-   body:`<div>N07 전화 좀 받아봐<br>정말 무슨일 생긴거 아니지?</div>`,
+   topNotice:'이전 대화를 불러올 수 없습니다',
+   body:`<div>N07 전화 좀 받아봐<br>정말 무슨일 생긴거 아니지?</div><div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 07. 20</div>`,
    canReply:true,
    thread:[
-     {from:'them', text:'잘못 보고된거라고 믿고 있었는데..<br>너 말고도 많은 요원들이 희생됐어.<br>대답 못하는 거 알면서 보낸다.<br>보고싶다.'}
+     {from:'them', text:'잘못 보고된거라고 믿고 있었는데..<br>너 말고도 많은 요원들이 희생됐어.<br>대답 못하는 거 알면서 보낸다.<br>보고싶다.<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 09. 02</div>'}
    ],
    waitingForAnswer:false, waitingForChoice:false, choiceMade:false,
    correctPassword:'도어', answered:false},
@@ -1522,8 +1523,10 @@ const messages = [
   {id:2, sender:'N32', dead:false, time:'어제', new:true, read:false,
    preview:'어이~ N07! 조형물 근처 재료 확인 해줄 수 있어?',
    attach:'⚠ expired_file.enc',
+   topNotice:'이전 대화를 불러올 수 없습니다',
    body:`<div>어이~ N07! 아직 재료에 대해선 가진 정보가 없는 것 같던데?<br>내가 관련해서 사진을 하나 받았는데 직접 확인하기엔 거리가 멀어서 말이야.<br>사진이 흐려서 모르겠는데 조형물 근처에 보이는 재료를 확인 해줄 수 있어?<br>도와주면 내가 다른 정보도 넘겨줄게 어때?</div>
    <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">사진 열람 기간 만료</div><div class="audio-time" style="color:#7a4040;">FILE_04에 저장됨</div></div></div>
+   <div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 06. 29</div>
    <div class="msg-zigzag">대화를 불러올 수 없습니다.</div>`,
    canReply:true, thread:[], waitingForAnswer:true,
    correctPassword:'ROSE', altPasswords:['장미','rose','Rose'],
@@ -1536,7 +1539,8 @@ const messages = [
    attach:'⚠ N05_voice_backup.mp3',
    isCallLog:true,
    body:`<div class="call-log-entry"><div class="call-log-icon">📞</div><div><div class="call-log-title">통화 기록</div><div class="call-log-sub">연결 끊김 · 3개월 전</div></div></div>
-   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.mp3</div><div class="audio-time" style="color:#7a4040;">FILE_07에 저장됨</div></div></div>`,
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.mp3</div><div class="audio-time" style="color:#7a4040;">FILE_07에 저장됨</div></div></div>
+   <div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 07. 07</div>`,
    canReply:true, thread:[], isDead:true},
 
   {id:4, sender:'NCI 정보국', dead:false, time:'', new:false, read:true,
@@ -1775,7 +1779,10 @@ function openMessage(i){
     ? `<div class="call-log-panel">${bodyHtml}</div>`
     : `<div class="msg-thread-bubble from-them">${bodyHtml}</div>`);
 
-  document.getElementById('msgDetailBody').innerHTML = mainHtml + zigzagHtml + threadHtml + choiceHtml;
+  // 대화 맨 위 시스템 안내(이전 대화를 불러올 수 없습니다 등)
+  const topNoticeHtml = m.topNotice ? `<div class="msg-zigzag">${m.topNotice}</div>` : '';
+
+  document.getElementById('msgDetailBody').innerHTML = topNoticeHtml + mainHtml + zigzagHtml + threadHtml + choiceHtml;
   goTo('s5');
   renderMessages();
 }
