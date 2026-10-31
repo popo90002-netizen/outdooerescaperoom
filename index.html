@@ -1787,15 +1787,24 @@ function openMessage(i){
   renderMessages();
 }
 
+function formatNowTime(){
+  const d = new Date();
+  let h = d.getHours();
+  const period = h < 12 ? '오전' : '오후';
+  h = h % 12; if(h === 0) h = 12;
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  return `${period} ${h}:${mm}`;
+}
+
 function sendReply(){
   if(currentMessageIdx === null) return;
   const m = messages[currentMessageIdx];
   const input = document.getElementById('msgReplyInput');
   const text = input.value.trim();
   if(!text) return;
-  
-  // 내 메시지 추가
-  m.thread.push({from:'me', text:text});
+
+  // 내 메시지 추가 (실시간 전송 시각 표시)
+  m.thread.push({from:'me', text:text+`<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatNowTime()}</div>`});
   
   // 응답 처리
   if(m.isDead){
@@ -1904,14 +1913,14 @@ function chooseN24(choice){
   m.waitingForChoice = false;
   m.choiceMade = true;
   if(choice === 'A'){
-    m.thread.push({from:'me', text:'나도 모르겠어, 일단 자세한 이야기는 나중에 하자.'});
+    m.thread.push({from:'me', text:'나도 모르겠어, 일단 자세한 이야기는 나중에 하자.'+`<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatNowTime()}</div>`});
     openMessage(currentMessageIdx);
     setTimeout(()=>{
       m.thread.push({from:'them', text:"그래, 일단 정보국에 보고하는게 좋을거야.<br>혹시 모를까봐 알려준다. 금일 암구호는 '실종 / 도마'야."});
       openMessage(currentMessageIdx);
     }, 600);
   } else {
-    m.thread.push({from:'me', text:'됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.'});
+    m.thread.push({from:'me', text:'됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.'+`<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatNowTime()}</div>`});
     openMessage(currentMessageIdx);
     setTimeout(()=>{
       m.thread.push({from:'them', text:"하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도마'야, 자세한건 나중에 얘기하자."});
