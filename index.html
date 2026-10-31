@@ -69,7 +69,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .support-sub{font-size:10px;color:#8a5a5a;line-height:1.5;letter-spacing:0.5px;}
 .recover-section{padding:12px 12px 60px 12px;}
 /* 지그재그 */
-.msg-zigzag{margin-top:10px;padding:8px 12px;font-size:10px;color:#5a4a20;letter-spacing:1px;text-align:center;background:repeating-linear-gradient(135deg,#1a1508,#1a1508 6px,#221c0a 6px,#221c0a 12px);border:1px solid #3a2a10;}
+.msg-zigzag{margin:10px 0 14px;padding:16px 12px;font-size:10px;color:#5a4a20;letter-spacing:1px;text-align:center;background:repeating-linear-gradient(135deg,#1a1508,#1a1508 6px,#221c0a 6px,#221c0a 12px);border:none;clip-path:polygon(0% 10%,6.25% 0%,12.5% 10%,18.75% 0%,25% 10%,31.25% 0%,37.5% 10%,43.75% 0%,50% 10%,56.25% 0%,62.5% 10%,68.75% 0%,75% 10%,81.25% 0%,87.5% 10%,93.75% 0%,100% 10%,100% 90%,93.75% 100%,87.5% 90%,81.25% 100%,75% 90%,68.75% 100%,62.5% 90%,56.25% 100%,50% 90%,43.75% 100%,37.5% 90%,31.25% 100%,25% 90%,18.75% 100%,12.5% 90%,6.25% 100%,0% 90%);}
 .recover-label{font-size:9px;color:#888;letter-spacing:2px;margin-bottom:8px;display:flex;justify-content:space-between;}
 .recover-label span{color:#ff4444;animation:blink 2s infinite;}
 .progress-row{margin-bottom:8px;}
@@ -871,7 +871,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s5 .msg-zigzag{
   background:repeating-linear-gradient(135deg,#e9cb7e,#e9cb7e 8px,#d7bc77 8px,#d7bc77 16px);
-  border:1px solid #a5811e;color:#4a3410;font-family:'Noto Sans KR',sans-serif;font-weight:700;
+  border:none;color:#4a3410;font-family:'Noto Sans KR',sans-serif;font-weight:700;
 }
 #s5 .audio-mock{background:#f1e8d9;border:1px solid #c8b89a;}
 #s5 .audio-mock:hover{background:#e8dcc4;}
@@ -1523,7 +1523,6 @@ const messages = [
   {id:2, sender:'N32', dead:false, time:'어제', new:true, read:false,
    preview:'어이~ N07! 조형물 근처 재료 확인 해줄 수 있어?',
    attach:'⚠ expired_file.enc',
-   topNotice:'이전 대화를 불러올 수 없습니다',
    body:`<div>어이~ N07! 아직 재료에 대해선 가진 정보가 없는 것 같던데?<br>내가 관련해서 사진을 하나 받았는데 직접 확인하기엔 거리가 멀어서 말이야.<br>사진이 흐려서 모르겠는데 조형물 근처에 보이는 재료를 확인 해줄 수 있어?<br>도와주면 내가 다른 정보도 넘겨줄게 어때?</div>
    <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">사진 열람 기간 만료</div><div class="audio-time" style="color:#7a4040;">FILE_04에 저장됨</div></div></div>
    <div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 06. 29</div>
