@@ -1721,8 +1721,10 @@ let currentMessageIdx = null;
 
 function openMessage(i){
   const m=messages[i];
+  const wasUnread = !m.read;
   m.read=true;
   m.new=false;
+  if(wasUnread) saveGameState();
   currentMessageIdx = i;
   const deadBadge = m.dead ? ' <span class="msg-dead-badge">❗발신인 사망 확인됨</span>' : '';
   document.getElementById('msgDetailSender').innerHTML=m.sender+deadBadge;
@@ -1741,12 +1743,14 @@ function openMessage(i){
   if(m.thread && m.thread.length > 0){
     threadHtml = '<div class="msg-thread">';
     m.thread.forEach(t=>{
+      const stampHtml = t.ts ? `<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatTimeOrDate(t.ts)}</div>` : '';
+      const text = t.text + stampHtml;
       if(t.from === 'me'){
-        threadHtml += `<div class="msg-thread-bubble from-me">${t.text}</div>`;
+        threadHtml += `<div class="msg-thread-bubble from-me">${text}</div>`;
       } else if(t.from === 'them'){
-        threadHtml += `<div class="msg-thread-bubble from-them">${t.text}</div>`;
+        threadHtml += `<div class="msg-thread-bubble from-them">${text}</div>`;
       } else if(t.from === 'system'){
-        threadHtml += `<div class="msg-thread-bubble dead-no-reply">${t.text}</div>`;
+        threadHtml += `<div class="msg-thread-bubble dead-no-reply">${text}</div>`;
       }
     });
     threadHtml += '</div>';
@@ -1787,13 +1791,25 @@ function openMessage(i){
   renderMessages();
 }
 
-function formatNowTime(){
-  const d = new Date();
-  let h = d.getHours();
-  const period = h < 12 ? '오전' : '오후';
-  h = h % 12; if(h === 0) h = 12;
-  const mm = String(d.getMinutes()).padStart(2,'0');
-  return `${period} ${h}:${mm}`;
+function formatTimeOrDate(ts){
+  const d = new Date(ts);
+  const now = new Date();
+  const sameDay = d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth() && d.getDate()===now.getDate();
+  if(sameDay){
+    let h = d.getHours();
+    const period = h < 12 ? '오전' : '오후';
+    h = h % 12; if(h === 0) h = 12;
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    return `${period} ${h}:${mm}`;
+  }
+  const y=d.getFullYear(), mo=String(d.getMonth()+1).padStart(2,'0'), da=String(d.getDate()).padStart(2,'0');
+  return `${y}. ${mo}. ${da}`;
+}
+
+// 실시간으로 오가는 메시지(답장/선택지)에 보낸 시각을 찍어서 thread에 추가
+function pushThreadMsg(m, from, text){
+  m.thread.push({from, text, ts: Date.now()});
+  saveGameState();
 }
 
 function sendReply(){
@@ -1804,13 +1820,13 @@ function sendReply(){
   if(!text) return;
 
   // 내 메시지 추가 (실시간 전송 시각 표시)
-  m.thread.push({from:'me', text:text+`<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatNowTime()}</div>`});
-  
+  pushThreadMsg(m, 'me', text);
+
   // 응답 처리
   if(m.isDead){
     // 죽은 사람: 보낼 때마다 매번 답장 없음 메시지 추가
     setTimeout(()=>{
-      m.thread.push({from:'system', text:'⚠ 답장이 오지 않습니다. 발신인은 사망 상태입니다.'});
+      pushThreadMsg(m, 'system', '⚠ 답장이 오지 않습니다. 발신인은 사망 상태입니다.');
       openMessage(currentMessageIdx);
     }, 800);
   } else if(m.sender === 'N24'){
@@ -1818,25 +1834,25 @@ function sendReply(){
     setTimeout(()=>{
       if(m.choiceMade){
         // 선택 이후: 항상 바쁘다는 답변만 반복
-        m.thread.push({from:'them', text:'지금 중요한 일을 하고 있어.<br>근무 끝나고 얘기하자.'});
+        pushThreadMsg(m, 'them', '지금 중요한 일을 하고 있어.<br>근무 끝나고 얘기하자.');
       } else if(!m.answered){
         // 첫 답장: 처음부터 암구호("도어")를 말하면 확인 절차를 건너뛴다
         if(text.trim() === (m.correctPassword||'')){
-          m.thread.push({from:'them', text:'제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?'});
+          pushThreadMsg(m, 'them', '제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?');
           m.waitingForChoice = true;
         } else {
-          m.thread.push({from:'them', text:'누구야 너?<br>설마 살아 있는 거야?<br>N07, 너가 맞다면 우리끼리 정한 암구호를 먼저 말해봐.'});
+          pushThreadMsg(m, 'them', '누구야 너?<br>설마 살아 있는 거야?<br>N07, 너가 맞다면 우리끼리 정한 암구호를 먼저 말해봐.');
           m.waitingForAnswer = true;
         }
         m.answered = true;
       } else if(m.waitingForAnswer){
         // 암구호 검증 (두 번째부터는 짧은 재촉 멘트만 반복)
         if(text.trim() === (m.correctPassword||'')){
-          m.thread.push({from:'them', text:'제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?'});
+          pushThreadMsg(m, 'them', '제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?');
           m.waitingForAnswer = false;
           m.waitingForChoice = true;
         } else {
-          m.thread.push({from:'them', text:'우리끼리 정한 암구호를 먼저 말해봐.'});
+          pushThreadMsg(m, 'them', '우리끼리 정한 암구호를 먼저 말해봐.');
         }
       }
       openMessage(currentMessageIdx);
@@ -1845,26 +1861,26 @@ function sendReply(){
     setTimeout(()=>{
       // 부재중 처리 (ROSE 답 이후 대화 종료)
       if(m.inactive){
-        m.thread.push({from:'system', text:'📵 부재중입니다.'});
+        pushThreadMsg(m, 'system', '📵 부재중입니다.');
         openMessage(currentMessageIdx);
         return;
       }
       const userInput = text.trim().toLowerCase();
       const correctList = [(m.correctPassword||'').toLowerCase(), ...(m.altPasswords||[]).map(p=>p.toLowerCase())];
       if(m.waitingForAnswer && correctList.includes(userInput)){
-        m.thread.push({from:'them', text: m.afterCorrect});
+        pushThreadMsg(m, 'them', m.afterCorrect);
         m.waitingForAnswer = false;
         m.inactive = true; // 이후 부재중 처리
       } else if(m.waitingForAnswer){
         // 오답 — 살아있는지 확인 후 암구어 요구
         if(!m.answered){
-          m.thread.push({from:'them', text:'뭐야.. N07.. 너 죽은 거 아니었어..?<br>너가 맞다면 이전에 얘기했던 주재료 하나를 말해봐.'});
+          pushThreadMsg(m, 'them', '뭐야.. N07.. 너 죽은 거 아니었어..?<br>너가 맞다면 이전에 얘기했던 주재료 하나를 말해봐.');
           m.answered = true;
         } else {
-          m.thread.push({from:'them', text:'이전에 얘기했던 주재료 하나를 말해봐.'});
+          pushThreadMsg(m, 'them', '이전에 얘기했던 주재료 하나를 말해봐.');
         }
       } else {
-        m.thread.push({from:'system', text:'📵 부재중입니다.'});
+        pushThreadMsg(m, 'system', '📵 부재중입니다.');
       }
       openMessage(currentMessageIdx);
     }, 600);
@@ -1872,35 +1888,35 @@ function sendReply(){
     // NCI 정보국: 암구호("도마") → 신원확인 딜레이 후 BLANK 브리핑 → 전신주 번호 조회 대기
     setTimeout(()=>{
       if(!m.infoStage && text.trim() === '도마'){
-        m.thread.push({from:'them', text:'신원 확인 중..'});
+        pushThreadMsg(m, 'them', '신원 확인 중..');
         openMessage(currentMessageIdx);
         setTimeout(()=>{
-          m.thread.push({from:'them', text:"현재 N07 요원이 맡고 있는 임무를 기반으로 정보 전달 드립니다.<br><br>BLANK는 현재 수도권 일대에서 불법 활동 중인 조직입니다.<br>주로 유통하는 약물로는 NULL-Z로 알려져 있습니다.<br>소량 복용 시에는 5분 전까지의 기억이 삭제되며, 잠시 동안 환각 효과가 나타납니다.<br>그러나, 과다 복용 시 사망하게 되지만, 이 사실에 대해 소비자에게 명시하지 않고 있습니다.<br>뇌를 연상시키는 마크를 사용하며, 조직 요원들은 공통적으로 눈썹이 없는 것이 특징입니다.<br><br>또한, 그들은 전신주를 기반으로 위치를 공유하며,<br>전신주 번호는 숫자와 영어를 포함한 8글자로 표현됩니다.<br>전신주 번호를 알려주시면 위치를 조회해 알려드리겠습니다."});
+          pushThreadMsg(m, 'them', "현재 N07 요원이 맡고 있는 임무를 기반으로 정보 전달 드립니다.<br><br>BLANK는 현재 수도권 일대에서 불법 활동 중인 조직입니다.<br>주로 유통하는 약물로는 NULL-Z로 알려져 있습니다.<br>소량 복용 시에는 5분 전까지의 기억이 삭제되며, 잠시 동안 환각 효과가 나타납니다.<br>그러나, 과다 복용 시 사망하게 되지만, 이 사실에 대해 소비자에게 명시하지 않고 있습니다.<br>뇌를 연상시키는 마크를 사용하며, 조직 요원들은 공통적으로 눈썹이 없는 것이 특징입니다.<br><br>또한, 그들은 전신주를 기반으로 위치를 공유하며,<br>전신주 번호는 숫자와 영어를 포함한 8글자로 표현됩니다.<br>전신주 번호를 알려주시면 위치를 조회해 알려드리겠습니다.");
           m.infoStage = 'awaiting_pole';
           openMessage(currentMessageIdx);
         }, 1600);
       } else if(m.infoStage === 'awaiting_pole'){
         if(text.trim().toUpperCase() === '9726R513'){
-          m.thread.push({from:'them', text:'조회하신 전신주의 위치는 연남동 390-94 입니다.'});
+          pushThreadMsg(m, 'them', '조회하신 전신주의 위치는 연남동 390-94 입니다.');
           m.infoStage = 'done';
         } else {
-          m.thread.push({from:'them', text:'조회를 위해 8글자를 정확하게 입력해주세요.'});
+          pushThreadMsg(m, 'them', '조회를 위해 8글자를 정확하게 입력해주세요.');
         }
         openMessage(currentMessageIdx);
       } else if(m.infoStage === 'done'){
         if(text.trim().toUpperCase() === '9725A785'){
-          m.thread.push({from:'them', text:'조회하신 전신주의 위치는 연남동 381-14 입니다.'});
+          pushThreadMsg(m, 'them', '조회하신 전신주의 위치는 연남동 381-14 입니다.');
         } else {
-          m.thread.push({from:'them', text:'조회를 위해 8글자를 정확하게 입력해주세요.'});
+          pushThreadMsg(m, 'them', '조회를 위해 8글자를 정확하게 입력해주세요.');
         }
         openMessage(currentMessageIdx);
       } else {
-        m.thread.push({from:'them', text:'실종'});
+        pushThreadMsg(m, 'them', '실종');
         openMessage(currentMessageIdx);
       }
     }, 600);
   }
-  
+
   // 화면 새로고침
   openMessage(currentMessageIdx);
 }
@@ -1913,17 +1929,17 @@ function chooseN24(choice){
   m.waitingForChoice = false;
   m.choiceMade = true;
   if(choice === 'A'){
-    m.thread.push({from:'me', text:'나도 모르겠어, 일단 자세한 이야기는 나중에 하자.'+`<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatNowTime()}</div>`});
+    pushThreadMsg(m, 'me', '나도 모르겠어, 일단 자세한 이야기는 나중에 하자.');
     openMessage(currentMessageIdx);
     setTimeout(()=>{
-      m.thread.push({from:'them', text:"그래, 일단 정보국에 보고하는게 좋을거야.<br>혹시 모를까봐 알려준다. 금일 암구호는 '실종 / 도마'야."});
+      pushThreadMsg(m, 'them', "그래, 일단 정보국에 보고하는게 좋을거야.<br>혹시 모를까봐 알려준다. 금일 암구호는 '실종 / 도마'야.");
       openMessage(currentMessageIdx);
     }, 600);
   } else {
-    m.thread.push({from:'me', text:'됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.'+`<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatNowTime()}</div>`});
+    pushThreadMsg(m, 'me', '됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.');
     openMessage(currentMessageIdx);
     setTimeout(()=>{
-      m.thread.push({from:'them', text:"하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도마'야, 자세한건 나중에 얘기하자."});
+      pushThreadMsg(m, 'them', "하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도마'야, 자세한건 나중에 얘기하자.");
       openMessage(currentMessageIdx);
     }, 600);
   }
@@ -2364,12 +2380,16 @@ function enterSystem(){
 
 
 function saveGameState(){
-  const state={files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,savedText:f.savedText||''})),memoryTriggered:window.memoryTriggered||false};
-  try{sessionStorage.setItem('nciGameState',JSON.stringify(state));}catch(e){}
+  const state={
+    files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,savedText:f.savedText||''})),
+    messages:messages.map(m=>({id:m.id,read:m.read,new:m.new,thread:m.thread,answered:m.answered||false,waitingForAnswer:m.waitingForAnswer||false,waitingForChoice:m.waitingForChoice||false,choiceMade:m.choiceMade||false,inactive:m.inactive||false,infoStage:m.infoStage||null})),
+    memoryTriggered:window.memoryTriggered||false
+  };
+  try{localStorage.setItem('nciGameState',JSON.stringify(state));}catch(e){}
 }
 function loadGameState(){
   try{
-    const raw=sessionStorage.getItem('nciGameState');
+    const raw=localStorage.getItem('nciGameState');
     if(!raw)return;
     const state=JSON.parse(raw);
     state.files.forEach(saved=>{
@@ -2380,12 +2400,23 @@ function loadGameState(){
       f.typed=saved.typed||false;f.colorSelected=saved.colorSelected||false;
       f.arrivalShown=saved.arrivalShown||false;f.savedText=saved.savedText||'';
     });
+    if(state.messages){
+      state.messages.forEach(saved=>{
+        const m=messages.find(x=>x.id===saved.id);
+        if(!m)return;
+        m.read=saved.read;m.new=saved.new;
+        m.thread=saved.thread||m.thread;
+        m.answered=saved.answered||false;m.waitingForAnswer=saved.waitingForAnswer||false;
+        m.waitingForChoice=saved.waitingForChoice||false;m.choiceMade=saved.choiceMade||false;
+        m.inactive=saved.inactive||false;m.infoStage=saved.infoStage||null;
+      });
+    }
     window.memoryTriggered=state.memoryTriggered||false;
   }catch(e){}
 }
 function resetGameState(){
   if(!confirm('처음부터 다시 시작하시겠습니까?\n모든 진행 상황이 초기화됩니다.'))return;
-  sessionStorage.removeItem('nciGameState');location.reload();
+  localStorage.removeItem('nciGameState');location.reload();
 }
 
 // ===== MONALISA 제출 (FILE_11 내부) =====
@@ -2618,6 +2649,7 @@ window.addEventListener('scroll', ()=>{
 
 // 초기화
 files.forEach(f=>{f.hintsRevealed=0; f.answerRevealed=false; f.explainRevealed=false;});
+loadGameState();
 renderMessages();
 renderInventory();
 </script>
