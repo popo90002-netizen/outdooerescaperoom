@@ -1333,7 +1333,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file05_explain1.jpg','file05_explain2.jpg'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file05_explain1.jpg','file05_explain2.jpg','file04_explain1.jpg'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1408,7 +1408,13 @@ const files = [
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
    <img class="detail-photo" src="assets/file04_heart.jpg?v=7" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=7')">
    <div class="detail-section"><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>`,
-   hints:['MYSTORAGE 화면에서 현장 분석 카메라를 켜서 조형물을 스캔합니다.','확인된 장미를 N32에게 메세지로 전달합니다.'],answerText:'N32로부터 참나무의 위치정보를 얻습니다. (가로등 AB-059)',
+   hints:['MYSTORAGE 화면에서 현장 분석 카메라를 켜서 조형물을 스캔합니다.','확인된 장미를 N32에게 메세지로 전달합니다.'],
+   answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+    <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
+    <span style="font-size:13px;color:#8a9aba;">현장 분석 카메라로 조형물을 스캔하면 장미가 나타납니다.</span>
+   </div>
+   <img src="assets/file04_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file04_explain1.jpg')">
+   <div style="margin-top:8px;">N32로부터 참나무의 위치정보를 얻습니다. (가로등 AB-059)</div>`,
    onUnlock:{drug:'NULL-Z',org:'BLANK'}},
 
   // #6 FILE_05
