@@ -1336,7 +1336,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file05_explain1.jpg','file05_explain2.jpg','file04_explain1.jpg'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file05_explain1.jpg','file05_explain2.jpg','file04_explain1.jpg','file08_explain1.png'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1472,10 +1472,15 @@ const files = [
 
   // #9 FILE_08
   {num:9,name:'FILE_08',sub:'카페 — QR 스티커',icon:'📷',unlocked:false,
-   answer:'567',unlockCode:'FADE',answerLen:3,
+   answer:'BLANK',unlockCode:'FADE',answerLen:3,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 10</div><div>주변을 살피던 중 카페 하나가 눈에 들어왔다.<br>창가에 같은 복장에 마스크를 쓴 무리들.<br>사진을 찍어 확대해보니 — 왼쪽 어깨에 동일한 마크가 찍혀있다.<br><br>저놈들이다.<br><br>카페 근처 가로등에 같은 마크가 붙어 있다.<br>현장분석 카메라로 확인해봐야겠다.</div></div>
    <img class="detail-photo" src="assets/file08_cafe.jpg" alt="카페 파파라치 사진" onclick="openPhotoZoom('assets/file08_cafe.jpg')">`,
-   hints:['카페 폴브 연남점을 찾아가 사진에 표시된 가로등을 확인하세요.','현장 분석 카메라를 켜서 가로등에 있는 마크를 스캔하세요.'],answerText:'현장분석카메라로 마크를 스캔하면 밑에 BLANK 단어가 표시됩니다.'},
+   hints:['카페 폴브 연남점을 찾아가 사진에 표시된 가로등을 확인하세요.','현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 가로등에 있는 마크를 스캔하세요.'],
+   answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+    <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
+    <span style="font-size:13px;color:#8a9aba;">현장 분석 카메라로 마크를 스캔하면 아래처럼 BLANK가 나타납니다.</span>
+   </div>
+   <img src="assets/file08_explain1.png" style="width:100%;border-radius:4px;cursor:zoom-in;background:#000;" onclick="openPhotoZoom('assets/file08_explain1.png')">`},
 
   // #10 FILE_09
   {num:10,name:'FILE_09',sub:'그래피티 — 가입 인증 1',icon:'📷',unlocked:false,
