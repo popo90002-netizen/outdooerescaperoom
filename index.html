@@ -1333,7 +1333,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1382,7 +1382,11 @@ const files = [
    </div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>직접 유통자를 접선하면 정보를 알아낼 수 있지 않을까..?<br>그들이 말한대로 편지를 적어 우체통에 넣었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>오늘 바로 답신[KIT-A]이 왔다.<br><br>접선 날짜 6월 24일.. 시간 밤 10시.. 장소는.. 음..? 날 테스트 하는건가?<br><br>내일 우체통을 다시 찾아가봐야겠다.</div></div>`,
-   hints:['안내판에서 추억을 담아 공유하는 사람들을 찾으세요.','family, friends, lover or yourself'],answerText:'각 영어 단어를 KIT-A에서 찾아 연결하면 NEON이 완성됩니다.'},
+   hints:['안내판에서 추억을 담아 공유하는 사람들을 찾으세요.','family, friends, lover or yourself'],
+   answerText:`<div style="display:flex;gap:6px;">
+    <img src="assets/file02_explain1.jpg" style="width:50%;height:120px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file02_explain1.jpg')">
+    <img src="assets/file02_explain2.jpg" style="width:50%;height:120px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file02_explain2.jpg')">
+    </div>`},
 
   // #4 FILE_03
   {num:4,name:'FILE_03',sub:'NEONSIGN — 레시피',icon:'🎵',unlocked:false,
