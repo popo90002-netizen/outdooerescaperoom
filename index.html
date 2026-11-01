@@ -1696,10 +1696,10 @@ function renderMessages(){
     el.className='msg-item'+(isUnread?' new':' read');
     el.onclick=()=>openMessage(i);
     const unreadDot = isUnread ? '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff4444;margin-right:6px;box-shadow:0 0 6px rgba(255,80,80,0.7);"></span>' : '';
-    const readLabel = isUnread 
-      ? '<span class="msg-status-label" style="font-size:8px;color:#ff8866;letter-spacing:1px;margin-left:auto;">● NEW</span>'
+    const readLabel = isUnread
+      ? '<span class="msg-status-label" style="font-size:8px;color:#ff8866;letter-spacing:1px;margin-left:auto;">안읽음</span>'
       : '<span class="msg-status-label" style="font-size:8px;color:#3a5a7a;letter-spacing:1px;margin-left:auto;">읽음</span>';
-    el.innerHTML=`<div class="msg-head">${unreadDot}<div class="msg-sender${m.dead?' dead':''}">${m.sender}</div>${readLabel}<div class="msg-time" style="margin-left:8px;">${m.time}</div></div><div class="msg-preview">${m.preview}</div>${m.attach?`<div class="msg-attach">📎 ${m.attach}</div>`:''}`;
+    el.innerHTML=`<div class="msg-head">${unreadDot}<div class="msg-sender${m.dead?' dead':''}">${m.sender}</div>${readLabel}</div><div class="msg-preview">${m.preview}</div>${m.attach?`<div class="msg-attach">📎 ${m.attach}</div>`:''}`;
     list.appendChild(el);
   });
   const unreadCount=messages.filter(m=>!m.read).length;
