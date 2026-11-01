@@ -1333,7 +1333,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file05_explain1.jpg','file05_explain2.jpg'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1415,7 +1415,11 @@ const files = [
   {num:6,name:'FILE_05',sub:'대왕참나무',icon:'📷',unlocked:false,
    answer:'MEMORYTOWER',unlockCode:'059',unlockPrefix:'AB-',answerLen:11,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 02</div><div>N32가 알려준 AB-059 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진[KIT-C]를 보내주면서, 대왕참나무 QR코드 안에 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
-   hints:['대왕참나무의 QR코드를 스캔하세요.','대왕참나무의 학명을 이용합니다.'],answerText:'학명에 써있는 문장을 두음절씩 끊어 KIT-C에서 대응하면 MEMORYTOWER가 완성됩니다.'},
+   hints:['대왕참나무의 QR코드를 스캔하세요.','대왕참나무의 학명을 이용합니다.'],
+   answerText:`<div style="display:flex;gap:6px;">
+    <img src="assets/file05_explain1.jpg" style="width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file05_explain1.jpg')">
+    <img src="assets/file05_explain2.jpg" style="width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file05_explain2.jpg')">
+   </div>`},
 
   // #7 FILE_06
   {num:7,name:'FILE_06',sub:'MEMORY TOWER — 타일벽화',icon:'📷',unlocked:false,
