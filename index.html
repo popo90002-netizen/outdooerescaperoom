@@ -355,8 +355,11 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-display{background:#0a1020;border:1px solid #3a3010;padding:12px;margin-top:8px;min-height:60px;}
 .hint-stage{margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid #2a2010;}
 .hint-stage:last-child{border-bottom:none;}
-.hint-stage-num{font-size:9px;color:#8a6a20;letter-spacing:2px;margin-bottom:4px;}
+.hint-stage-num{font-size:9px;color:#8a6a20;letter-spacing:2px;margin-bottom:4px;cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;}
 .hint-stage-txt{font-size:11px;color:#c8b880;line-height:1.6;}
+.hint-stage-txt.collapsed{display:none;}
+.hint-toggle-arrow{font-size:9px;transition:transform 0.15s;margin-left:6px;}
+.hint-stage-num.is-collapsed .hint-toggle-arrow{transform:rotate(-90deg);}
 .hint-locked-stage{background:#0a1020;border:1px dashed #3a3010;padding:9px;margin-top:6px;display:flex;align-items:center;justify-content:space-between;}
 .hint-locked-stage span{font-size:10px;color:#5a4a20;}
 .hint-locked-stage button{background:#3a3010;border:1px solid #8a6a20;color:#c8a840;font-size:9px;padding:5px 9px;cursor:pointer;}
@@ -1361,7 +1364,7 @@ const files = [
   // #2 FILE_01
   {num:2,name:'FILE_01',sub:'경의선숲길 — 기둥',icon:'📄',unlocked:true,
    answer:'102',unlockCode:null,answerLen:3,answerPrefix:'AB-',
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 05. 31</div><div>가로등에 숫자가 새겨져 있어 위치 파악하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><img class="detail-photo" src="assets/file01_streetlight.jpg" alt="경의선숲길 가로등" onclick="openPhotoZoom('assets/file01_streetlight.jpg')">`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 05. 31</div><div>가로등에 숫자가 새겨져 있어 위치 파악하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><div style="border-bottom:1px solid #1a3060;padding-bottom:12px;margin-bottom:14px;"><img class="detail-photo" style="margin:10px 0 0;" src="assets/file01_streetlight.jpg" alt="경의선숲길 가로등" onclick="openPhotoZoom('assets/file01_streetlight.jpg')"></div>`,
    hints:['사진 속 가로등 주변 지형지물을 보고 해당 장소의 가로등을 찾으세요.','가로등은 홍대입구역 3번 출구 근처에 위치합니다.'],
    answerText:`<div style="display:flex;gap:6px;">
     <img src="assets/file01_explain2.jpg" style="width:33.33%;height:90px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file01_explain2.jpg')">
@@ -1403,12 +1406,12 @@ const files = [
 
   // #5 FILE_04
   {num:5,name:'FILE_04',sub:'하트 조형물 — 꽃',icon:'📷',unlocked:false,
-   answer:'장미 / 로즈 / ROSE / 059',unlockCode:'NULL-Z',unlockSeparator:{char:'-',after:4},answerLen:5,
+   answer:'059',unlockCode:'NULL-Z',unlockSeparator:{char:'-',after:4},answerLen:5,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 25</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
    <img class="detail-photo" src="assets/file04_heart.jpg?v=7" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=7')">
    <div class="detail-section"><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>`,
-   hints:['MYSTORAGE 화면에서 현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 조형물을 스캔합니다.','스캔에서 나온 장미를 N32에게 메시지로 알려준 후 다음 장소의 위치 정보를 얻습니다.'],
+   hints:['MYSTORAGE 화면에서 현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 조형물을 스캔합니다.','스캔해서 나온 장미를 N32에게 메시지로 알려준 후 다음 장소의 위치 정보를 얻습니다.'],
    answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
     <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
     <span style="font-size:13px;color:#8a9aba;">현장 분석 카메라로 조형물을 스캔하면 장미가 나타납니다.</span>
@@ -2315,19 +2318,26 @@ function openSupport(){
   document.getElementById('modalSupport').classList.add('on');
 }
 
+function toggleHintStage(headerEl){
+  const body = headerEl.nextElementSibling;
+  if(!body) return;
+  body.classList.toggle('collapsed');
+  headerEl.classList.toggle('is-collapsed');
+}
+
 function renderHints(target){
   const hintEl=document.getElementById('hintContent');
   let html='<div class="hint-display">';
   // 공개된 힌트 표시
   for(let i=0;i<target.hintsRevealed;i++){
-    html+=`<div class="hint-stage"><div class="hint-stage-num">HINT ${i+1} / ${target.hints.length}</div><div class="hint-stage-txt">${target.hints[i]}</div></div>`;
+    html+=`<div class="hint-stage"><div class="hint-stage-num" onclick="toggleHintStage(this)">HINT ${i+1} / ${target.hints.length}<span class="hint-toggle-arrow">▼</span></div><div class="hint-stage-txt">${target.hints[i]}</div></div>`;
   }
   // 정답이 공개됐으면 정답 표시 (해설은 별도 버튼으로 분리)
   const ansVal = target.answer;
   if(target.answerRevealed && ansVal){
-    html+=`<div class="hint-stage" style="border-top:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답</div><div class="hint-stage-txt" style="color:#ffdd99;font-weight:bold;">${ansVal}</div></div>`;
+    html+=`<div class="hint-stage" style="border-top:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;" onclick="toggleHintStage(this)">★ 정답<span class="hint-toggle-arrow">▼</span></div><div class="hint-stage-txt" style="color:#ffdd99;font-weight:bold;">${ansVal}</div></div>`;
     if(target.explainRevealed && target.answerText){
-      html+=`<div class="hint-stage" style="border-top:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설</div><div class="hint-stage-txt" style="color:#d8d8d0;">${target.answerText}</div></div>`;
+      html+=`<div class="hint-stage" style="border-top:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;" onclick="toggleHintStage(this)">★ 해설<span class="hint-toggle-arrow">▼</span></div><div class="hint-stage-txt" style="color:#d8d8d0;">${target.answerText}</div></div>`;
     }
   }
   html+='</div>';
