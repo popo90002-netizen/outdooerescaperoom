@@ -1754,6 +1754,7 @@ let currentMessageIdx = null;
 
 function openMessage(i){
   const m=messages[i];
+  const alreadyOpen = currentMessageIdx===i && document.getElementById('s5').classList.contains('on');
   const wasUnread = !m.read;
   m.read=true;
   m.new=false;
@@ -1820,6 +1821,10 @@ function openMessage(i){
   const topNoticeHtml = m.topNotice ? `<div class="msg-zigzag">${m.topNotice}</div>` : '';
 
   document.getElementById('msgDetailBody').innerHTML = topNoticeHtml + mainHtml + zigzagHtml + threadHtml + choiceHtml;
+  if(alreadyOpen){
+    renderMessages();
+    return;
+  }
   goTo('s5');
   renderMessages();
 }
