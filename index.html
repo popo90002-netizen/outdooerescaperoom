@@ -795,7 +795,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   border:none;padding:20px 20px 20px 13%;border-radius:0;
   display:flex;align-items:center;gap:14px;
 }
-#s7 .audio-mock .play-icon{display:flex;align-items:center;justify-content:center;order:3;width:24px;height:24px;flex-shrink:0;font-size:12px;color:#f1e4cd;background:#6a3a9a;border-radius:50%;}
+#s7 .audio-mock .play-icon{display:none;}
 #s7 .audio-mock-info{line-height:1.7;}
 #s7 .audio-name{color:#6a3a9a;font-family:'Noto Sans KR',sans-serif;font-size:14.5px;font-weight:700;}
 #s7 .audio-time{color:#6a5a40;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;}
@@ -2281,28 +2281,22 @@ function playAudio(el,src){
     audio.addEventListener('timeupdate',()=>{
       if(fill && audio.duration) fill.style.width=(audio.currentTime/audio.duration*100)+'%';
     });
-    audio.addEventListener('ended',()=>{icon.textContent='▶';icon.classList.remove('is-playing');});
+    audio.addEventListener('ended',()=>{icon.textContent='▶';});
     el._audio=audio;
   }
   const audio=el._audio;
   if(currentAudioEl && currentAudioEl!==audio){
     currentAudioEl.pause();
-    if(currentAudioEl._el){
-      const prevIcon=currentAudioEl._el.querySelector('.play-icon');
-      prevIcon.textContent='▶';
-      prevIcon.classList.remove('is-playing');
-    }
+    if(currentAudioEl._el) currentAudioEl._el.querySelector('.play-icon').textContent='▶';
   }
   if(audio.paused){
     audio.play();
     icon.textContent='⏸';
-    icon.classList.add('is-playing');
     audio._el=el;
     currentAudioEl=audio;
   } else {
     audio.pause();
     icon.textContent='▶';
-    icon.classList.remove('is-playing');
   }
 }
 function seekAudio(ev,bar){
