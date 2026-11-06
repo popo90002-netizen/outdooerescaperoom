@@ -358,7 +358,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-stage-num{font-size:9px;color:#8a6a20;letter-spacing:2px;margin-bottom:4px;user-select:none;display:flex;align-items:center;justify-content:space-between;}
 .hint-stage-txt{font-size:11px;color:#c8b880;line-height:1.6;}
 .hint-stage-txt.collapsed{display:none;}
-.hint-fold-btn{width:58px;height:22px;flex-shrink:0;cursor:pointer;background-size:100% 100%;background-repeat:no-repeat;background-position:center;margin-left:8px;}
+.hint-fold-btn{width:76px;height:32px;flex-shrink:0;cursor:pointer;background-size:100% 100%;background-repeat:no-repeat;background-position:center;margin-left:8px;}
 .hint-fold-btn.collapse{background-image:url('assets/hint_collapse_btn.webp');}
 .hint-fold-btn.expand{background-image:url('assets/hint_expand_btn.webp');}
 .hint-locked-stage{background:#0a1020;border:1px dashed #3a3010;padding:9px;margin-top:6px;display:flex;align-items:center;justify-content:space-between;}
@@ -369,7 +369,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 /* 잠금해제 토스트 */
 .unlock-toast{
   position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-  background:#f1e8d9;border:2px solid #8a5a10;color:#3a2a1a;
+  background:#f1e8d9;border:2px solid #2e8b44;color:#3a2a1a;
   padding:14px 26px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.3px;
   z-index:400;display:none;border-radius:4px;box-shadow:4px 4px 0 rgba(0,0,0,0.3);text-align:center;
 }
@@ -1337,7 +1337,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file05_explain1.jpg','file05_explain2.jpg','file04_explain1.jpg','file08_explain1.png','hint_collapse_btn.webp','hint_expand_btn.webp','file06_explain1.jpg','file06_explain2.jpg','file06_explain3.jpg'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v6.webp','mystorage_background.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file08_cafe.jpg','file09_blank_membership.jpg','file11_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file05_explain1.jpg','file05_explain2.jpg','file04_explain1.jpg','file08_explain1.png','hint_collapse_btn.webp','hint_expand_btn.webp','file06_explain1.jpg','file06_explain2.jpg','file06_explain3.jpg','file11_answer_boxes.png'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1377,14 +1377,14 @@ const files = [
   {num:3,name:'FILE_02',sub:'숲길 우체통',icon:'📷',unlocked:false,
    answer:'NEON',unlockCode:'102',unlockPrefix:'AB-',answerLen:4,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 03</div><div>홍대 일대, 밤마다 약에 취한 무리들.<br>특이한 점으로는 무리 중 한 명이 항상 가로등 AB-091 옆 우체통 앞에 선다.<br>아무래도 조사해볼 필요가 있는것 같다.</div></div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 22</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 21</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
    <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 voice_memo_postbox.wav</div><div class="audio-time">01:24</div></div></div>
    <button class="script-toggle" onclick="toggleScript('scriptPostbox')">📝 스크립트 보기</button>
    <div class="script-box" id="scriptPostbox">
    <div><span class="script-speaker">대진:</span> 아... 그 숲길 우체통 말이야... 거기가... 우리만 아는 통로라니까?<br>막 일 년에 두 번 배달하는 느린 우체통이라고 써있던데.. 또 어디서 본건 있어가지고... ....낭만 챙기기는...</div><br>
    <div><span class="script-speaker">세헌:</span> 거기에다가 걔네 조직 이름을 딱 써가지고 넣잖아? 그럼 다음날 바로 집으로 답장이 온다니까.<br>그러면 거기에 접선 날짜랑 장소를 적어줘. 안 믿기면 내일 니가 가서 넣어봐.</div>
    </div></div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>직접 유통자를 접선하면 정보를 알아낼 수 있지 않을까..?<br>그들이 말한대로 편지를 적어 우체통에 넣었다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 22</div><div>직접 유통자를 접선하면 정보를 알아낼 수 있지 않을까..?<br>그들이 말한대로 편지를 적어 우체통에 넣었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>오늘 바로 답신[KIT-A]이 왔다.<br><br>접선 날짜 6월 24일.. 시간 밤 10시.. 장소는.. 음..? 날 테스트 하는건가?<br><br>내일 우체통을 다시 찾아가봐야겠다.</div></div>`,
    hints:['안내판에서 추억을 담아 공유하는 사람들을 찾으세요.','family, friends, lover or yourself'],
    answerText:`<div style="display:flex;gap:6px;">
@@ -1412,7 +1412,7 @@ const files = [
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
    <img class="detail-photo" src="assets/file04_heart.jpg?v=7" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=7')">
    <div class="detail-section"><div>사진의 이 조형물.. 가로등 AB-078 근처에서 봤던 기억이 있다.<br>현장 분석 카메라로 비춰 확인해보자.</div></div>`,
-   hints:['MYSTORAGE 화면에서 현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 조형물을 스캔합니다.','스캔해서 나온 장미를 N32에게 메시지로 알려준 후 다음 장소의 위치 정보를 얻습니다.'],
+   hints:['MYSTORAGE 화면에서 현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 조형물을 스캔합니다.<br><button onclick="openPhotoZoom(\'assets/file04_explain1.jpg\')" style="margin-top:6px;background:#1a1a3a;border:1px solid #8a9aba;color:#d8d8f0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;">📷 카메라 인식 불가</button>','스캔해서 나온 장미를 N32에게 메시지로 알려준 후 다음 장소의 위치 정보를 얻습니다.'],
    answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
     <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
     <span style="font-size:13px;color:#8a9aba;">현장 분석 카메라로 조형물을 스캔하면 장미가 나타납니다.</span>
@@ -1424,8 +1424,8 @@ const files = [
   // #6 FILE_05
   {num:6,name:'FILE_05',sub:'대왕참나무',icon:'📷',unlocked:false,
    answer:'MEMORYTOWER',unlockCode:'059',unlockPrefix:'AB-',answerLen:11,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 02</div><div>N32가 알려준 AB-059 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진[KIT-C]를 보내주면서, 대왕참나무 QR코드 안에 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
-   hints:['대왕참나무의 학명을 이용합니다.','학명에 써있는 문장을 두 음절씩 끊어서 KIT-C에 대응해보세요.'],
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 02</div><div>N32가 알려준 AB-059 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진[KIT-C]를 보내주면서, 대왕참나무 코드 안에 NULL-Z 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
+   hints:['대왕참나무에 푯말에 있는 QR코드를 찍어서 나오는 페이지의 학명을 이용합니다.','학명에 써있는 문장을 두 음절씩 끊어서 KIT-C에 대응해보세요.'],
    answerText:`<div style="display:flex;gap:6px;">
     <img src="assets/file05_explain1.jpg" style="width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file05_explain1.jpg')">
     <img src="assets/file05_explain2.jpg" style="width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file05_explain2.jpg')">
@@ -1435,7 +1435,7 @@ const files = [
   {num:7,name:'FILE_06',sub:'MEMORY TOWER — 타일벽화',icon:'📷',unlocked:false,
    answer:'KEY',unlockCode:'MEMORYTOWER',answerLen:3,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 03</div><div>MEMORY TOWER.. AB-051 근처에 있는 건물이다.<br>사람들의 행복한 기억들을 그려놓은 건물에서 제조를 하고 있었다니 확실히 악랄한 녀석들이다.<br><br>NULL-Z의 효과, 단기 기억 삭제..<br>잊고 싶은 기억을 지우고, 행복한 기억만 남기고 싶다는 욕구로 사람들은 점점 중독돼 갔겠지..<br><br>벽화 앞을 서성이다 바닥에 떨어져 있는 그림 조각들을[KIT-D] 발견했다.<br>중요한 단서가 될 수 있으려나?</div></div>`,
-   hints:['KIT-D 세 장과 매칭되는 그림을 찾으세요.','매칭되는 그림의 틀에 KIT-D를 맞춰서 만들어지는 단어를 찾으세요.'],
+   hints:['KIT-D 그림 세장과 매칭되는 그림을 벽화에서 찾으세요.','매칭되는 그림의 틀에 KIT-D를 맞춰서 만들어지는 단어를 찾으세요.'],
    answerText:`<div style="display:flex;gap:4px;">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file06_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file06_explain1.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">K</span></div>
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file06_explain2.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file06_explain2.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">E</span></div>
@@ -1443,9 +1443,9 @@ const files = [
    </div>`},
 
   // #8 FILE_07
-  {num:8,name:'FILE_07',sub:'어린이은행공원 — 음표',icon:'🎵',unlocked:false,
+  {num:8,name:'FILE_07',sub:'어린이은행공원 — 음표놀이판',icon:'🎵',unlocked:false,
    answer:'FADE',unlockCode:'KEY',answerLen:4,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 04</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처에 있는 연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 04</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처 연남동 250-1에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 05</div><div>겉으로 볼때는 지구방범대로 알겠지만 사실 NCI 정보국이다.<br>MEMORY TOWER에서 알아낸 KEY에 대해 묻자,<br>NCI 정보요원은 그들의 본거지의 비밀번호가 영어로 만들어졌다는 정보를 얻었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 07</div><div>갑자기 N05에게 다급한 전화가 왔다.</div>
    <div class="audio-mock" onclick="playAudio(this)"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 N05_voice_backup.mp3</div></div></div>
@@ -1471,17 +1471,17 @@ const files = [
    <div><span class="script-speaker">대원1:</span> 추적해.</div><br>
    <div>(통화 끊기는 소리)</div>
    </div>
-   <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br>통화 중 들리는 비밀번호 소리..<br><br>마침 정보국 옆 공원 안에 있는 음표로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
+   <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br>통화 중 들리는 비밀번호 소리..<br><br>마침 정보국 옆 공원 안에 있는 음표놀이판으로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
    </div>
 `,
-   hints:['공원 놀이터 안에 음표판을 찾으세요.','N05 녹취파일속에 들리는 도어락소리를 음표판에서 찾아 해당되는 알파벳을 조합합니다.'],answerText:'도어락소리에 맞춰 음표를 누르고, 대응되는 알파벳을 조합하면 FADE가 완성됩니다.'},
+   hints:['공원 놀이터 안에 음표놀이판을 찾으세요.','N05 녹취파일속에 들리는 도어락소리를 음표놀이판에서 찾아 해당되는 알파벳을 조합합니다.'],answerText:'도어락소리에 맞춰 음표를 누르고, 대응되는 알파벳을 조합하면 FADE가 완성됩니다.'},
 
   // #9 FILE_08
   {num:9,name:'FILE_08',sub:'카페 — QR 스티커',icon:'📷',unlocked:false,
    answer:'BLANK',unlockCode:'FADE',answerLen:3,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 10</div><div>주변을 살피던 중 카페 하나가 눈에 들어왔다.<br>창가에 같은 복장에 마스크를 쓴 무리들.<br>사진을 찍어 확대해보니 — 왼쪽 어깨에 동일한 마크가 찍혀있다.<br><br>저놈들이다.<br><br>카페 근처 가로등에 같은 마크가 붙어 있다.<br>현장분석 카메라로 확인해봐야겠다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 10</div><div>주변을 살피던 중 카페 하나가 눈에 들어왔다.<br>창가에 같은 복장에 마스크를 쓴 무리들.<br>사진을 찍어 확대해보니 — 왼쪽 어깨에 동일한 마크가 찍혀있다.<br><br>저놈들이다.<br><br>카페 폴브 근처 가로등에 같은 마크가 붙어 있다.<br>현장분석 카메라로 확인해봐야겠다.</div></div>
    <img class="detail-photo" src="assets/file08_cafe.jpg" alt="카페 파파라치 사진" onclick="openPhotoZoom('assets/file08_cafe.jpg')">`,
-   hints:['카페 폴브 연남점을 찾아가 사진에 표시된 가로등을 확인하세요.','현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 가로등에 있는 마크를 스캔하세요.'],
+   hints:['카페 폴브 연남점을 찾아가 사진에 표시된 가로등을 확인하세요.','현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 가로등에 있는 마크를 스캔하세요.<br><button onclick="openPhotoZoom(\'assets/file08_explain1.png\')" style="margin-top:6px;background:#1a1a3a;border:1px solid #8a9aba;color:#d8d8f0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;">📷 카메라 인식 불가</button>'],
    answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
     <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
     <span style="font-size:13px;color:#8a9aba;">현장 분석 카메라로 마크를 스캔하면 아래처럼 BLANK가 나타납니다.</span>
@@ -1492,32 +1492,33 @@ const files = [
   {num:10,name:'FILE_09',sub:'그래피티 — 가입 인증 1',icon:'📷',unlocked:false,
    answer:'9726R513',unlockCode:'BLANK',answerLen:8,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 11</div>
-   <div style="text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:11px;color:#8a5a10;letter-spacing:0.5px;margin-bottom:8px;">가입 혜택: 제휴 카페 5% 할인</div>
+   <div>BLANK가 저놈들 조직 이름이다.<br>카메라를 비춰보니 멤버십 가입센터로 연결됐다.</div></div>
    <img class="detail-photo" src="assets/file09_blank_membership.jpg" alt="BLANK 멤버십 인증 안내" onclick="openPhotoZoom('assets/file09_blank_membership.jpg')">
-   <div>녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>`,
-   hints:['해당 위치에 찾아가 그래피티를 찾으세요.','KIT-E에서 틀에 맞춰 퍼즐을 완성하세요.'],answerText:'퍼즐을 완성하게되면 9726R513이 완성됩니다.'},
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 12</div><div>BLANK로부터 KIT-E랑 KIT-F가 도착했다.<br><br>녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>`,
+   hints:['연남동 259-16에 도착해서 노란색 그래피티를 찾으세요.','KIT-E와 KIT-F를 이용하여 그래피티 퍼즐을 완성하세요.'],answerText:'퍼즐을 완성하게되면 9726R513이 완성됩니다.'},
 
   // #11 FILE_10
   {num:11,name:'FILE_10',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
    answer:'9725A785',unlockCode:'9726R513',answerLen:8,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 14</div><div>9726R513.. 이게 뭘 뜻하는거지?<br>NCI 정보국에 물어보고 싶지만 암구호가 필요해보인다.<br>NCI 본부에서 근무하는 N24에게 연락하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>`,
-   hints:['전봇대에 적힌 숫자를 확인하세요.','숫자 순서대로 스크래치 카드를 긁으세요.'],answerText:''},
+   hints:['암구호 도어 / 제로를 이용하여 N24에게 메세지를 보냅니다.','N24로부터 얻은 금일의 암구호를 NCI 정보국에 메세지를 보냅니다.','퍼즐로 완성된 9726R513을 NCI 정보국에 전달해 위치 정보를 얻습니다.'],answerText:'정답: 390-94'},
 
   // #12 FILE_11 — (가안: 실제 답사 후 내용 교체 필요)
   {num:12,name:'FILE_11',sub:'전신주 390-94 — 세 번째 흔적',icon:'📍',unlocked:false,
    answer:'현장 확인',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국에서 알려준 전신주 위치, 연남동 390-94에 도착했다.<br>주변을 둘러보니 BLANK의 흔적으로 보이는 표식이 남아있다.<br><br>이 흔적이 다음 단서로 이어질 것 같다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>390-94에 도착했다.<br><br>나를 지켜봤다는듯이 BLANK로부터 메세지가 도착했다.<br>메세지를 열자 숫자와 그림같은게 보이다가 몇초 뒤에 사라졌다.<br><br>기억에 의지하여 아래와 같이 그려놓았다.</div></div>
    <img class="detail-photo" style="border-radius:0;cursor:default;" src="assets/file11_kit.png?v=8" alt="KIT 메모">
-   <div style="text-align:center;font-size:11px;color:#8a7a5a;letter-spacing:1px;margin-top:2px;">다음 전신주 번호</div>`,
-   hints:['연남동 390-94 주변 전신주와 표지판을 자세히 살펴보세요.','표식이나 스티커가 남아있는 곳을 찾아 키트와 대조해보세요.'],answerText:'정답: 현장에서 발견한 표식을 키트와 대조'},
+   <div style="text-align:center;font-size:11px;color:#8a7a5a;letter-spacing:1px;margin-top:8px;">다음 위치 :</div>
+   <img class="detail-photo" style="border-radius:0;cursor:default;margin-top:4px;" src="assets/file11_answer_boxes.png" alt="다음 위치 입력칸">`,
+   hints:['전신주에 그림과 일치하는 표식을 찾으세요.','전구, 동신지, 마크를 동일한 위치에 매칭시켜 나오는 내용을 다음 위치 번호를 채워주세요.','다음 위치로 추정되는 번호를 NCI 정보국에 조회하여 다음 위치에 대한 정보를 얻으세요.'],answerText:'정답: 현장에서 발견한 표식을 키트와 대조'},
 
   // #13 FILE_12
   {num:13,name:'FILE_12',sub:'모나리자 — 그래피티',icon:'🎨',unlocked:false,
    answer:'모나리자',unlockCode:'9725A785',answerLen:8,
    isMemoryTrigger:true,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 16</div><div>두번째 전신주의 위치로 오니 써있는대로 수상한 검은색 그림이 보인다.<br>이 얼굴 어디서 많이 본것 같은데..<br><br>그리고 저 멀리 누군가 나를 쳐다보고 있는 느낌이 든다.</div></div>
-   <button onclick="openMonalisaModal()" style="background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 분석 결과 입력</button>`,
-   hints:['NCI 정보국으로 받은 위치의 건물 주변에서 검정색으로 칠해져있는 심볼을 찾으세요.','심볼의 정체를 사건일지 내의 질문에 답하세요.'],answerText:'정답: MONALISA'},
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 16</div><div>두번째 전신주의 위치로 도착하니, 수상한 얼굴 그래피티가 보인다. 이게 히든심볼인걸까?<br>그래피티를 보고있으니 왠지모르게 갑자기 소름이 돋는다.<br><br>저 멀리 누군가 나를 쳐다보는거 같은데 기분탓인가..</div></div>
+   <button onclick="openMonalisaModal()" style="background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 그래피티 분석</button>`,
+   hints:['NCI 정보국으로 받은 위치의 건물 주변에서 검정색으로 칠해져있는 얼굴 그래피티를 찾으세요.','히든 심볼의 정체를 그래피티 분석 질문에 답하세요.'],answerText:'정답: MONALISA'},
 
   // #14 FILE_13 — 가챠샵 (HIDDEN)
   {num:14,name:'FILE_13',sub:'푸른바다 가챠샵',icon:'🎰',unlocked:true,hidden:true,
@@ -1883,7 +1884,7 @@ function sendReply(){
           pushThreadMsg(m, 'them', '제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?');
           m.waitingForChoice = true;
         } else {
-          pushThreadMsg(m, 'them', '누구야 너?<br>설마 살아 있는 거야?<br>N07, 너가 맞다면 우리끼리 정한 암구호를 먼저 말해봐.');
+          pushThreadMsg(m, 'them', '누구야 너?<br>설마 살아 있는 거야?<br>우리끼리 정한 암구호를 먼저 말해봐.');
           m.waitingForAnswer = true;
         }
         m.answered = true;
