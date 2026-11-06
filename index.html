@@ -1332,7 +1332,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </div>
 </div>
 
-<div class="unlock-toast" id="unlockToast">🔓 FILE UNLOCKED</div>
+<div class="unlock-toast" id="unlockToast">🔓 FILE 잠금 해제</div>
 <div class="unlock-toast lock-toast" id="lockToast">🔒 LOCKED</div>
 
 <script>
@@ -2161,6 +2161,7 @@ function submitCode(){
     f.unlockReveal=true;
     closeModal('modalCode');
     const toast=document.getElementById('unlockToast');
+    toast.textContent='🔓 '+f.name+' 잠금 해제';
     toast.classList.remove('show');
     void toast.offsetWidth; // 강제 reflow
     toast.classList.add('show');
