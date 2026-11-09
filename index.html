@@ -750,9 +750,10 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 .hint-modal .hint-stage[style*="border-top"]{border-top:1px dashed #b89858!important;}
 .hint-modal .hint-stage-num[style*="c8a840"]{color:#a06818!important;}
-.hint-modal .hint-stage-txt[style*="ffdd99"]{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;}
-.hint-modal .hint-stage-num[style*="8a9aba"]{color:#2a4a6a!important;}
-.hint-modal .hint-stage-txt[style*="d8d8d0"]{color:#1c2838!important;background:rgba(138,154,186,0.22);padding:4px 6px;border-radius:3px;}
+.hint-answer-value{color:#ffdd99;font-weight:bold;}
+.hint-explain-text{color:#d8d8d0;margin-top:8px;}
+.hint-modal .hint-answer-value{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;display:inline-block;}
+.hint-modal .hint-explain-text{color:#1c2838!important;background:rgba(138,154,186,0.22);padding:4px 6px;border-radius:3px;}
 
 /* ---- S7: 파일 상세보기(사건일지) — 종이 테마, 테스트 ---- */
 #s7 .detail-screen{
@@ -2404,15 +2405,11 @@ function renderHints(target){
     const key='hint'+i, collapsed=!!sc[key];
     html+=`<div class="hint-stage"><div class="hint-stage-num">HINT ${i+1} / ${target.hints.length}${foldBtn(key)}</div><div class="hint-stage-txt${collapsed?' collapsed':''}">${target.hints[i]}</div></div>`;
   }
-  // 정답이 공개됐으면 정답 표시 (해설은 별도 버튼으로 분리)
+  // 정답/해설은 한 번에 같이 공개, 하나의 접기 버튼으로 묶음
   const ansVal = target.answer;
   if(target.answerRevealed && ansVal){
     const key='answer', collapsed=!!sc[key];
-    html+=`<div class="hint-stage" style="border-top:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답${foldBtn(key)}</div><div class="hint-stage-txt${collapsed?' collapsed':''}" style="color:#ffdd99;font-weight:bold;">${ansVal}</div></div>`;
-    if(target.explainRevealed && target.answerText){
-      const key2='explain', collapsed2=!!sc[key2];
-      html+=`<div class="hint-stage" style="border-top:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설${foldBtn(key2)}</div><div class="hint-stage-txt${collapsed2?' collapsed':''}" style="color:#d8d8d0;">${target.answerText}</div></div>`;
-    }
+    html+=`<div class="hint-stage" style="border-top:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답 및 해설${foldBtn(key)}</div><div class="hint-stage-txt${collapsed?' collapsed':''}"><div class="hint-answer-value">${ansVal}</div>${target.answerText?`<div class="hint-explain-text">${target.answerText}</div>`:''}</div></div>`;
   }
   html+='</div>';
 
@@ -2423,12 +2420,9 @@ function renderHints(target){
       // 다음 힌트 열기 버튼
       html+=`<div class="hint-locked-stage"><span>🔒 HINT ${target.hintsRevealed+1} / ${target.hints.length}</span><button onclick="revealHint('${refId}')">▶ 열기</button></div>`;
     } else {
-      // 힌트 다 봤으면 정답 보기 버튼
-      html+=`<div class="hint-locked-stage" style="border-color:#5a3010;background:#1a0d0a;"><span style="color:#c8a840;">★ 정답 확인</span><button onclick="revealAnswer('${refId}')" style="background:#5a3010;border-color:#c8a840;color:#ffdd99;">▶ 정답 확인</button></div>`;
+      // 힌트 다 봤으면 정답 및 해설 보기 버튼
+      html+=`<div class="hint-locked-stage" style="border-color:#5a3010;background:#1a0d0a;"><span style="color:#c8a840;">★ 정답 및 해설</span><button onclick="revealAnswer('${refId}')" style="background:#5a3010;border-color:#c8a840;color:#ffdd99;">▶ 열기</button></div>`;
     }
-  } else if(!target.explainRevealed && target.answerText){
-    // 정답은 공개됐지만 해설은 아직 — 해설 보기 버튼
-    html+=`<div class="hint-locked-stage" style="border-color:#3a3a5a;background:#0a0a1a;"><span style="color:#8a9aba;">💡 상세 해설 열람 가능</span><button onclick="revealExplain('${refId}')" style="background:#1a1a3a;border-color:#8a9aba;color:#d8d8f0;">▶ 해설 확인</button></div>`;
   }
   hintEl.innerHTML=html;
 }
@@ -2457,19 +2451,6 @@ function revealAnswer(ref){
   }
   if(target){
     target.answerRevealed = true;
-    renderHints(target);
-  }
-}
-
-function revealExplain(ref){
-  let target;
-  if(ref === 'safe' || ref === "'safe'"){
-    target = safeModeHints;
-  } else {
-    const num = parseInt(ref);
-    target = files.find(x=>x.num===num);
-  }
-  if(target){
     target.explainRevealed = true;
     renderHints(target);
   }
