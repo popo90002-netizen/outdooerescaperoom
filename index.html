@@ -748,7 +748,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   border:none!important;color:transparent!important;
   width:76px;height:32px;flex-shrink:0;
 }
-.hint-modal .hint-stage[style*="border-top"]{border-top:1px dashed #b89858!important;}
+.hint-modal .hint-stage[style*="dashed"]{border:1px dashed #b89858!important;}
 .hint-modal .hint-stage-num[style*="c8a840"]{color:#a06818!important;}
 .hint-modal .hint-stage-num[style*="8a9aba"]{color:#2a4a6a!important;}
 .hint-answer-value{color:#ffdd99;font-weight:bold;}
@@ -2406,14 +2406,13 @@ function renderHints(target){
     const key='hint'+i, collapsed=!!sc[key];
     html+=`<div class="hint-stage"><div class="hint-stage-num">HINT ${i+1} / ${target.hints.length}${foldBtn(key)}</div><div class="hint-stage-txt${collapsed?' collapsed':''}">${target.hints[i]}</div></div>`;
   }
-  // 정답/해설은 한 번에 같이 공개되지만, 칸은 각각 분리하고 접기도 각자 따로
+  // 정답/해설은 한 번에 같이 공개, 칸은 분리하되 접기는 정답 쪽 버튼 하나로 같이 열고닫힘
   const ansVal = target.answer;
   if(target.answerRevealed && ansVal){
     const key='answer', collapsed=!!sc[key];
-    html+=`<div class="hint-stage" style="border-top:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답${foldBtn(key)}</div><div class="hint-stage-txt hint-answer-value${collapsed?' collapsed':''}">${ansVal}</div></div>`;
+    html+=`<div class="hint-stage" style="border:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답${foldBtn(key)}</div><div class="hint-stage-txt hint-answer-value${collapsed?' collapsed':''}">${ansVal}</div></div>`;
     if(target.answerText){
-      const key2='explain', collapsed2=!!sc[key2];
-      html+=`<div class="hint-stage" style="border-top:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설${foldBtn(key2)}</div><div class="hint-stage-txt hint-explain-text${collapsed2?' collapsed':''}">${target.answerText}</div></div>`;
+      html+=`<div class="hint-stage" style="border:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설</div><div class="hint-stage-txt hint-explain-text${collapsed?' collapsed':''}">${target.answerText}</div></div>`;
     }
   }
   html+='</div>';
