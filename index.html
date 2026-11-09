@@ -2406,13 +2406,18 @@ function renderHints(target){
     const key='hint'+i, collapsed=!!sc[key];
     html+=`<div class="hint-stage"><div class="hint-stage-num">HINT ${i+1} / ${target.hints.length}${foldBtn(key)}</div><div class="hint-stage-txt${collapsed?' collapsed':''}">${target.hints[i]}</div></div>`;
   }
-  // 정답/해설은 한 번에 같이 공개, 칸은 분리하되 접기는 정답 쪽 버튼 하나로 같이 열고닫힘
+  // 정답/해설은 한 번에 같이 공개, 접기는 정답 쪽 버튼 하나로 같이 열고닫힘
+  // 접었을 때는 "정답 및 해설" 한 칸으로, 펼쳤을 때는 정답/해설 두 칸으로 나눠 보여줌
   const ansVal = target.answer;
   if(target.answerRevealed && ansVal){
     const key='answer', collapsed=!!sc[key];
-    html+=`<div class="hint-stage" style="border:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답${foldBtn(key)}</div><div class="hint-stage-txt hint-answer-value${collapsed?' collapsed':''}">${ansVal}</div></div>`;
-    if(target.answerText){
-      html+=`<div class="hint-stage" style="border:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설</div><div class="hint-stage-txt hint-explain-text${collapsed?' collapsed':''}">${target.answerText}</div></div>`;
+    if(collapsed){
+      html+=`<div class="hint-stage" style="border:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답 및 해설${foldBtn(key)}</div></div>`;
+    } else {
+      html+=`<div class="hint-stage" style="border:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답${foldBtn(key)}</div><div class="hint-stage-txt hint-answer-value">${ansVal}</div></div>`;
+      if(target.answerText){
+        html+=`<div class="hint-stage" style="border:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설</div><div class="hint-stage-txt hint-explain-text">${target.answerText}</div></div>`;
+      }
     }
   }
   html+='</div>';
