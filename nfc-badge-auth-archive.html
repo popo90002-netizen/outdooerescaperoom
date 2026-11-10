@@ -1,0 +1,2832 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<title>NCI_SYS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:none;}
+body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;}
+.device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;overflow-x:hidden;}
+
+.scanline{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;height:100dvh;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.13) 2px,rgba(0,0,0,0.13) 4px);pointer-events:none;z-index:100;}
+.blackout{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;height:100dvh;background:#000;pointer-events:none;z-index:201;opacity:0;transition:opacity 0.2s;}
+.scan-auth{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:4px;background:linear-gradient(90deg,transparent,#ff4444,#ff8888,#ff4444,transparent);pointer-events:none;z-index:202;opacity:0;box-shadow:0 0 12px #ff4444;}
+
+.inner.glitching{animation:sg 0.6s ease forwards;}
+@keyframes sg{0%{transform:none;filter:none}10%{transform:translateX(6px);filter:hue-rotate(180deg) brightness(2)}30%{filter:hue-rotate(90deg) brightness(3)}50%{filter:brightness(4) saturate(0)}70%{filter:brightness(0.2)}100%{transform:none;filter:none}}
+
+/* TOPBAR (공통) */
+.topbar{background:#080808;border-bottom:1px solid #2a1a1a;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:50;}
+.inner{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;padding-top:44px;}
+.topbar-left{display:flex;align-items:center;gap:8px;}
+.back-btn{background:none;border:none;color:#5a7a9a;font-family:'Share Tech Mono',monospace;font-size:14px;cursor:pointer;padding:4px 8px;display:none;}
+.back-btn:hover{color:#7a9aba;}
+.back-btn.show{display:block;}
+.logo{font-family:'VT323',monospace;font-size:20px;color:#cc4444;letter-spacing:3px;}
+.topbar-right{display:flex;align-items:center;}
+.dot{width:7px;height:7px;border-radius:50%;background:#ff4444;display:inline-block;margin-right:6px;animation:blink 1s infinite;transition:background 0.5s;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.1}}
+.stxt{font-size:9px;color:#ff4444;letter-spacing:1px;transition:color 0.5s;}
+
+.screen{display:none;flex:1;flex-direction:column;}
+.screen.on{display:flex;}
+
+/* ===== S1: SAFE MODE ===== */
+.s1-body{padding:14px;flex:1;}
+.outer-box{border:1px solid #ff3333;background:#0d0808;position:relative;flex:1;display:flex;flex-direction:column;min-height:calc(100svh - 100px);}
+.outer-box::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,50,50,0.04),transparent);animation:sb 4s infinite;}
+@keyframes sb{0%{left:-100%}100%{left:200%}}
+.corner{position:absolute;width:14px;height:14px;}
+.corner.tl{top:-1px;left:-1px;border-top:2px solid #ff3333;border-left:2px solid #ff3333;}
+.corner.tr{top:-1px;right:-1px;border-top:2px solid #ff3333;border-right:2px solid #ff3333;}
+.corner.bl{bottom:-1px;left:-1px;border-bottom:2px solid #ff3333;border-left:2px solid #ff3333;}
+.corner.br{bottom:-1px;right:-1px;border-bottom:2px solid #ff3333;border-right:2px solid #ff3333;}
+.alert-section{border-bottom:1px solid #3a1515;padding:12px;}
+.alert-ttl{font-family:'VT323',monospace;font-size:22px;color:#ff4444;letter-spacing:3px;margin-bottom:6px;}
+.g-wrap{font-size:11px;line-height:1.7;}
+.g-wrap span{display:block;}
+.g-wrap .w{color:#e8c060;}
+.g-wrap .r{color:#e06040;}
+.g-wrap .d{color:#aaa;}
+.safe-section{border-bottom:1px solid #3a1515;padding:12px;}
+.safe-ttl{font-family:'VT323',monospace;font-size:20px;color:#ff4444;letter-spacing:5px;text-align:center;margin-bottom:8px;animation:sftl 2.5s infinite;}
+@keyframes sftl{0%,91%,100%{text-shadow:0 0 10px rgba(255,50,50,0.4)}93%{text-shadow:0 0 24px rgba(255,50,50,1)}}
+.hint-box{border:1px solid #3a2020;background:#0a0808;padding:9px 11px;}
+.hint-row{display:block;font-size:12px;line-height:1.85;color:#c8c8c0;}
+.hint-glint{display:inline-block;font-weight:700;color:#c8c8c0;animation:hintGlint 10s ease-in-out infinite;}
+@keyframes hintGlint{0%,88%,100%{color:#c8c8c0;text-shadow:none;}92%,96%{color:#e8e8e4;text-shadow:0 0 4px rgba(255,255,255,0.45),0 0 10px rgba(207,232,255,0.32);}94%{color:#ffffff;text-shadow:0 0 6px rgba(255,255,255,0.7),0 0 14px rgba(207,232,255,0.5);}}
+.support-box{border:1px solid #3a2020;background:#0a0808;padding:14px 11px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s;}
+.support-box:hover{border-color:#5a3030;background:#120a0a;}
+.support-icon{font-size:32px;flex-shrink:0;}
+.support-text{flex:1;}
+.support-title{font-family:'VT323',monospace;font-size:16px;color:#cc6644;letter-spacing:2px;margin-bottom:3px;}
+.support-sub{font-size:10px;color:#8a5a5a;line-height:1.5;letter-spacing:0.5px;}
+.recover-section{padding:12px 12px 60px 12px;}
+/* 지그재그 */
+.msg-zigzag{margin:10px 0 14px;padding:16px 12px;font-size:10px;color:#5a4a20;letter-spacing:1px;text-align:center;background:repeating-linear-gradient(135deg,#1a1508,#1a1508 6px,#221c0a 6px,#221c0a 12px);border:none;clip-path:polygon(0% 10%,6.25% 0%,12.5% 10%,18.75% 0%,25% 10%,31.25% 0%,37.5% 10%,43.75% 0%,50% 10%,56.25% 0%,62.5% 10%,68.75% 0%,75% 10%,81.25% 0%,87.5% 10%,93.75% 0%,100% 10%,100% 90%,93.75% 100%,87.5% 90%,81.25% 100%,75% 90%,68.75% 100%,62.5% 90%,56.25% 100%,50% 90%,43.75% 100%,37.5% 90%,31.25% 100%,25% 90%,18.75% 100%,12.5% 90%,6.25% 100%,0% 90%);}
+.recover-label{font-size:9px;color:#888;letter-spacing:2px;margin-bottom:8px;display:flex;justify-content:space-between;}
+.recover-label span{color:#ff4444;animation:blink 2s infinite;}
+.progress-row{margin-bottom:8px;}
+.progress-title{font-size:9px;color:#888;margin-bottom:3px;}
+.progress-bar-wrap{height:5px;background:#1a0a0a;border:1px solid #3a1515;overflow:hidden;}
+.progress-bar-fill{height:100%;background:#5a1a1a;}
+.bar-1{width:23%}.bar-2{width:67%}.bar-3{width:41%}.bar-4{width:8%}
+.nfc-zone{display:none;}
+.nfc-sim-mini{position:absolute;top:8px;right:8px;background:rgba(20,8,8,0.85);border:1px dashed #3a1515;color:#5a3030;font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;padding:5px 8px;cursor:pointer;z-index:5;}
+.nfc-sim-mini:hover{border-color:#6a3030;color:#8a4040;}
+
+/* ===== S2: 배지 스캔 ===== */
+.scan-screen{background:#0a0a0a;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;}
+.badge-wrap{position:relative;width:140px;height:180px;margin-bottom:20px;}
+.badge-svg{width:140px;height:180px;transition:filter 0.3s;filter:drop-shadow(0 0 8px rgba(255,50,50,0.15));}
+.badge-scan-line{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(255,80,80,0.9),rgba(255,180,180,1),rgba(255,80,80,0.9),transparent);box-shadow:0 0 8px rgba(255,50,50,0.8);top:-3px;opacity:0;z-index:5;border-radius:2px;}
+.n07-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'VT323',monospace;font-size:28px;color:#ff4444;letter-spacing:4px;opacity:0;z-index:6;text-shadow:0 0 12px rgba(255,50,50,0.8);transition:opacity 0.4s;}
+.scan-status{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:#3a3a3a;text-align:center;min-height:18px;}
+
+/* ===== S3: AUTH ===== */
+.auth-bg{background:#0a0a0a;padding:30px 18px;flex:1;}
+.auth-line{font-size:11px;color:#5a8a5a;letter-spacing:1px;line-height:2.4;overflow:hidden;white-space:nowrap;width:0;display:block;}
+.auth-line.dim{color:#2a4a2a;}
+.auth-line.hi{color:#8aba8a;}
+.auth-line.err{color:#ff6644;}
+.auth-line.type{animation:tw 0.6s steps(40) forwards;}
+@keyframes tw{from{width:0}to{width:100%}}
+.auth-ok{margin-top:18px;border-left:2px solid #5a8a5a;padding-left:12px;opacity:0;transition:opacity 0.5s;}
+.auth-ok.show{opacity:1;}
+.auth-ok p{font-size:12px;color:#8aba8a;letter-spacing:2px;line-height:2;}
+.next-btn{margin-top:20px;background:transparent;border:1px solid #2a4a2a;color:#5a8a5a;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;padding:11px;cursor:pointer;width:100%;opacity:0;}
+.next-btn.show{opacity:1;}
+.next-btn:hover{background:#0d1a0d;border-color:#4a7a4a;}
+
+/* ===== N07 프로필 카드 ===== */
+.profile-card{margin:14px;background:#0a1020;border:1px solid #1a3060;padding:14px;flex-shrink:0;display:flex;gap:14px;align-items:flex-start;}
+.profile-photo{flex-shrink:0;width:80px;}
+.profile-photo svg{width:80px;height:80px;border:2px solid #3a1515;display:block;}
+.profile-status{font-family:'VT323',monospace;font-size:14px;color:#cc4444;letter-spacing:4px;text-align:center;margin-top:4px;font-weight:bold;}
+.profile-mission{flex:1;min-width:0;}
+.profile-mission-label{font-family:'VT323',monospace;font-size:14px;color:#c8a840;letter-spacing:3px;margin-bottom:6px;}
+.profile-mission-text{font-size:11px;color:#9abaca;line-height:1.7;}
+.mission-blank{background:#1a2a3a;color:#1a2a3a;border:1px solid #2a3a5a;padding:0 4px;font-family:'VT323',monospace;}
+.mission-blank.revealed{background:transparent;color:#c8a840;border-color:#5a4020;letter-spacing:1px;}
+
+/* 메시지 작성 UI */
+.msg-compose-btn{background:#0d1830;border:1px dashed #3a5a7a;color:#5a8aba;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;padding:10px;cursor:pointer;width:100%;margin-top:8px;}
+.msg-compose-btn:hover{background:#102040;border-style:solid;}
+
+/* 메시지 답장 영역 (메시지 상세 안) */
+.msg-thread{margin-top:14px;padding-top:14px;border-top:1px solid #1a3060;}
+.msg-thread-bubble{padding:9px 12px;margin-bottom:8px;font-size:11px;line-height:1.6;border-radius:4px;max-width:85%;}
+.msg-thread-bubble.from-me{background:#1a3060;color:#aaccdc;margin-left:auto;border-bottom-right-radius:1px;}
+.msg-thread-bubble.from-them{background:#0a1828;color:#9abaca;border:1px solid #1a3060;border-bottom-left-radius:1px;}
+.msg-thread-bubble.dead-no-reply{background:#1a0d0d;border:1px dashed #5a2020;color:#7a4040;font-style:italic;text-align:center;}
+.msg-reply-area{margin-top:12px;display:flex;gap:6px;}
+.msg-reply-input{flex:1;background:#0a1020;border:1px solid #2a4a6a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;padding:9px;outline:none;}
+.msg-reply-input:focus{border-color:#5a8aba;}
+.msg-reply-send{background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;padding:9px 14px;cursor:pointer;}
+.msg-reply-send:hover{background:#2a4a7a;}
+.msg-choice-box{margin-top:14px;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+@keyframes choiceGlow{
+  0%,100%{box-shadow:0 0 6px rgba(255,205,80,0.45),0 0 2px rgba(255,205,80,0.5);}
+  50%{box-shadow:0 0 16px rgba(255,205,80,0.95),0 0 6px rgba(255,205,80,0.8);}
+}
+.msg-choice-btn{max-width:85%;margin-left:auto;background:#1a3060;border:2px solid rgba(255,205,80,0.85);color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.5;padding:9px 12px;border-radius:4px;border-bottom-right-radius:1px;text-align:left;cursor:pointer;animation:choiceGlow 1.8s ease-in-out infinite;}
+.msg-choice-btn:hover{background:#24407a;}
+
+/* ===== S4: 메시지 화면 (요원 인증 직후) ===== */
+.msg-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;position:relative;}
+.placeholder-banner{background:#1a2030;border:1px dashed #3a5a7a;padding:6px 10px;font-size:9px;color:#5a7a9a;letter-spacing:1px;text-align:center;margin:10px 14px 0;flex-shrink:0;}
+.msg-tabs{display:flex;border-bottom:1px solid #1e3a6e;background:#0a1020;flex-shrink:0;padding:8px 14px;align-items:center;gap:8px;}
+.msg-tab{flex:1;padding:11px 6px;text-align:center;font-family:'VT323',monospace;font-size:14px;letter-spacing:2px;color:#3a5a7a;cursor:pointer;border-bottom:2px solid transparent;}
+.msg-tab.on{color:#8aaac8;border-bottom-color:#5a8aba;background:#0d1830;}
+.msg-tab .badge-count{background:#ff4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:4px;}
+.msg-list{overflow-y:auto;padding:4px 10px 0;}
+.msg-item{background:#0a1020;border:1px solid #1a3060;border-left:3px solid #1a3060;padding:11px 12px;margin-bottom:8px;cursor:pointer;transition:all 0.15s;}
+.msg-item:hover{border-color:#3a6a9a;background:#0d1830;}
+.msg-item.new{border-left-color:#c8a840;}
+.msg-item.read{opacity:0.65;}
+.msg-head{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.msg-sender{font-size:11px;color:#7a9aba;letter-spacing:1px;}
+.msg-sender.dead{color:#ff5544;text-decoration:line-through;}
+.msg-dead-badge{display:inline-block;font-size:9px;color:#ff5544;text-decoration:none;letter-spacing:0;font-family:'Noto Sans KR',sans-serif;font-weight:700;}
+.msg-time{margin-left:auto;font-size:9px;color:#3a5a7a;}
+.msg-preview{font-size:10px;color:#5a7a9a;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.msg-attach{margin-top:5px;font-size:9px;color:#c8a840;letter-spacing:1px;}
+.storage-bottom-btn{display:block;margin:12px 14px;background:#0a1828;border:1px solid #1e3a6e;border-left:3px solid #4a7aaa;color:#4a7aaa;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;padding:13px;cursor:pointer;text-align:center;}
+.storage-bottom-btn:hover{background:#0d2030;}
+
+/* 미션 브리핑 카드 (메시지 상단에) */
+.mission-card{margin:14px;background:#0a1020;border:1px solid #1a3060;padding:12px;flex-shrink:0;}
+.m-card-title{font-family:'VT323',monospace;font-size:17px;color:#5a8aba;letter-spacing:3px;margin-bottom:8px;}
+.m-card-txt{font-size:11px;color:#4a6a8a;line-height:1.8;margin-bottom:10px;}
+.redacted{background:#1a2a3a;color:#1a2a3a;border:1px solid #2a3a5a;padding:0 3px;font-size:10px;}
+.fields-mini{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:10px;}
+.field-mini{background:#0d1830;padding:6px 8px;border:1px solid #1a3060;}
+.field-mini-lbl{font-size:8px;color:#3a5a7a;letter-spacing:1px;margin-bottom:2px;}
+.field-mini-val{color:#1e3050;letter-spacing:2px;font-family:'VT323',monospace;font-size:13px;}
+.field-mini-val.revealed{color:#c8a840;}
+
+/* ===== S5: 메시지 상세 (음성 메모 등) ===== */
+.msg-detail-screen{background:#0e1525;flex:1;padding:14px;overflow-y:auto;}
+.msg-detail-head{margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #1a3060;}
+.msg-detail-sender{font-family:'VT323',monospace;font-size:18px;color:#8aaac8;letter-spacing:2px;}
+.msg-detail-sender.dead{color:#ff5544;text-decoration:line-through;}
+.call-log-panel .call-log-entry{display:flex;align-items:center;gap:10px;background:#1a0d0d;border:1px solid #5a2020;padding:11px;margin-bottom:10px;}
+.call-log-icon{font-size:20px;color:#cc4444;}
+.call-log-title{font-size:12px;color:#cc6644;font-weight:700;}
+.call-log-sub{font-size:10px;color:#7a4040;margin-top:2px;}
+.msg-detail-time{font-size:9px;color:#3a5a7a;margin-top:3px;letter-spacing:1px;}
+.msg-detail-body{font-size:12px;color:#9abaca;line-height:1.9;margin-bottom:14px;}
+.audio-mock{background:#0d1830;border:1px solid #2a4a7a;padding:11px;display:flex;align-items:center;gap:10px;cursor:pointer;margin:10px 0;}
+.audio-mock:hover{background:#102040;}
+.audio-mock.locked{background:#1a0d0d;border-color:#5a2020;}
+.audio-mock.locked:hover{background:#220f0f;}
+.audio-mock.locked .play-icon{color:#cc6644;}
+.audio-mock.locked .audio-name{color:#cc6644;}
+.audio-mock.locked .audio-time{color:#7a4040;}
+.audio-mock .play-icon{font-size:18px;color:#5a8aba;}
+.audio-mock-info{flex:1;}
+.audio-name{font-size:10px;color:#5a8aba;letter-spacing:1px;}
+.audio-time{font-size:9px;color:#3a5a7a;margin-top:2px;}
+.audio-progress{height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-top:7px;cursor:pointer;position:relative;}
+.audio-progress-fill{height:100%;width:0%;background:#5a8aba;border-radius:2px;pointer-events:none;}
+.script-toggle{margin-top:6px;background:none;border:1px solid #2a4a6a;color:#5a7a9a;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;padding:5px 9px;cursor:pointer;transition:transform 0.08s ease;}
+.script-toggle:hover{border-color:#4a7a9a;color:#7a9aba;}
+.script-toggle:active{transform:scale(0.93);}
+.script-box{margin-top:6px;background:#0a1020;border-left:2px solid #3a5a7a;padding:9px;font-size:10px;line-height:1.7;color:#7a9aba;display:none;}
+.script-box.show{display:block;}
+.script-speaker{color:#c8a840;font-weight:bold;}
+
+/* ===== S6: MY STORAGE (인벤토리) ===== */
+.storage-screen{background:#0e1525;flex:1;display:flex;flex-direction:column;position:relative;}
+.storage-head{padding:10px 14px;border-bottom:1px solid #1a3060;flex-shrink:0;display:flex;align-items:center;gap:8px;}
+.storage-head h2{font-family:'VT323',monospace;font-size:18px;color:#8aaac8;letter-spacing:3px;}
+.storage-progress{margin-left:auto;font-size:10px;color:#5a7a9a;}
+.storage-progress span{color:#c8a840;}
+
+/* 인벤토리 그리드 */
+.inv-grid-wrap{padding:10px 12px;}
+.inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.slot{aspect-ratio:1;position:relative;cursor:pointer;background:linear-gradient(145deg,#161c24,#0d1218);border:1px solid #1e2a38;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;overflow:hidden;}
+.slot::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);}
+.slot:hover:not(.locked):not(.empty){background:linear-gradient(145deg,#1a2530,#0f1620);border-color:#3a5a7a;}
+.slot.unlocked{background:linear-gradient(145deg,#0d1e30,#0a1624);border-color:#3a6a9a;}
+.slot.locked{background:linear-gradient(145deg,#0d0f12,#090b0e);border-color:#141c24;opacity:0.6;}
+.slot.empty{background:#090c10;border-color:#0d1318;cursor:default;}
+.slot.shake{animation:shake 0.4s;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.slot.unlock-anim{animation:unlock-glow 0.8s;}
+@keyframes unlock-glow{0%{box-shadow:0 0 0 rgba(200,168,64,0)}50%{box-shadow:0 0 16px rgba(200,168,64,0.7);border-color:#c8a840;}100%{box-shadow:0 0 0 rgba(200,168,64,0)}}
+.slot-icon{font-size:22px;line-height:1;}
+.slot.locked .slot-icon{font-size:16px;opacity:0.35;}
+.slot-num{font-size:8px;color:#3a5a7a;font-family:'Share Tech Mono',monospace;letter-spacing:1px;position:absolute;bottom:4px;right:5px;}
+.slot.unlocked .slot-num{color:#5a8aba;}
+.slot-name{font-size:7px;color:#3a5a7a;letter-spacing:0.5px;text-align:center;padding:0 3px;}
+.slot.unlocked .slot-name{color:#7a9aba;}
+.cn{position:absolute;width:5px;height:5px;opacity:0;}
+.cn.tl{top:2px;left:2px;border-top:1px solid #c8a840;border-left:1px solid #c8a840;}
+.cn.tr{top:2px;right:2px;border-top:1px solid #c8a840;border-right:1px solid #c8a840;}
+.cn.bl{bottom:2px;left:2px;border-bottom:1px solid #c8a840;border-left:1px solid #c8a840;}
+.cn.br{bottom:2px;right:2px;border-bottom:1px solid #c8a840;border-right:1px solid #c8a840;}
+.slot.selected .cn{opacity:1;}
+
+/* 선택 파일 정보 (하단) */
+.inv-info{background:#0a1020;border-top:1px solid #1a3060;padding:12px 14px;flex-shrink:0;}
+.inv-info-title{font-family:'VT323',monospace;font-size:16px;color:#8aaac8;letter-spacing:2px;margin-bottom:4px;}
+.inv-info-sub{font-size:9px;color:#3a5a7a;margin-bottom:8px;letter-spacing:1px;}
+.inv-info-action{background:#0d1830;border:1px solid #2a4a7a;color:#5a8aba;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;padding:9px;cursor:pointer;width:100%;}
+.inv-info-action:hover{background:#102040;color:#8aaac8;}
+.inv-info-locked{font-size:10px;color:#5a3a3a;text-align:center;padding:9px;}
+
+/* ===== S7: 파일 상세 ===== */
+.detail-screen{background:#0e1525;flex:1;padding:14px;overflow-y:auto;}
+.detail-num-badge{font-family:'VT323',monospace;font-size:14px;color:#5a7a9a;letter-spacing:2px;float:right;}
+.detail-title{font-family:'VT323',monospace;font-size:20px;color:#8aaac8;letter-spacing:2px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #1a3060;}
+.detail-content{font-size:12px;color:#9abaca;line-height:1.9;}
+.detail-img{width:100%;height:180px;background:#1a2a4a;border:1px solid #2a4a6a;display:flex;align-items:center;justify-content:center;margin:10px 0;color:#5a7a9a;font-size:10px;letter-spacing:2px;text-align:center;}
+.detail-photo{width:100%;display:block;margin:10px 0;border-radius:4px;cursor:zoom-in;}
+.photo-zoom-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:500;padding:20px;}
+.photo-zoom-bg.on{display:flex;}
+.photo-zoom-bg img{max-width:100%;max-height:100%;border-radius:6px;}
+.photo-zoom-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;}
+.detail-section{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #1a3060;}
+.detail-section:last-child{border-bottom:none;}
+.detail-section-title{font-size:9px;color:#3a5a7a;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
+
+/* 힌트 버튼 (기본: 오른쪽 하단) — Safe Mode 미니 버튼과 동일 스타일 */
+.hint-btn{transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;backface-visibility:hidden;}
+.hint-btn{position:fixed;top:calc(100dvh - 68px);right:16px;width:48px;height:48px;border-radius:50%;background:#3a1a1a;border:1px solid #8a3a3a;color:#ffaa66;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));transition:transform 0.08s ease, filter 0.08s ease;}
+.hint-btn:hover{background:#4a2a2a;}
+.hint-btn.show{display:flex;}
+.hint-btn.paper-style{background:url('assets/hint_emoticon.webp') center/100% 100% no-repeat;border:none;color:transparent;}
+.hint-btn:active,.hint-btn.press-active{transform:scale(0.93);filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));}
+
+/* 전화 아이콘 (MY PROFILE 전용, 화면 내부 왼쪽 하단에 고정 배치 — 뷰포트 기준 고정이 아니라
+   스크롤 드리프트 버그를 피하기 위해 화면 자체의 콘텐츠 흐름 안에 절대 위치로 둠) */
+.profile-call-btn{
+  position:absolute;bottom:20px;left:20px;width:48px;height:48px;border-radius:50%;
+  background:url('assets/call_phone_icon.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;cursor:pointer;z-index:10;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+.profile-call-btn:active,.profile-call-btn.press-active{
+  transform:scale(0.93);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
+}
+/* 카메라 아이콘 (MY STORAGE 전용, 동일한 방식) */
+.storage-bottom-row{display:flex;align-items:center;margin:7px 14px 4px;position:relative;top:-2px;}
+.storage-camera-btn{
+  flex-shrink:0;width:48px;height:48px;border-radius:50%;
+  background:url('assets/camera_emoticon.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;cursor:pointer;z-index:10;
+  position:relative;top:3px;margin-left:-8px;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+.storage-camera-btn:active,.storage-camera-btn.press-active{
+  transform:scale(0.93);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
+}
+
+/* 큰 화면(데스크탑)에서는 device 영역 안쪽에 위치 */
+@media(min-width:500px){
+  .hint-btn{right:calc(50% - 195px);}
+}
+
+/* Safe Mode 전용: outer-box 안쪽 좌우 하단 배치 — My Storage와 동일한 톤 */
+/* Safe Mode 전용: outer-box 안쪽 좌우 하단 배치 */
+.safe-mode-support{position:absolute;bottom:12px;left:12px;z-index:5;}
+.safe-mode-hint{position:absolute;bottom:12px;right:12px;z-index:5;}
+.safe-mode-support button, .safe-mode-hint button{width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+.safe-mode-support .support-mini{background:#2a1a1a;border:2px solid #6a3a3a;color:#cc8866;font-size:20px;}
+.safe-mode-support .support-mini:hover{background:#3a2020;}
+.safe-mode-hint .hint-mini{background:#1a2a4a;border:2px solid #3a6a9a;color:#c8a840;font-size:22px;}
+.safe-mode-hint .hint-mini:hover{background:#2a3a5a;}
+
+/* ===== 모달 ===== */
+.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:300;padding:20px;}
+.modal-bg.on{display:flex;}
+.modal{width:100%;max-width:340px;background:#0d1830;border:2px solid #3a6a9a;padding:18px;position:relative;max-height:calc(100vh - 40px);overflow-y:auto;}
+.modal.shake{animation:shake 0.4s;}
+.modal-close{position:absolute;top:6px;right:10px;background:none;border:none;color:#5a7a9a;font-size:20px;cursor:pointer;}
+
+/* ===== 미션 확대 모달 ===== */
+.mission-zoom-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:300;padding:20px;}
+.mission-zoom-bg.on{display:flex;}
+.mission-zoom-card{
+  width:100%;max-width:380px;background:#fdf1e1;border-radius:6px;
+  padding:26px 22px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  transform:scale(0.7);opacity:0;transition:transform 0.25s ease,opacity 0.25s ease;
+}
+.mission-zoom-bg.on .mission-zoom-card{transform:scale(1);opacity:1;}
+.mission-zoom-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:22px;color:#8a5a10;cursor:pointer;}
+.mission-zoom-label{font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:19px;color:#8a5a10;letter-spacing:1px;margin-bottom:12px;}
+.mission-zoom-text{font-size:15px;color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:500;line-height:1.85;}
+.modal h3{font-family:'VT323',monospace;font-size:20px;color:#8aaac8;letter-spacing:3px;margin-bottom:5px;}
+.modal-sub{font-size:10px;color:#5a7a9a;letter-spacing:1px;margin-bottom:16px;}
+.code-display{display:flex;gap:5px;justify-content:center;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.code-prefix{font-family:'VT323',monospace;font-size:22px;color:#5a8aba;letter-spacing:2px;}
+.code-cell{width:28px;height:38px;background:#0a1020;border:1px solid #2a4a6a;display:flex;align-items:center;justify-content:center;font-family:'VT323',monospace;font-size:20px;color:#c8a840;}
+.code-cell.filled{border-color:#5a8aba;color:#aaccdc;}
+.code-input{width:100%;background:#0a1020;border:1px solid #2a4a6a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:6px;text-align:center;padding:10px;outline:none;text-transform:uppercase;}
+.code-input:focus{border-color:#5a8aba;}
+.modal-submit{margin-top:12px;width:100%;background:#1a3a6a;border:1px solid #4a7aaa;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px;cursor:pointer;}
+.modal-submit:hover{background:#2a4a7a;}
+.modal-error{margin-top:8px;font-size:10px;color:#ff6644;letter-spacing:1px;text-align:center;min-height:14px;}
+
+/* MY STORAGE 컨셉(종이/서류함 톤)에 맞춘 현장분석 카메라 확인 모달 */
+.ar-confirm-modal{background:#f0e7da;border:2px solid #b8a888;border-radius:10px;}
+.ar-confirm-modal h3{color:#8a5a10;font-family:'Share Tech Mono',monospace;font-weight:700;letter-spacing:1px;}
+.ar-confirm-modal .modal-close{color:#8a7a5a;}
+.ar-confirm-modal .modal-sub{font-family:'Noto Sans KR',sans-serif;color:#3a2a1a;font-weight:700;}
+.ar-confirm-modal .ar-yes{background:#8a5a10;border:1px solid #6a4408;color:#fff8ec;font-family:'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:0;}
+.ar-confirm-modal .ar-yes:hover{background:#a06818;}
+.ar-confirm-modal .ar-no{background:#e4d6bc;border:1px solid #c8b89a;color:#5a4a30;font-family:'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:0;}
+.ar-confirm-modal .ar-no:hover{background:#d8c8a8;}
+
+.hint-modal h3{color:#c8a840;}
+.hint-num-input{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.hint-num-input label{font-size:11px;color:#7a9aba;}
+.hint-num-input input{flex:1;background:#0a1020;border:1px solid #2a4a6a;color:#c8a840;font-family:'VT323',monospace;font-size:18px;text-align:center;padding:6px;outline:none;}
+.hint-num-input button{background:#3a3010;border:1px solid #8a6a20;color:#c8a840;font-family:'Share Tech Mono',monospace;font-size:10px;padding:6px 12px;cursor:pointer;}
+.hint-display{background:#0a1020;border:1px solid #3a3010;padding:12px;margin-top:8px;min-height:60px;}
+.hint-stage{margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid #2a2010;}
+.hint-stage:last-child{border-bottom:none;}
+.hint-stage-num{font-size:9px;color:#8a6a20;letter-spacing:2px;margin-bottom:4px;user-select:none;display:flex;align-items:center;justify-content:space-between;}
+.hint-stage-txt{font-size:11px;color:#c8b880;line-height:1.6;}
+.hint-stage-txt.collapsed{display:none;}
+.hint-fold-btn{width:73px;height:27px;flex-shrink:0;cursor:pointer;background-size:100% 100%;background-repeat:no-repeat;background-position:center;margin-left:8px;transition:transform 0.08s ease;}
+.hint-fold-btn.collapse{background-image:url('assets/hint_collapse_btn.webp');}
+.hint-fold-btn.expand{background-image:url('assets/hint_expand_btn.webp');}
+.hint-fold-btn:active{transform:scale(0.9);}
+.hint-locked-stage{background:#0a1020;border:1px dashed #3a3010;padding:9px;margin-top:6px;display:flex;align-items:center;justify-content:space-between;}
+.hint-locked-stage span{font-size:10px;color:#5a4a20;}
+.hint-locked-stage button{background:#3a3010;border:1px solid #8a6a20;color:#c8a840;font-size:9px;padding:5px 9px;cursor:pointer;transition:transform 0.08s ease;}
+.hint-locked-stage button:active{transform:scale(0.92);}
+.hint-error{color:#ff6644;font-size:10px;text-align:center;margin-top:8px;}
+
+/* 잠금해제 토스트 */
+.unlock-toast{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#f1e8d9;border:2px solid #2e8b44;color:#3a2a1a;
+  padding:14px 26px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.3px;
+  z-index:400;display:none;border-radius:4px;box-shadow:4px 4px 0 rgba(0,0,0,0.3);text-align:center;
+}
+.unlock-toast.show{display:block;animation:toast 2s ease forwards;}
+.unlock-toast.lock-toast{background:#f3e4da;border-color:#a02020;color:#7a2418;}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,-50%) scale(0.85)}10%,80%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(0.85)}}
+
+/* ===== 기억 회복 오버레이 ===== */
+#memoryOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px;}
+#memoryOverlay.on{display:flex;animation:glitchIn 0.3s ease;}
+@keyframes glitchIn{0%{opacity:0;filter:brightness(3) contrast(2);}30%{opacity:1;filter:brightness(0.5);}60%{filter:brightness(2);}100%{filter:brightness(1);}}
+#memoryText{font-family:'VT323',monospace;font-size:20px;color:#d8cfa8;letter-spacing:3px;line-height:2;text-align:center;white-space:pre-line;text-shadow:0 0 10px rgba(216,207,168,0.5);}
+.memory-reveal-line{color:#d8cfa8;text-shadow:0 0 10px rgba(216,207,168,0.5);}
+.memory-final-line{display:inline-block;margin-top:16px;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:32px;letter-spacing:6px;color:#ff2a2a;text-shadow:0 0 22px rgba(255,40,40,1),0 0 44px rgba(255,40,40,0.7);}
+#memoryVideo{display:none;width:100%;height:100%;object-fit:contain;background:#000;}
+/* 보고서 네비 버튼 */
+.report-nav-btn{display:block;margin:12px 14px;background:#0a1828;border:1px solid #1e3a6e;border-left:3px solid #4a7aaa;color:#4a7aaa;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;padding:13px;cursor:pointer;text-align:center;}
+.report-nav-btn:hover{background:#0d2030;}
+/* 보고서 화면 */
+.report-screen{min-height:100%;background:#06080e;display:flex;flex-direction:column;overflow-y:auto;}
+.report-header{background:#080c14;border-bottom:2px solid #1a2a4a;padding:20px 18px 16px;text-align:center;}
+.report-org{font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a6a8a;letter-spacing:4px;margin-bottom:6px;}
+.report-title{font-family:'VT323',monospace;font-size:26px;color:#c8a840;letter-spacing:4px;margin-bottom:8px;}
+.report-meta{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:8px;color:#2a4a6a;letter-spacing:1px;}
+.report-body{flex:1;padding:20px 18px;}
+.report-section-title{font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a7aaa;letter-spacing:3px;margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid #1a2a4a;}
+.report-field{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #0e1828;}
+.report-field-label{font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a5a6a;letter-spacing:2px;flex-shrink:0;width:90px;white-space:nowrap;}
+.report-input{flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid #2a4a6a;color:#aaccdc;font-family:'Share Tech Mono',monospace;font-size:14px;padding:4px 8px;outline:none;letter-spacing:1px;text-align:right;text-overflow:ellipsis;}
+.report-input:focus{border-bottom-color:#5a8aba;}
+.report-divider{height:1px;background:linear-gradient(90deg,transparent,#1a3a6a,transparent);margin:14px 0;}
+.report-submit-btn{background:#0a2010;border:2px solid #4a8a4a;color:#8ada8a;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:3px;padding:14px 28px;cursor:pointer;width:100%;margin-top:10px;}
+.report-submit-btn:hover{background:#102818;}
+.report-notice{font-family:'Share Tech Mono',monospace;font-size:9px;color:#3a5a7a;letter-spacing:1px;text-align:center;padding:8px;border:1px solid #1a2a4a;margin-bottom:10px;}
+.mission-clear-banner{background:linear-gradient(135deg,#0a2010,#0a1a08);border:2px solid #4a8a4a;padding:20px;margin-bottom:16px;text-align:center;}
+.mission-clear-text{font-family:'VT323',monospace;font-size:32px;color:#8ada8a;letter-spacing:6px;text-shadow:0 0 20px rgba(100,220,100,0.8);}
+.mission-clear-sub{font-family:'Share Tech Mono',monospace;font-size:9px;color:#4a8a4a;letter-spacing:2px;margin-top:6px;}
+.report-footer{background:#04060c;border-top:1px solid #0e1828;padding:12px;font-family:'Share Tech Mono',monospace;font-size:8px;color:#1a2a3a;letter-spacing:2px;text-align:center;}
+/* ===== S0: 스플래시 화면 ===== */
+.splash-screen{
+  min-height:100svh;
+  height:100svh;
+  background:#000;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 24px;gap:40px;
+  position:relative;
+  overflow:hidden;
+}
+.splash-logo-wrap{text-align:center;}
+.splash-logo{
+  font-family:'VT323',monospace;
+  font-size:48px;color:#cc2222;
+  letter-spacing:6px;
+  text-shadow:0 0 20px rgba(200,34,34,0.8),0 0 60px rgba(200,34,34,0.3);
+  animation:splashPulse 2s infinite;
+  margin-bottom:8px;
+}
+@keyframes splashPulse{
+  0%,100%{opacity:1;text-shadow:0 0 20px rgba(200,34,34,0.8);}
+  50%{opacity:0.8;text-shadow:0 0 40px rgba(200,34,34,1),0 0 80px rgba(200,34,34,0.5);}
+}
+.splash-sub{
+  font-family:'Share Tech Mono',monospace;
+  font-size:9px;color:#5a1a1a;
+  letter-spacing:4px;margin-bottom:20px;
+}
+.splash-line{
+  width:120px;height:1px;
+  background:linear-gradient(90deg,transparent,#cc2222,transparent);
+  margin:0 auto 16px;
+}
+.splash-warning{
+  font-family:'Share Tech Mono',monospace;
+  font-size:10px;color:#8a4444;
+  letter-spacing:2px;
+}
+.splash-btn{
+  background:transparent;
+  border:1px solid #cc2222;
+  color:#cc2222;
+  font-family:'Share Tech Mono',monospace;
+  font-size:14px;letter-spacing:4px;
+  padding:16px 40px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.splash-btn:hover{
+  background:rgba(200,34,34,0.1);
+  box-shadow:0 0 20px rgba(200,34,34,0.3);
+}
+.splash-btn:disabled{
+  border-color:#5a3a3a;
+  color:#5a3a3a;
+  cursor:default;
+}
+.splash-btn:disabled:hover{
+  background:transparent;
+  box-shadow:none;
+}
+.splash-footer{
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;color:#2a1a1a;
+  letter-spacing:3px;
+  position:absolute;bottom:20px;
+}
+
+/* 화면 흔들림 */
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  10%{transform:translateX(-8px);}
+  20%{transform:translateX(8px);}
+  30%{transform:translateX(-6px);}
+  40%{transform:translateX(6px);}
+  50%{transform:translateX(-4px);}
+  60%{transform:translateX(4px);}
+  70%{transform:translateX(-2px);}
+  80%{transform:translateX(2px);}
+}
+.shaking{animation:shake 0.6s ease!important;}
+
+/* ============================================================
+   PAPER THEME OVERRIDE — S4 / S6 (TEST)
+   ============================================================ */
+.inner.no-topbar-pad{padding-top:0;}
+.scanline.paper-hide{display:none;}
+
+/* ---- S6: MY STORAGE ---- */
+#s6 .storage-screen{
+  background-color:#f9ead6;
+  background-image:url('assets/mystorage_background.webp'),url('assets/mystorage_background.webp');
+  background-repeat:no-repeat,no-repeat;
+  background-position:top center,bottom center;
+  background-size:100% auto,100% auto;
+  padding:0 4.5% 10px;
+  position:relative;
+  flex:none;
+  min-height:100%;
+}
+#s6 .placeholder-banner{display:none;}
+/* 헤더 영역(배경 이미지의 NCI/뒤로가기/MY STORAGE/구분선 부분)만큼 자리 확보 — 이미지 실측 비율(941:376) */
+#s6 .storage-head{
+  display:block;width:auto;margin:0 -4.5%;
+  aspect-ratio:860/241;
+  position:relative;padding:0;border:none;
+}
+#s6 .storage-head h2{display:none;}
+#s6 .storage-progress{
+  margin:14px 5% 4px;text-align:right;
+  font-family:'Share Tech Mono',monospace;font-weight:bold;font-size:15px;color:#3a2a18;letter-spacing:0.5px;
+}
+#s6 .storage-progress span{color:#a02020;}
+.s6-back-overlay{
+  position:absolute;top:0;left:0;width:24%;height:100%;
+  background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
+}
+#s6 .inv-grid-wrap{padding:2px 2px 0;}
+#s6 .inv-grid{gap:8px 8px;row-gap:5px;}
+#s6 .slot{
+  aspect-ratio:0.72;background-color:transparent;border:none;opacity:1;
+  background-repeat:no-repeat;background-size:100% 100%;position:relative;
+  transition:transform 0.12s ease, filter 0.12s ease;
+  border-radius:6px;
+  filter:drop-shadow(0 2px 2px rgba(40,25,10,0.3));
+}
+#s6 .slot:active,#s6 .slot.press-active{transform:scale(0.93);filter:brightness(0.9) drop-shadow(0 1px 1px rgba(40,25,10,0.25));}
+#s6 .slot::before{display:none;}
+#s6 .slot.locked{background-image:url('assets/file_locked.webp');}
+#s6 .slot.unlocked{background-image:url('assets/file_unlocked.webp');}
+#s6 .slot.latest-unlock{animation:slotGlowIn 0.8s ease forwards;}
+@keyframes slotGlowIn{
+  from{box-shadow:0 0 0 0 rgba(200,168,64,0);}
+  to{box-shadow:0 0 0 2px rgba(200,168,64,0.85),0 0 10px 3px rgba(200,168,64,0.5);}
+}
+/* 방금 unlock된 바로 그 순간에만(1회) 재생 — 재방문/뒤로가기 시에는 재생 안 함 */
+#s6 .slot.just-unlocked{overflow:hidden;perspective:500px;}
+#s6 .slot.just-unlocked::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:url('assets/file_locked.webp') center/100% 100% no-repeat;
+  transform-origin:left center;backface-visibility:hidden;border-radius:6px;
+  animation:coverFlip 0.6s cubic-bezier(0.65,0,0.35,1) forwards;
+}
+@keyframes coverFlip{
+  0%{transform:rotateY(0deg);}
+  100%{transform:rotateY(-130deg);}
+}
+#s6 .slot.empty{background:transparent;}
+#s6 .slot:hover{background-color:transparent;border-color:transparent;}
+#s6 .slot .cn{display:none;}
+#s6 .slot .slot-icon{display:none;}
+#s6 .slot-name{
+  position:absolute;top:54%;left:0;right:0;text-align:center;
+  font-family:'Share Tech Mono',monospace;font-size:10.5px;font-weight:bold;letter-spacing:0.5px;color:#2a1c10;
+}
+#s6 .slot.locked .slot-name{color:#4a3a24;}
+#s6 .slot-num{display:none;}
+#s6{flex:none;}
+#s6 .report-nav-btn{
+  background:url('assets/report_view_btn.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;aspect-ratio:880/220;height:auto;max-width:220px;
+  width:100%;margin:0 auto;display:block;padding:0;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s6 .report-nav-btn:active,#s6 .report-nav-btn.press-active{
+  transform:scale(0.97) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
+}
+
+/* ---- S4: 프로필/메시지 ---- */
+#s4{flex:none;}
+#s4 .msg-screen{
+  background-color:#f9ead6;
+  background-image:url('assets/myprofile_background.webp'),url('assets/myprofile_background.webp');
+  background-repeat:no-repeat,no-repeat;
+  background-position:top center,bottom center;
+  background-size:100% auto,100% auto;
+  padding:1.5% 4.5% 22px;
+  position:relative;
+  flex:none;
+  min-height:100%;
+}
+.s4-header-imgs{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.s4-logo-img{width:48%;height:auto;display:block;}
+.s4-confidential-img{width:27%;height:auto;display:block;margin-top:14px;}
+
+#s4 .profile-card{
+  width:99.5%;margin:0 0 12px 0;border:none;padding:3% 4% 7% 30%;
+  aspect-ratio:1906/590;
+  background:url('assets/profile_card_v2.webp') center/100% 100% no-repeat;
+  display:block;
+  box-sizing:border-box;
+  cursor:pointer;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s4 .profile-card:active,#s4 .profile-card.press-active{
+  transform:scale(0.98) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
+}
+#s4 .profile-photo{display:none!important;}
+#s4 .profile-mission-text{color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;line-height:1.6;overflow-wrap:anywhere;}
+#s4 .profile-mission-label{color:#8a5a10;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:14px;}
+
+#s4 .msg-tabs{
+  background-color:transparent;background-repeat:no-repeat;background-position:center;background-size:contain;
+  border:none;padding:0;margin:0 auto 12px;height:auto;position:relative;
+  width:52%;aspect-ratio:2088/433;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+}
+#s4 .msg-tab{display:none;}
+#s4 .msg-list{padding:0;overflow-y:visible;}
+#s4 .msg-item{
+  background:url('assets/msg_card_read.webp') center/100% 100% no-repeat;
+  border:none;padding:16px 30px 12px 18px;margin-bottom:10px;min-height:74px;
+  opacity:1;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s4 .msg-item.new{background-image:url('assets/msg_card_unread.webp');}
+#s4 .msg-item:hover{background-color:transparent;}
+#s4 .msg-item.read{opacity:1;}
+#s4 .msg-item:active,#s4 .msg-item.press-active{
+  transform:scale(0.97) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
+}
+#s4 .msg-sender{color:#1a2a5a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:14px;}
+#s4 .msg-sender.dead{color:#a02020;}
+#s4 .msg-time{color:#6a5a40;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;}
+#s4 .msg-status-label{font-family:'Noto Sans KR',sans-serif!important;font-weight:700!important;font-size:12px!important;}
+#s4 .msg-preview{color:#3a2a1a;}
+#s4 .msg-attach{color:#8a5a10;}
+
+#s4 .storage-bottom-btn{
+  background:url('assets/myprofile_mystorage_button_v7.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;
+  display:block;width:52%;aspect-ratio:2000/667;height:auto;
+  margin:4px 0 0 auto;
+  position:relative;top:3px;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+  animation:storageBtnGlow 1.6s ease-in-out infinite;
+}
+#s4 .storage-bottom-btn.glow-off{
+  animation:none;
+  transform:scale(1);
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+}
+@keyframes storageBtnGlow{
+  0%,100%{filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(1px 0 0 rgba(235,195,120,0.35)) drop-shadow(0.71px 0.71px 0 rgba(235,195,120,0.35)) drop-shadow(0 1px 0 rgba(235,195,120,0.35)) drop-shadow(-0.71px 0.71px 0 rgba(235,195,120,0.35)) drop-shadow(-1px 0 0 rgba(235,195,120,0.35)) drop-shadow(-0.71px -0.71px 0 rgba(235,195,120,0.35)) drop-shadow(0 -1px 0 rgba(235,195,120,0.35)) drop-shadow(0.71px -0.71px 0 rgba(235,195,120,0.35));}
+  50%{filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(1px 0 0 rgba(235,195,120,1)) drop-shadow(0.71px 0.71px 0 rgba(235,195,120,1)) drop-shadow(0 1px 0 rgba(235,195,120,1)) drop-shadow(-0.71px 0.71px 0 rgba(235,195,120,1)) drop-shadow(-1px 0 0 rgba(235,195,120,1)) drop-shadow(-0.71px -0.71px 0 rgba(235,195,120,1)) drop-shadow(0 -1px 0 rgba(235,195,120,1)) drop-shadow(0.71px -0.71px 0 rgba(235,195,120,1)) drop-shadow(0 0 8px rgba(235,195,120,0.7));}
+}
+#s4 .storage-bottom-btn:active,#s4 .storage-bottom-btn.press-active{
+  transform:scale(0.97) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
+}
+
+/* ---- 코드 입력 모달 (비밀번호창, 종이 테마) ---- */
+#modalCodeBox{
+  width:100%!important;max-width:340px!important;box-sizing:border-box!important;
+  background-color:#f0e7da;
+  background-image:url('assets/code_modal_bg.webp');
+  background-repeat:no-repeat;background-position:top center;background-size:100% 100%;
+  border:none;border-radius:14px;
+  padding:0 7% 6%;
+}
+#modalCodeBox .modal-close{
+  top:10px;right:10px;width:34px;height:34px;color:transparent;
+  background:transparent;border:none;
+}
+#modalCodeBox h3{
+  display:block!important;width:100%!important;box-sizing:border-box!important;
+  padding:9% 0 0 15%!important;margin:0!important;white-space:nowrap;text-align:left!important;letter-spacing:0.3px;
+  font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:19px;
+  color:#2a1c10;
+}
+#modalCodeBox .modal-sub{
+  display:block!important;width:100%!important;box-sizing:border-box!important;
+  padding-left:15%!important;margin:5px 0 16px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left!important;
+  font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;
+  color:#6a5230;letter-spacing:0.2px;
+}
+#modalCodeBox .code-display{width:100%!important;flex-wrap:wrap;gap:6px;margin-bottom:12px;justify-content:center!important;}
+#modalCodeBox .code-cell{
+  width:28px;height:36px;background:url('assets/code_slot.webp') center/100% 100% no-repeat;
+  border:none;font-family:'Noto Sans KR',sans-serif;font-size:16px;font-weight:700;color:transparent;flex-shrink:0;
+}
+#modalCodeBox .code-cell.filled{
+  color:#2a1c10;background-image:url('assets/code_slot_filled.webp');
+}
+#modalCodeBox .code-prefix{color:#2a1c10;}
+#modalCodeBox .code-input{
+  display:block!important;width:100%!important;box-sizing:border-box!important;
+  background:url('assets/code_input_bar2.webp') center/100% 100% no-repeat;
+  border:none;color:#2a1c10;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;
+  letter-spacing:4px;padding:7px 10px!important;margin:0 0 10px!important;
+}
+#modalCodeBox .code-input::placeholder{color:#9a8a6a;letter-spacing:1px;}
+#modalCodeBox .modal-submit{
+  display:block!important;width:100%!important;box-sizing:border-box!important;margin:0!important;
+  background:url('assets/code_unlock_btn.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;height:42px;
+}
+#modalCodeBox .modal-error{color:#a02020;font-family:'Noto Sans KR',sans-serif;font-weight:700;}
+
+/* ---- 힌트 모달 (종이 테마, 테스트) ---- */
+.hint-modal{
+  background-color:#f0e7da;
+  background-image:url('assets/hint_tile.webp');
+  background-repeat:repeat-y;background-position:top center;background-size:100% auto;
+  border:none;border-radius:14px;overflow-x:hidden;overflow-y:auto;
+  padding:0 16px 18px;
+}
+.hint-modal::before{
+  content:'';display:block;
+  width:calc(100% + 32px);margin:0 -16px 14px;
+  aspect-ratio:1448/210;
+  background:url('assets/hint_header.webp') center/100% 100% no-repeat;
+}
+.hint-modal h3{display:none;}
+.hint-modal .modal-close{
+  top:10px;right:10px;width:34px;height:34px;color:transparent;
+  background:transparent;border:none;
+}
+.hint-modal .modal-sub{
+  font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#3a2a1a;
+  letter-spacing:0.3px;line-height:1.5;
+  border-bottom:1px solid #b8a888;padding-bottom:10px;margin-bottom:12px;
+}
+.hint-modal .hint-display{background:transparent;border:none;padding:0;min-height:0;}
+.hint-modal .hint-stage{
+  background:rgba(255,255,255,0.5);border:1px solid #c8b89a;border-bottom:1px solid #c8b89a;
+  padding:10px 12px;margin-bottom:10px;border-radius:2px;
+}
+.hint-modal .hint-stage-num{color:#8a5a10;font-weight:bold;}
+.hint-modal .hint-stage-txt{color:#2a1c10;font-size:12px;}
+.hint-modal .hint-locked-stage{
+  background:rgba(255,255,255,0.35)!important;border:1px dashed #b8a888!important;
+  padding:9px 10px;
+}
+.hint-modal .hint-locked-stage span{color:#6a5230!important;font-family:'Noto Sans KR',sans-serif;font-size:11px;}
+.hint-modal .hint-locked-stage button{
+  background:url('assets/hint_expand_btn.webp') center/100% 100% no-repeat!important;
+  border:none!important;color:transparent!important;
+  width:73px;height:27px;flex-shrink:0;
+  transition:transform 0.08s ease;
+}
+.hint-modal .hint-locked-stage button:active{transform:scale(0.92);}
+.hint-modal .hint-stage[style*="dashed"]{border:1px dashed #b89858!important;}
+.hint-modal .hint-stage-num[style*="c8a840"]{color:#a06818!important;}
+.hint-modal .hint-stage-num[style*="8a9aba"]{color:#2a4a6a!important;}
+.hint-answer-value{color:#ffdd99;font-weight:bold;}
+.hint-explain-text{color:#d8d8d0;}
+.hint-modal .hint-answer-value{color:#5a3a10!important;background:rgba(255,221,153,0.35);padding:4px 6px;border-radius:3px;}
+.hint-modal .hint-explain-text{color:#1c2838!important;background:rgba(138,154,186,0.22);padding:4px 6px;border-radius:3px;}
+
+/* ---- S7: 파일 상세보기(사건일지) — 종이 테마, 테스트 ---- */
+#s7 .detail-screen{
+  background-color:#f1e8d9;
+  background-image:url('assets/incidentlog_tile.webp');
+  background-repeat:repeat-y;
+  background-position:top center;
+  background-size:100% auto;
+  padding:0;position:relative;
+  overflow-y:visible;flex:none;
+}
+#s7 .detail-head{
+  display:block;
+  aspect-ratio:860/263;position:relative;
+  background:url('assets/incidentlog_header.webp') center/100% 100% no-repeat;
+}
+.s7-back-overlay{
+  position:absolute;top:0;left:0;width:24%;height:100%;
+  background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
+}
+#s7 .detail-num-badge{display:none;}
+#s7 .detail-title{
+  position:absolute;left:9%;right:14%;top:75.3%;float:none;
+  font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:20px;letter-spacing:0.2px;
+  color:#2a1c10;margin:0;padding:0;border:none;line-height:1.25;
+}
+#s7 .detail-content{color:#3a2a1a;padding:16px 8.6% 20px;font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:500;line-height:1.85;}
+#s7 .detail-img{background:rgba(255,255,255,0.4);border:1px solid #c8b89a;color:#8a7a5a;font-family:'Noto Sans KR',sans-serif;font-size:11px;letter-spacing:0.3px;line-height:1.6;}
+#s7 .detail-bottom-cap{
+  display:block;
+  aspect-ratio:941/160;
+  background:url('assets/incidentlog_bottom.webp') center/100% 100% no-repeat;
+}
+#s7 .detail-section{border-bottom-color:#c8b89a;}
+#s7 .detail-section-title{font-size:13.5px;font-weight:700;color:#8a5a10;letter-spacing:1px;}
+#s7 .audio-mock{margin-left:-2.67%;margin-right:0;}
+#s7 .script-toggle{margin-left:0;}
+#s7 .audio-mock{
+  background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat;
+  border:none;padding:16px 20px 16px 7%;border-radius:0;
+  display:flex;align-items:center;gap:14px;
+  aspect-ratio:357.0625/92.578125;height:auto;
+}
+#s7 .audio-mock .play-icon{display:block;width:42px;height:42px;flex-shrink:0;color:transparent;background:url('assets/icon_play.webp') center/100% 100% no-repeat;cursor:pointer;position:relative;top:8px;}
+#s7 .audio-mock .play-icon.is-playing{background-image:url('assets/icon_pause.webp');}
+#s7 .audio-mock-info{line-height:1.7;margin-top:18px;flex:1;min-width:0;}
+#s7 .audio-mock-toprow{display:flex;align-items:baseline;gap:10px;}
+#s7 .audio-mock-toprow .audio-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#s7 .audio-mock-toprow .audio-time{margin:0;flex-shrink:0;}
+#s7 .audio-name{color:#6a3a9a;font-family:'Noto Sans KR',sans-serif;font-size:14.5px;font-weight:700;}
+#s7 .audio-time{color:#6a5a40;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;}
+#s7 .audio-progress{background:rgba(90,50,10,0.18);}
+#s7 .audio-progress-fill{background:#8a5a10;}
+#s7 .audio-mock.locked{background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat;}
+#s7 .audio-mock.locked .audio-name{color:#a02020;}
+#s7 .audio-mock.locked .audio-time{color:#8a5a40;}
+#s7 .audio-mock[style]{background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat!important;border-color:transparent!important;}
+#s7 .play-icon[style]{display:none!important;}
+#s7 .audio-name[style]{color:#a02020!important;font-family:'Noto Sans KR',sans-serif;font-weight:700;}
+#s7 .audio-time[style]{color:#8a5a40!important;font-family:'Noto Sans KR',sans-serif;}
+#s7 .script-toggle{
+  background:url('assets/script_view_btn.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;width:150px;height:34px;padding:0;margin-left:4px;
+}
+#s7 .script-box{background:rgba(255,255,255,0.45);border-left:2px solid #8a6a40;color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:500;line-height:1.8;}
+#s7 .script-line{cursor:pointer;border-radius:3px;padding:1px 3px;margin:0 -3px;}
+#s7 .script-line:hover{background:rgba(138,90,16,0.15);}
+#s7 .script-speaker{color:#8a5a10;font-weight:700;}
+
+/* ---- S5: 채팅창 (종이 테마, 테스트) ---- */
+#s5 .msg-detail-screen{
+  background-color:#ede3d3;
+  background-image:url('assets/msg_paper_border_tile.webp');
+  background-repeat:repeat-y;background-position:top center;background-size:100% auto;
+  display:flex;flex-direction:column;flex:none;overflow-y:visible;padding:0;min-height:680px;
+}
+#s5 .msg-detail-head{
+  display:block;flex-shrink:0;
+  aspect-ratio:941/305;position:relative;
+  background:url('assets/msg_header_generic.webp') top center no-repeat;background-size:100% 100%;
+  border:none;margin:0;padding:0;
+}
+.s5-back-overlay{
+  position:absolute;top:0;left:0;width:22%;height:45%;
+  background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
+}
+#s5 .msg-detail-sender{
+  display:block;position:absolute;left:7%;top:64%;
+  font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:20px;color:#2a1c10;
+  letter-spacing:0.3px;
+}
+#s5 .msg-detail-sender.dead{color:#a02020;text-decoration:line-through;}
+#s5 .msg-dead-badge{font-size:11px;color:#a02020;}
+#s5 .call-log-panel .call-log-entry{background:rgba(160,32,32,0.12);border:1px dashed #a05050;}
+#s5 .call-log-title{color:#a02020;font-family:'Noto Sans KR',sans-serif;}
+#s5 .call-log-sub{color:#8a3a3a;font-family:'Noto Sans KR',sans-serif;}
+#s5 .msg-detail-time{display:none;}
+#s5 .msg-detail-body{
+  flex:1;padding:16px 6%;
+  background:none;
+  color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:500;line-height:1.85;
+  margin:0;
+}
+#s5 .msg-thread{border-top:none;margin-top:16px;padding-top:0;}
+#s5 .msg-thread-bubble{font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-radius:10px;}
+#s5 .msg-thread-bubble.from-me{background:#2a4a30;color:#eaf5ea;}
+#s5 .msg-thread-bubble.from-them{background:rgba(255,255,255,0.55);color:#2a1c10;border:1px solid #c8b89a;}
+#s5 .msg-thread-bubble.dead-no-reply{background:rgba(160,32,32,0.12);border:1px dashed #a05050;color:#8a3a3a;}
+#s5 .msg-choice-btn{background:#2a4a30;border:2px solid rgba(255,205,80,0.85);color:#eaf5ea;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;border-radius:10px;border-bottom-right-radius:2px;}
+#s5 .msg-choice-btn:hover{background:#345e3c;}
+#s5 .msg-reply-footer{
+  display:none;flex-shrink:0;align-items:center;gap:10px;
+  margin:0 2.4%;padding:12px 3.6% 16px;
+  background:none;
+  border-top:1px solid #d8c8a8;
+}
+#s5 .msg-detail-bottomcap{
+  display:block;flex-shrink:0;
+  aspect-ratio:941/51;
+  background:url('assets/msg_bottom_cap.webp') top center no-repeat;background-size:100% 100%;
+}
+#s5 .msg-reply-input{
+  flex:1;min-width:0;
+  background:rgba(255,255,255,0.55);border:1px solid #c8b89a;border-radius:8px;outline:none;
+  padding:11px 12px;
+  font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;color:#2a1c10;
+}
+#s5 .msg-reply-input::placeholder{color:#9a8a6a;}
+#s5 .msg-reply-send{
+  flex-shrink:0;background:#2d7155;border:none;border-radius:8px;color:#fff;cursor:pointer;
+  padding:11px 18px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:14px;
+}
+#s5 .msg-zigzag{
+  background:repeating-linear-gradient(135deg,#e9cb7e,#e9cb7e 8px,#d7bc77 8px,#d7bc77 16px);
+  border:none;color:#4a3410;font-family:'Noto Sans KR',sans-serif;font-weight:700;
+}
+#s5 .audio-mock{background:#f1e8d9;border:1px solid #c8b89a;}
+#s5 .audio-mock:hover{background:#e8dcc4;}
+#s5 .play-icon{color:#8a5a10;}
+#s5 .audio-name{color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:0;}
+#s5 .audio-time{color:#7a6a50;font-family:'Noto Sans KR',sans-serif;font-size:11px;}
+#s5 .audio-mock-info{line-height:1.6;}
+#s5 .audio-mock[style]{background:#f3d8d2!important;border:1px solid #c47a6a!important;}
+#s5 .play-icon[style]{color:#a02020!important;}
+#s5 .audio-name[style]{color:#a02020!important;font-weight:700;font-family:'Noto Sans KR',sans-serif;}
+#s5 .audio-time[style]{color:#7a4a40!important;font-family:'Noto Sans KR',sans-serif;}
+#s5 div[style*="border-left:3px solid #ff4444"]{
+  background:#f3d8d2!important;border-left:3px solid #a02020!important;color:#8a2020!important;
+  font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:12px!important;
+}
+
+/* ---- S8: 최종 보고서 (종이 테마, 테스트) ---- */
+#s8 .report-screen{
+  background-color:#f1e9dc;
+  background-image:url('assets/report_tile.webp');
+  background-repeat:repeat-y;background-position:top center;background-size:100% auto;
+  padding:0;
+  overflow-y:visible;flex:none;
+}
+.report-head-spacer{
+  display:block;aspect-ratio:941/400;position:relative;
+  background:url('assets/report_header.webp?v=2') center/100% 100% no-repeat;
+}
+.s8-back-overlay{
+  position:absolute;top:0;left:0;width:26%;height:100%;
+  background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
+}
+#s8 .report-header{display:none;}
+#s8 .report-body{padding:18px 6% 0;}
+#s8 .report-notice{
+  background:rgba(255,255,255,0.4);border:1px solid #c8b89a;color:#3a2a1a;
+  font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;letter-spacing:0;
+  padding:10px 12px;line-height:1.6;
+}
+#s8 .report-section-title{
+  color:#8a5a10;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:14px;
+  letter-spacing:0.5px;border-bottom-color:#c8b89a;background:rgba(255,221,153,0.35);
+  padding:4px 6px;
+}
+#s8 .report-field{border-bottom-color:#d8c8a8;}
+#s8 .report-field-label{color:#5a4530;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;}
+#s8 .report-input{
+  color:#2a1c10;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:15px;
+  border-bottom-color:#b8a888;
+}
+#s8 .report-input::placeholder{color:#a89878;}
+#s8 .report-divider{background:linear-gradient(90deg,transparent,#c8b89a,transparent);}
+#s8 .report-submit-btn{
+  display:block;background:url('assets/report_submit_btn.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;aspect-ratio:860/191;height:auto;max-width:220px;margin:10px auto 18px;
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s8 .report-submit-btn:active,#s8 .report-submit-btn.press-active{
+  transform:scale(0.97) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
+}
+#s8 .report-footer{
+  background:transparent;border-top:1px solid #d8c8a8;color:#8a7a5a;
+  font-family:'Noto Sans KR',sans-serif;font-size:11px;padding:12px 6%;
+}
+#s8 .report-bottom-cap{
+  display:block;aspect-ratio:941/160;
+  background:url('assets/report_bottom.webp') center/100% 100% no-repeat;
+}
+#s8 .mission-clear-banner{
+  background:#f6efe1;border:2px solid #8a5a10;border-radius:6px;
+  box-shadow:3px 3px 0 rgba(0,0,0,0.15);
+}
+#s8 .mission-clear-text{
+  font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:26px;color:#8a5a10;
+  letter-spacing:2px;text-shadow:none;
+}
+#s8 .mission-clear-sub{font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:12px;color:#5a4530;letter-spacing:0;}
+#s8 .report-result-tag{font-family:'Noto Sans KR',sans-serif;font-size:11px;color:#a5811e;letter-spacing:2px;margin-bottom:12px;}
+#s8 .report-result-op{font-family:'Noto Sans KR',sans-serif;font-size:11px;color:#8a7a5a;letter-spacing:0.5px;margin-top:10px;}
+#s8 .report-error-box{
+  background:#f6efe1;border:2px dashed #a02020;
+  padding:18px 14px 14px;margin-bottom:8px;border-radius:2px;
+}
+#s8 .report-error-title{
+  display:inline-block;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:12px;
+  color:#a02020;letter-spacing:0.5px;margin-bottom:10px;
+  border:2px solid #a02020;padding:4px 10px;border-radius:2px;
+  transform:rotate(-1.5deg);
+}
+#s8 .report-error-item{
+  font-family:'Noto Sans KR',sans-serif;font-size:12px;color:#5a4530;
+  padding:5px 0;border-bottom:1px dashed #d8c8a8;
+}
+#s8 .report-error-item:last-child{border-bottom:none;}
+</style>
+</head>
+<body>
+<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v56</div>
+<div class="scanline"></div>
+<div class="blackout" id="blackout"></div>
+<div class="scan-auth" id="scanAuth"></div>
+
+<div class="device">
+<div class="inner" id="inner">
+
+<!-- S0: 스플래시 화면 -->
+<div class="screen on" id="s0">
+<div class="splash-screen">
+  <div class="splash-logo-wrap">
+    <div class="splash-logo">NCI_SYS</div>
+    <div class="splash-sub">NATIONAL COVERT INVESTIGATION</div>
+    <div class="splash-line"></div>
+    <div class="splash-warning">⚠ 인가된 요원만 접속 가능합니다</div>
+  </div>
+  <button class="splash-btn" id="splashBtn" onclick="enterSystem()" disabled>로딩중... 0%</button>
+  <div class="splash-footer">NCI SECURE NETWORK v2.7.1</div>
+</div>
+</div>
+
+<!-- TOPBAR (모든 화면 공통) -->
+<div class="topbar">
+<div class="topbar-left">
+<button class="back-btn" id="backBtn" onclick="goBack()">←</button>
+<div class="logo">NCI_SYS</div>
+</div>
+<div class="topbar-right">
+<span class="dot" id="dot"></span>
+<span class="stxt" id="statusTxt">SAFE MODE ACTIVE</span>
+</div>
+</div>
+
+<!-- S1: SAFE MODE -->
+<div class="screen" id="s1">
+<div class="s1-body">
+<div class="outer-box">
+<button class="nfc-sim-mini" onclick="triggerNFC()">[NFC SIM]</button>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="safe-mode-support">
+<button class="support-mini" onclick="openSupport()" title="문의">📞</button>
+</div>
+<div class="safe-mode-hint">
+<button class="hint-mini" onclick="openHintModal()" title="힌트">💡</button>
+</div>
+<div class="alert-section">
+<div class="alert-ttl">⚠ SYSTEM ALERT</div>
+<div class="g-wrap">
+<span class="w">비정상적인 접근이 감지되었습니다.</span>
+<span class="r">신원이 인증되지 않은 사용자는 열람이 제한됩니다.</span>
+<span class="d">보안 프로토콜에 따라 시스템이 SAFE MODE로 전환됩니다.</span>
+</div>
+</div>
+<div class="safe-section">
+<div class="safe-ttl">[ SAFE MODE ]</div>
+<div class="hint-box">
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0s">요</span>청된 접근을 수행할 수 없습니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.15s">원</span>격 인증 System이 손상된 것으로 보입니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.3s">배</span>정된 요원 이외에는 접속할 수 없습니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.45s">지</span>속적인 보안 위협이 탐지되었습니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.6s">접</span>근 권한 복구가 필요합니다.</span>
+<span class="hint-row"><span class="hint-glint" style="animation-delay:0.75s">촉</span>각 기반의 신원 인증 절차 진행이 필요합니다.</span>
+</div>
+</div>
+<div class="recover-section">
+<div class="recover-label">SYSTEM RECOVERY <span>HALTED</span></div>
+<div class="progress-row"><div class="progress-title">AUTH MODULE</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-1"></div></div></div>
+<div class="progress-row"><div class="progress-title">SECURITY</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-2"></div></div></div>
+<div class="progress-row"><div class="progress-title">DATABASE</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-3"></div></div></div>
+<div class="progress-row"><div class="progress-title">AGENT REGISTRY</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-4"></div></div></div>
+</div>
+<div class="nfc-zone">
+<button class="nfc-btn" onclick="triggerNFC()">[ NFC 배지 태깅 시뮬레이션 ]</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- S2: 배지 스캔 -->
+<div class="screen" id="s2">
+<div class="scan-screen">
+<div class="badge-wrap">
+<svg class="badge-svg" id="badgeSvg" viewBox="0 0 140 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="20" width="120" height="150" rx="8" fill="#0d0808" stroke="#3a1515" stroke-width="1.5"/>
+<rect x="50" y="12" width="40" height="14" rx="4" fill="#0d0808" stroke="#3a1515" stroke-width="1.5"/>
+<rect x="62" y="8" width="16" height="8" rx="3" fill="#0d0808" stroke="#3a1515" stroke-width="1.5"/>
+<line x1="20" y1="70" x2="120" y2="70" stroke="#2a1515" stroke-width="0.8"/>
+<rect x="20" y="30" width="45" height="32" rx="3" fill="#110808" stroke="#2a1515" stroke-width="0.8"/>
+<line x1="24" y1="34" x2="61" y2="58" stroke="#2a1010" stroke-width="0.8"/>
+<line x1="61" y1="34" x2="24" y2="58" stroke="#2a1010" stroke-width="0.8"/>
+<rect x="72" y="33" width="38" height="5" rx="2" fill="#1a0808"/>
+<rect x="72" y="42" width="28" height="4" rx="2" fill="#150606"/>
+<rect x="72" y="50" width="32" height="4" rx="2" fill="#150606"/>
+<rect x="20" y="78" width="80" height="4" rx="2" fill="#1a0808"/>
+<rect x="20" y="87" width="60" height="4" rx="2" fill="#150606"/>
+<rect x="20" y="96" width="70" height="4" rx="2" fill="#150606"/>
+<rect x="20" y="112" width="100" height="44" rx="4" fill="#0a0606" stroke="#1a0a0a" stroke-width="0.8"/>
+<text x="90" y="138" font-family="monospace" font-size="8" fill="#2a1515">NCI</text>
+<text x="84" y="148" font-family="monospace" font-size="7" fill="#1a0d0d">AGENT</text>
+</svg>
+<div class="badge-scan-line" id="badgeScanLine"></div>
+<div class="n07-badge" id="n07Badge">N07</div>
+</div>
+<div class="scan-status" id="scanStatus">SCANNING...</div>
+</div>
+</div>
+
+<!-- S3: AUTH -->
+<div class="screen" id="s3">
+<div class="auth-bg">
+<div class="auth-line dim" id="a1">INITIALIZING AUTH PROTOCOL...</div>
+<div class="auth-line dim" id="a2">SCANNING DEVICE SIGNATURE...</div>
+<div class="auth-line" id="a3">NFC TAG DETECTED ▌</div>
+<div class="auth-line" id="a4">VERIFYING AGENT CODE...</div>
+<div class="auth-line dim" id="a5">CROSS-REFERENCING DATABASE...</div>
+<div class="auth-line err" id="a6">████ RECORD PARTIAL — RESTORING...</div>
+<div class="auth-line hi" id="a7">AGENT N07 — CONFIRMED ✓</div>
+<div class="auth-ok" id="authOk">
+<p>N07 요원 접속 인증되었습니다.</p>
+<p style="color:#5a8a5a;font-size:12px">WELCOME BACK, AGENT.</p>
+</div>
+<button class="next-btn" id="nextBtn" onclick="goTo('s4')">▶ N07 프로필 보기</button>
+</div>
+</div>
+
+<!-- S4: N07 프로필 + 메시지 -->
+<div class="screen" id="s4">
+<div class="msg-screen">
+
+<!-- 로고 / 기밀 스티커 (이미지 에셋) -->
+<div class="s4-header-imgs">
+<img src="assets/myprofile_NCI_SYS.webp" class="s4-logo-img" alt="NCI_SYS">
+<img src="assets/myprofile_confidential_sticker.webp" class="s4-confidential-img" alt="CONFIDENTIAL">
+</div>
+
+<!-- N07 프로필 카드 -->
+<div class="profile-card" onclick="openMissionZoom()">
+<div class="profile-photo">
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="silGrad" cx="50%" cy="40%" r="60%">
+<stop offset="0%" stop-color="#3a3a3a"/>
+<stop offset="100%" stop-color="#0a0a0a"/>
+</radialGradient>
+</defs>
+<rect width="80" height="80" fill="#0a0a0a"/>
+<!-- 사람 실루엣 (남녀 구분 안되도록) -->
+<circle cx="40" cy="28" r="12" fill="url(#silGrad)"/>
+<path d="M 18 80 Q 18 52 40 50 Q 62 52 62 80 Z" fill="url(#silGrad)"/>
+<!-- 전체에 큰 X 표시 (사망 처리) -->
+<g stroke="#cc2222" stroke-width="4" stroke-linecap="round" opacity="0.85">
+<line x1="6" y1="6" x2="74" y2="74"/>
+<line x1="74" y1="6" x2="6" y2="74"/>
+</g>
+</svg>
+<div class="profile-status">N07</div>
+</div>
+<div class="profile-mission">
+<div class="profile-mission-label">▶ MISSION</div>
+<div class="profile-mission-text">
+홍대 일대에서 퍼지고 있는 정체 불명의 물약의 정보와 샘플을 확보하고, 유통하는 조직을 추적하여 최종 보고서를 작성해 제출하라.
+</div>
+</div>
+</div>
+
+<!-- 메시지 헤더 -->
+<div class="msg-tabs" id="msgTabs" style="background-image:url('assets/msg_title_2_v2.webp');">
+<div class="msg-tab on" style="cursor:default;">📩 MESSAGE <span class="badge-count" id="msgCount">2</span></div>
+</div>
+
+<!-- 메시지 리스트 -->
+<div class="msg-list" id="msgList"></div>
+
+<!-- My Storage 진입 버튼 -->
+<button class="storage-bottom-btn" onclick="openStorageFromProfile()">📦 MY STORAGE 열람</button>
+<button class="profile-call-btn" onclick="openSupport()" aria-label="문의"></button>
+</div>
+</div>
+
+<!-- S5: 메시지 상세 -->
+<div class="screen" id="s5">
+<div class="msg-detail-screen">
+<div class="msg-detail-head" id="msgDetailHead">
+<button class="s5-back-overlay" onclick="goBack()" aria-label="뒤로가기"></button>
+<div class="msg-detail-sender" id="msgDetailSender"></div>
+<div class="msg-detail-time" id="msgDetailTime"></div>
+</div>
+<div class="msg-detail-body" id="msgDetailBody"></div>
+<div class="msg-reply-footer" id="msgReplyFooter">
+<input type="text" class="msg-reply-input" id="msgReplyInput" placeholder="답장 입력..." onkeydown="if(event.key==='Enter'&&!event.isComposing)sendReply()">
+<button class="msg-reply-send" onclick="sendReply()">전송</button>
+</div>
+<div class="msg-detail-bottomcap"></div>
+</div>
+</div>
+
+<!-- S6: MY STORAGE -->
+<div class="screen" id="s6">
+<div class="storage-screen">
+<div class="placeholder-banner">⚠ 디자인 미정 — 추후 인벤토리 디자인 이미지로 교체</div>
+<div class="storage-head">
+<button class="s6-back-overlay" onclick="goBack()" aria-label="뒤로가기"></button>
+<h2>📦 MY STORAGE</h2>
+</div>
+<div class="storage-progress">UNLOCKED <span id="progressNum">1</span> / <span id="totalNum">13</span></div>
+<div class="inv-grid-wrap">
+<div class="inv-grid" id="invGrid"></div>
+</div>
+<div class="storage-bottom-row">
+<button class="storage-camera-btn" onclick="openARCamera()" aria-label="카메라"></button>
+<button class="report-nav-btn" onclick="goTo('s8')">최종보고서 열람</button>
+</div>
+</div>
+</div>
+
+<!-- S7: 파일 상세 -->
+<div class="screen" id="s7">
+<div class="detail-screen">
+<div class="detail-head">
+<button class="s7-back-overlay" onclick="goBack()" aria-label="뒤로가기"></button>
+<div class="detail-num-badge" id="detailNum">#?</div>
+<div class="detail-title" id="detailTitle">FILE</div>
+</div>
+<div class="detail-content" id="detailContent"></div>
+<div class="detail-bottom-cap"></div>
+</div>
+</div>
+
+<!-- S8: 최종 보고서 -->
+<div class="screen" id="s8">
+<div class="report-screen">
+<div class="report-head-spacer"><button class="s8-back-overlay" onclick="goBack()" aria-label="뒤로가기"></button></div>
+<div class="report-header">
+  <div class="report-org">NCI — 국가수사기관</div>
+  <div class="report-title">수사 최종 보고서</div>
+  <div class="report-meta">
+    <span>문서번호: NCI-2025-N07</span>
+    <span>보안등급: ███████</span>
+  </div>
+</div>
+<div class="report-body">
+  <div class="report-notice">수사 과정에서 획득한 정보를 직접 입력하여 보고서를 완성하라.</div>
+  <div class="report-section-title">[ 약물 관련 ]</div>
+  <div class="report-field"><div class="report-field-label">약물 명칭</div><input class="report-input" id="rDrug" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">주 재료 ①</div><input class="report-input" id="rMat1" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">주 재료 ②</div><input class="report-input" id="rMat2" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">물약 색깔</div><input class="report-input" id="rColor" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-divider"></div>
+  <div class="report-section-title">[ 조직 관련 ]</div>
+  <div class="report-field"><div class="report-field-label">조직 명칭</div><input class="report-input" id="rOrg" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">히든 심볼</div><input class="report-input" id="rBoss" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">제조 공장</div><input class="report-input" id="rTower" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">도어락 코드</div><input class="report-input" id="rDoorCode" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-divider"></div>
+  <div id="reportResult"></div>
+  <button class="report-submit-btn" onclick="submitReport()">▶ 최종 보고서 제출</button></div>
+<div class="report-footer">수사관 N07 &nbsp;|&nbsp; NCI 극비 문서 &nbsp;|&nbsp; 무단 열람 금지</div>
+<div class="report-bottom-cap"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 기억 회복 오버레이 -->
+<div id="memoryOverlay">
+  <video id="memoryVideo" playsinline webkit-playsinline="true"></video>
+  <div id="memoryText"></div>
+</div>
+
+<!-- 힌트 버튼 -->
+<button class="hint-btn" id="hintBtn" onclick="openHintModal()">💡</button>
+
+<!-- 사진 확대 -->
+<div class="photo-zoom-bg" id="photoZoomBg" onclick="if(event.target===this)closePhotoZoom()">
+<button class="photo-zoom-close" onclick="closePhotoZoom()">✕</button>
+<img id="photoZoomImg" src="" alt="">
+</div>
+
+<!-- 미션 확대 모달 -->
+<div class="mission-zoom-bg" id="modalMissionZoom" onclick="if(event.target===this)closeMissionZoom()">
+<div class="mission-zoom-card">
+<button class="mission-zoom-close" onclick="closeMissionZoom()">✕</button>
+<div class="mission-zoom-label">▶ MISSION</div>
+<div class="mission-zoom-text" id="missionZoomText"></div>
+</div>
+</div>
+
+<!-- 정답 입력 모달 -->
+<div class="modal-bg" id="modalCode">
+<div class="modal" id="modalCodeBox">
+<button class="modal-close" onclick="closeModal('modalCode')">✕</button>
+<h3 id="codeModalTitle">🔒 LOCKED FILE</h3>
+<div class="modal-sub" id="codeModalSub">정답 코드를 입력하세요</div>
+<div class="code-display" id="codeDisplay"></div>
+<input type="text" class="code-input" id="codeInput" placeholder="코드 입력" autocomplete="off">
+<button class="modal-submit" onclick="submitCode()">▶ UNLOCK</button>
+<div class="modal-error" id="codeError"></div>
+</div>
+</div>
+
+<!-- 힌트 모달 -->
+<div class="modal-bg" id="modalHint">
+<div class="modal" id="hintModalBox">
+<button class="modal-close" onclick="closeModal('modalHint')">✕</button>
+<h3>💡 HINT</h3>
+<div class="modal-sub" id="hintModalSub">힌트를 단계별로 열어보세요</div>
+<div id="hintContent"></div>
+</div>
+</div>
+
+<!-- 문의 모달 -->
+<div class="modal-bg" id="modalSupport">
+<div class="modal ar-confirm-modal">
+<button class="modal-close" onclick="closeModal('modalSupport')">✕</button>
+<h3>📞 CALL</h3>
+<div style="text-align:center;padding:30px 10px;font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#8a7a5a;">내용을 준비중...</div>
+</div>
+</div>
+
+<!-- 현장 분석 카메라 확인 모달 -->
+<div class="modal-bg" id="modalARConfirm">
+<div class="modal ar-confirm-modal">
+<button class="modal-close" onclick="closeModal('modalARConfirm')">✕</button>
+<h3>📸 FIELD ANALYSIS CAMERA</h3>
+<div class="modal-sub">현장분석 카메라를 실행하시겠습니까?</div>
+<div style="display:flex;gap:10px;margin-top:14px;">
+<button class="modal-submit ar-yes" style="margin-top:0;" onclick="confirmARCamera()">예</button>
+<button class="modal-submit ar-no" style="margin-top:0;" onclick="closeModal('modalARConfirm')">아니오</button>
+</div>
+</div>
+</div>
+
+<!-- 모나리자 현장 분석 결과 입력 모달 -->
+<div class="modal-bg" id="modalMonalisa">
+<div class="modal">
+<button class="modal-close" onclick="closeModal('modalMonalisa')">✕</button>
+<h3 style="color:#4a8aba;">🔍 ANALYSIS</h3>
+<div class="modal-sub">히든 심볼의 그림이 나타내는 인물은?</div>
+<input type="text" class="code-input" id="monalisaInput" placeholder="정답 입력..." autocomplete="off" onkeydown="if(event.key==='Enter'&&!event.isComposing)submitMonalisa()">
+<button class="modal-submit" onclick="submitMonalisa()">▶ 확인</button>
+<div class="modal-error" id="monalisaError"></div>
+</div>
+</div>
+
+<div class="unlock-toast" id="unlockToast">🔓 FILE 잠금 해제</div>
+<div class="unlock-toast lock-toast" id="lockToast">🔒 LOCKED</div>
+
+<script>
+// ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v7.webp','mystorage_background.webp','icon_play.webp','icon_pause.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file09_cafe.jpg','file10_blank_membership.jpg','file12_kit.png?v=8','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file06_explain1.jpg','file04_explain1.jpg','file09_explain1.png','hint_collapse_btn.webp','hint_expand_btn.webp','file07_explain1.jpg','file07_explain2.jpg','file07_explain3.jpg','file12_answer_boxes.png'];
+(function preloadAssets(){
+  const btn=document.getElementById('splashBtn');
+  const total=ASSET_LIST.length;
+  let loaded=0;
+  if(total===0){btn.disabled=false;btn.textContent='▶ 시스템 접속';return;}
+  ASSET_LIST.forEach(name=>{
+    const img=new Image();
+    img.onload=img.onerror=()=>{
+      loaded++;
+      const pct=Math.round(loaded/total*100);
+      btn.textContent='로딩중... '+pct+'%';
+      if(loaded===total){
+        btn.disabled=false;
+        btn.textContent='▶ 시스템 접속';
+      }
+    };
+    img.src='assets/'+name;
+  });
+})();
+
+// ===== 파일 데이터 (#2 ~ #15) =====
+// 잠금 시스템: 각 파일의 unlockCode = 이전 파일의 정답
+// answer = 이 파일을 풀어서 야외에서 알아내는 정답 (다음 파일 잠금 해제용)
+const files = [
+  // #2 FILE_01
+  {num:2,name:'FILE_01',sub:'경의선숲길 — 기둥',icon:'📄',unlocked:true,
+   answer:'102',unlockCode:null,answerLen:3,answerPrefix:'AB-',
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 05. 31</div><div><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등에 숫자가 새겨져 있어 위치 파악</span>하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><div style="border-bottom:1px solid #c8b89a;padding-bottom:12px;margin-bottom:14px;"><img class="detail-photo" style="margin:10px 0 0;" src="assets/file01_streetlight.jpg" alt="경의선숲길 가로등" onclick="openPhotoZoom('assets/file01_streetlight.jpg')"></div>`,
+   hints:['사진 속 가로등 주변 지형지물을 보고 해당 장소의 가로등을 찾으세요.','가로등은 홍대입구역 3번 출구 근처에 위치합니다.'],
+   answerText:`<div style="display:flex;gap:6px;">
+    <img src="assets/file01_explain2.jpg" style="width:33.33%;height:90px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file01_explain2.jpg')">
+    <img src="assets/file01_explain1.jpg" style="width:33.33%;height:90px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file01_explain1.jpg')">
+    <img src="assets/file01_explain3.jpg" style="width:33.33%;height:90px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file01_explain3.jpg')">
+    </div>`},
+
+  // #3 FILE_02
+  {num:3,name:'FILE_02',sub:'숲길 우체통',icon:'📷',unlocked:false,
+   answer:'NEON',unlockCode:'102',unlockPrefix:'AB-',answerLen:4,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 03</div><div>홍대 일대, 밤마다 약에 취한 무리들.<br>특이한 점으로는 무리 중 한 명이 항상 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-091</span> 옆 우체통 앞에 선다.<br>아무래도 조사해볼 필요가 있는것 같다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 21</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
+   <div class="audio-mock" id="audioMockPostbox" onclick="playAudio(this,'assets/file02_voice_postbox.mp3')"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-mock-toprow"><div class="audio-name">🎵 voice_memo.wav</div><div class="audio-time">00:28</div></div><div class="audio-progress" onclick="seekAudio(event,this)"><div class="audio-progress-fill"></div></div></div></div>
+   <button class="script-toggle" onclick="toggleScript('scriptPostbox')">📝 스크립트 보기</button>
+   <div class="script-box" id="scriptPostbox">
+   <div class="script-line" onclick="seekScriptLine('audioMockPostbox','assets/file02_voice_postbox.mp3',0)"><span class="script-speaker">대진:</span> 아... 그 빨간 우체통 말이야... 거기가... 우리만 아는 통로라니까?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockPostbox','assets/file02_voice_postbox.mp3',6)">막 일 년에 두 번 배달하는 느린 우체통이라고 써있던데.. 또 어디서 본건 있어가지고... ....낭만 챙기기는...</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockPostbox','assets/file02_voice_postbox.mp3',14)"><span class="script-speaker">세헌:</span> 거기에다가 걔네 조직 이름을 딱 써가지고 넣잖아? 그럼 다음날 바로 집으로 답장이 온다니까.</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockPostbox','assets/file02_voice_postbox.mp3',21)">그러면 거기에 접선 날짜랑 시간, 장소가 적혀있어. 안 믿기면 내일 니가 가서 넣어봐.</div>
+   </div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 22</div><div>직접 유통자를 접선하면 정보를 알아낼 수 있지 않을까..?<br>그들이 말한대로 편지를 적어 우체통에 넣었다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>오늘 바로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">답신[KIT-A]</span>이 왔다.<br><br>접선 날짜 6월 24일.. 시간 밤 10시.. 장소는.. 음..? 날 테스트 하는건가?<br><br>답신에 써있듯이 우체통을 찾아가 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">안내판</span>을 살펴봐야겠다.</div></div>`,
+   hints:['안내판에서 추억을 담아 공유하는 사람들을 찾으세요.','family, friends, lover or yourself'],
+   answerText:`<div style="display:flex;gap:6px;">
+    <img src="assets/file02_explain1.jpg" style="width:50%;height:120px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file02_explain1.jpg')">
+    <img src="assets/file02_explain2.jpg" style="width:50%;height:120px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file02_explain2.jpg')">
+    </div>`},
+
+  // #4 FILE_03
+  {num:4,name:'FILE_03',sub:'NEONSIGN — 레시피',icon:'🎵',unlocked:false,
+   answer:'NULL-Z',unlockCode:'NEON',answerLen:1,answerPrefix:'NULL-',
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 24</div><div>우체통에서 왼쪽으로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">10m정도 떨어진 곳</span>에 5분 정원 도시 NEONSIGN이 보였다.<br>해당 장소에서 잠복 중, 약속 시간 무렵, 마스크를 쓴 누군가가 나타났다.<br>눈썹이 희미한 특이한 외모, 주변을 살피는 살짝 불안해보이는 눈빛 — 유통자가 맞아 보인다.<br><br>몇 마디 나누다 낌새를 눈치챘는지 갑자기 도주.<br>제압을 시도했으나 예상보다 거셌다.<br><br>제압 직전, 인파 속으로 사라졌다. 추격은 실패.<br><br>— 몸싸움 도중 그자가 떨어뜨린 것이 있었다. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-B]</span><br>제조법 같아 보이는 그림, 분석이 필요하다.</div></div>`,
+   hints:['KIT-B에서 보이는 그림과 색이 일치하는 것을 NEONSIGN에서 찾으세요.','KIT-B에 알파벳은 그림 사이즈를 의미합니다.'],
+   answerText:`<div style="display:flex;gap:4px;">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain1.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">N</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain2.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain2.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">U</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain3.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain3.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">L</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain4.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain4.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">L</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain5.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain5.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">Z</span></div>
+   </div>`},
+
+  // #5 FILE_04
+  {num:5,name:'FILE_04',sub:'하트 조형물 — 꽃',icon:'📷',unlocked:false,
+   answer:'ROSE',unlockCode:'NULL-Z',unlockSeparator:{char:'-',after:4},answerLen:5,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 25</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
+   <img class="detail-photo" src="assets/file04_heart.jpg?v=7" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=7')">
+   <div class="detail-section"><div>사진의 이 조형물.. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-078</span> 근처에서 봤던 기억이 있다.<br>N32가 요청 했었던 조형물 근처 재료를 확인해봐야겠다.<br>확인이 어렵다면 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">현장분석 카메라</span>로 스캔하자.</div></div>`,
+   hints:['MYSTORAGE 화면에서 현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 조형물을 스캔합니다.<br><button onclick="openPhotoZoom(\'assets/file04_explain1.jpg\')" style="margin-top:6px;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;"><img src="assets/camera_emoticon.webp" style="width:14px;height:14px;vertical-align:middle;border-radius:50%;margin-right:3px;">카메라 인식 불가</button>'],
+   answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+    <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
+    <span style="font-size:13px;color:#8a9aba;">현장 분석 카메라로 조형물을 스캔하면 장미가 나타납니다.</span>
+   </div>
+   <img src="assets/file04_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file04_explain1.jpg')">`,
+   onUnlock:{drug:'NULL-Z',org:'BLANK'}},
+
+  // #6 FILE_05
+  {num:6,name:'FILE_05',sub:'장미 — N32 제보',icon:'💬',unlocked:false,
+   answer:'059',unlockCode:'ROSE',answerLen:3,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 30</div><div>현장 분석 카메라로 조형물을 스캔하자 장미가 나타났다.<br>NULL-Z의 주재료로 쓰이는 모양인데 분명 이외의 다른 재료도 있을 것이다.<br>우선, 이 정보를 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">N32에게 메세지로 전달</span> 해야겠다.<br><br>조금 껄끄럽지만, 임무에 진심인 녀석이라 생각보다 여러 정보를 얻을 수도 있다.</div></div>`,
+   hints:['스캔해서 나온 장미를 N32에게 메시지로 알려준 후 다음 장소의 위치 정보를 얻습니다.'],
+   answerText:`<div>N32에게 장미를 알리면 위치정보를 얻습니다. (가로등 AB-<span style="background:rgba(255,221,0,0.55);padding:0 2px;border-radius:2px;">059</span>)</div>`},
+
+  // #7 FILE_06
+  {num:7,name:'FILE_06',sub:'대왕참나무',icon:'📷',unlocked:false,
+   answer:'MEMORYTOWER',unlockCode:'059',unlockPrefix:'AB-',answerLen:11,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 02</div><div>N32가 알려준 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-059</span> 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진<span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-C]</span>를 보내주면서, 대왕참나무 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">QR코드</span> 안에 NULL-Z 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
+   hints:['대왕참나무에 푯말에 있는 QR코드를 찍어서 나오는 페이지의 학명을 이용합니다.','학명에 써있는 문장을 두 음절씩 끊어서 KIT-C에 대응해보세요.'],
+   answerText:`<img src="assets/file06_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file06_explain1.jpg')">`},
+
+  // #8 FILE_07
+  {num:8,name:'FILE_07',sub:'MEMORY TOWER — 타일벽화',icon:'📷',unlocked:false,
+   answer:'KEY',unlockCode:'MEMORYTOWER',answerLen:3,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 03</div><div>MEMORY TOWER.. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-051</span> 근처에 있는 건물이다.<br>사람들의 행복한 기억들을 그려놓은 건물을 제조공장으로 쓰고 있었다니 확실히 악랄한 녀석들이다.<br><br>NULL-Z의 효과, 단기 기억 삭제..<br>잊고 싶은 기억을 지우고, 행복한 기억만 남기고 싶다는 욕구로 사람들은 점점 중독돼 갔겠지..<br><br>벽화 앞을 서성이다 바닥에 떨어져 있는 그림 조각들을<span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-D]</span> 발견했다.<br>중요한 단서가 될 수 있으려나?</div></div>`,
+   hints:['KIT-D 그림 세장과 매칭되는 그림을 벽화에서 찾으세요.','매칭되는 그림의 틀에 KIT-D를 맞춰서 만들어지는 단어를 찾으세요.'],
+   answerText:`<div style="display:flex;gap:4px;">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file07_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file07_explain1.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">K</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file07_explain2.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file07_explain2.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">E</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file07_explain3.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file07_explain3.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">Y</span></div>
+   </div>`},
+
+  // #9 FILE_08
+  {num:9,name:'FILE_08',sub:'어린이은행공원 — 음표놀이판',icon:'🎵',unlocked:false,
+   answer:'FADE',unlockCode:'KEY',answerLen:4,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 04</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">연남동 250-1</span>에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 05</div><div>겉으로 볼때는 지구방범대로 알겠지만 사실 NCI 정보국이다.<br>MEMORY TOWER에서 알아낸 KEY에 대해 묻자,<br>NCI 정보요원은 그들의 본거지 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">비밀번호가 영어</span>로 만들어졌다는 정보를 얻었다.</div></div>
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 07</div><div>갑자기 N05에게 다급한 전화가 왔다.</div>
+   <div class="audio-mock" id="audioMockN05" onclick="playAudio(this,'assets/file08_voice_n05.mp3')"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-mock-toprow"><div class="audio-name">🎵 N05_voice_backup.mp3</div><div class="audio-time">00:46</div></div><div class="audio-progress" onclick="seekAudio(event,this)"><div class="audio-progress-fill"></div></div></div></div>
+   <button class="script-toggle" onclick="toggleScript('scriptN05')">📝 스크립트 보기</button>
+   <div class="script-box" id="scriptN05">
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',0)"><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',7)"><span class="script-speaker">대원1:</span> 그러니까 누가 널 제압하려 했었다는거지?</div><br>
+   <div class="script-line" style="color:#4a9eff;font-weight:bold;font-style:italic;" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',9)">도어락 소리</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',14)"><span class="script-speaker">대원2:</span> 맞습니다. 아무래도 저희를 추격하는 세력이 있는 것 같습니다.</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',17)">(와장창)<br><span class="script-speaker">N05:</span> 이크..!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',19)"><span class="script-speaker">대원1:</span> 거기 누구야!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',21)">(몸싸움 소리)<br><span class="script-speaker">대원1:</span> 잠깐... 이 배지... NCI?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',26)"><span class="script-speaker">대원2:</span> 아마도 NCI 한테 추적당하고 있는 것 같습니다. 이녀석 어떻게 할까요?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',30)"><span class="script-speaker">대원1:</span> 어떻게하긴 처리해야지...</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',33)"><span class="script-speaker">대원2:</span> 어..어떻게 처리하죠?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',34)"><span class="script-speaker">대원1:</span> 몰라서 물어? 니 손에 있는거 과다 복용시키면 되잖아.</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',36)"><span class="script-speaker">N05:</span> 읍..으읍!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',39)"><span class="script-speaker">대원1:</span> 누구랑 통화 중이였네?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',41)"><span class="script-speaker">대원2:</span> ...N07? NCI놈이 하나 더있는것 같습니다.</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',44)"><span class="script-speaker">대원1:</span> 당장 추적해!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',45.5)">(통화 끊기는 소리)</div>
+   </div>
+   <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">통화 중 들리는 비밀번호 소리..</span><br><br>마침 정보국 옆 공원 안에 있는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">음표놀이판</span>으로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
+   </div>
+`,
+   hints:['공원 놀이터 안에 음표놀이판을 찾으세요.','N05 녹취파일속에 들리는 도어락소리를 음표놀이판에서 찾아 해당되는 알파벳을 조합합니다.'],answerText:'도어락소리에 맞춰 음표를 누르고, 대응되는 알파벳을 조합하면 FADE가 완성됩니다.'},
+
+  // #10 FILE_09
+  {num:10,name:'FILE_09',sub:'카페 — QR 스티커',icon:'📷',unlocked:false,
+   answer:'BLANK',unlockCode:'FADE',answerLen:3,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 10</div><div>주변을 살피던 중 카페 하나가 눈에 들어왔다.<br>창가에 같은 복장에 마스크를 쓴 무리들.<br>사진을 찍어 확대해보니 — 왼쪽 어깨에 동일한 마크가 찍혀있다.<br><br>저놈들이다.<br><br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">카페 폴브</span> 근처 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등</span>에 같은 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">마크</span>가 붙어 있다.<br>현장분석 카메라로 확인해봐야겠다.</div></div>
+   <img class="detail-photo" src="assets/file09_cafe.jpg" alt="카페 파파라치 사진" onclick="openPhotoZoom('assets/file09_cafe.jpg')">`,
+   hints:['카페 폴브 연남점을 찾아가 사진에 표시된 가로등을 확인하세요.','현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 가로등에 있는 마크를 스캔하세요.<br><button onclick="openPhotoZoom(\'assets/file09_explain1.png\')" style="margin-top:6px;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;"><img src="assets/camera_emoticon.webp" style="width:14px;height:14px;vertical-align:middle;border-radius:50%;margin-right:3px;">카메라 인식 불가</button>'],
+   answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+    <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
+    <span style="font-size:13px;color:#8a9aba;">현장 분석 카메라로 마크를 스캔하면 아래처럼 BLANK가 나타납니다.</span>
+   </div>
+   <img src="assets/file09_explain1.png" style="width:100%;border-radius:4px;cursor:zoom-in;background:#000;" onclick="openPhotoZoom('assets/file09_explain1.png')">`},
+
+  // #11 FILE_10
+  {num:11,name:'FILE_10',sub:'그래피티 — 가입 인증 1',icon:'📷',unlocked:false,
+   answer:'9726R513',unlockCode:'BLANK',answerLen:8,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 11</div>
+   <div>BLANK가 저놈들 조직 이름이다.<br>카메라를 비춰보니 멤버십 가입센터로 연결됐다.</div></div>
+   <img class="detail-photo" src="assets/file10_blank_membership.jpg" alt="BLANK 멤버십 인증 안내" onclick="openPhotoZoom('assets/file10_blank_membership.jpg')">
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 12</div><div>BLANK로부터 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">KIT-E랑 KIT-F</span>가 도착했다.<br><br>녀석들 조직에 직접 들어가는 수밖에 없겠다.<br>멤버십 가입으로 내부에 잠입해보자.<br>들키지 않게 조심해야 한다.<br><br>우선 해당위치로 가보자.</div></div>`,
+   hints:['연남동 259-16에 도착해서 노란색 그래피티를 찾으세요.','KIT-E와 KIT-F를 이용하여 그래피티 퍼즐을 완성하세요.'],answerText:'퍼즐을 완성하게되면 9726R513이 완성됩니다.'},
+
+  // #12 FILE_11
+  {num:12,name:'FILE_11',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
+   answer:'9725A785',unlockCode:'9726R513',answerLen:8,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 14</div><div>9726R513.. 이게 뭘 뜻하는거지?<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">NCI 정보국</span>에 물어보고 싶지만 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">암구호</span>가 필요해보인다.<br>NCI 본부에서 근무하는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">N24에게 연락</span>하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>`,
+   hints:['암구호 도어 / 제로를 이용하여 N24에게 메세지를 보냅니다.','N24로부터 얻은 금일의 암구호를 NCI 정보국에 메세지를 보냅니다.','퍼즐로 완성된 9726R513을 NCI 정보국에 전달해 위치 정보를 얻습니다.'],answerText:'정답: 390-94'},
+
+  // #13 FILE_12 — (가안: 실제 답사 후 내용 교체 필요)
+  {num:13,name:'FILE_12',sub:'전신주 390-94 — 세 번째 흔적',icon:'📍',unlocked:false,
+   answer:'현장 확인',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국으로부터 받은 위치 390-94에 도착했다.<br><br>나를 지켜봤다는듯이 BLANK로부터 메세지가 도착했다.<br>메세지를 열자 숫자와 그림같은게 보이다가 몇초 뒤에 사라졌다.<br><br>기억에 의지하여 아래와 같이 그려놓았다.</div></div>
+   <img class="detail-photo" style="border-radius:0;cursor:default;" src="assets/file12_kit.png?v=8" alt="KIT 메모">
+   <div style="text-align:center;font-size:11px;color:#8a7a5a;letter-spacing:1px;margin-top:8px;">다음 전신주 위치</div>
+   <img class="detail-photo" style="border-radius:0;cursor:default;margin-top:4px;" src="assets/file12_answer_boxes.png" alt="다음 위치 입력칸">`,
+   hints:['전신주에 그림과 일치하는 표식을 찾으세요.','전구, 동신지, 마크를 동일한 위치에 매칭시켜 나오는 내용을 다음 위치 번호를 채워주세요.','다음 위치로 추정되는 번호를 NCI 정보국에 조회하여 다음 위치에 대한 정보를 얻으세요.'],answerText:'정답: 현장에서 발견한 표식을 키트와 대조'},
+
+  // #14 FILE_13
+  {num:14,name:'FILE_13',sub:'모나리자 — 그래피티',icon:'🎨',unlocked:false,
+   answer:'모나리자',unlockCode:'9725A785',answerLen:8,
+   isMemoryTrigger:true,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 16</div><div>두번째 전신주의 위치로 도착하니, <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">수상한 얼굴 그래피티</span>가 보인다. 이게 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">히든심볼</span>인걸까?<br>그래피티를 보고있으니 왠지모르게 갑자기 소름이 돋는다.<br><br>저 멀리 누군가 나를 쳐다보는거 같은데 기분탓인가..</div></div>
+   <button onclick="openMonalisaModal()" style="background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 그래피티 분석</button>`,
+   hints:['NCI 정보국으로 받은 위치의 건물 주변에서 검정색으로 칠해져있는 얼굴 그래피티를 찾으세요.','히든 심볼의 정체를 그래피티 분석 질문에 답하세요.'],answerText:'정답: MONALISA'},
+
+  // #15 FILE_14 — 가챠샵 (HIDDEN)
+  {num:15,name:'FILE_14',sub:'푸른바다 가챠샵',icon:'🎰',unlocked:true,hidden:true,
+   isTypewriter:true,typed:false,
+   typewriterText:'기억이 돌아오고 있다.\n\n저 얼굴이다.\n노란 머리. 마스크.\n\n그 자가 보스다.\n\n기억이 났다. 전부.\n지금 가지고 있는 코인으로\n가챠샵에서 물약을 빼낼 수 있다.\n\n푸른바다 가챠샵.\n지금 바로 가보자.',
+   content:`<div id="gacha-content"><div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div></div>
+   <div id="gacha-arrival" style="display:none;">
+   <div class="detail-section" style="margin-top:14px;border:1px solid #c8a840;background:#1a1810;padding:14px;">
+   <div style="color:#c8a840;font-size:10px;letter-spacing:2px;margin-bottom:10px;">▶ 가챠샵 도착</div>
+   <div style="font-size:12px;color:#9abaca;margin-bottom:14px;">모나리자 그림이 있는 가챠머신 앞.<br>코인을 넣고 캡슐을 뽑은 후 시험관 두 개를 혼합하라.<br>나온 색깔을 선택하라.</div>
+   <div style="display:flex;gap:10px;justify-content:center;">
+   <button onclick="selectColor('RED')" style="flex:1;padding:14px 8px;background:#3a0808;border:2px solid #cc2222;color:#ff8888;font-family:Share Tech Mono,monospace;font-size:13px;letter-spacing:2px;cursor:pointer;border-radius:4px;">🔴 RED</button>
+   <button onclick="selectColor('BLUE')" style="flex:1;padding:14px 8px;background:#08083a;border:2px solid #2222cc;color:#8888ff;font-family:Share Tech Mono,monospace;font-size:13px;letter-spacing:2px;cursor:pointer;border-radius:4px;">🔵 BLUE</button>
+   <button onclick="selectColor('YELLOW')" style="flex:1;padding:14px 8px;background:#2a2a08;border:2px solid #aaaa22;color:#ffff88;font-family:Share Tech Mono,monospace;font-size:13px;letter-spacing:2px;cursor:pointer;border-radius:4px;">🟡 YELLOW</button>
+   </div></div></div>`,
+   hints:['푸른바다 가챠샵을 찾아가세요.','모나리자 그림이 있는 가챠머신에 코인을 투입하세요.'],answerText:''},
+
+  // #16 FILE_15 — 본거지 (HIDDEN)
+  {num:16,name:'FILE_15',sub:'본거지 — 최종 보고',icon:'🏢',unlocked:true,hidden:true,
+   isTypewriter:true,typed:false,
+   typewriterText:'NULL-Z 샘플을 확보했다.\nRED. 틀림없다.\n\n이제 본거지로 향한다.\n\n저 자가 있는 곳.\n\n모든 기억이 돌아왔다.\n이제 끝낼 시간이다.\n\n최종 보고서를 작성하고\n본부에 제출한다.',
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget2" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div>`,
+   hints:['본거지 건물을 찾아가세요.','건물 주변에서 BLANK의 마크(뇌 모양)가 표시된 입구를 찾아보세요.'],answer:'BLANK IN YOUR AREA',answerText:''}
+];
+
+// ===== 개발/테스트용: 모든 파일 잠금 해제 (배포 전 false로 변경) =====
+const DEV_UNLOCK_ALL = false;
+if(DEV_UNLOCK_ALL) files.forEach(f => { f.unlocked = true; f.hidden = false; });
+
+// ===== 메시지 데이터 =====
+const messages = [
+  // N24 — 생존, 암구어 시스템
+  {id:1, sender:'N24', dead:false, time:'2시간 전', new:true, read:false,
+   preview:'N07 전화 좀 받아봐 정말 무슨일 생긴거 아니지?',
+   attach:null,
+   topNotice:'이전 대화를 불러올 수 없습니다',
+   body:`<div>N07 전화 좀 받아봐<br>정말 무슨일 생긴거 아니지?</div><div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 07. 20</div>`,
+   canReply:true,
+   thread:[
+     {from:'them', text:'잘못 보고된거라고 믿고 있었는데..<br>너 말고도 많은 요원들이 희생됐어.<br>대답 못하는 거 알면서 보낸다.<br>보고싶다.<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 09. 02</div>'}
+   ],
+   waitingForAnswer:false, waitingForChoice:false, choiceMade:false,
+   correctPassword:'도어', answered:false},
+
+  // N32 — 생존, 하트 조형물 단서 + 부재중 시스템
+  {id:2, sender:'N32', dead:false, time:'어제', new:true, read:false,
+   preview:'어이~ N07! 조형물 근처 재료 확인 해줄 수 있어?',
+   attach:'⚠ expired_file.enc',
+   body:`<div>어이~ N07! 아직 재료에 대해선 가진 정보가 없는 것 같던데?<br>내가 관련해서 사진을 하나 받았는데 직접 확인하기엔 거리가 멀어서 말이야.<br>사진이 흐려서 모르겠는데 조형물 근처에 보이는 재료를 확인 해줄 수 있어?<br>도와주면 내가 다른 정보도 넘겨줄게 어때?</div>
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">사진 열람 기간 만료</div><div class="audio-time" style="color:#7a4040;">FILE_04에 저장됨</div></div></div>
+   <div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 06. 29</div>
+   <div class="msg-zigzag">대화를 불러올 수 없습니다.</div>`,
+   canReply:true, thread:[], waitingForAnswer:true,
+   correctPassword:'ROSE', altPasswords:['장미','rose','Rose'],
+   answered:false, inactive:false,
+   afterCorrect:'N07! 너 살아 있었구나..! 난 너무 위험해서 그 일엔 손 뗐어..<br><br>그래 장미 말고 다른 재료로 무슨 참나무였던 거 같은데.. AB-059 근처에 있었던 것만 기억나네..<br><br>아무튼 너도 이제 그 일에 그만 손떼는 게 좋을 거야..'},
+
+  // N05 — 사망, 본거지 잠입 전 녹취파일 전송 (통화 이력으로 표시)
+  {id:3, sender:'N05', dead:true, time:'3개월 전', new:false, read:true,
+   preview:'📞 통화 기록 — 연결 끊김',
+   attach:'⚠ N05_voice_backup.mp3',
+   isCallLog:true,
+   body:`<div class="call-log-entry"><div class="call-log-icon">📞</div><div><div class="call-log-title">통화 기록</div><div class="call-log-sub">연결 끊김</div></div></div>
+   <div class="audio-mock" style="background:#1a0d0d;border-color:#5a2020;cursor:default;margin-top:10px;"><div class="play-icon" style="color:#cc4444;font-size:14px;">⚠</div><div class="audio-mock-info"><div class="audio-name" style="color:#cc6644;">N05_voice_backup.mp3</div><div class="audio-time" style="color:#7a4040;">FILE_08에 저장됨</div></div></div>
+   <div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">2025. 07. 07</div>`,
+   canReply:true, thread:[], isDead:true},
+
+  {id:4, sender:'NCI 정보국', dead:false, time:'', new:false, read:true,
+   preview:'이전 대화를 불러올 수 없습니다',
+   attach:null,
+   body:`<div class="msg-zigzag">이전 대화를 불러올 수 없습니다</div>`,
+   canReply:true,
+   thread:[],
+   isDead:false,
+   isInfoguk:true}
+];
+
+let history = ['s1'];
+let currentLockedIdx = null;
+let selectedSlotIdx = null;
+
+// ===== 화면 전환 =====
+function goTo(id, addHistory=true){
+  if(typeof currentAudioEl!=='undefined' && currentAudioEl && !currentAudioEl.paused){
+    currentAudioEl.pause();
+    if(currentAudioEl._el){
+      const icon=currentAudioEl._el.querySelector('.play-icon');
+      if(icon){icon.textContent='▶';icon.classList.remove('is-playing');}
+    }
+  }
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0); document.documentElement.scrollTop=0; document.body.scrollTop=0;
+  
+  if(addHistory && history[history.length-1] !== id) history.push(id);
+  
+  const backBtn = document.getElementById('backBtn');
+  const hintBtn = document.getElementById('hintBtn');
+
+  // BACK 버튼: S5(메시지 상세), S6(스토리지), S7(파일상세)에서 표시
+  if(['s5','s6','s7','s8'].includes(id)) backBtn.classList.add('show');
+  else backBtn.classList.remove('show');
+
+  // 힌트 버튼: Safe Mode(S1)와 파일 상세(S7)에서 표시
+  if(['s1','s7'].includes(id)) hintBtn.classList.add('show');
+  else hintBtn.classList.remove('show');
+  // S1에서는 박스 안 버튼만 사용 → 플로팅 버튼 숨김
+  if(id==='s1'){ hintBtn.classList.remove('show'); }
+  // S0/S4/S5/S6/S7/S8: topbar 숨김 (배경 이미지에 자체 헤더 포함 — 테스트 중)
+  const topbar = document.querySelector('.topbar');
+  if(topbar) topbar.style.display = ['s0','s4','s5','s6','s7','s8'].includes(id) ? 'none' : '';
+  // topbar가 없는 화면은 inner의 상단 여백(44px)도 제거
+  const innerEl = document.getElementById('inner');
+  if(innerEl) innerEl.classList.toggle('no-topbar-pad', ['s4','s5','s6','s7','s8'].includes(id));
+  // 힌트 버튼: 종이 테마 화면(S7)에서는 종이 테마 아이콘으로 교체
+  if(hintBtn) hintBtn.classList.toggle('paper-style', id==='s7');
+  // 스캔라인 효과: 종이 테마 화면에서는 제거
+  const scanlineEl = document.querySelector('.scanline');
+  if(scanlineEl) scanlineEl.classList.toggle('paper-hide', ['s4','s5','s6','s7','s8'].includes(id));
+  if(id==='s8') renderReport();
+  // 모든 내부 스크롤 초기화
+  document.querySelectorAll('.msg-list, .detail-content, .report-body, .storage-screen').forEach(el => { el.scrollTop = 0; });
+}
+
+function goBack(){
+  if(history.length < 2) return;
+  history.pop();
+  const prev = history[history.length-1];
+  goTo(prev, false);
+}
+
+// 첫 클릭 이후엔 이목을 끌던 글로우 펄스를 멈추고 원래 그림자만 남김
+function openStorageFromProfile(){
+  const btn = document.querySelector('#s4 .storage-bottom-btn');
+  if(btn) btn.classList.add('glow-off');
+  goTo('s6');
+}
+
+// ===== NFC 트리거 =====
+function triggerNFC(){
+  // 진동: NFC 태깅 느낌
+  if(navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]);
+  const inner = document.getElementById('inner');
+  const blackout = document.getElementById('blackout');
+  inner.classList.add('glitching');
+  setTimeout(()=>blackout.style.opacity='1', 500);
+  setTimeout(()=>{
+    goTo('s2');
+    blackout.style.transition='opacity 0.3s';
+    blackout.style.opacity='0';
+    inner.classList.remove('glitching');
+    document.getElementById('statusTxt').textContent='SCANNING...';
+    startBadgeScan();
+  },800);
+}
+
+function startBadgeScan(){
+  const badgeSvg=document.getElementById('badgeSvg');
+  const scanLine=document.getElementById('badgeScanLine');
+  const status=document.getElementById('scanStatus');
+  badgeSvg.style.filter='drop-shadow(0 0 12px rgba(255,50,50,0.5))';
+  status.textContent='NFC DETECTED...';
+  setTimeout(()=>{
+    status.textContent='SCANNING...';
+    scanLine.style.opacity='1';
+    scanLine.style.top='0px';
+    let start=Date.now();
+    function anim(){
+      const p=Math.min((Date.now()-start)/1200,1);
+      scanLine.style.top=(p*180)+'px';
+      if(p<1) requestAnimationFrame(anim);
+      else {scanLine.style.opacity='0'; onBadgeScanned();}
+    }
+    requestAnimationFrame(anim);
+  },400);
+}
+
+function onBadgeScanned(){
+  const badgeSvg=document.getElementById('badgeSvg');
+  const n07=document.getElementById('n07Badge');
+  const status=document.getElementById('scanStatus');
+  const blackout=document.getElementById('blackout');
+  const scanAuth=document.getElementById('scanAuth');
+  status.textContent='VERIFYING...';
+  setTimeout(()=>{
+    badgeSvg.style.filter='drop-shadow(0 0 20px rgba(255,50,50,0.9))';
+    setTimeout(()=>{
+      n07.style.opacity='1';
+      status.textContent='AGENT N07 — CONFIRMED ✓';
+      status.style.color='#5a8a5a';
+    },200);
+  },300);
+  setTimeout(()=>{
+    blackout.style.opacity='1';
+    setTimeout(()=>{
+      goTo('s3');
+      blackout.style.opacity='0';
+      setTimeout(()=>{
+        scanAuth.style.opacity='1';
+        scanAuth.style.transition='top 1s linear';
+        scanAuth.style.top='0';
+        setTimeout(()=>scanAuth.style.top='100vh', 50);
+      },100);
+      setTimeout(()=>{
+        scanAuth.style.opacity='0';
+        document.getElementById('statusTxt').textContent='AUTHENTICATING...';
+        typeAuthLines();
+      },1200);
+    },400);
+  },2000);
+}
+
+function typeAuthLines(){
+  const lines=['a1','a2','a3','a4','a5','a6','a7'];
+  lines.forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('type'),i*400));
+  setTimeout(()=>{
+    document.getElementById('authOk').classList.add('show');
+    document.getElementById('statusTxt').textContent='AGENT VERIFIED';
+    document.getElementById('statusTxt').style.color='#4a8a4a';
+    document.getElementById('dot').style.background='#4a8a4a';
+  },lines.length*400+200);
+  setTimeout(()=>document.getElementById('nextBtn').classList.add('show'),lines.length*400+600);
+}
+
+// ===== 메시지 렌더 =====
+function renderMessages(){
+  const list=document.getElementById('msgList');
+  if(!list) return;
+  list.innerHTML='';
+  messages.forEach((m,i)=>{
+    const el=document.createElement('div');
+    const isUnread = !m.read;
+    el.className='msg-item'+(isUnread?' new':' read');
+    el.onclick=()=>openMessage(i);
+    const unreadDot = isUnread ? '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff4444;margin-right:6px;box-shadow:0 0 6px rgba(255,80,80,0.7);"></span>' : '';
+    const readLabel = isUnread
+      ? '<span class="msg-status-label" style="font-size:8px;color:#ff8866;letter-spacing:1px;margin-left:auto;">안읽음</span>'
+      : '<span class="msg-status-label" style="font-size:8px;color:#3a5a7a;letter-spacing:1px;margin-left:auto;">읽음</span>';
+    el.innerHTML=`<div class="msg-head">${unreadDot}<div class="msg-sender${m.dead?' dead':''}">${m.sender}</div>${readLabel}</div><div class="msg-preview">${m.preview}</div>${m.attach?`<div class="msg-attach">📎 ${m.attach}</div>`:''}`;
+    list.appendChild(el);
+  });
+  const unreadCount=messages.filter(m=>!m.read).length;
+  const badge=document.getElementById('msgCount');
+  if(badge){
+    if(unreadCount>0){badge.textContent=unreadCount;badge.style.display='inline-block';}
+    else badge.style.display='none';
+  }
+  // 종이 테마 MESSAGE 타이틀: 안읽음 개수에 맞는 이미지로 교체 (0/1/2/3, 4개 이상은 3으로 고정)
+  const msgTabs=document.getElementById('msgTabs');
+  if(msgTabs){
+    const n=Math.min(unreadCount,3);
+    msgTabs.style.backgroundImage=`url('assets/msg_title_${n}_v2.webp')`;
+  }
+}
+
+let currentMessageIdx = null;
+
+function openMessage(i){
+  const m=messages[i];
+  const alreadyOpen = currentMessageIdx===i && document.getElementById('s5').classList.contains('on');
+  const wasUnread = !m.read;
+  m.read=true;
+  m.new=false;
+  if(wasUnread) saveGameState();
+  currentMessageIdx = i;
+  const deadBadge = m.dead ? ' <span class="msg-dead-badge">❗발신인 사망 확인됨</span>' : '';
+  document.getElementById('msgDetailSender').innerHTML=m.sender+deadBadge;
+  document.getElementById('msgDetailSender').className='msg-detail-sender'+(m.dead?' dead':'');
+  document.getElementById('msgDetailTime').textContent=m.time;
+
+  // 본문 (잠금/해제 분기)
+  let bodyHtml = m.body || '';
+  if(m.bodyLocked && m.bodyUnlocked && m.unlocksWith !== undefined){
+    const unlockFile = files[m.unlocksWith];
+    bodyHtml = (unlockFile && unlockFile.unlocked) ? m.bodyUnlocked : m.bodyLocked;
+  }
+  
+  // 답장 스레드
+  let threadHtml = '';
+  if(m.thread && m.thread.length > 0){
+    threadHtml = '<div class="msg-thread">';
+    m.thread.forEach(t=>{
+      const stampHtml = t.ts ? `<div style="text-align:right;font-size:9px;opacity:0.55;margin-top:5px;">${formatTimeOrDate(t.ts)}</div>` : '';
+      const text = t.text + stampHtml;
+      if(t.from === 'me'){
+        threadHtml += `<div class="msg-thread-bubble from-me">${text}</div>`;
+      } else if(t.from === 'them'){
+        threadHtml += `<div class="msg-thread-bubble from-them">${text}</div>`;
+      } else if(t.from === 'system'){
+        threadHtml += `<div class="msg-thread-bubble dead-no-reply">${text}</div>`;
+      }
+    });
+    threadHtml += '</div>';
+  }
+  
+  // 답장 입력 영역: 고정 푸터(paper theme) 표시/숨김만 토글, 재생성하지 않음
+  const footerEl = document.getElementById('msgReplyFooter');
+  if(footerEl) footerEl.style.display = (m.canReply && !m.waitingForChoice) ? 'flex' : 'none';
+  const replyInputEl = document.getElementById('msgReplyInput');
+  if(replyInputEl) replyInputEl.value = '';
+
+  // N24 A/B 선택지
+  let choiceHtml = '';
+  if(m.waitingForChoice){
+    choiceHtml = `<div class="msg-choice-box">
+      <button class="msg-choice-btn" onclick="chooseN24('A')">A. 나도 모르겠어, 일단 자세한 이야기는 나중에 하자.</button>
+      <button class="msg-choice-btn" onclick="chooseN24('B')">B. 됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.</button>
+    </div>`;
+  }
+
+  // 풍선 밖으로 빼낼 전체 폭 지그재그(시스템 단절) 블록 분리
+  const bodyWrap = document.createElement('div');
+  bodyWrap.innerHTML = bodyHtml;
+  let zigzagHtml = '';
+  bodyWrap.querySelectorAll('.msg-zigzag').forEach(el=>{ zigzagHtml += el.outerHTML; el.remove(); });
+  bodyHtml = bodyWrap.innerHTML;
+
+  const bodyIsEmpty = bodyHtml.replace(/<br\s*\/?>/gi,'').trim() === '';
+  const mainHtml = bodyIsEmpty ? '' : (m.isCallLog
+    ? `<div class="call-log-panel">${bodyHtml}</div>`
+    : `<div class="msg-thread-bubble from-them">${bodyHtml}</div>`);
+
+  // 대화 맨 위 시스템 안내(이전 대화를 불러올 수 없습니다 등)
+  const topNoticeHtml = m.topNotice ? `<div class="msg-zigzag">${m.topNotice}</div>` : '';
+
+  document.getElementById('msgDetailBody').innerHTML = topNoticeHtml + mainHtml + zigzagHtml + threadHtml + choiceHtml;
+  if(alreadyOpen){
+    renderMessages();
+    return;
+  }
+  goTo('s5');
+  renderMessages();
+}
+
+function formatTimeOrDate(ts){
+  const d = new Date(ts);
+  const now = new Date();
+  const sameDay = d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth() && d.getDate()===now.getDate();
+  if(sameDay){
+    let h = d.getHours();
+    const period = h < 12 ? '오전' : '오후';
+    h = h % 12; if(h === 0) h = 12;
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    return `${period} ${h}:${mm}`;
+  }
+  const y=d.getFullYear(), mo=String(d.getMonth()+1).padStart(2,'0'), da=String(d.getDate()).padStart(2,'0');
+  return `${y}. ${mo}. ${da}`;
+}
+
+// 실시간으로 오가는 메시지(답장/선택지)에 보낸 시각을 찍어서 thread에 추가
+function pushThreadMsg(m, from, text){
+  m.thread.push({from, text, ts: Date.now()});
+  saveGameState();
+}
+
+function sendReply(){
+  if(currentMessageIdx === null) return;
+  const m = messages[currentMessageIdx];
+  const input = document.getElementById('msgReplyInput');
+  const text = input.value.trim();
+  if(!text) return;
+
+  // 내 메시지 추가 (실시간 전송 시각 표시)
+  pushThreadMsg(m, 'me', text);
+
+  // 응답 처리
+  if(m.isDead){
+    // 죽은 사람: 보낼 때마다 매번 답장 없음 메시지 추가
+    setTimeout(()=>{
+      pushThreadMsg(m, 'system', '⚠ 답장이 오지 않습니다. 발신인은 사망 상태입니다.');
+      openMessage(currentMessageIdx);
+    }, 800);
+  } else if(m.sender === 'N24'){
+    // N24 암구호 시스템 + 이후 A/B 선택 분기
+    setTimeout(()=>{
+      if(m.choiceMade){
+        // 선택 이후: 항상 바쁘다는 답변만 반복
+        pushThreadMsg(m, 'them', '지금 중요한 일을 하고 있어.<br>근무 끝나고 얘기하자.');
+      } else if(!m.answered){
+        // 첫 답장: 처음부터 암구호("도어")를 말하면 확인 절차를 건너뛴다
+        if(text.trim() === (m.correctPassword||'')){
+          pushThreadMsg(m, 'them', '제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?');
+          m.waitingForChoice = true;
+        } else {
+          pushThreadMsg(m, 'them', '누구야 너?<br>설마 살아 있는 거야?<br>우리끼리 정한 암구호를 먼저 말해봐.');
+          m.waitingForAnswer = true;
+        }
+        m.answered = true;
+      } else if(m.waitingForAnswer){
+        // 암구호 검증 (두 번째부터는 짧은 재촉 멘트만 반복)
+        if(text.trim() === (m.correctPassword||'')){
+          pushThreadMsg(m, 'them', '제로..<br>N07..어떻게 살아있는 거야?<br>그동안 무슨 일이 있었던 거야?');
+          m.waitingForAnswer = false;
+          m.waitingForChoice = true;
+        } else {
+          pushThreadMsg(m, 'them', '우리끼리 정한 암구호를 먼저 말해봐.');
+        }
+      }
+      openMessage(currentMessageIdx);
+    }, 600);
+  } else if(m.sender === 'N32'){
+    setTimeout(()=>{
+      // 부재중 처리 (ROSE 답 이후 대화 종료)
+      if(m.inactive){
+        pushThreadMsg(m, 'system', '📵 부재중입니다.');
+        openMessage(currentMessageIdx);
+        return;
+      }
+      const userInput = text.trim().toLowerCase();
+      const correctList = [(m.correctPassword||'').toLowerCase(), ...(m.altPasswords||[]).map(p=>p.toLowerCase())];
+      if(m.waitingForAnswer && correctList.includes(userInput)){
+        pushThreadMsg(m, 'them', m.afterCorrect);
+        m.waitingForAnswer = false;
+        m.inactive = true; // 이후 부재중 처리
+      } else if(m.waitingForAnswer){
+        // 오답 — 살아있는지 확인 후 암구어 요구
+        if(!m.answered){
+          pushThreadMsg(m, 'them', '뭐야.. N07.. 너 죽은 거 아니었어..?<br>너가 맞다면 이전에 얘기했던 주재료 하나를 말해봐.');
+          m.answered = true;
+        } else {
+          pushThreadMsg(m, 'them', '이전에 얘기했던 주재료 하나를 말해봐.');
+        }
+      } else {
+        pushThreadMsg(m, 'system', '📵 부재중입니다.');
+      }
+      openMessage(currentMessageIdx);
+    }, 600);
+  } else if(m.isInfoguk){
+    // NCI 정보국: 암구호("도마") → 신원확인 딜레이 후 BLANK 브리핑 → 전신주 번호 조회 대기
+    setTimeout(()=>{
+      if(!m.infoStage && text.trim() === '도마'){
+        pushThreadMsg(m, 'them', '신원 확인 중..');
+        openMessage(currentMessageIdx);
+        setTimeout(()=>{
+          pushThreadMsg(m, 'them', "현재 N07 요원이 맡고 있는 임무를 기반으로 정보 전달 드립니다.<br><br>BLANK는 현재 수도권 일대에서 불법 활동 중인 조직입니다.<br>주로 유통하는 약물로는 NULL-Z로 알려져 있습니다.<br>소량 복용 시에는 5분 전까지의 기억이 삭제되며, 잠시 동안 환각 효과가 나타납니다.<br>그러나, 과다 복용 시 사망하게 되지만, 이 사실에 대해 소비자에게 명시하지 않고 있습니다.<br>뇌를 연상시키는 마크를 사용하며, 조직 요원들은 공통적으로 눈썹이 없는 것이 특징입니다.<br><br>또한, 그들은 전신주를 기반으로 위치를 공유하며,<br>전신주 번호는 숫자와 영어를 포함한 8글자로 표현됩니다.<br>전신주 번호를 알려주시면 위치를 조회해 알려드리겠습니다.");
+          m.infoStage = 'awaiting_pole';
+          openMessage(currentMessageIdx);
+        }, 1600);
+      } else if(m.infoStage === 'awaiting_pole'){
+        if(text.trim().toUpperCase() === '9726R513'){
+          pushThreadMsg(m, 'them', '조회하신 전신주의 위치는 연남동 390-94 입니다.');
+          m.infoStage = 'done';
+        } else {
+          pushThreadMsg(m, 'them', '조회를 위해 8글자를 정확하게 입력해주세요.');
+        }
+        openMessage(currentMessageIdx);
+      } else if(m.infoStage === 'done'){
+        if(text.trim().toUpperCase() === '9725A785'){
+          pushThreadMsg(m, 'them', '조회하신 전신주의 위치는 연남동 381-14 입니다.');
+        } else {
+          pushThreadMsg(m, 'them', '조회를 위해 8글자를 정확하게 입력해주세요.');
+        }
+        openMessage(currentMessageIdx);
+      } else {
+        pushThreadMsg(m, 'them', '실종');
+        openMessage(currentMessageIdx);
+      }
+    }, 600);
+  }
+
+  // 화면 새로고침
+  openMessage(currentMessageIdx);
+}
+
+// ===== N24 A/B 선택지 =====
+function chooseN24(choice){
+  if(currentMessageIdx === null) return;
+  const m = messages[currentMessageIdx];
+  if(!m || m.sender !== 'N24' || !m.waitingForChoice) return;
+  m.waitingForChoice = false;
+  m.choiceMade = true;
+  if(choice === 'A'){
+    pushThreadMsg(m, 'me', '나도 모르겠어, 일단 자세한 이야기는 나중에 하자.');
+    openMessage(currentMessageIdx);
+    setTimeout(()=>{
+      pushThreadMsg(m, 'them', "그래, 일단 정보국에 보고하는게 좋을거야.<br>혹시 모를까봐 알려준다. 금일 암구호는 '실종 / 도마'야.");
+      openMessage(currentMessageIdx);
+    }, 600);
+  } else {
+    pushThreadMsg(m, 'me', '됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.');
+    openMessage(currentMessageIdx);
+    setTimeout(()=>{
+      pushThreadMsg(m, 'them', "하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도마'야, 자세한건 나중에 얘기하자.");
+      openMessage(currentMessageIdx);
+    }, 600);
+  }
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.msg-tab').forEach(t=>t.classList.remove('on'));
+  event.target.classList.add('on');
+  // 추후 미션 탭 구현
+}
+
+// ===== 인벤토리 그리드 렌더 =====
+function renderInventory(){
+  const grid=document.getElementById('invGrid');
+  grid.innerHTML='';
+  const visibleFiles=files.filter(f=>!f.hidden);
+  for(let i=0;i<16;i++){
+    const slot=document.createElement('div');
+    if(i<visibleFiles.length){
+      const f=visibleFiles[i];
+      const realIdx=files.indexOf(f);
+      const isLatest=f.unlocked&&(i+1>=visibleFiles.length||!visibleFiles[i+1].unlocked);
+      const justUnlocked=!!f.unlockReveal;
+      if(justUnlocked) f.unlockReveal=false; // 플립은 이 렌더 한 번만 — 소비 후 재생 안 함
+      slot.className='slot'+(f.unlocked?' unlocked':' locked')+(isLatest?' latest-unlock':'')+(justUnlocked?' just-unlocked':'');
+      slot.dataset.idx=realIdx;
+      slot.innerHTML=`
+        <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
+        <div class="slot-icon">${f.unlocked?f.icon:'🔒'}</div>
+        <div class="slot-name">${f.name}</div>
+        <div class="slot-num">#${f.num}</div>`;
+      slot.onclick=()=>selectSlot(realIdx);
+    } else {
+      slot.className='slot empty';
+    }
+    grid.appendChild(slot);
+  }
+  document.getElementById('progressNum').textContent=visibleFiles.filter(f=>f.unlocked).length;
+  const totalEl=document.getElementById('totalNum');
+  if(totalEl) totalEl.textContent=visibleFiles.length;
+}
+
+function selectSlot(i){
+  const f=files[i];
+  selectedSlotIdx=i;
+  document.querySelectorAll('.slot').forEach(s=>s.classList.remove('selected'));
+  const slotEl=document.querySelector(`.slot[data-idx="${i}"]`);
+  if(slotEl) slotEl.classList.add('selected');
+  // 잠겨있으면 UNLOCK 모달, 열렸으면 OPEN
+  if(f.unlocked){
+    openDetail(i);
+  } else {
+    // 이전 파일이 열려있어야 이 파일을 풀 수 있음
+    // i가 0이 아니고 이전 파일이 안 열려있으면 차단
+    if(i > 0 && !files[i-1].unlocked){
+      // 흔들기 + 토스트
+      if(slotEl){
+        slotEl.classList.add('shake');
+        setTimeout(()=>slotEl.classList.remove('shake'),400);
+      }
+      showLockToast('🔒 이전 파일을 먼저 해제하세요');
+      return;
+    }
+    openCodeModal(i);
+  }
+}
+
+function showLockToast(msg){
+  const toast=document.getElementById('lockToast');
+  toast.textContent = msg;
+  toast.classList.remove('show');
+  // 강제 reflow로 애니메이션 재시작
+  void toast.offsetWidth;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'), 2100);
+}
+
+// ===== 정답 입력 모달 =====
+function openCodeModal(idx){
+  currentLockedIdx=idx;
+  const f=files[idx];
+  document.getElementById('codeModalTitle').textContent=`${f.name}`;
+  document.getElementById('codeModalSub').textContent=`잠금 해제 코드 입력 — #${f.num}`;
+  const disp=document.getElementById('codeDisplay');
+  disp.innerHTML='';
+  const code = f.unlockCode || '';
+  const prefix = f.unlockPrefix || '';
+  const separator = f.unlockSeparator || null;
+  const displayLen = separator ? (f.answerLen || code.replace(separator.char,'').length) : code.length;
+  const isLong = (prefix ? displayLen : code.length) > 11 || /[ㄱ-힣]/.test(code);
+
+  if(separator){
+    // 구분자 방식: _ _ _ _ - _
+    for(let i=0;i<displayLen;i++){
+      if(i === separator.after){
+        const sep=document.createElement('div');
+        sep.className='code-prefix';
+        sep.textContent=separator.char;
+        disp.appendChild(sep);
+      }
+      const c=document.createElement('div');
+      c.className='code-cell';
+      c.textContent='_';
+      disp.appendChild(c);
+    }
+  } else if(prefix){
+    const pre=document.createElement('div');
+    pre.className='code-prefix';
+    pre.textContent=prefix;
+    disp.appendChild(pre);
+    for(let i=0;i<displayLen;i++){
+      const c=document.createElement('div');
+      c.className='code-cell';
+      c.textContent='_';
+      disp.appendChild(c);
+    }
+  } else if(!isLong){
+    for(let i=0;i<code.length;i++){
+      const c=document.createElement('div');
+      c.className='code-cell';
+      c.textContent='_';
+      disp.appendChild(c);
+    }
+  } else {
+    const hint=document.createElement('div');
+    hint.style.cssText='font-size:11px;color:#5a7a9a;letter-spacing:1px;text-align:center;padding:8px;';
+    hint.textContent=`${prefix ? prefix : ''}${code.length}자 코드`;
+    disp.appendChild(hint);
+  }
+  document.getElementById('codeInput').value='';
+  document.getElementById('codeInput').maxLength = prefix ? displayLen : (isLong ? 30 : code.length);
+  document.getElementById('codeError').textContent='';
+  document.getElementById('modalCode').classList.add('on');
+  setTimeout(()=>document.getElementById('codeInput').focus(),100);
+}
+
+document.getElementById('codeInput').addEventListener('input',(e)=>{
+  if(currentLockedIdx===null) return;
+  const f=files[currentLockedIdx];
+  const code=f.unlockCode||'';
+  const isLong=code.length>11||/[ㄱ-힣]/.test(code);
+  if(isLong) return;
+  const v=e.target.value.toUpperCase();
+  const cells=document.querySelectorAll('#codeDisplay .code-cell');
+  cells.forEach((c,i)=>{
+    if(i<v.length){c.textContent=v[i];c.classList.add('filled');}
+    else{c.textContent='_';c.classList.remove('filled');}
+  });
+});
+
+document.getElementById('codeInput').addEventListener('keydown',(e)=>{
+  if(e.key==='Enter' && !e.isComposing) submitCode();
+});
+
+function submitCode(){
+  const rawInput=document.getElementById('codeInput').value.trim();
+  const f=files[currentLockedIdx];
+  const expectedCode = f.unlockCode || '';
+  const prefix = f.unlockPrefix || '';
+  const separator = f.unlockSeparator || null;
+  const isKorean = /[ㄱ-힣]/.test(expectedCode);
+
+  let fullInput;
+  if(separator){
+    // NULLZ → NULL-Z (after 위치에 구분자 삽입)
+    const raw = rawInput.replace(separator.char,'');
+    fullInput = raw.slice(0,separator.after) + separator.char + raw.slice(separator.after);
+  } else {
+    // prefix는 표시용 — 검증은 rawInput 그대로
+    fullInput = rawInput;
+  }
+
+  const input = isKorean ? fullInput : fullInput.toUpperCase();
+  const expected = isKorean ? expectedCode : expectedCode.toUpperCase();
+  if(input===expected){
+    f.unlocked=true;
+    f.unlockReveal=true;
+    closeModal('modalCode');
+    const toast=document.getElementById('unlockToast');
+    toast.textContent='🔓 '+f.name+' 잠금 해제';
+    toast.classList.remove('show');
+    void toast.offsetWidth; // 강제 reflow
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), 2100);
+    if(f.onUnlock) revealMissionData(f.onUnlock);
+    saveGameState();
+    renderInventory();
+    renderMessages(); // 메시지 잠금 상태 갱신
+    setTimeout(()=>{
+      const slot=document.querySelector(`.slot[data-idx="${currentLockedIdx}"]`);
+      if(slot) slot.classList.add('unlock-anim');
+    },50);
+    // 플립 애니메이션이 끝나면 just-unlocked 클래스를 완전히 제거 —
+    // 화면을 나갔다 들어와도(display:none 토글) 다시 재생되지 않도록 함
+    setTimeout(()=>{
+      const slot=document.querySelector(`.slot[data-idx="${currentLockedIdx}"]`);
+      if(slot) slot.classList.remove('just-unlocked');
+    },700);
+  } else {
+    document.getElementById('modalCodeBox').classList.add('shake');
+    document.getElementById('codeError').textContent='✕ ACCESS DENIED — 잘못된 코드';
+    setTimeout(()=>document.getElementById('modalCodeBox').classList.remove('shake'),400);
+  }
+}
+
+function revealMissionData(data){
+  // 신규 프로필 화면 필드
+  if(data.drug){
+    const el=document.getElementById('missionDrug');
+    if(el){el.textContent=data.drug;el.classList.add('revealed');}
+  }
+  if(data.org){
+    const el=document.getElementById('missionOrg');
+    if(el){el.textContent=data.org;el.classList.add('revealed');}
+  }
+  // 구 화면 호환 (있으면 같이 업데이트)
+  ['fldDrug','fldOrg','fldBase','fldColor'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+  });
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('on');
+}
+
+function openMissionZoom(){
+  document.getElementById('missionZoomText').innerHTML=document.querySelector('#s4 .profile-mission-text').innerHTML;
+  document.getElementById('modalMissionZoom').classList.add('on');
+}
+function closeMissionZoom(){
+  document.getElementById('modalMissionZoom').classList.remove('on');
+}
+function openPhotoZoom(src){
+  document.getElementById('photoZoomImg').src=src;
+  document.getElementById('photoZoomBg').classList.add('on');
+}
+function closePhotoZoom(){
+  document.getElementById('photoZoomBg').classList.remove('on');
+}
+
+// ===== 파일 상세 =====
+function openDetail(idx){
+  const f=files[idx];
+  currentDetailIdx=idx;
+  document.getElementById('detailTitle').textContent=f.name;
+  document.getElementById('detailNum').textContent=`#${f.num}`;
+  document.getElementById('detailContent').innerHTML=f.content;
+  goTo('s7');
+  if(f.isTypewriter){
+    const targetId=f.num===15?'typewriterTarget':'typewriterTarget2';
+    const target=document.getElementById(targetId);
+    if(!target)return;
+    if(f.typed&&f.savedText){
+      target.textContent=f.savedText;
+      if(f.num===15&&f.arrivalShown){
+        const arr=document.getElementById('gacha-arrival');
+        if(arr)arr.style.display='block';
+        if(f.colorSelected){
+          arr.querySelectorAll('button').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
+        }
+      }
+    }else if(!f.typed){
+      f.typed=true;
+      f.savedText=f.typewriterText;
+      if(f.num===15) f.arrivalShown=true;
+      saveGameState();
+      typewriterEffect(target,f.typewriterText,()=>{
+        if(f.num===15){
+          setTimeout(()=>{const arr=document.getElementById('gacha-arrival');if(arr){arr.style.display='block';arr.scrollIntoView({behavior:'smooth'});}},800);
+        }
+      });
+    }
+  }
+}
+
+function openARCamera(){
+  document.getElementById('modalARConfirm').classList.add('on');
+}
+function confirmARCamera(){
+  closeModal('modalARConfirm');
+  window.open('https://popo90002-netizen.github.io/heart-rose-ar-blank/', '_blank');
+}
+function openMonalisaModal(){
+  document.getElementById('monalisaInput').value='';
+  document.getElementById('monalisaError').textContent='';
+  document.getElementById('modalMonalisa').classList.add('on');
+}
+let currentAudioEl=null;
+function formatAudioTime(sec){
+  sec=Math.max(0,Math.floor(sec||0));
+  const m=Math.floor(sec/60), s=sec%60;
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function ensureAudio(el,src){
+  if(!el._audio){
+    const icon=el.querySelector('.play-icon');
+    const timeEl=el.querySelector('.audio-time');
+    const originalTimeText=timeEl?timeEl.textContent:'';
+    const audio=new Audio(src);
+    const fill=el.querySelector('.audio-progress-fill');
+    audio.addEventListener('timeupdate',()=>{
+      if(fill && audio.duration) fill.style.width=(audio.currentTime/audio.duration*100)+'%';
+      if(timeEl) timeEl.textContent=formatAudioTime(audio.currentTime);
+    });
+    audio.addEventListener('ended',()=>{
+      icon.textContent='▶';
+      icon.classList.remove('is-playing');
+      audio.currentTime=0;
+      if(fill) fill.style.width='0%';
+      if(timeEl) timeEl.textContent=originalTimeText;
+    });
+    el._audio=audio;
+  }
+  return el._audio;
+}
+function switchCurrentAudio(audio,el){
+  if(currentAudioEl && currentAudioEl!==audio){
+    currentAudioEl.pause();
+    if(currentAudioEl._el){
+      const prevIcon=currentAudioEl._el.querySelector('.play-icon');
+      prevIcon.textContent='▶';
+      prevIcon.classList.remove('is-playing');
+    }
+  }
+  audio._el=el;
+  currentAudioEl=audio;
+}
+function playAudio(el,src){
+  const icon=el.querySelector('.play-icon');
+  if(!src){
+    icon.textContent='⏸';
+    alert('🎵 음성 재생 시뮬레이션\n(실제 배포 시 음성 파일 재생)');
+    setTimeout(()=>{icon.textContent='▶';},500);
+    return;
+  }
+  const audio=ensureAudio(el,src);
+  switchCurrentAudio(audio,el);
+  if(audio.paused){
+    audio.play();
+    icon.textContent='⏸';
+    icon.classList.add('is-playing');
+  } else {
+    audio.pause();
+    icon.textContent='▶';
+    icon.classList.remove('is-playing');
+  }
+}
+function seekScriptLine(mockId,src,t){
+  const el=document.getElementById(mockId);
+  if(!el) return;
+  const audio=ensureAudio(el,src);
+  switchCurrentAudio(audio,el);
+  const icon=el.querySelector('.play-icon');
+  const setTimeAndPlay=()=>{
+    audio.currentTime=t;
+    audio.play();
+    icon.textContent='⏸';
+    icon.classList.add('is-playing');
+  };
+  if(audio.readyState>=1){ setTimeAndPlay(); }
+  else { audio.addEventListener('loadedmetadata',setTimeAndPlay,{once:true}); }
+}
+function seekAudio(ev,bar){
+  ev.stopPropagation();
+  const el=bar.closest('.audio-mock');
+  const audio=el&&el._audio;
+  if(!audio||!audio.duration) return;
+  const rect=bar.getBoundingClientRect();
+  const frac=Math.max(0,Math.min(1,(ev.clientX-rect.left)/rect.width));
+  audio.currentTime=frac*audio.duration;
+  const fill=bar.querySelector('.audio-progress-fill');
+  if(fill) fill.style.width=(frac*100)+'%';
+}
+
+function toggleScript(id){
+  document.getElementById(id).classList.toggle('show');
+}
+
+function tryUnlockVoice(){
+  alert('🔒 음성메모가 잠겨있습니다.\n임무 진행 중 잠금 코드를 찾으세요.\n\n(추후 구현: 별도 잠금 해제 모달)');
+}
+
+// ===== 현재 열린 파일 추적 =====
+let currentDetailIdx = null;
+
+// #1 (Safe Mode) 힌트 데이터
+const safeModeHints = {
+  name: 'FILE #1',
+  sub: 'SAFE MODE — 시스템 인증',
+  hints: [
+    'SAFE MODE 6줄 메시지를 자세히 살펴보세요.',
+    '각 문장의 첫 글자를 모아보세요.'
+  ],
+  answer: '요원배지접촉',
+  answerText: '키트에 있는 요원배지를 폰에 태깅하세요.',
+  hintsRevealed: 0,
+  answerRevealed: false,
+  explainRevealed: false
+};
+
+// ===== 힌트 =====
+function openHintModal(){
+  // 현재 화면 확인
+  const currentScreen = document.querySelector('.screen.on')?.id;
+  
+  let hintTarget;
+  if(currentScreen === 's1'){
+    // Safe Mode (#1) 힌트
+    hintTarget = safeModeHints;
+  } else if(currentDetailIdx !== null) {
+    // 파일 상세 화면
+    const f = files[currentDetailIdx];
+    if(!f.unlocked) return;
+    if(!f.hintsRevealed) f.hintsRevealed = 0;
+    hintTarget = f;
+  } else {
+    return;
+  }
+  
+  document.getElementById('hintModalSub').textContent = hintTarget.name;
+  renderHints(hintTarget);
+  document.getElementById('hintModalBox').classList.toggle('hint-modal', currentScreen !== 's1');
+  document.getElementById('modalHint').classList.add('on');
+}
+
+function openSupport(){
+  document.getElementById('modalSupport').classList.add('on');
+}
+
+let currentHintTarget = null;
+
+function toggleHintStage(ev, key){
+  ev.stopPropagation();
+  const target = currentHintTarget;
+  if(!target) return;
+  if(!target.stageCollapsed) target.stageCollapsed = {};
+  target.stageCollapsed[key] = !target.stageCollapsed[key];
+  renderHints(target);
+}
+
+function renderHints(target){
+  currentHintTarget = target;
+  if(!target.stageCollapsed) target.stageCollapsed = {};
+  const sc = target.stageCollapsed;
+  const foldBtn = (key) => {
+    const collapsed = !!sc[key];
+    return `<span class="hint-fold-btn ${collapsed?'expand':'collapse'}" onclick="toggleHintStage(event,'${key}')"></span>`;
+  };
+  const hintEl=document.getElementById('hintContent');
+  let html='<div class="hint-display">';
+  // 공개된 힌트 표시
+  for(let i=0;i<target.hintsRevealed;i++){
+    const key='hint'+i, collapsed=!!sc[key];
+    html+=`<div class="hint-stage"><div class="hint-stage-num">HINT ${i+1} / ${target.hints.length}${foldBtn(key)}</div><div class="hint-stage-txt${collapsed?' collapsed':''}">${target.hints[i]}</div></div>`;
+  }
+  // 정답/해설은 한 번에 같이 공개, 접기는 정답 쪽 버튼 하나로 같이 열고닫힘
+  // 접었을 때는 "정답 및 해설" 한 칸으로, 펼쳤을 때는 정답/해설 두 칸으로 나눠 보여줌
+  const ansVal = target.answer;
+  if(target.answerRevealed && ansVal){
+    const key='answer', collapsed=!!sc[key];
+    if(collapsed){
+      html+=`<div class="hint-stage" style="border:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답 및 해설${foldBtn(key)}</div></div>`;
+    } else {
+      html+=`<div class="hint-stage" style="border:1px dashed #8a6a20;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#c8a840;">★ 정답${foldBtn(key)}</div><div class="hint-stage-txt hint-answer-value">${ansVal}</div></div>`;
+      if(target.answerText){
+        html+=`<div class="hint-stage" style="border:1px dashed #5a4a30;padding-top:10px;margin-top:8px;"><div class="hint-stage-num" style="color:#8a9aba;">★ 해설</div><div class="hint-stage-txt hint-explain-text">${target.answerText}</div></div>`;
+      }
+    }
+  }
+  html+='</div>';
+
+  const refId = target.num !== undefined ? target.num : 'safe';
+
+  if(!target.answerRevealed){
+    if(target.hintsRevealed < target.hints.length){
+      // 다음 힌트 열기 버튼
+      html+=`<div class="hint-locked-stage"><span>🔒 HINT ${target.hintsRevealed+1} / ${target.hints.length}</span><button onclick="revealHint('${refId}')">▶ 열기</button></div>`;
+    } else {
+      // 힌트 다 봤으면 정답 및 해설 보기 버튼
+      html+=`<div class="hint-locked-stage" style="border-color:#5a3010;background:#1a0d0a;"><span style="color:#c8a840;">★ 정답 및 해설</span><button onclick="revealAnswer('${refId}')" style="background:#5a3010;border-color:#c8a840;color:#ffdd99;">▶ 열기</button></div>`;
+    }
+  }
+  hintEl.innerHTML=html;
+}
+
+function revealHint(ref){
+  let target;
+  if(ref === 'safe' || ref === "'safe'"){
+    target = safeModeHints;
+  } else {
+    const num = parseInt(ref);
+    target = files.find(x=>x.num===num);
+  }
+  if(target && target.hintsRevealed < target.hints.length){
+    target.hintsRevealed++;
+    renderHints(target);
+  }
+}
+
+function revealAnswer(ref){
+  let target;
+  if(ref === 'safe' || ref === "'safe'"){
+    target = safeModeHints;
+  } else {
+    const num = parseInt(ref);
+    target = files.find(x=>x.num===num);
+  }
+  if(target){
+    target.answerRevealed = true;
+    target.explainRevealed = true;
+    renderHints(target);
+  }
+}
+
+
+// ===== S0: 시스템 접속 =====
+function enterSystem(){
+  const inner = document.getElementById('inner');
+  inner.classList.add('shaking');
+  setTimeout(()=>{
+    inner.classList.remove('shaking');
+    goTo('s1');
+  }, 700);
+}
+
+
+// 개발 중에는 오토세이브(진행상황 저장/불러오기)를 꺼둠 — 실제 유포 시 true로 변경
+const AUTOSAVE_ENABLED = false;
+
+function saveGameState(){
+  if(!AUTOSAVE_ENABLED) return;
+  const state={
+    files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,savedText:f.savedText||''})),
+    messages:messages.map(m=>({id:m.id,read:m.read,new:m.new,thread:m.thread,answered:m.answered||false,waitingForAnswer:m.waitingForAnswer||false,waitingForChoice:m.waitingForChoice||false,choiceMade:m.choiceMade||false,inactive:m.inactive||false,infoStage:m.infoStage||null})),
+    memoryTriggered:window.memoryTriggered||false
+  };
+  try{localStorage.setItem('nciGameState',JSON.stringify(state));}catch(e){}
+}
+function loadGameState(){
+  if(!AUTOSAVE_ENABLED) return;
+  try{
+    const raw=localStorage.getItem('nciGameState');
+    if(!raw)return;
+    const state=JSON.parse(raw);
+    state.files.forEach(saved=>{
+      const f=files.find(x=>x.num===saved.num);
+      if(!f)return;
+      f.unlocked=saved.unlocked;f.hidden=saved.hidden;
+      f.hintsRevealed=saved.hintsRevealed||0;f.answerRevealed=saved.answerRevealed||false;f.explainRevealed=saved.explainRevealed||false;
+      f.typed=saved.typed||false;f.colorSelected=saved.colorSelected||false;
+      f.arrivalShown=saved.arrivalShown||false;f.savedText=saved.savedText||'';
+    });
+    if(state.messages){
+      state.messages.forEach(saved=>{
+        const m=messages.find(x=>x.id===saved.id);
+        if(!m)return;
+        m.read=saved.read;m.new=saved.new;
+        m.thread=saved.thread||m.thread;
+        m.answered=saved.answered||false;m.waitingForAnswer=saved.waitingForAnswer||false;
+        m.waitingForChoice=saved.waitingForChoice||false;m.choiceMade=saved.choiceMade||false;
+        m.inactive=saved.inactive||false;m.infoStage=saved.infoStage||null;
+      });
+    }
+    window.memoryTriggered=state.memoryTriggered||false;
+  }catch(e){}
+}
+function resetGameState(){
+  if(!confirm('처음부터 다시 시작하시겠습니까?\n모든 진행 상황이 초기화됩니다.'))return;
+  localStorage.removeItem('nciGameState');location.reload();
+}
+
+// ===== MONALISA 제출 (FILE_13 내부) =====
+function submitMonalisa(){
+  const input=(document.getElementById('monalisaInput')?.value||'').trim();
+  const errEl=document.getElementById('monalisaError');
+  if(input==='모나리자'){
+    if(errEl)errEl.textContent='';
+    closeModal('modalMonalisa');
+    const f11=files.find(f=>f.num===14);
+    if(f11)f11.unlocked=true;
+    saveGameState();
+    setTimeout(()=>triggerMemoryRecovery(),400);
+  }else{
+    if(errEl){errEl.textContent='✕ 정답이 아닙니다.';setTimeout(()=>errEl.textContent='',1500);}
+  }
+}
+
+// ===== 기억 회복 트리거 =====
+function triggerMemoryRecovery(){
+  window.memoryTriggered=true;saveGameState();
+  const overlay=document.getElementById('memoryOverlay');
+  const video=document.getElementById('memoryVideo');
+  const txt=document.getElementById('memoryText');
+  overlay.classList.add('on');
+  txt.textContent='';txt.classList.remove('emphasis');
+
+  let started=false;
+  const startText=()=>{
+    if(started)return; started=true;
+    video.style.display='none';
+    video.onended=null;video.onerror=null;
+    runMemoryText();
+  };
+
+  video.style.display='block';
+  video.src='assets/memory_flashback.mp4';
+  video.muted=false;
+  video.currentTime=0;
+  video.onended=startText;
+  video.onerror=startText;
+  const playPromise=video.play();
+  if(playPromise && playPromise.catch){
+    playPromise.catch(()=>{
+      video.muted=true;
+      video.play().catch(startText);
+    });
+  }
+}
+
+function runMemoryText(){
+  const overlay=document.getElementById('memoryOverlay');
+  const txt=document.getElementById('memoryText');
+  txt.classList.remove('emphasis');
+  txt.innerHTML='';
+
+  const part1=[
+    {t:'기억이..', d:1400},
+    {t:'', d:500},
+    {t:'기억이 돌아오고있다..', d:1700},
+    {t:'', d:500},
+    {t:'눈썹이 없고, 검은 긴 생머리에 이 여자', d:2300},
+    {t:'', d:500},
+    {t:'BLANK의 수장이다.', d:1900},
+    {t:'', d:500},
+    {t:'바로 이 장소에서 날 납치했고,', d:2100},
+    {t:'NULL-7을 과다복용 시켜', d:2100},
+    {t:'날 죽이려 했었다...', d:2300}
+  ];
+
+  let i=0;
+  function stepPart1(){
+    if(i<part1.length){
+      txt.textContent += part1[i].t + '\n';
+      const delay = part1[i].d;
+      i++;
+      setTimeout(stepPart1, delay);
+    } else {
+      setTimeout(startPart2, 1200);
+    }
+  }
+  stepPart1();
+
+  function startPart2(){
+    txt.innerHTML = '<span class="memory-reveal-line">실종된 비밀 요원은..,</span><br><span class="memory-final-line" id="memoryFinalLine"></span>';
+    // 뜸을 들인 뒤 몇 번 깜빡이다 공개
+    setTimeout(()=>{
+      const finalEl = document.getElementById('memoryFinalLine');
+      finalEl.textContent = '바로 나였다';
+      finalEl.style.visibility = 'hidden';
+      let blinks = 0;
+      const maxBlinks = 6;
+      const blinkInterval = setInterval(()=>{
+        finalEl.style.visibility = (finalEl.style.visibility === 'hidden') ? 'visible' : 'hidden';
+        blinks++;
+        if(blinks >= maxBlinks){
+          clearInterval(blinkInterval);
+          finalEl.style.visibility = 'visible';
+          setTimeout(finishMemorySequence, 2400);
+        }
+      }, 160);
+    }, 2600);
+  }
+
+  function finishMemorySequence(){
+    overlay.classList.remove('on');
+    txt.innerHTML='';
+    const gachaFile=files.find(f=>f.num===15);
+    if(gachaFile)gachaFile.hidden=false;
+    saveGameState();renderInventory();renderMessages();
+    const lt=document.getElementById('lockToast');
+    lt.textContent='📁 새로운 파일 발견 — FILE_14';
+    lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
+    setTimeout(()=>lt.classList.remove('show'),2500);
+    setTimeout(()=>{
+      // 사건일지(S7)에서 기억 회복이 트리거되었으므로, 보관함에서 뒤로가기 시
+      // 파일 상세가 아니라 마이프로필로 돌아가도록 기록을 정리한다.
+      history=['s1','s4'];
+      goTo('s6');
+    },1000);
+  }
+}
+
+// ===== 타이핑 효과 =====
+function typewriterEffect(element,text,callback){
+  element.textContent='';let i=0;
+  function type(){
+    if(i<text.length){element.textContent+=text[i];i++;setTimeout(type,text[i-1]==='\n'?200:40);}
+    else{if(callback)setTimeout(callback,500);}
+  }
+  type();
+}
+
+// ===== 색깔 선택 (가챠샵) =====
+function selectColor(color){
+  if(color==='RED'){
+    const gachaFile=files.find(f=>f.num===15);
+    if(gachaFile){gachaFile.colorSelected=true;saveGameState();}
+    const ending=files.find(f=>f.num===16);
+    if(ending)ending.hidden=false;
+    saveGameState();renderInventory();
+    document.querySelectorAll('#gacha-arrival button').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
+    const msg=document.createElement('div');
+    msg.style.cssText='margin-top:10px;text-align:center;font-size:11px;color:#8ada8a;letter-spacing:1px;';
+    msg.textContent='✓ 빨간색 선택 완료 — FILE_14 열람 가능';
+    document.querySelector('#gacha-arrival > div')?.appendChild(msg);
+    setTimeout(()=>{goTo('s6');setTimeout(()=>{const endIdx=files.indexOf(ending);if(endIdx>=0)openDetail(endIdx);},600);},1200);
+  }else{
+    const el=document.querySelector('#gacha-arrival > div');if(!el)return;
+    const msg=document.createElement('div');
+    msg.style.cssText='margin-top:12px;padding:10px;background:#1a0808;border:1px solid #5a2020;font-size:11px;color:#cc6644;text-align:center;';
+    msg.textContent=color==='BLUE'?'BLUE.. 뭔가 다르다. 다시 확인해보자.':'노란색.. 이건 아닌 것 같다.';
+    el.appendChild(msg);setTimeout(()=>msg.remove(),2000);
+  }
+}
+
+// ===== 최종 보고서 =====
+function renderReport(){}
+function submitReport(){
+  const answers=[
+    {id:'rDrug',label:'약물 명칭',correct:['NULL-Z','NULLZ']},
+    {id:'rMat1',label:'주 재료 ①',correct:['장미','ROSE','로즈']},
+    {id:'rMat2',label:'주 재료 ②',correct:['대왕참나무','참나무']},
+    {id:'rColor',label:'물약 색깔',correct:['RED','빨강','빨간색']},
+    {id:'rOrg',label:'조직 명칭',correct:['BLANK']},
+    {id:'rBoss',label:'히든 심볼',correct:['모나리자','MONALISA']},
+    {id:'rTower',label:'제조 공장',correct:['MEMORYTOWER','MEMORY TOWER']},
+    {id:'rDoorCode',label:'도어락 코드',correct:['FADE','페이드']},
+  ];
+  let allCorrect=true;let wrongList=[];
+  answers.forEach(a=>{
+    const el=document.getElementById(a.id);if(!el)return;
+    const val=el.value.trim().toUpperCase().replace(/\s+/g,' ');
+    const isCorrect=a.correct.some(c=>val===c.toUpperCase().replace(/\s+/g,' '));
+    if(isCorrect){el.style.borderBottomColor='#4a8a3a';el.style.color='#3a6a2a';}
+    else{el.style.borderBottomColor='#a02020';el.style.color='#a02020';allCorrect=false;wrongList.push(a.label);}
+  });
+  const resultEl=document.getElementById('reportResult');
+  if(allCorrect){
+    resultEl.innerHTML=`
+    <div class="mission-clear-banner">
+      <div class="report-result-tag">— NCI 본부 —</div>
+      <div class="mission-clear-text">임무</div>
+      <div class="mission-clear-text">완료</div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,#c8a840,transparent);margin:14px 0;"></div>
+      <div class="mission-clear-sub">수사관 N07의 최종 보고서가<br>NCI 본부로 전송되었습니다.</div>
+      <div class="report-result-op">OPERATION NULL-Z — 종결</div>
+    </div>`;
+    // 진동 효과
+    if(navigator.vibrate) navigator.vibrate([200,100,200,100,400,100,800]);
+  }else{
+    resultEl.innerHTML='<div class="report-error-box"><div class="report-error-title">✕ 오류 — 다음 항목을 다시 확인하세요</div>'+wrongList.map(l=>`<div class="report-error-item">• ${l}</div>`).join('')+'</div>';
+  }
+  resultEl.scrollIntoView({behavior:'smooth'});
+}
+
+// iOS Safari 당겨서 새로고침 제스처 차단
+// overscroll-behavior:none (CSS)으로 1차 차단하고, 혹시 모를 경우를 대비해
+// 스크롤 위치가 정확히 0이 되는 순간을 1px로 밀어서 "맨 위에 도달함"으로
+// 인식해 새로고침 제스처가 시작되지 않게 함. 터치 이동을 직접 가로채는
+// 방식은 스크롤 매끄러움을 해쳐서 뺐음 (overscroll-behavior만으로 충분)
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY===0 && document.documentElement.scrollHeight > window.innerHeight+2){
+    window.scrollTo(0,1);
+  }
+}, {passive:true});
+
+// 모바일에서 누르는 효과(press effect)가 보일 시간도 없이 바로 화면이
+// 전환되는 문제 — 그림자 눌림 효과가 적용된 버튼들을 클릭하면, 실제 동작을
+// 살짝(130ms) 지연시켜 눌린 모습을 먼저 보여준 뒤 원래 동작을 실행한다.
+(function(){
+  const PRESS_SEL = '#s4 .msg-item, #s4 .storage-bottom-btn, #s4 .profile-card, '
+    + '.profile-call-btn, .storage-camera-btn, #s6 .slot, #s6 .report-nav-btn, '
+    + '#s8 .report-submit-btn, .hint-btn';
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest(PRESS_SEL);
+    if(!btn) return;
+    if(btn.__pressFxReplay){ btn.__pressFxReplay = false; return; }
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    btn.classList.add('press-active');
+    void btn.offsetWidth;
+    setTimeout(()=>{
+      btn.classList.remove('press-active');
+      btn.__pressFxReplay = true;
+      btn.click();
+    }, 130);
+  }, true);
+})();
+
+// 초기화
+files.forEach(f=>{f.hintsRevealed=0; f.answerRevealed=false; f.explainRevealed=false;});
+loadGameState();
+renderMessages();
+renderInventory();
+</script>
+</body>
+</html>

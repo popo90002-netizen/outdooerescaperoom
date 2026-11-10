@@ -757,10 +757,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 .hint-modal .hint-locked-stage span{color:#6a5230!important;font-family:'Noto Sans KR',sans-serif;font-size:11px;}
 .hint-modal .hint-locked-stage button{
-  background:url('assets/hint_open_btn.webp') center/100% 100% no-repeat!important;
+  background:url('assets/hint_expand_btn.webp') center/100% 100% no-repeat!important;
   border:none!important;color:transparent!important;
-  width:76px;height:32px;flex-shrink:0;
+  width:73px;height:27px;flex-shrink:0;
+  transition:transform 0.08s ease;
 }
+.hint-modal .hint-locked-stage button:active{transform:scale(0.92);}
 .hint-modal .hint-stage[style*="dashed"]{border:1px dashed #b89858!important;}
 .hint-modal .hint-stage-num[style*="c8a840"]{color:#a06818!important;}
 .hint-modal .hint-stage-num[style*="8a9aba"]{color:#2a4a6a!important;}
@@ -1002,7 +1004,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v56</div>
+<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v57</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1031,101 +1033,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="logo">NCI_SYS</div>
 </div>
 <div class="topbar-right">
-<span class="dot" id="dot"></span>
-<span class="stxt" id="statusTxt">SAFE MODE ACTIVE</span>
-</div>
-</div>
-
-<!-- S1: SAFE MODE -->
-<div class="screen" id="s1">
-<div class="s1-body">
-<div class="outer-box">
-<button class="nfc-sim-mini" onclick="triggerNFC()">[NFC SIM]</button>
-<div class="corner tl"></div><div class="corner tr"></div>
-<div class="corner bl"></div><div class="corner br"></div>
-<div class="safe-mode-support">
-<button class="support-mini" onclick="openSupport()" title="문의">📞</button>
-</div>
-<div class="safe-mode-hint">
-<button class="hint-mini" onclick="openHintModal()" title="힌트">💡</button>
-</div>
-<div class="alert-section">
-<div class="alert-ttl">⚠ SYSTEM ALERT</div>
-<div class="g-wrap">
-<span class="w">비정상적인 접근이 감지되었습니다.</span>
-<span class="r">신원이 인증되지 않은 사용자는 열람이 제한됩니다.</span>
-<span class="d">보안 프로토콜에 따라 시스템이 SAFE MODE로 전환됩니다.</span>
-</div>
-</div>
-<div class="safe-section">
-<div class="safe-ttl">[ SAFE MODE ]</div>
-<div class="hint-box">
-<span class="hint-row"><span class="hint-glint" style="animation-delay:0s">요</span>청된 접근을 수행할 수 없습니다.</span>
-<span class="hint-row"><span class="hint-glint" style="animation-delay:0.15s">원</span>격 인증 System이 손상된 것으로 보입니다.</span>
-<span class="hint-row"><span class="hint-glint" style="animation-delay:0.3s">배</span>정된 요원 이외에는 접속할 수 없습니다.</span>
-<span class="hint-row"><span class="hint-glint" style="animation-delay:0.45s">지</span>속적인 보안 위협이 탐지되었습니다.</span>
-<span class="hint-row"><span class="hint-glint" style="animation-delay:0.6s">접</span>근 권한 복구가 필요합니다.</span>
-<span class="hint-row"><span class="hint-glint" style="animation-delay:0.75s">촉</span>각 기반의 신원 인증 절차 진행이 필요합니다.</span>
-</div>
-</div>
-<div class="recover-section">
-<div class="recover-label">SYSTEM RECOVERY <span>HALTED</span></div>
-<div class="progress-row"><div class="progress-title">AUTH MODULE</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-1"></div></div></div>
-<div class="progress-row"><div class="progress-title">SECURITY</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-2"></div></div></div>
-<div class="progress-row"><div class="progress-title">DATABASE</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-3"></div></div></div>
-<div class="progress-row"><div class="progress-title">AGENT REGISTRY</div><div class="progress-bar-wrap"><div class="progress-bar-fill bar-4"></div></div></div>
-</div>
-<div class="nfc-zone">
-<button class="nfc-btn" onclick="triggerNFC()">[ NFC 배지 태깅 시뮬레이션 ]</button>
-</div>
-</div>
-</div>
-</div>
-
-<!-- S2: 배지 스캔 -->
-<div class="screen" id="s2">
-<div class="scan-screen">
-<div class="badge-wrap">
-<svg class="badge-svg" id="badgeSvg" viewBox="0 0 140 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="10" y="20" width="120" height="150" rx="8" fill="#0d0808" stroke="#3a1515" stroke-width="1.5"/>
-<rect x="50" y="12" width="40" height="14" rx="4" fill="#0d0808" stroke="#3a1515" stroke-width="1.5"/>
-<rect x="62" y="8" width="16" height="8" rx="3" fill="#0d0808" stroke="#3a1515" stroke-width="1.5"/>
-<line x1="20" y1="70" x2="120" y2="70" stroke="#2a1515" stroke-width="0.8"/>
-<rect x="20" y="30" width="45" height="32" rx="3" fill="#110808" stroke="#2a1515" stroke-width="0.8"/>
-<line x1="24" y1="34" x2="61" y2="58" stroke="#2a1010" stroke-width="0.8"/>
-<line x1="61" y1="34" x2="24" y2="58" stroke="#2a1010" stroke-width="0.8"/>
-<rect x="72" y="33" width="38" height="5" rx="2" fill="#1a0808"/>
-<rect x="72" y="42" width="28" height="4" rx="2" fill="#150606"/>
-<rect x="72" y="50" width="32" height="4" rx="2" fill="#150606"/>
-<rect x="20" y="78" width="80" height="4" rx="2" fill="#1a0808"/>
-<rect x="20" y="87" width="60" height="4" rx="2" fill="#150606"/>
-<rect x="20" y="96" width="70" height="4" rx="2" fill="#150606"/>
-<rect x="20" y="112" width="100" height="44" rx="4" fill="#0a0606" stroke="#1a0a0a" stroke-width="0.8"/>
-<text x="90" y="138" font-family="monospace" font-size="8" fill="#2a1515">NCI</text>
-<text x="84" y="148" font-family="monospace" font-size="7" fill="#1a0d0d">AGENT</text>
-</svg>
-<div class="badge-scan-line" id="badgeScanLine"></div>
-<div class="n07-badge" id="n07Badge">N07</div>
-</div>
-<div class="scan-status" id="scanStatus">SCANNING...</div>
-</div>
-</div>
-
-<!-- S3: AUTH -->
-<div class="screen" id="s3">
-<div class="auth-bg">
-<div class="auth-line dim" id="a1">INITIALIZING AUTH PROTOCOL...</div>
-<div class="auth-line dim" id="a2">SCANNING DEVICE SIGNATURE...</div>
-<div class="auth-line" id="a3">NFC TAG DETECTED ▌</div>
-<div class="auth-line" id="a4">VERIFYING AGENT CODE...</div>
-<div class="auth-line dim" id="a5">CROSS-REFERENCING DATABASE...</div>
-<div class="auth-line err" id="a6">████ RECORD PARTIAL — RESTORING...</div>
-<div class="auth-line hi" id="a7">AGENT N07 — CONFIRMED ✓</div>
-<div class="auth-ok" id="authOk">
-<p>N07 요원 접속 인증되었습니다.</p>
-<p style="color:#5a8a5a;font-size:12px">WELCOME BACK, AGENT.</p>
-</div>
-<button class="next-btn" id="nextBtn" onclick="goTo('s4')">▶ N07 프로필 보기</button>
+<span class="dot" id="dot" style="background:#4a8a4a;"></span>
+<span class="stxt" id="statusTxt" style="color:#4a8a4a;">AGENT VERIFIED</span>
 </div>
 </div>
 
@@ -1673,92 +1582,6 @@ function openStorageFromProfile(){
   const btn = document.querySelector('#s4 .storage-bottom-btn');
   if(btn) btn.classList.add('glow-off');
   goTo('s6');
-}
-
-// ===== NFC 트리거 =====
-function triggerNFC(){
-  // 진동: NFC 태깅 느낌
-  if(navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]);
-  const inner = document.getElementById('inner');
-  const blackout = document.getElementById('blackout');
-  inner.classList.add('glitching');
-  setTimeout(()=>blackout.style.opacity='1', 500);
-  setTimeout(()=>{
-    goTo('s2');
-    blackout.style.transition='opacity 0.3s';
-    blackout.style.opacity='0';
-    inner.classList.remove('glitching');
-    document.getElementById('statusTxt').textContent='SCANNING...';
-    startBadgeScan();
-  },800);
-}
-
-function startBadgeScan(){
-  const badgeSvg=document.getElementById('badgeSvg');
-  const scanLine=document.getElementById('badgeScanLine');
-  const status=document.getElementById('scanStatus');
-  badgeSvg.style.filter='drop-shadow(0 0 12px rgba(255,50,50,0.5))';
-  status.textContent='NFC DETECTED...';
-  setTimeout(()=>{
-    status.textContent='SCANNING...';
-    scanLine.style.opacity='1';
-    scanLine.style.top='0px';
-    let start=Date.now();
-    function anim(){
-      const p=Math.min((Date.now()-start)/1200,1);
-      scanLine.style.top=(p*180)+'px';
-      if(p<1) requestAnimationFrame(anim);
-      else {scanLine.style.opacity='0'; onBadgeScanned();}
-    }
-    requestAnimationFrame(anim);
-  },400);
-}
-
-function onBadgeScanned(){
-  const badgeSvg=document.getElementById('badgeSvg');
-  const n07=document.getElementById('n07Badge');
-  const status=document.getElementById('scanStatus');
-  const blackout=document.getElementById('blackout');
-  const scanAuth=document.getElementById('scanAuth');
-  status.textContent='VERIFYING...';
-  setTimeout(()=>{
-    badgeSvg.style.filter='drop-shadow(0 0 20px rgba(255,50,50,0.9))';
-    setTimeout(()=>{
-      n07.style.opacity='1';
-      status.textContent='AGENT N07 — CONFIRMED ✓';
-      status.style.color='#5a8a5a';
-    },200);
-  },300);
-  setTimeout(()=>{
-    blackout.style.opacity='1';
-    setTimeout(()=>{
-      goTo('s3');
-      blackout.style.opacity='0';
-      setTimeout(()=>{
-        scanAuth.style.opacity='1';
-        scanAuth.style.transition='top 1s linear';
-        scanAuth.style.top='0';
-        setTimeout(()=>scanAuth.style.top='100vh', 50);
-      },100);
-      setTimeout(()=>{
-        scanAuth.style.opacity='0';
-        document.getElementById('statusTxt').textContent='AUTHENTICATING...';
-        typeAuthLines();
-      },1200);
-    },400);
-  },2000);
-}
-
-function typeAuthLines(){
-  const lines=['a1','a2','a3','a4','a5','a6','a7'];
-  lines.forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('type'),i*400));
-  setTimeout(()=>{
-    document.getElementById('authOk').classList.add('show');
-    document.getElementById('statusTxt').textContent='AGENT VERIFIED';
-    document.getElementById('statusTxt').style.color='#4a8a4a';
-    document.getElementById('dot').style.background='#4a8a4a';
-  },lines.length*400+200);
-  setTimeout(()=>document.getElementById('nextBtn').classList.add('show'),lines.length*400+600);
 }
 
 // ===== 메시지 렌더 =====
@@ -2542,7 +2365,7 @@ function enterSystem(){
   inner.classList.add('shaking');
   setTimeout(()=>{
     inner.classList.remove('shaking');
-    goTo('s1');
+    goTo('s4');
   }, 700);
 }
 
