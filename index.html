@@ -806,10 +806,14 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   background:url('assets/voice_log_bar.webp') center/100% 100% no-repeat;
   border:none;padding:16px 20px 16px 7%;border-radius:0;
   display:flex;align-items:center;gap:14px;
+  aspect-ratio:357.0625/92.578125;height:auto;
 }
-#s7 .audio-mock .play-icon{display:block;width:42px;height:42px;flex-shrink:0;color:transparent;background:url('assets/icon_play.webp') center/100% 100% no-repeat;cursor:pointer;}
+#s7 .audio-mock .play-icon{display:block;width:42px;height:42px;flex-shrink:0;color:transparent;background:url('assets/icon_play.webp') center/100% 100% no-repeat;cursor:pointer;position:relative;top:8px;}
 #s7 .audio-mock .play-icon.is-playing{background-image:url('assets/icon_pause.webp');}
-#s7 .audio-mock-info{line-height:1.7;}
+#s7 .audio-mock-info{line-height:1.7;margin-top:18px;flex:1;min-width:0;}
+#s7 .audio-mock-toprow{display:flex;align-items:baseline;gap:10px;}
+#s7 .audio-mock-toprow .audio-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#s7 .audio-mock-toprow .audio-time{margin:0;flex-shrink:0;}
 #s7 .audio-name{color:#6a3a9a;font-family:'Noto Sans KR',sans-serif;font-size:14.5px;font-weight:700;}
 #s7 .audio-time{color:#6a5a40;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;}
 #s7 .audio-progress{background:rgba(90,50,10,0.18);}
@@ -826,6 +830,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   border:none;color:transparent;width:150px;height:34px;padding:0;margin-left:4px;
 }
 #s7 .script-box{background:rgba(255,255,255,0.45);border-left:2px solid #8a6a40;color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:500;line-height:1.8;}
+#s7 .script-line{cursor:pointer;border-radius:3px;padding:1px 3px;margin:0 -3px;}
+#s7 .script-line:hover{background:rgba(138,90,16,0.15);}
 #s7 .script-speaker{color:#8a5a10;font-weight:700;}
 
 /* ---- S5: 채팅창 (종이 테마, 테스트) ---- */
@@ -993,7 +999,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v52</div>
+<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v53</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1385,7 +1391,7 @@ const files = [
    answer:'NEON',unlockCode:'102',unlockPrefix:'AB-',answerLen:4,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 03</div><div>홍대 일대, 밤마다 약에 취한 무리들.<br>특이한 점으로는 무리 중 한 명이 항상 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-091</span> 옆 우체통 앞에 선다.<br>아무래도 조사해볼 필요가 있는것 같다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 21</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
-   <div class="audio-mock" onclick="playAudio(this,'assets/file02_voice_postbox.mp3')"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 voice_memo_postbox.wav</div><div class="audio-time">00:28</div><div class="audio-progress" onclick="seekAudio(event,this)"><div class="audio-progress-fill"></div></div></div></div>
+   <div class="audio-mock" onclick="playAudio(this,'assets/file02_voice_postbox.mp3')"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-mock-toprow"><div class="audio-name">🎵 voice_memo.wav</div><div class="audio-time">00:28</div></div><div class="audio-progress" onclick="seekAudio(event,this)"><div class="audio-progress-fill"></div></div></div></div>
    <button class="script-toggle" onclick="toggleScript('scriptPostbox')">📝 스크립트 보기</button>
    <div class="script-box" id="scriptPostbox">
    <div><span class="script-speaker">대진:</span> 아... 그 빨간 우체통 말이야... 거기가... 우리만 아는 통로라니까?<br>막 일 년에 두 번 배달하는 느린 우체통이라고 써있던데.. 또 어디서 본건 있어가지고... ....낭만 챙기기는...</div><br>
@@ -1458,28 +1464,28 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 04</div><div>KEY..? 이게 뭘 뜻하는 걸까..<br>근처 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">연남동 250-1</span>에 있는 NCI 정보국에 의뢰를 해보는게 좋겠다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 05</div><div>겉으로 볼때는 지구방범대로 알겠지만 사실 NCI 정보국이다.<br>MEMORY TOWER에서 알아낸 KEY에 대해 묻자,<br>NCI 정보요원은 그들의 본거지 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">비밀번호가 영어</span>로 만들어졌다는 정보를 얻었다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 07</div><div>갑자기 N05에게 다급한 전화가 왔다.</div>
-   <div class="audio-mock" onclick="playAudio(this,'assets/file08_voice_n05.mp3')"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-name">🎵 N05_voice_backup.mp3</div><div class="audio-time">00:46</div><div class="audio-progress" onclick="seekAudio(event,this)"><div class="audio-progress-fill"></div></div></div></div>
+   <div class="audio-mock" id="audioMockN05" onclick="playAudio(this,'assets/file08_voice_n05.mp3')"><div class="play-icon">▶</div><div class="audio-mock-info"><div class="audio-mock-toprow"><div class="audio-name">🎵 N05_voice_backup.mp3</div><div class="audio-time">00:46</div></div><div class="audio-progress" onclick="seekAudio(event,this)"><div class="audio-progress-fill"></div></div></div></div>
    <button class="script-toggle" onclick="toggleScript('scriptN05')">📝 스크립트 보기</button>
    <div class="script-box" id="scriptN05">
-   <div><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
-   <div><span class="script-speaker">대원1:</span> 그러니까 누가 널 제압하려 했었다는거지?</div><br>
-   <div style="color:#4a9eff;font-weight:bold;font-style:italic;">도어락 소리</div><br>
-   <div><span class="script-speaker">대원2:</span> 맞습니다. 아무래도 저희를 추격하는 세력이 있는 것 같습니다.</div><br>
-   <div>(와장창)</div><br>
-   <div><span class="script-speaker">N05:</span> 이크..!</div><br>
-   <div><span class="script-speaker">대원1:</span> 거기 누구야!</div><br>
-   <div>(몸싸움 소리)</div><br>
-   <div><span class="script-speaker">대원1:</span> 잠깐... 이 배지... NCI?</div><br>
-   <div><span class="script-speaker">대원2:</span> 아마도 NCI 한테 추적당하고 있는 것 같습니다. 이녀석 어떻게 할까요?</div><br>
-   <div><span class="script-speaker">대원1:</span> 어떻게하긴 처리해야지...</div><br>
-   <div><span class="script-speaker">대원2:</span> 어..어떻게 처리하죠?</div><br>
-   <div><span class="script-speaker">대원1:</span> 몰라서 물어? 니 손에 있는거 과다 복용시키면 되잖아.</div><br>
-   <div><span class="script-speaker">N05:</span> 읍..으읍!</div><br>
-   <div>(휴대폰을 집어 드는 소리)</div><br>
-   <div><span class="script-speaker">대원1:</span> 누구랑 통화 중이였네?</div><br>
-   <div><span class="script-speaker">대원2:</span> ...N07? NCI놈이 하나 더있는것 같습니다.</div><br>
-   <div><span class="script-speaker">대원1:</span> 당장 추적해!</div><br>
-   <div>(통화 끊기는 소리)</div>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',0)"><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',8)"><span class="script-speaker">대원1:</span> 그러니까 누가 널 제압하려 했었다는거지?</div><br>
+   <div class="script-line" style="color:#4a9eff;font-weight:bold;font-style:italic;" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',11)">도어락 소리</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',12)"><span class="script-speaker">대원2:</span> 맞습니다. 아무래도 저희를 추격하는 세력이 있는 것 같습니다.</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',17)">(와장창)</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',18)"><span class="script-speaker">N05:</span> 이크..!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',19)"><span class="script-speaker">대원1:</span> 거기 누구야!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',20)">(몸싸움 소리)</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',21)"><span class="script-speaker">대원1:</span> 잠깐... 이 배지... NCI?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',23)"><span class="script-speaker">대원2:</span> 아마도 NCI 한테 추적당하고 있는 것 같습니다. 이녀석 어떻게 할까요?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',29)"><span class="script-speaker">대원1:</span> 어떻게하긴 처리해야지...</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',31)"><span class="script-speaker">대원2:</span> 어..어떻게 처리하죠?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',32)"><span class="script-speaker">대원1:</span> 몰라서 물어? 니 손에 있는거 과다 복용시키면 되잖아.</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',37)"><span class="script-speaker">N05:</span> 읍..으읍!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',38)">(휴대폰을 집어 드는 소리)</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',39)"><span class="script-speaker">대원1:</span> 누구랑 통화 중이였네?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',41)"><span class="script-speaker">대원2:</span> ...N07? NCI놈이 하나 더있는것 같습니다.</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',45)"><span class="script-speaker">대원1:</span> 당장 추적해!</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',45.5)">(통화 끊기는 소리)</div>
    </div>
    <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">통화 중 들리는 비밀번호 소리..</span><br><br>마침 정보국 옆 공원 안에 있는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">음표놀이판</span>으로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
    </div>
@@ -2294,15 +2300,9 @@ function openMonalisaModal(){
   document.getElementById('modalMonalisa').classList.add('on');
 }
 let currentAudioEl=null;
-function playAudio(el,src){
-  const icon=el.querySelector('.play-icon');
-  if(!src){
-    icon.textContent='⏸';
-    alert('🎵 음성 재생 시뮬레이션\n(실제 배포 시 음성 파일 재생)');
-    setTimeout(()=>{icon.textContent='▶';},500);
-    return;
-  }
+function ensureAudio(el,src){
   if(!el._audio){
+    const icon=el.querySelector('.play-icon');
     const audio=new Audio(src);
     const fill=el.querySelector('.audio-progress-fill');
     audio.addEventListener('timeupdate',()=>{
@@ -2311,7 +2311,9 @@ function playAudio(el,src){
     audio.addEventListener('ended',()=>{icon.textContent='▶';icon.classList.remove('is-playing');});
     el._audio=audio;
   }
-  const audio=el._audio;
+  return el._audio;
+}
+function switchCurrentAudio(audio,el){
   if(currentAudioEl && currentAudioEl!==audio){
     currentAudioEl.pause();
     if(currentAudioEl._el){
@@ -2320,17 +2322,43 @@ function playAudio(el,src){
       prevIcon.classList.remove('is-playing');
     }
   }
+  audio._el=el;
+  currentAudioEl=audio;
+}
+function playAudio(el,src){
+  const icon=el.querySelector('.play-icon');
+  if(!src){
+    icon.textContent='⏸';
+    alert('🎵 음성 재생 시뮬레이션\n(실제 배포 시 음성 파일 재생)');
+    setTimeout(()=>{icon.textContent='▶';},500);
+    return;
+  }
+  const audio=ensureAudio(el,src);
+  switchCurrentAudio(audio,el);
   if(audio.paused){
     audio.play();
     icon.textContent='⏸';
     icon.classList.add('is-playing');
-    audio._el=el;
-    currentAudioEl=audio;
   } else {
     audio.pause();
     icon.textContent='▶';
     icon.classList.remove('is-playing');
   }
+}
+function seekScriptLine(mockId,src,t){
+  const el=document.getElementById(mockId);
+  if(!el) return;
+  const audio=ensureAudio(el,src);
+  switchCurrentAudio(audio,el);
+  const icon=el.querySelector('.play-icon');
+  const setTimeAndPlay=()=>{
+    audio.currentTime=t;
+    audio.play();
+    icon.textContent='⏸';
+    icon.classList.add('is-playing');
+  };
+  if(audio.readyState>=1){ setTimeAndPlay(); }
+  else { audio.addEventListener('loadedmetadata',setTimeAndPlay,{once:true}); }
 }
 function seekAudio(ev,bar){
   ev.stopPropagation();
