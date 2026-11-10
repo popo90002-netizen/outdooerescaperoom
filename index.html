@@ -661,8 +661,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
 }
 @keyframes storageBtnGlow{
-  0%,100%{transform:scale(1);filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0.1px 0 0 rgba(235,195,120,0.35)) drop-shadow(0.07px 0.07px 0 rgba(235,195,120,0.35)) drop-shadow(0 0.1px 0 rgba(235,195,120,0.35)) drop-shadow(-0.07px 0.07px 0 rgba(235,195,120,0.35)) drop-shadow(-0.1px 0 0 rgba(235,195,120,0.35)) drop-shadow(-0.07px -0.07px 0 rgba(235,195,120,0.35)) drop-shadow(0 -0.1px 0 rgba(235,195,120,0.35)) drop-shadow(0.07px -0.07px 0 rgba(235,195,120,0.35));}
-  50%{transform:scale(1.03);filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0.1px 0 0 rgba(235,195,120,1)) drop-shadow(0.07px 0.07px 0 rgba(235,195,120,1)) drop-shadow(0 0.1px 0 rgba(235,195,120,1)) drop-shadow(-0.07px 0.07px 0 rgba(235,195,120,1)) drop-shadow(-0.1px 0 0 rgba(235,195,120,1)) drop-shadow(-0.07px -0.07px 0 rgba(235,195,120,1)) drop-shadow(0 -0.1px 0 rgba(235,195,120,1)) drop-shadow(0.07px -0.07px 0 rgba(235,195,120,1)) drop-shadow(0 0 8px rgba(235,195,120,0.7));}
+  0%,100%{filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0.1px 0 0 rgba(235,195,120,0.35)) drop-shadow(0.07px 0.07px 0 rgba(235,195,120,0.35)) drop-shadow(0 0.1px 0 rgba(235,195,120,0.35)) drop-shadow(-0.07px 0.07px 0 rgba(235,195,120,0.35)) drop-shadow(-0.1px 0 0 rgba(235,195,120,0.35)) drop-shadow(-0.07px -0.07px 0 rgba(235,195,120,0.35)) drop-shadow(0 -0.1px 0 rgba(235,195,120,0.35)) drop-shadow(0.07px -0.07px 0 rgba(235,195,120,0.35));}
+  50%{filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0.1px 0 0 rgba(235,195,120,1)) drop-shadow(0.07px 0.07px 0 rgba(235,195,120,1)) drop-shadow(0 0.1px 0 rgba(235,195,120,1)) drop-shadow(-0.07px 0.07px 0 rgba(235,195,120,1)) drop-shadow(-0.1px 0 0 rgba(235,195,120,1)) drop-shadow(-0.07px -0.07px 0 rgba(235,195,120,1)) drop-shadow(0 -0.1px 0 rgba(235,195,120,1)) drop-shadow(0.07px -0.07px 0 rgba(235,195,120,1)) drop-shadow(0 0 8px rgba(235,195,120,0.7));}
 }
 #s4 .storage-bottom-btn:active,#s4 .storage-bottom-btn.press-active{
   transform:scale(0.97) translateY(2px);
@@ -993,6 +993,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
+<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v50</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1169,7 +1170,6 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <!-- My Storage 진입 버튼 -->
 <button class="storage-bottom-btn" onclick="openStorageFromProfile()">📦 MY STORAGE 열람</button>
-<button onclick="resetStorageGlow()" style="position:fixed;top:8px;left:8px;z-index:999;background:#1a1a1a;color:#fff;border:1px solid #888;font-size:10px;padding:5px 8px;border-radius:4px;opacity:0.85;">🔄 글로우 테스트</button>
 <button class="profile-call-btn" onclick="openSupport()" aria-label="문의"></button>
 </div>
 </div>
@@ -1658,12 +1658,6 @@ function openStorageFromProfile(){
   const btn = document.querySelector('#s4 .storage-bottom-btn');
   if(btn) btn.classList.add('glow-off');
   goTo('s6');
-}
-
-// 테스트용: 글로우 펄스를 다시 켜서 확인할 수 있게 함 (배포 전 제거)
-function resetStorageGlow(){
-  const btn = document.querySelector('#s4 .storage-bottom-btn');
-  if(btn) btn.classList.remove('glow-off');
 }
 
 // ===== NFC 트리거 =====
