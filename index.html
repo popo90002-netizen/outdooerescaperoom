@@ -653,11 +653,11 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   position:relative;top:3px;
   filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
   transition:transform 0.08s ease, filter 0.08s ease;
-  animation:storageBtnGlow 2.2s ease-in-out infinite;
+  animation:storageBtnGlow 1.6s ease-in-out infinite;
 }
 @keyframes storageBtnGlow{
-  0%,100%{filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0 0 2px rgba(255,221,140,0.25));}
-  50%{filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0 0 14px rgba(255,221,140,0.95));}
+  0%,100%{transform:scale(1);filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0 0 3px rgba(255,221,140,0.35));}
+  50%{transform:scale(1.045);filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0 0 22px rgba(255,200,80,1)) drop-shadow(0 0 6px rgba(255,230,170,1));}
 }
 #s4 .storage-bottom-btn:active,#s4 .storage-bottom-btn.press-active{
   transform:scale(0.97) translateY(2px);
