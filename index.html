@@ -195,8 +195,9 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .audio-time{font-size:9px;color:#3a5a7a;margin-top:2px;}
 .audio-progress{height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-top:7px;cursor:pointer;position:relative;}
 .audio-progress-fill{height:100%;width:0%;background:#5a8aba;border-radius:2px;pointer-events:none;}
-.script-toggle{margin-top:6px;background:none;border:1px solid #2a4a6a;color:#5a7a9a;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;padding:5px 9px;cursor:pointer;}
+.script-toggle{margin-top:6px;background:none;border:1px solid #2a4a6a;color:#5a7a9a;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;padding:5px 9px;cursor:pointer;transition:transform 0.08s ease;}
 .script-toggle:hover{border-color:#4a7a9a;color:#7a9aba;}
+.script-toggle:active{transform:scale(0.93);}
 .script-box{margin-top:6px;background:#0a1020;border-left:2px solid #3a5a7a;padding:9px;font-size:10px;line-height:1.7;color:#7a9aba;display:none;}
 .script-box.show{display:block;}
 .script-speaker{color:#c8a840;font-weight:bold;}
@@ -360,12 +361,14 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .hint-stage-num{font-size:9px;color:#8a6a20;letter-spacing:2px;margin-bottom:4px;user-select:none;display:flex;align-items:center;justify-content:space-between;}
 .hint-stage-txt{font-size:11px;color:#c8b880;line-height:1.6;}
 .hint-stage-txt.collapsed{display:none;}
-.hint-fold-btn{width:73px;height:27px;flex-shrink:0;cursor:pointer;background-size:100% 100%;background-repeat:no-repeat;background-position:center;margin-left:8px;}
+.hint-fold-btn{width:73px;height:27px;flex-shrink:0;cursor:pointer;background-size:100% 100%;background-repeat:no-repeat;background-position:center;margin-left:8px;transition:transform 0.08s ease;}
 .hint-fold-btn.collapse{background-image:url('assets/hint_collapse_btn.webp');}
 .hint-fold-btn.expand{background-image:url('assets/hint_expand_btn.webp');}
+.hint-fold-btn:active{transform:scale(0.9);}
 .hint-locked-stage{background:#0a1020;border:1px dashed #3a3010;padding:9px;margin-top:6px;display:flex;align-items:center;justify-content:space-between;}
 .hint-locked-stage span{font-size:10px;color:#5a4a20;}
-.hint-locked-stage button{background:#3a3010;border:1px solid #8a6a20;color:#c8a840;font-size:9px;padding:5px 9px;cursor:pointer;}
+.hint-locked-stage button{background:#3a3010;border:1px solid #8a6a20;color:#c8a840;font-size:9px;padding:5px 9px;cursor:pointer;transition:transform 0.08s ease;}
+.hint-locked-stage button:active{transform:scale(0.92);}
 .hint-error{color:#ff6644;font-size:10px;text-align:center;margin-top:8px;}
 
 /* 잠금해제 토스트 */
@@ -999,7 +1002,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
-<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v55</div>
+<div id="testVersionBanner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;text-align:center;padding:3px 0;pointer-events:none;">TEST v56</div>
 <div class="scanline"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
@@ -1475,8 +1478,7 @@ const files = [
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',14)"><span class="script-speaker">대원2:</span> 맞습니다. 아무래도 저희를 추격하는 세력이 있는 것 같습니다.</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',17)">(와장창)<br><span class="script-speaker">N05:</span> 이크..!</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',19)"><span class="script-speaker">대원1:</span> 거기 누구야!</div><br>
-   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',21)">(몸싸움 소리)</div><br>
-   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',23)"><span class="script-speaker">대원1:</span> 잠깐... 이 배지... NCI?</div><br>
+   <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',21)">(몸싸움 소리)<br><span class="script-speaker">대원1:</span> 잠깐... 이 배지... NCI?</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',26)"><span class="script-speaker">대원2:</span> 아마도 NCI 한테 추적당하고 있는 것 같습니다. 이녀석 어떻게 할까요?</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',30)"><span class="script-speaker">대원1:</span> 어떻게하긴 처리해야지...</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',33)"><span class="script-speaker">대원2:</span> 어..어떻게 처리하죠?</div><br>
