@@ -655,6 +655,11 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   transition:transform 0.08s ease, filter 0.08s ease;
   animation:storageBtnGlow 1.6s ease-in-out infinite;
 }
+#s4 .storage-bottom-btn.glow-off{
+  animation:none;
+  transform:scale(1);
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+}
 @keyframes storageBtnGlow{
   0%,100%{transform:scale(1);filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0.1px 0 0 rgba(235,195,120,0.35)) drop-shadow(0.07px 0.07px 0 rgba(235,195,120,0.35)) drop-shadow(0 0.1px 0 rgba(235,195,120,0.35)) drop-shadow(-0.07px 0.07px 0 rgba(235,195,120,0.35)) drop-shadow(-0.1px 0 0 rgba(235,195,120,0.35)) drop-shadow(-0.07px -0.07px 0 rgba(235,195,120,0.35)) drop-shadow(0 -0.1px 0 rgba(235,195,120,0.35)) drop-shadow(0.07px -0.07px 0 rgba(235,195,120,0.35));}
   50%{transform:scale(1.03);filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35)) drop-shadow(0.1px 0 0 rgba(235,195,120,1)) drop-shadow(0.07px 0.07px 0 rgba(235,195,120,1)) drop-shadow(0 0.1px 0 rgba(235,195,120,1)) drop-shadow(-0.07px 0.07px 0 rgba(235,195,120,1)) drop-shadow(-0.1px 0 0 rgba(235,195,120,1)) drop-shadow(-0.07px -0.07px 0 rgba(235,195,120,1)) drop-shadow(0 -0.1px 0 rgba(235,195,120,1)) drop-shadow(0.07px -0.07px 0 rgba(235,195,120,1)) drop-shadow(0 0 8px rgba(235,195,120,0.7));}
@@ -1163,7 +1168,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="msg-list" id="msgList"></div>
 
 <!-- My Storage 진입 버튼 -->
-<button class="storage-bottom-btn" onclick="goTo('s6')">📦 MY STORAGE 열람</button>
+<button class="storage-bottom-btn" onclick="openStorageFromProfile()">📦 MY STORAGE 열람</button>
 <button class="profile-call-btn" onclick="openSupport()" aria-label="문의"></button>
 </div>
 </div>
@@ -1645,6 +1650,13 @@ function goBack(){
   history.pop();
   const prev = history[history.length-1];
   goTo(prev, false);
+}
+
+// 첫 클릭 이후엔 이목을 끌던 글로우 펄스를 멈추고 원래 그림자만 남김
+function openStorageFromProfile(){
+  const btn = document.querySelector('#s4 .storage-bottom-btn');
+  if(btn) btn.classList.add('glow-off');
+  goTo('s6');
 }
 
 // ===== NFC 트리거 =====
