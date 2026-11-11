@@ -342,7 +342,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 /* MY STORAGE 컨셉(종이/서류함 톤)에 맞춘 현장분석 카메라 확인 모달 */
 .ar-confirm-modal{background:#f0e7da;border:2px solid #b8a888;border-radius:10px;}
-.ar-confirm-modal h3{color:#8a5a10;font-family:'Share Tech Mono',monospace;font-weight:700;letter-spacing:1px;}
+.ar-confirm-modal h3{color:#8a5a10;font-family:'Share Tech Mono',monospace;font-weight:700;letter-spacing:0;font-size:13px;white-space:nowrap;}
 .ar-confirm-modal .modal-close{color:#8a7a5a;}
 .ar-confirm-modal .modal-sub{font-family:'Noto Sans KR',sans-serif;color:#3a2a1a;font-weight:700;}
 .ar-confirm-modal .ar-yes{background:#8a5a10;border:1px solid #6a4408;color:#fff8ec;font-family:'Noto Sans KR',sans-serif;font-weight:700;letter-spacing:0;}
@@ -1268,7 +1268,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v7.webp','mystorage_background.webp','icon_play.webp','icon_pause.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file09_cafe.jpg','file10_blank_membership.jpg','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file06_explain1.jpg','file04_explain1.jpg','file09_explain1.png','hint_collapse_btn.webp','hint_expand_btn.webp','file07_explain1.jpg','file07_explain2.jpg','file07_explain3.jpg','file12_answer_boxes.png'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v7.webp','mystorage_background.webp','icon_play.webp','icon_pause.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp','report_submit_btn.webp','report_tile.webp','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file09_cafe.jpg','file10_blank_membership.jpg','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file06_explain1.jpg','file04_explain1.jpg','file09_explain1.png','hint_collapse_btn.webp','hint_expand_btn.webp','file07_explain1.jpg','file07_explain2.jpg','file07_explain3.jpg'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1440,8 +1440,7 @@ const files = [
   {num:13,name:'FILE_12',sub:'전신주 390-94 — 세 번째 흔적',icon:'📍',unlocked:false,
    answer:'현장 확인',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국으로부터 위치 정보를 얻어 연남동 390-94에 도착했다.<br><br>BLANK 녀석들은 전신주의 고유번호를 위치 정보로 사용하고 있군.<br><br>나를 이곳으로 부른 특별한 이유가 있을까?<br><br>주변을 살펴보니 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">전신주 하나가 눈에 띈다.</span><br><br>BLANK로부터 받은 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">KIT-G</span>를 이용하면 다음 정보를 얻을 수 있을 것 같다.</div></div>
-   <div style="text-align:center;font-size:11px;color:#8a7a5a;letter-spacing:1px;margin-top:8px;">다음 전신주 위치</div>
-   <img class="detail-photo" style="border-radius:0;cursor:default;margin-top:4px;" src="assets/file12_answer_boxes.png" alt="다음 위치 입력칸">`,
+`,
    hints:['전신주에 그림과 일치하는 표식을 찾으세요.','전구, 동신지, 마크를 동일한 위치에 매칭시켜 나오는 내용을 다음 위치 번호를 채워주세요.','다음 위치로 추정되는 번호를 NCI 정보국에 조회하여 다음 위치에 대한 정보를 얻으세요.'],answerText:'정답: 현장에서 발견한 표식을 키트와 대조'},
 
   // #14 FILE_13
