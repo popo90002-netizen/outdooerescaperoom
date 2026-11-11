@@ -837,6 +837,13 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s7 .script-box{background:rgba(255,255,255,0.45);border-left:2px solid #8a6a40;color:#3a2a1a;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:500;line-height:1.8;}
 #s7 .script-line{cursor:pointer;border-radius:3px;padding:1px 3px;margin:0 -3px;}
 #s7 .script-line:hover{background:rgba(138,90,16,0.15);}
+#s7 .script-line.sfx{
+  display:inline-block;color:#2a5a9e;font-weight:bold;font-style:normal;
+  background:rgba(74,158,255,0.15);border:1px solid #4a9eff;border-radius:14px;
+  padding:3px 14px;margin:2px 0;transition:transform 0.08s ease,background 0.15s ease;
+}
+#s7 .script-line.sfx:hover{background:rgba(74,158,255,0.28);}
+#s7 .script-line.sfx:active{transform:scale(0.93);}
 #s7 .script-speaker{color:#8a5a10;font-weight:700;}
 
 /* ---- S5: 채팅창 (종이 테마, 테스트) ---- */
@@ -1311,7 +1318,7 @@ const files = [
    <div class="script-line" onclick="seekScriptLine('audioMockPostbox','assets/file02_voice_postbox.mp3',21)">그러면 거기에 접선 날짜랑 시간, 장소가 적혀있어. 안 믿기면 내일 니가 가서 넣어봐.</div>
    </div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 22</div><div>직접 유통자를 접선하면 정보를 알아낼 수 있지 않을까..?<br>그들이 말한대로 편지를 적어 우체통에 넣었다.</div></div>
-   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>오늘 바로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">답신[KIT-A]</span>이 왔다.<br><br>접선 날짜 6월 24일.. 시간 밤 10시.. 장소는.. 음..? 날 테스트 하는건가?<br><br>답신에 써있듯이 우체통을 찾아가 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">안내판</span>을 살펴봐야겠다.</div></div>`,
+   <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 23</div><div>오늘 바로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">답신[KIT-A]</span>이 왔다.<br><br>접선 날짜 6월 24일.. 시간 밤 10시.. 장소는.. 음..? 날 테스트 하는건가?<br><br>답신에 써있듯이 우체통을 찾아가 옆에 있는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">안내판</span>을 살펴봐야겠다.</div></div>`,
    hints:['안내판에서 추억을 담아 공유하는 사람들을 찾으세요.','family, friends, lover or yourself'],
    answerText:`<div style="display:flex;gap:6px;">
     <img src="assets/file02_explain1.jpg" style="width:50%;height:120px;object-fit:cover;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file02_explain1.jpg')">
@@ -1382,7 +1389,7 @@ const files = [
    <div class="script-box" id="scriptN05">
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',0)"><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',7)"><span class="script-speaker">대원1:</span> 그러니까 누가 널 제압하려 했었다는거지?</div><br>
-   <div class="script-line" style="color:#4a9eff;font-weight:bold;font-style:italic;" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',9)">도어락 소리</div><br>
+   <div class="script-line sfx" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',9)">🔊 도어락 소리</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',14)"><span class="script-speaker">대원2:</span> 맞습니다. 아무래도 저희를 추격하는 세력이 있는 것 같습니다.</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',17)">(와장창)<br><span class="script-speaker">N05:</span> 이크..!</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',19)"><span class="script-speaker">대원1:</span> 거기 누구야!</div><br>
@@ -1426,13 +1433,13 @@ const files = [
   // #12 FILE_11
   {num:12,name:'FILE_11',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
    answer:'9725A785',unlockCode:'9726R513',answerLen:8,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 14</div><div>9726R513.. 이게 뭘 뜻하는거지?<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">NCI 정보국</span>에 물어보고 싶지만 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">암구호</span>가 필요해보인다.<br>NCI 본부에서 근무하는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">N24에게 연락</span>하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 14</div><div>9726R513.. 이게 뭘 뜻하는거지?<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">NCI 정보국</span>에 물어보고 싶지만 금일의 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">암구호</span>가 필요해보인다.<br>NCI 본부에서 근무하는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">N24에게 연락</span>하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로</div></div>`,
    hints:['암구호 도어 / 제로를 이용하여 N24에게 메세지를 보냅니다.','N24로부터 얻은 금일의 암구호를 NCI 정보국에 메세지를 보냅니다.','퍼즐로 완성된 9726R513을 NCI 정보국에 전달해 위치 정보를 얻습니다.'],answerText:'정답: 390-94'},
 
   // #13 FILE_12 — (가안: 실제 답사 후 내용 교체 필요)
   {num:13,name:'FILE_12',sub:'전신주 390-94 — 세 번째 흔적',icon:'📍',unlocked:false,
    answer:'현장 확인',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국으로부터 받은 위치 390-94에 도착했다.<br><br>나를 지켜봤다는듯이 BLANK로부터 메세지가 도착했다.<br>메세지를 열자 숫자와 그림같은게 보이다가 몇초 뒤에 사라졌다.<br><br>기억에 의지하여 아래와 같이 그려놓았다.</div></div>
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국으로부터 받은 전신주 위치 390-94에 도착했다.<br>도착하니 전신주 하나가 눈에 띈다.<br><br>나를 지켜봤다는듯이 BLANK로부터 메세지가 도착했다.<br>메세지를 열자 숫자와 그림같은게 보이다가 몇초 뒤에 사라졌다.<br><br>기억에 의지하여 아래와 같이 그려놓았다.</div></div>
    <img class="detail-photo" style="border-radius:0;cursor:default;" src="assets/file12_kit.png?v=8" alt="KIT 메모">
    <div style="text-align:center;font-size:11px;color:#8a7a5a;letter-spacing:1px;margin-top:8px;">다음 전신주 위치</div>
    <img class="detail-photo" style="border-radius:0;cursor:default;margin-top:4px;" src="assets/file12_answer_boxes.png" alt="다음 위치 입력칸">`,
