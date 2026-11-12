@@ -501,15 +501,13 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .kit-cover.open{pointer-events:none;}
 .kit-folder{
   width:34vw;max-width:150px;
-  transform-origin:left center;
-  transform-style:preserve-3d;
-  backface-visibility:hidden;
+  transform-origin:43% 37%;
   transition:transform 1.3s cubic-bezier(.45,0,.25,1);
   transform:rotate(-7deg) scale(1);
   filter:drop-shadow(0 26px 34px rgba(0,0,0,0.6));
 }
 .kit-cover.open .kit-folder{
-  transform:rotate(-7deg) scale(3.2) rotateY(-125deg);
+  transform:rotate(-7deg) scale(10);
 }
 .kit-folder svg{display:block;width:100%;height:auto;}
 .kit-loading{
@@ -2450,7 +2448,7 @@ function openKit(){
   cover.classList.add('open');
   if(loadingEl) loadingEl.classList.add('hide');
   if(navigator.vibrate) navigator.vibrate(40);
-  setTimeout(()=>{ goTo('s4'); }, 1320);
+  setTimeout(()=>{ goTo('s4'); }, 1200);
 }
 
 
