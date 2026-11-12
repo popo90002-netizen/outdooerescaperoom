@@ -7,7 +7,7 @@
 <title>NCI_SYS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:none;}
@@ -409,18 +409,20 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #letterOverlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(10,8,5,0);transition:background 0.8s ease;}
 #letterOverlay.on{display:flex;background:rgba(10,8,5,0.92);}
 .letter-card{
-  position:relative;width:88%;max-width:400px;max-height:82vh;overflow-y:auto;
-  background:#efe3c6;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,0.6);
-  padding:28px 24px 34px;transform:translateY(110vh) rotate(-2deg);
+  position:relative;width:min(88vw,400px);aspect-ratio:1170/2532;max-height:82vh;overflow:hidden;
+  transform:translateY(110vh) rotate(-2deg);
   transition:transform 0.9s cubic-bezier(.2,.8,.2,1);
 }
 #letterOverlay.on .letter-card{transform:translateY(0) rotate(-0.6deg);}
 #letterOverlay.out .letter-card{transform:translateY(110vh) rotate(3deg);transition-duration:0.7s;transition-timing-function:ease-in;}
-.letter-meta{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:#8a6a43;margin-bottom:14px;display:flex;justify-content:space-between;}
-.letter-body{font-family:'Noto Sans KR',sans-serif;font-size:14.5px;line-height:1.85;color:#2a2018;}
+.letter-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none;}
+.letter-body{
+  position:absolute;top:10.5%;left:7%;right:9%;bottom:5%;overflow-y:auto;z-index:1;
+  font-family:'Noto Sans KR',sans-serif;font-size:14.5px;line-height:1.85;color:#2a2018;
+}
 .letter-body p{margin-bottom:0.8em;white-space:pre-line;word-break:keep-all;}
 .letter-body p.key{font-weight:900;color:#1c140e;}
-.letter-body .sign{font-family:'Noto Sans KR',sans-serif;font-weight:700;font-style:italic;color:#4a3a6a;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
+.letter-body .sign{font-family:'Nanum Pen Script',cursive;font-weight:400;font-size:22px;color:#233b6b;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
 .letter-body .sign.on{opacity:0.9;}
 .case-stamp{position:fixed;left:50%;top:44%;z-index:2;pointer-events:none;
   border:5px solid #a3241c;color:#a3241c;padding:8px 18px;border-radius:6px;
@@ -1261,7 +1263,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <!-- 봉인된 편지 오버레이 -->
 <div id="letterOverlay">
   <div class="letter-card" id="letterCard">
-    <div class="letter-meta"><span>TO_N07</span><span>CONFIDENTIAL</span></div>
+    <img class="letter-bg" src="assets/letter_bg_A.jpg" alt="">
     <div class="letter-body" id="letterBody"></div>
   </div>
   <div class="case-stamp" id="caseStamp">CASE CLOSED</div>
