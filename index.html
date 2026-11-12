@@ -22,8 +22,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 @keyframes sg{0%{transform:none;filter:none}10%{transform:translateX(6px);filter:hue-rotate(180deg) brightness(2)}30%{filter:hue-rotate(90deg) brightness(3)}50%{filter:brightness(4) saturate(0)}70%{filter:brightness(0.2)}100%{transform:none;filter:none}}
 
 /* TOPBAR (공통) */
-.topbar{background:#080808;border-bottom:1px solid #2a1a1a;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:50;}
-#s0.on ~ .topbar{display:none;}
+.topbar{background:#080808;border-bottom:1px solid #2a1a1a;padding:10px 14px;display:none;align-items:center;justify-content:space-between;position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:50;}
 .inner{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;padding-top:44px;}
 .topbar-left{display:flex;align-items:center;gap:8px;}
 .back-btn{background:none;border:none;color:#5a7a9a;font-family:'Share Tech Mono',monospace;font-size:14px;cursor:pointer;padding:4px 8px;display:none;}
@@ -483,31 +482,41 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   position:absolute;bottom:20px;
 }
 
-/* ===== S0: 키트 커버 3D 오픈 스플래시 ===== */
-.kit-splash{
-  min-height:100svh;height:100svh;background:#000;
-  position:relative;overflow:hidden;
+/* ===== 키트 커버 3D 오픈 오버레이 ===== */
+#kitOverlay{
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;
+  height:100vh;height:100dvh;
+  overflow:hidden;z-index:500;
 }
+#kitOverlay.hidden{display:none;}
+.kit-backdrop{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 38%, #1c1c1c, #000 72%);
+  transition:opacity 1s ease;
+}
+#kitOverlay.open .kit-backdrop{opacity:0;}
 .kit-stage{
   position:absolute;inset:0;perspective:1600px;
+  pointer-events:none;
 }
 .kit-cover{
   position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 38%, #1c1c1c, #000 72%);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
+  cursor:pointer;pointer-events:auto;
 }
-.kit-cover.ready{cursor:pointer;}
-.kit-cover.open{pointer-events:none;}
+#kitOverlay.open .kit-cover{pointer-events:none;}
 .kit-folder{
   width:34vw;max-width:150px;
-  transform-origin:43% 37%;
+  transform-origin:left center;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
   transition:transform 1.3s cubic-bezier(.45,0,.25,1);
   transform:rotate(-7deg) scale(1);
   filter:drop-shadow(0 26px 34px rgba(0,0,0,0.6));
 }
-.kit-cover.open .kit-folder{
-  transform:rotate(-7deg) scale(10);
+#kitOverlay.open .kit-folder{
+  transform:rotate(-7deg) scale(3.4) rotateY(-120deg);
 }
 .kit-folder svg{display:block;width:100%;height:auto;}
 .kit-loading{
@@ -1051,58 +1060,57 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
 
-<div class="device">
-<div class="inner" id="inner">
-
-<!-- S0: 스플래시 화면 (키트 커버 3D 오픈) -->
-<div class="screen on" id="s0">
-<div class="kit-splash" id="kitSplashWrap">
-  <div class="kit-stage">
-    <div class="kit-cover" id="kitCover" onclick="openKit()">
-      <div class="kit-folder">
-        <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="folderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#c89968"/>
-              <stop offset="55%" stop-color="#b8824e"/>
-              <stop offset="100%" stop-color="#a06f3e"/>
-            </linearGradient>
-            <linearGradient id="tabGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#7fd4c1"/>
-              <stop offset="100%" stop-color="#5bb8a4"/>
-            </linearGradient>
-          </defs>
-          <rect x="246" y="60" width="34" height="100" rx="6" fill="url(#tabGrad)"/>
-          <text x="267" y="110" font-family="'Courier New',monospace" font-size="9" font-weight="700" fill="#1a4a40" text-anchor="middle" transform="rotate(90 267 110)">N07-013</text>
-          <rect x="10" y="20" width="260" height="320" rx="14" fill="url(#folderGrad)" stroke="#7a5428" stroke-width="2"/>
-          <rect x="10" y="328" width="260" height="12" rx="6" fill="#8a6030"/>
-          <g transform="translate(36,78)">
-            <path d="M14 0 C 24 0 30 8 30 18 L30 48 C30 56 24 62 16 62 C8 62 2 56 2 48 L2 22" fill="none" stroke="#9aa0a6" stroke-width="5" stroke-linecap="round"/>
-            <path d="M14 8 C 19 8 23 12 23 18 L23 46" fill="none" stroke="#c4c8cc" stroke-width="2.5" stroke-linecap="round"/>
-          </g>
-          <rect x="34" y="70" width="190" height="130" rx="4" fill="#f3ead8" stroke="#8a7550" stroke-width="1.5"/>
-          <text x="129" y="92" font-family="'Courier New',monospace" font-size="9" font-weight="700" fill="#5a4a30" text-anchor="middle" letter-spacing="1">NATIONAL COVERT INVESTIGATION</text>
-          <line x1="46" y1="100" x2="212" y2="100" stroke="#b8a888" stroke-width="1"/>
-          <text x="129" y="138" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#2a2a2a" text-anchor="middle">AGENT</text>
-          <text x="129" y="168" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#b02020" text-anchor="middle">N07</text>
-          <line x1="46" y1="182" x2="212" y2="182" stroke="#b8a888" stroke-width="1"/>
-          <text x="46" y="195" font-family="'Courier New',monospace" font-size="8" fill="#6a5a3a">CASE 2025-0531</text>
-          <g transform="translate(60,218) rotate(-3)">
-            <rect x="0" y="0" width="190" height="34" rx="3" fill="#c22a2a"/>
-            <text x="95" y="24" font-family="'Courier New',monospace" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="3">CLASSIFIED</text>
-          </g>
-          <rect x="10" y="256" width="10" height="46" fill="#c22a2a"/>
-          <g transform="translate(172,268) rotate(8)">
-            <rect x="0" y="0" width="80" height="26" rx="3" fill="#f3ead8" stroke="#c22a2a" stroke-width="1.5"/>
-            <text x="40" y="17" font-family="'Courier New',monospace" font-size="9" font-weight="700" fill="#c22a2a" text-anchor="middle" letter-spacing="1">EYES ONLY</text>
-          </g>
-        </svg>
-      </div>
+<!-- 키트 커버 3D 오픈 오버레이 (MY PROFILE 위에 덮여있다가 열림) -->
+<div id="kitOverlay">
+<div class="kit-backdrop"></div>
+<div class="kit-stage">
+  <div class="kit-cover" id="kitCover" onclick="openKit()">
+    <div class="kit-folder">
+      <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="folderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#c89968"/>
+            <stop offset="55%" stop-color="#b8824e"/>
+            <stop offset="100%" stop-color="#a06f3e"/>
+          </linearGradient>
+          <linearGradient id="tabGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#7fd4c1"/>
+            <stop offset="100%" stop-color="#5bb8a4"/>
+          </linearGradient>
+        </defs>
+        <rect x="246" y="60" width="34" height="100" rx="6" fill="url(#tabGrad)"/>
+        <text x="267" y="110" font-family="'Courier New',monospace" font-size="9" font-weight="700" fill="#1a4a40" text-anchor="middle" transform="rotate(90 267 110)">N07-013</text>
+        <rect x="10" y="20" width="260" height="320" rx="14" fill="url(#folderGrad)" stroke="#7a5428" stroke-width="2"/>
+        <rect x="10" y="328" width="260" height="12" rx="6" fill="#8a6030"/>
+        <g transform="translate(36,78)">
+          <path d="M14 0 C 24 0 30 8 30 18 L30 48 C30 56 24 62 16 62 C8 62 2 56 2 48 L2 22" fill="none" stroke="#9aa0a6" stroke-width="5" stroke-linecap="round"/>
+          <path d="M14 8 C 19 8 23 12 23 18 L23 46" fill="none" stroke="#c4c8cc" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <rect x="34" y="70" width="190" height="130" rx="4" fill="#f3ead8" stroke="#8a7550" stroke-width="1.5"/>
+        <text x="129" y="92" font-family="'Courier New',monospace" font-size="9" font-weight="700" fill="#5a4a30" text-anchor="middle" letter-spacing="1">NATIONAL COVERT INVESTIGATION</text>
+        <line x1="46" y1="100" x2="212" y2="100" stroke="#b8a888" stroke-width="1"/>
+        <text x="129" y="138" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#2a2a2a" text-anchor="middle">AGENT</text>
+        <text x="129" y="168" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#b02020" text-anchor="middle">N07</text>
+        <line x1="46" y1="182" x2="212" y2="182" stroke="#b8a888" stroke-width="1"/>
+        <text x="46" y="195" font-family="'Courier New',monospace" font-size="8" fill="#6a5a3a">CASE 2025-0531</text>
+        <g transform="translate(60,218) rotate(-3)">
+          <rect x="0" y="0" width="190" height="34" rx="3" fill="#c22a2a"/>
+          <text x="95" y="24" font-family="'Courier New',monospace" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="3">CLASSIFIED</text>
+        </g>
+        <rect x="10" y="256" width="10" height="46" fill="#c22a2a"/>
+        <g transform="translate(172,268) rotate(8)">
+          <rect x="0" y="0" width="80" height="26" rx="3" fill="#f3ead8" stroke="#c22a2a" stroke-width="1.5"/>
+          <text x="40" y="17" font-family="'Courier New',monospace" font-size="9" font-weight="700" fill="#c22a2a" text-anchor="middle" letter-spacing="1">EYES ONLY</text>
+        </g>
+      </svg>
     </div>
   </div>
-  <div class="kit-loading" id="kitLoading">로딩중... 0%</div>
 </div>
+<div class="kit-loading" id="kitLoading">로딩중... 0%</div>
 </div>
+
+<div class="device">
+<div class="inner" id="inner">
 
 <!-- TOPBAR (모든 화면 공통) -->
 <div class="topbar">
@@ -1117,7 +1125,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </div>
 
 <!-- S4: N07 프로필 + 메시지 -->
-<div class="screen" id="s4">
+<div class="screen on" id="s4">
 <div class="msg-screen">
 
 <!-- 로고 / 기밀 스티커 (이미지 에셋) -->
@@ -1603,7 +1611,7 @@ const messages = [
    isInfoguk:true}
 ];
 
-let history = ['s1'];
+let history = ['s4'];
 let currentLockedIdx = null;
 let selectedSlotIdx = null;
 
@@ -2442,13 +2450,13 @@ function revealAnswer(ref){
 // ===== S0: 시스템 접속 =====
 function openKit(){
   if(!kitReady) return;
-  const cover=document.getElementById('kitCover');
+  const overlay=document.getElementById('kitOverlay');
   const loadingEl=document.getElementById('kitLoading');
-  if(cover.classList.contains('open')) return;
-  cover.classList.add('open');
+  if(overlay.classList.contains('open')) return;
+  overlay.classList.add('open');
   if(loadingEl) loadingEl.classList.add('hide');
   if(navigator.vibrate) navigator.vibrate(40);
-  setTimeout(()=>{ goTo('s4'); }, 1200);
+  setTimeout(()=>{ overlay.classList.add('hidden'); }, 1350);
 }
 
 
