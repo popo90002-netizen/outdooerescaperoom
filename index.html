@@ -404,6 +404,44 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 @keyframes glitchIn{0%{opacity:0;filter:brightness(3) contrast(2);}30%{opacity:1;filter:brightness(0.5);}60%{filter:brightness(2);}100%{filter:brightness(1);}}
 #memoryText{font-family:'VT323',monospace;font-size:20px;color:#d8cfa8;letter-spacing:3px;line-height:2;text-align:center;white-space:pre-line;text-shadow:0 0 10px rgba(216,207,168,0.5);}
 .memory-reveal-line{color:#d8cfa8;text-shadow:0 0 10px rgba(216,207,168,0.5);}
+
+/* ===== 봉인된 편지 오버레이 ===== */
+#letterOverlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(10,8,5,0);transition:background 0.8s ease;}
+#letterOverlay.on{display:flex;background:rgba(10,8,5,0.92);}
+.letter-card{
+  position:relative;width:88%;max-width:400px;max-height:82vh;overflow-y:auto;
+  background:#efe3c6;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,0.6);
+  padding:28px 24px 34px;transform:translateY(110vh) rotate(-2deg);
+  transition:transform 0.9s cubic-bezier(.2,.8,.2,1);
+}
+#letterOverlay.on .letter-card{transform:translateY(0) rotate(-0.6deg);}
+#letterOverlay.out .letter-card{transform:translateY(110vh) rotate(3deg);transition-duration:0.7s;transition-timing-function:ease-in;}
+.letter-meta{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:#8a6a43;margin-bottom:14px;display:flex;justify-content:space-between;}
+.letter-body{font-family:'Noto Sans KR',sans-serif;font-size:14.5px;line-height:1.85;color:#2a2018;}
+.letter-body p{margin-bottom:0.8em;white-space:pre-line;word-break:keep-all;}
+.letter-body p.key{font-weight:900;color:#1c140e;}
+.letter-body .sign{font-family:'Noto Sans KR',sans-serif;font-weight:700;font-style:italic;color:#4a3a6a;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
+.letter-body .sign.on{opacity:0.9;}
+.case-stamp{position:fixed;left:50%;top:44%;z-index:2;pointer-events:none;
+  border:5px solid #a3241c;color:#a3241c;padding:8px 18px;border-radius:6px;
+  font-family:'Share Tech Mono',monospace;font-weight:700;font-size:clamp(28px,9vw,46px);letter-spacing:4px;white-space:nowrap;
+  transform:translate(-50%,-50%) rotate(-14deg) scale(3);opacity:0;mix-blend-mode:multiply;}
+.case-stamp.hit{animation:caseStampHit 0.38s cubic-bezier(.2,1.6,.4,1) forwards;}
+@keyframes caseStampHit{to{transform:translate(-50%,-50%) rotate(-14deg) scale(1);opacity:0.88;}}
+.letter-final{position:fixed;inset:0;z-index:1;background:#15110c;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 1.4s ease;text-align:center;}
+.letter-final.show{opacity:1;pointer-events:auto;}
+.lf-agent{font-family:'Share Tech Mono',monospace;font-weight:700;font-size:14px;letter-spacing:4px;color:#cbb994;}
+.lf-status{margin-top:14px;font-family:'Share Tech Mono',monospace;font-weight:700;font-size:20px;letter-spacing:2px;color:#8d7a5d;}
+.lf-status b{color:#8d7a5d;transition:color 0.6s;}
+.lf-status b.ok{color:#5fae6a;text-shadow:0 0 14px rgba(95,174,106,0.4);}
+.lf-title{margin-top:8vh;font-family:'Share Tech Mono',monospace;font-weight:700;font-size:clamp(48px,18vw,96px);line-height:1;color:#a3241c;letter-spacing:10px;text-shadow:0 0 30px rgba(163,36,28,0.35);}
+.lf-sub{margin-top:12px;font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:4px;color:#cbb994;}
+.lf-line{width:min(70vw,300px);height:1px;margin:20px auto 0;background:linear-gradient(90deg,transparent,#c9a640,transparent);}
+.lf-mc{margin-top:16px;font-family:'Share Tech Mono',monospace;font-weight:700;font-size:13px;letter-spacing:6px;color:#c9a640;}
+.lf-close{margin-top:30px;background:transparent;color:#cbb994;border:1px solid rgba(203,185,148,0.5);border-radius:4px;
+  padding:11px 28px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;cursor:pointer;}
+.lf-close:active{background:rgba(203,185,148,0.12);}
 .memory-final-line{display:inline-block;margin-top:16px;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:32px;letter-spacing:6px;color:#ff2a2a;text-shadow:0 0 22px rgba(255,40,40,1),0 0 44px rgba(255,40,40,0.7);}
 #memoryVideo{display:none;width:100%;height:100%;object-fit:contain;background:#000;}
 /* 보고서 네비 버튼 */
@@ -576,6 +614,22 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 @keyframes coverFlip{
   0%{transform:rotateY(0deg);}
   100%{transform:rotateY(-130deg);}
+}
+#s6 .slot.letter-slot{
+  background:linear-gradient(145deg,#2a2018,#120e0a);
+  border:1px solid #6a4a1a;border-radius:6px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  animation:letterGlow 1.8s ease-in-out infinite;
+}
+@keyframes letterGlow{
+  0%,100%{box-shadow:0 0 0 0 rgba(200,168,64,0.25),inset 0 0 8px rgba(200,168,64,0.1);}
+  50%{box-shadow:0 0 10px 2px rgba(200,168,64,0.55),inset 0 0 10px rgba(200,168,64,0.25);}
+}
+#s6 .slot.letter-slot .letter-seal{
+  font-size:22px;color:#c9a640;text-shadow:0 0 8px rgba(200,168,64,0.7);
+}
+#s6 .slot.letter-slot .letter-label{
+  font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;color:#c9a640;
 }
 #s6 .slot.empty{background:transparent;}
 #s6 .slot:hover{background-color:transparent;border-color:transparent;}
@@ -1204,6 +1258,24 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   <div id="memoryText"></div>
 </div>
 
+<!-- 봉인된 편지 오버레이 -->
+<div id="letterOverlay">
+  <div class="letter-card" id="letterCard">
+    <div class="letter-meta"><span>TO_N07</span><span>CONFIDENTIAL</span></div>
+    <div class="letter-body" id="letterBody"></div>
+  </div>
+  <div class="case-stamp" id="caseStamp">CASE CLOSED</div>
+  <div class="letter-final" id="letterFinal">
+    <div class="lf-agent">AGENT N07</div>
+    <div class="lf-status">STATUS : <b id="lfStatus">MISSING</b></div>
+    <div class="lf-title" id="lfTitle" style="display:none;">NCI</div>
+    <div class="lf-sub" id="lfSub" style="display:none;">National Covert Investigation</div>
+    <div class="lf-line" id="lfLine" style="display:none;"></div>
+    <div class="lf-mc" id="lfMc" style="display:none;">MISSION COMPLETE</div>
+    <button class="lf-close" id="lfClose" style="display:none;" onclick="closeLetterOverlay()">닫기</button>
+  </div>
+</div>
+
 <!-- 힌트 버튼 -->
 <button class="hint-btn" id="hintBtn" onclick="openHintModal()">💡</button>
 
@@ -1503,7 +1575,11 @@ const files = [
    isTypewriter:true,typed:false,
    typewriterText:'NULL-Z 샘플을 확보했다.\nBLUE. 틀림없다.\n\n이제 본거지로 향한다.\n\n저 자가 있는 곳.\n\n모든 기억이 돌아왔다.\n이제 끝낼 시간이다.\n\n최종 보고서를 작성하고\n본부에 제출한다.',
    content:`<div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget2" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div></div>`,
-   hints:['본거지 건물을 찾아가세요.','건물 주변에서 BLANK의 마크(뇌 모양)가 표시된 입구를 찾아보세요.'],answer:'BLANK IN YOUR AREA',answerText:''}
+   hints:['본거지 건물을 찾아가세요.','건물 주변에서 BLANK의 마크(뇌 모양)가 표시된 입구를 찾아보세요.'],answer:'BLANK IN YOUR AREA',answerText:''},
+
+  // #17 봉인된 편지 (최종 보고서 제출 성공 시에만 등장)
+  {num:17,name:'TO_N07',sub:'봉인된 기록',icon:'✉️',unlocked:true,hidden:true,isLetter:true,
+   hints:[],answerText:''}
 ];
 
 // ===== 개발/테스트용: 모든 파일 잠금 해제 (배포 전 false로 변경) =====
@@ -1894,7 +1970,8 @@ function renderInventory(){
   const grid=document.getElementById('invGrid');
   grid.innerHTML='';
   const visibleFiles=files.filter(f=>!f.hidden);
-  for(let i=0;i<16;i++){
+  const slotCount=Math.max(16,visibleFiles.length);
+  for(let i=0;i<slotCount;i++){
     const slot=document.createElement('div');
     if(i<visibleFiles.length){
       const f=visibleFiles[i];
@@ -1902,14 +1979,23 @@ function renderInventory(){
       const isLatest=f.unlocked&&(i+1>=visibleFiles.length||!visibleFiles[i+1].unlocked);
       const justUnlocked=!!f.unlockReveal;
       if(justUnlocked) f.unlockReveal=false; // 플립은 이 렌더 한 번만 — 소비 후 재생 안 함
-      slot.className='slot'+(f.unlocked?' unlocked':' locked')+(isLatest?' latest-unlock':'')+(justUnlocked?' just-unlocked':'');
-      slot.dataset.idx=realIdx;
-      slot.innerHTML=`
-        <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
-        <div class="slot-icon">${f.unlocked?f.icon:'🔒'}</div>
-        <div class="slot-name">${f.name}</div>
-        <div class="slot-num">#${f.num}</div>`;
-      slot.onclick=()=>selectSlot(realIdx);
+      if(f.isLetter){
+        slot.className='slot letter-slot'+(justUnlocked?' just-unlocked':'');
+        slot.dataset.idx=realIdx;
+        slot.innerHTML=`
+          <div class="letter-seal">✉</div>
+          <div class="letter-label">${f.name}</div>`;
+        slot.onclick=()=>openLetterReveal();
+      } else {
+        slot.className='slot'+(f.unlocked?' unlocked':' locked')+(isLatest?' latest-unlock':'')+(justUnlocked?' just-unlocked':'');
+        slot.dataset.idx=realIdx;
+        slot.innerHTML=`
+          <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
+          <div class="slot-icon">${f.unlocked?f.icon:'🔒'}</div>
+          <div class="slot-name">${f.name}</div>
+          <div class="slot-num">#${f.num}</div>`;
+        slot.onclick=()=>selectSlot(realIdx);
+      }
     } else {
       slot.className='slot empty';
     }
@@ -2619,6 +2705,91 @@ function selectColor(color){
   }
 }
 
+// ===== 봉인된 편지 =====
+const LETTER_PARAGRAPHS=[
+  {t:'이 파일이 열렸다는 건, 결국 해냈다는 뜻이겠지.'},
+  {t:'BLANK를 쫓으면서 알게 됐어. 놈들의 약은 기억을 지운다. 그리고 이 임무를 계속하는 한, 언젠가 나도 그 약에 당할 수 있다는 것도.'},
+  {t:'그래서 대비해뒀어. 중요한 기록마다 암호를 걸었고, 그 암호는 나만 풀 수 있게 만들었어. 혹시 내가 모든 걸 잊더라도, 이 기록들을 따라가다 보면 다시 나를 찾게 될 거라고 믿었으니까.'},
+  {t:'언제, 어디서 기억이 돌아왔을지는 나도 몰라. 하지만 이 파일은 마지막 보고서가 제출돼야만 열리게 해뒀어. 그러니 지금 이걸 읽고 있는 넌, 끝까지 해낸 거야.'},
+  {t:'약은 기억을 지울 수 있어도, 내가 누구인지까지 지울 순 없었던 거야.',key:true},
+  {t:'임무 완수를 축하한다, N07.\n그리고 돌아온 걸 환영해.',close:true}
+];
+const LETTER_SIGN='— 기억을 잃기 전의 나로부터';
+let letterOpening=false;
+async function openLetterReveal(){
+  if(letterOpening) return; letterOpening=true;
+  const overlay=document.getElementById('letterOverlay');
+  const body=document.getElementById('letterBody');
+  body.innerHTML='';
+  overlay.classList.add('on');
+  if(navigator.vibrate) navigator.vibrate(20);
+  await letterWait(1000);
+  for(const para of LETTER_PARAGRAPHS){
+    const p=document.createElement('p');
+    if(para.key) p.className='key';
+    body.appendChild(p);
+    await letterTypePara(p,para.t);
+    await letterTapOrTime(2600);
+  }
+  const sign=document.createElement('div');
+  sign.className='sign';
+  sign.textContent=LETTER_SIGN;
+  body.appendChild(sign);
+  await letterWait(50);
+  sign.classList.add('on');
+  await letterWait(2000);
+  await letterTapOrTime(3500);
+  finishLetterSequence();
+}
+function letterWait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+async function letterTypePara(p,text){
+  for(const ch of text){
+    p.textContent+=ch;
+    await letterWait(ch==='\n'?220:28);
+  }
+}
+function letterTapOrTime(ms){
+  const card=document.getElementById('letterCard');
+  return new Promise(r=>{
+    const done=()=>{clearTimeout(t);card.removeEventListener('click',done);r();};
+    const t=setTimeout(done,ms);
+    card.addEventListener('click',done,{once:true});
+  });
+}
+async function finishLetterSequence(){
+  const overlay=document.getElementById('letterOverlay');
+  overlay.classList.add('out');
+  await letterWait(700);
+  await letterWait(500);
+  document.getElementById('caseStamp').classList.add('hit');
+  if(navigator.vibrate) navigator.vibrate(60);
+  await letterWait(1400);
+  const final=document.getElementById('letterFinal');
+  final.classList.add('show');
+  await letterWait(1000);
+  const stat=document.getElementById('lfStatus');
+  stat.textContent='RESTORED';
+  stat.classList.add('ok');
+  await letterWait(1600);
+  document.getElementById('lfTitle').style.display='block';
+  document.getElementById('lfSub').style.display='block';
+  await letterWait(700);
+  document.getElementById('lfLine').style.display='block';
+  document.getElementById('lfMc').style.display='block';
+  await letterWait(500);
+  document.getElementById('lfClose').style.display='inline-block';
+}
+function closeLetterOverlay(){
+  const overlay=document.getElementById('letterOverlay');
+  overlay.classList.remove('on','out');
+  document.getElementById('caseStamp').classList.remove('hit');
+  document.getElementById('letterFinal').classList.remove('show');
+  ['lfTitle','lfSub','lfLine','lfMc','lfClose'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('lfStatus').textContent='MISSING';
+  document.getElementById('lfStatus').classList.remove('ok');
+  letterOpening=false;
+}
+
 // ===== 최종 보고서 =====
 function renderReport(){}
 function submitReport(){
@@ -2652,11 +2823,14 @@ function submitReport(){
       <div class="report-result-op">OPERATION NULL-Z — 종결</div>
     </div>
     <div style="display:flex;gap:10px;margin-top:14px;">
-      <a href="happy_ending.html" style="flex:1;text-decoration:none;display:block;text-align:center;background:#8a5a10;border:1px solid #6a4408;color:#fff8ec;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;padding:14px 8px;border-radius:4px;">☀️ 해피엔딩</a>
+      <button onclick="goTo('s6')" style="flex:1;text-decoration:none;display:block;text-align:center;background:#8a5a10;border:1px solid #6a4408;color:#fff8ec;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;padding:14px 8px;border-radius:4px;cursor:pointer;">☀️ 해피엔딩</button>
       <a href="sad_ending.html" style="flex:1;text-decoration:none;display:block;text-align:center;background:#3a3a4a;border:1px solid #2a2a3a;color:#e0e0ec;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;padding:14px 8px;border-radius:4px;">🌧️ 새드엔딩</a>
     </div>`;
     // 진동 효과
     if(navigator.vibrate) navigator.vibrate([200,100,200,100,400,100,800]);
+    // 숨겨진 편지 파일 해제
+    const letterFile=files.find(f=>f.num===17);
+    if(letterFile){letterFile.hidden=false;letterFile.unlockReveal=true;saveGameState();renderInventory();}
   }else{
     resultEl.innerHTML='<div class="report-error-box"><div class="report-error-title">✕ 오류 — 다음 항목을 다시 확인하세요</div>'+wrongList.map(l=>`<div class="report-error-item">• ${l}</div>`).join('')+'</div>';
   }
