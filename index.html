@@ -424,6 +424,15 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .letter-body p.key{font-weight:900;color:#1c140e;}
 .letter-body .sign{font-family:'Nanum Pen Script',cursive;font-weight:400;font-size:22px;color:#233b6b;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
 .letter-body .sign.on{opacity:0.9;}
+.letter-flash{position:fixed;inset:0;z-index:5;pointer-events:none;
+  background:radial-gradient(circle at 50% 42%,rgba(255,224,160,0.95),rgba(255,200,120,0.35) 45%,rgba(255,200,120,0) 72%);
+  opacity:0;}
+.letter-flash.hit{animation:letterFlashPulse 0.8s ease-out forwards;}
+@keyframes letterFlashPulse{
+  0%{opacity:0;}
+  12%{opacity:1;}
+  100%{opacity:0;}
+}
 .case-stamp{position:fixed;left:50%;top:44%;z-index:2;pointer-events:none;
   border:5px solid #a3241c;color:#a3241c;padding:8px 18px;border-radius:6px;
   font-family:'Share Tech Mono',monospace;font-weight:700;font-size:clamp(28px,9vw,46px);letter-spacing:4px;white-space:nowrap;
@@ -1262,6 +1271,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 
 <!-- 봉인된 편지 오버레이 -->
 <div id="letterOverlay">
+  <div class="letter-flash" id="letterFlash"></div>
   <div class="letter-card" id="letterCard">
     <img class="letter-bg" src="assets/letter_bg_A.jpg" alt="">
     <div class="letter-body" id="letterBody"></div>
@@ -2725,6 +2735,8 @@ async function openLetterReveal(){
   body.innerHTML='';
   overlay.classList.add('on');
   if(navigator.vibrate) navigator.vibrate(20);
+  const flash=document.getElementById('letterFlash');
+  flash.classList.remove('hit'); void flash.offsetWidth; flash.classList.add('hit');
   await letterWait(1000);
   for(const para of LETTER_PARAGRAPHS){
     const p=document.createElement('p');
@@ -2784,6 +2796,7 @@ async function finishLetterSequence(){
 function closeLetterOverlay(){
   const overlay=document.getElementById('letterOverlay');
   overlay.classList.remove('on','out');
+  document.getElementById('letterFlash').classList.remove('hit');
   document.getElementById('caseStamp').classList.remove('hit');
   document.getElementById('letterFinal').classList.remove('show');
   ['lfTitle','lfSub','lfLine','lfMc','lfClose'].forEach(id=>document.getElementById(id).style.display='none');
