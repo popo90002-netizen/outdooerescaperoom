@@ -1354,7 +1354,7 @@ const files = [
   {num:4,name:'FILE_03',sub:'NEONSIGN — 레시피',icon:'🎵',unlocked:false,
    answer:'NULL-Z',unlockCode:'NEON',answerLen:1,answerPrefix:'NULL-',
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 24</div><div>우체통에서 왼쪽으로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">10m정도 떨어진 곳</span>에 5분 정원 도시 NEONSIGN이 보였다.<br>해당 장소에서 잠복 중, 약속 시간 무렵, 마스크를 쓴 누군가가 나타났다.<br>눈썹이 희미한 특이한 외모, 주변을 살피는 살짝 불안해보이는 눈빛 — 유통자가 맞아 보인다.<br><br>몇 마디 나누다 낌새를 눈치챘는지 갑자기 도주.<br>제압을 시도했으나 예상보다 거셌다.<br><br>제압 직전, 인파 속으로 사라졌다. 추격은 실패.<br><br>— 몸싸움 도중 그자가 떨어뜨린 것이 있었다. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-B]</span><br>제조법 같아 보이는 그림, 분석이 필요하다.</div></div>`,
-   hints:['KIT-B에서 보이는 그림과 색이 일치하는 것을 NEONSIGN에서 찾으세요.','KIT-B 그림에 써있는 알파벳은 해당 그림 사이즈 크기를 의미합니다.'],
+   hints:['KIT-B에서 보이는 그림과 색이 일치하는 것을 NEONSIGN에서 찾으세요.','KIT-B 그림에 써있는 알파벳은 해당 그림 사이즈 크기를 의미합니다.<br>S : Small, M : Medium, L : Large.'],
    answerText:`<div style="display:flex;gap:4px;">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain1.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">N</span></div>
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain2.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain2.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">U</span></div>
@@ -1390,8 +1390,10 @@ const files = [
    answer:'MEMORYTOWER',unlockCode:'059',unlockPrefix:'AB-',answerLen:11,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 02</div><div>N32가 알려준 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-059</span> 오른편에 있는 대왕참나무 앞으로 왔다.<br>추가로 사진<span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-C]</span>를 보내주면서, 대왕참나무 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">QR코드</span> 안에 NULL-Z 제조 공장 위치를 숨겨 놓았다는데<br>하여튼... 그 자식 쉽게 알려주는 법이 없다니까...</div></div>`,
    hints:['대왕참나무에 푯말에 있는 QR코드를 찍어서 나오는 페이지의 학명을 이용합니다.<br><button onclick="openPhotoZoom(\'assets/file06_qr_result.png\')" style="margin-top:6px;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;">📷 QR코드 인식 불가</button>','학명에 써있는 문장을 두 음절씩 끊어서 KIT-C에서 찾아 해당 음절들과 선으로 이어져 대응하는 것들을 확인해보세요.'],
-   answerText:`<img src="assets/file06_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file06_explain1.jpg')">
-    <img src="assets/file06_explain2.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;margin-top:8px;" onclick="openPhotoZoom('assets/file06_explain2.jpg')">`},
+   answerText:`<div style="display:flex;gap:6px;">
+    <img src="assets/file06_explain2.jpg" style="flex:1;width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file06_explain2.jpg')">
+    <img src="assets/file06_explain1.jpg" style="flex:1;width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file06_explain1.jpg')">
+   </div>`},
 
   // #8 FILE_07
   {num:8,name:'FILE_07',sub:'MEMORY TOWER — 타일벽화',icon:'📷',unlocked:false,
