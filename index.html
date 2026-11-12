@@ -315,6 +315,8 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .modal{width:100%;max-width:340px;background:#0d1830;border:2px solid #3a6a9a;padding:18px;position:relative;max-height:calc(100vh - 40px);overflow-y:auto;}
 .modal.shake{animation:shake 0.4s;}
 .modal-close{position:absolute;top:6px;right:10px;background:none;border:none;color:#5a7a9a;font-size:20px;cursor:pointer;}
+.note-board-modal{max-width:420px;}
+.note-board-frame{width:100%;aspect-ratio:1164/705;border:none;border-radius:8px;margin-top:10px;display:block;background:#1c1a17;}
 
 /* ===== 미션 확대 모달 ===== */
 .mission-zoom-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:300;padding:20px;}
@@ -1251,6 +1253,16 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </div>
 </div>
 
+<!-- 음표놀이판 (현장 접근 불가 시 대체 시뮬레이션) -->
+<div class="modal-bg" id="modalNoteBoard">
+<div class="modal note-board-modal">
+<button class="modal-close" onclick="closeModal('modalNoteBoard')">✕</button>
+<h3>🎵 음표 놀이판</h3>
+<div class="modal-sub">NOTE BOARD SIMULATOR</div>
+<iframe src="assets/note_board.html" class="note-board-frame" title="음표 놀이판"></iframe>
+</div>
+</div>
+
 <!-- 모나리자 현장 분석 결과 입력 모달 -->
 <div class="modal-bg" id="modalMonalisa">
 <div class="modal">
@@ -1407,7 +1419,7 @@ const files = [
    <div style="margin-top:12px;">통화는 도중에 끊겼다.<br>N05가 습격당한 것 같다.<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">통화 중 들리는 비밀번호 소리..</span><br><br>마침 정보국 옆 공원 안에 있는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">음표놀이판</span>으로 알아낼 수 있을것 같다.<br>그나저나 내 정체도 들킨 모양이군. 조금더 신경 써서 움직여야겠어.</div>
    </div>
 `,
-   hints:['공원 놀이터 안에 음표놀이판을 찾으세요.','N05 녹취파일속에 들리는 도어락소리를 음표놀이판에서 찾아 해당되는 알파벳을 조합합니다.'],answerText:'도어락소리에 맞춰 음표를 누르고, 대응되는 알파벳을 조합하면 FADE가 완성됩니다.'},
+   hints:['공원 놀이터 안에 음표놀이판을 찾으세요.<br><button onclick="document.getElementById(\'modalNoteBoard\').classList.add(\'on\')" style="margin-top:6px;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;">🎵 음표놀이판 사용 불가</button>','N05 녹취파일속에 들리는 도어락소리를 음표놀이판에서 찾아 해당되는 알파벳을 조합합니다.'],answerText:'도어락소리에 맞춰 음표를 누르고, 대응되는 알파벳을 조합하면 FADE가 완성됩니다.'},
 
   // #10 FILE_09
   {num:10,name:'FILE_09',sub:'카페 — QR 스티커',icon:'📷',unlocked:false,
