@@ -406,22 +406,35 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .memory-reveal-line{color:#d8cfa8;text-shadow:0 0 10px rgba(216,207,168,0.5);}
 
 /* ===== 봉인된 편지 오버레이 ===== */
-#letterOverlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(10,8,5,0);transition:background 0.8s ease;}
-#letterOverlay.on{display:flex;background:rgba(10,8,5,0.92);}
-.letter-card{
-  position:relative;width:min(88vw,400px);aspect-ratio:1170/2532;max-height:82vh;overflow:hidden;
-  transform:translateY(110vh) rotate(-2deg);
-  transition:transform 0.9s cubic-bezier(.2,.8,.2,1);
+#letterOverlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(10,8,5,0.92);}
+#letterOverlay.on{display:flex;animation:letterOverlayFadeIn 0.8s ease forwards;}
+@keyframes letterOverlayFadeIn{
+  from{background-color:rgba(10,8,5,0);}
+  to{background-color:rgba(10,8,5,0.92);}
 }
-#letterOverlay.on .letter-card{transform:translateY(0) rotate(-0.6deg);}
-#letterOverlay.out .letter-card{transform:translateY(110vh) rotate(3deg);transition-duration:0.7s;transition-timing-function:ease-in;}
+.letter-card{
+  position:relative;width:min(88vw,400px,37.9vh);aspect-ratio:1170/2532;max-height:82vh;overflow:hidden;
+  transform:scaleY(0.045) scaleX(0.92);transform-origin:center center;
+}
+#letterOverlay.on .letter-card{animation:letterUnfold 0.85s cubic-bezier(.2,.9,.25,1.04) forwards;}
+@keyframes letterUnfold{
+  from{transform:scaleY(0.045) scaleX(0.92);}
+  to{transform:scaleY(1) scaleX(1);}
+}
+#letterOverlay.out .letter-card{animation:letterFold 0.5s ease-in forwards;}
+@keyframes letterFold{
+  from{transform:scaleY(1) scaleX(1);}
+  to{transform:scaleY(0.045) scaleX(0.92);}
+}
 .letter-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none;}
 .letter-body{
   position:absolute;top:25%;left:14%;right:11.5%;bottom:8%;overflow-y:auto;z-index:1;
   font-family:'Noto Sans KR',sans-serif;font-size:14.5px;line-height:1.85;color:#2a2018;
+  scrollbar-width:none;-ms-overflow-style:none;
 }
+.letter-body::-webkit-scrollbar{display:none;}
 .letter-body p{margin-bottom:0.8em;white-space:pre-line;word-break:keep-all;}
-.letter-body p.key{font-weight:900;color:#1c140e;background:#f4e09e;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:1px 4px;}
+.letter-body p.key{font-weight:900;color:#1c140e;}
 .letter-body .sign{font-family:'Nanum Pen Script',cursive;font-weight:400;font-size:22px;color:#1f3a7a;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
 .letter-body .sign.on{opacity:0.9;}
 .letter-flash{position:fixed;inset:0;z-index:5;pointer-events:none;
@@ -2720,11 +2733,11 @@ function selectColor(color){
 // ===== 봉인된 편지 =====
 const LETTER_PARAGRAPHS=[
   {t:'이 파일이 열렸다는 건, 결국 해냈다는 뜻이겠지.'},
-  {t:'BLANK를 쫓으면서 알게 됐어. 놈들의 약은 기억을 지운다. 그리고 이 임무를 계속하는 한, 언젠가 나도 그 약에 당할 수 있다는 것도.'},
-  {t:'그래서 대비해뒀어. 중요한 기록마다 암호를 걸었고, 그 암호는 나만 풀 수 있게 만들었어. 혹시 내가 모든 걸 잊더라도, 이 기록들을 따라가다 보면 다시 나를 찾게 될 거라고 믿었으니까.'},
+  {t:'BLANK를 쫓으면서 알게 됐어. 놈들의 약은 기억을 지운다.\n그리고 이 임무를 계속하는 한, 언젠가 나도 그 약에 당할 수 있다는 것도.'},
+  {t:'그래서 대비해뒀어. 중요한 기록마다 암호를 걸었고,\n그 암호는 나만 풀 수 있게 만들었어. 혹시 내가 모든 걸 잊더라도,\n이 기록들을 따라가다 보면 다시 나를 찾게 될 거라고 믿었으니까.'},
   {t:'언제, 어디서 기억이 돌아왔을지는 나도 몰라. 하지만 이 파일은 마지막 보고서가 제출돼야만 열리게 해뒀어. 그러니 지금 이걸 읽고 있는 넌, 끝까지 해낸 거야.'},
   {t:'약은 기억을 지울 수 있어도, 내가 누구인지까지 지울 순 없었던 거야.',key:true},
-  {t:'임무 완수를 축하한다, N07.\n그리고 돌아온 걸 환영해.',close:true}
+  {t:'나는 네가 여기까지 올 거라고 믿었어.\n기억을 잃어도, 우린 결국 같은 선택을 할 테니까.\n끝까지 포기하지 않아 줘서 고마워.\n이제, 우리 삶으로 돌아가자.',close:true}
 ];
 const LETTER_SIGN='— 기억을 잃기 전의 나로부터';
 let letterOpening=false;
@@ -2754,7 +2767,7 @@ async function openLetterReveal(){
   await letterWait(50);
   sign.classList.add('on');
   await letterWait(2000);
-  await letterTapOrTime(3500);
+  await letterTapOrTime(60000);
   finishLetterSequence();
 }
 function letterWait(ms){ return new Promise(r=>setTimeout(r,ms)); }
