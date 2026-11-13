@@ -939,6 +939,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s7 .script-line.sfx:hover{background:rgba(74,158,255,0.28);}
 #s7 .script-line.sfx:active{transform:scale(0.93);}
+#s7 .script-line.sfx.img-btn{
+  display:block;width:220px;aspect-ratio:700/137;
+  background:url('assets/doorlock_sound_btn.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;padding:0;margin:4px 0;
+}
+#s7 .script-line.sfx.img-btn:hover{background:url('assets/doorlock_sound_btn.webp') center/100% 100% no-repeat;filter:brightness(1.08);}
 #s7 .script-speaker{color:#8a5a10;font-weight:700;}
 
 /* ---- S5: 채팅창 (종이 테마, 테스트) ---- */
@@ -1515,7 +1521,7 @@ const files = [
    <div class="script-box" id="scriptN05">
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',0)"><span class="script-speaker">N05:</span> N07... 본거지 앞에 와있는데... 생각보다 경비가 삼엄하다...<br>(인기척) 잠깐... 누가 오는 것 같—</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',7)"><span class="script-speaker">대원1:</span> 그러니까 누가 널 제압하려 했었다는거지?</div><br>
-   <div class="script-line sfx" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',9)">🔊 도어락 소리</div><br><br>
+   <div class="script-line sfx img-btn" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',9)">도어락 소리</div><br><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',14)"><span class="script-speaker">대원2:</span> 맞습니다. 아무래도 저희를 추격하는 세력이 있는 것 같습니다.</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',17)">(와장창)<br><span class="script-speaker">N05:</span> 이크..!</div><br>
    <div class="script-line" onclick="seekScriptLine('audioMockN05','assets/file08_voice_n05.mp3',19)"><span class="script-speaker">대원1:</span> 거기 누구야!</div><br>
@@ -1564,10 +1570,10 @@ const files = [
 
   // #13 FILE_12 — (가안: 실제 답사 후 내용 교체 필요)
   {num:13,name:'FILE_12',sub:'전신주 390-94 — 세 번째 흔적',icon:'📍',unlocked:false,
-   answer:'현장 확인',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
+   answer:'9725A785',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:8,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국으로부터 위치 정보를 얻어 연남동 390-94에 도착했다.<br><br>도착하자마자 나를 지켜보고 있었다는 듯이 아래처럼 문자가 왔다.<br><div style="margin-top:10px;padding:10px 12px;border-left:3px solid #8a5a10;background:rgba(138,90,16,0.08);font-style:italic;color:#5a4428;"><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">"우리는 빈자리에 진실을 남긴다."</span><br>— BLANK</div><br>주변을 살펴보니 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">전신주 하나가 눈에 띈다.</span><br><br>BLANK로부터 받은 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">KIT-G와 문자 내용</span>을 이용하면 다음 정보를 얻을 수 있을 것 같다.</div></div>
 `,
-   hints:['전신주에 그림과 일치하는 표식을 찾으세요.','전구, 동신지, 마크를 동일한 위치에 매칭시켜 나오는 내용을 다음 위치 번호를 채워주세요.','다음 위치로 추정되는 번호를 NCI 정보국에 조회하여 다음 위치에 대한 정보를 얻으세요.'],answerText:'정답: 현장에서 발견한 표식을 키트와 대조'},
+   hints:['전신주에서 전구 그림이 있는 표식을 찾아 KIT-G와 대응해보세요.<br>전구 그림 기준으로 숫자 읽는 순서를 확인해 보세요.','칸 안에 주황색 선은 디지털 숫자 또는 알파벳의 일부입니다. 선 이외의 비어 있는 선을 채우면 정답이 완성됩니다.'],answerText:'정답: 9725A785'},
 
   // #14 FILE_13
   {num:14,name:'FILE_13',sub:'모나리자 — 그래피티',icon:'🎨',unlocked:false,
