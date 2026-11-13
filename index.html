@@ -417,12 +417,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #letterOverlay.out .letter-card{transform:translateY(110vh) rotate(3deg);transition-duration:0.7s;transition-timing-function:ease-in;}
 .letter-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none;}
 .letter-body{
-  position:absolute;top:10.5%;left:7%;right:9%;bottom:5%;overflow-y:auto;z-index:1;
+  position:absolute;top:25%;left:14%;right:11.5%;bottom:8%;overflow-y:auto;z-index:1;
   font-family:'Noto Sans KR',sans-serif;font-size:14.5px;line-height:1.85;color:#2a2018;
 }
 .letter-body p{margin-bottom:0.8em;white-space:pre-line;word-break:keep-all;}
-.letter-body p.key{font-weight:900;color:#1c140e;}
-.letter-body .sign{font-family:'Nanum Pen Script',cursive;font-weight:400;font-size:22px;color:#233b6b;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
+.letter-body p.key{font-weight:900;color:#1c140e;background:#f4e09e;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:1px 4px;}
+.letter-body .sign{font-family:'Nanum Pen Script',cursive;font-weight:400;font-size:22px;color:#1f3a7a;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
 .letter-body .sign.on{opacity:0.9;}
 .letter-flash{position:fixed;inset:0;z-index:5;pointer-events:none;
   background:radial-gradient(circle at 50% 42%,rgba(255,224,160,0.95),rgba(255,200,120,0.35) 45%,rgba(255,200,120,0) 72%);
@@ -1273,7 +1273,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div id="letterOverlay">
   <div class="letter-flash" id="letterFlash"></div>
   <div class="letter-card" id="letterCard">
-    <img class="letter-bg" src="assets/letter_bg_A.jpg" alt="">
+    <img class="letter-bg" src="assets/letter_bg_B.jpg" alt="">
     <div class="letter-body" id="letterBody"></div>
   </div>
   <div class="case-stamp" id="caseStamp">CASE CLOSED</div>
@@ -2742,6 +2742,7 @@ async function openLetterReveal(){
     const p=document.createElement('p');
     if(para.key) p.className='key';
     body.appendChild(p);
+    body.scrollTo({top:body.scrollHeight,behavior:'smooth'});
     await letterTypePara(p,para.t);
     await letterTapOrTime(2600);
   }
@@ -2749,6 +2750,7 @@ async function openLetterReveal(){
   sign.className='sign';
   sign.textContent=LETTER_SIGN;
   body.appendChild(sign);
+  body.scrollTo({top:body.scrollHeight,behavior:'smooth'});
   await letterWait(50);
   sign.classList.add('on');
   await letterWait(2000);
