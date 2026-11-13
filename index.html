@@ -434,7 +434,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   transform:rotate(0.5deg);transform-origin:center;
 }
 .letter-body::-webkit-scrollbar{display:none;}
-.letter-body p{margin-bottom:0.8em;white-space:pre-line;word-break:keep-all;}
+.letter-body p{margin-bottom:0.8em;white-space:pre-line;}
 .letter-body p.key{font-weight:700;color:#1c140e;}
 .letter-body .sign{font-family:'Nanum Pen Script',cursive;font-weight:400;font-size:22px;color:#1f3a7a;text-align:right;margin-top:0.6em;opacity:0;transition:opacity 1.6s ease;}
 .letter-body .sign.on{opacity:0.9;}
@@ -2756,7 +2756,6 @@ async function openLetterReveal(){
     const p=document.createElement('p');
     if(para.key) p.className='key';
     body.appendChild(p);
-    body.scrollTo({top:body.scrollHeight,behavior:'smooth'});
     await letterTypePara(p,para.t);
     await letterTapOrTime(2600);
   }
@@ -2773,8 +2772,10 @@ async function openLetterReveal(){
 }
 function letterWait(ms){ return new Promise(r=>setTimeout(r,ms)); }
 async function letterTypePara(p,text){
+  const body=p.parentElement;
   for(const ch of text){
     p.textContent+=ch;
+    body.scrollTop=body.scrollHeight;
     await letterWait(ch==='\n'?220:28);
   }
 }
