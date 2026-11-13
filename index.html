@@ -406,25 +406,25 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 .memory-reveal-line{color:#d8cfa8;text-shadow:0 0 10px rgba(216,207,168,0.5);}
 
 /* ===== 봉인된 편지 오버레이 ===== */
-#letterOverlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(10,8,5,0.92);}
+#letterOverlay{position:fixed;inset:0;z-index:9999;display:none;align-items:safe center;justify-content:center;overflow-y:auto;background:rgba(10,8,5,0.92);}
 #letterOverlay.on{display:flex;animation:letterOverlayFadeIn 0.8s ease forwards;}
 @keyframes letterOverlayFadeIn{
   from{background-color:rgba(10,8,5,0);}
   to{background-color:rgba(10,8,5,0.92);}
 }
 .letter-card{
-  position:relative;width:min(88vw,400px,37.9vh);aspect-ratio:1170/2532;max-height:82vh;overflow:hidden;
-  transform:scaleY(0.045) scaleX(0.92);transform-origin:center center;
+  position:relative;width:min(88vw,400px);aspect-ratio:1170/2532;overflow:hidden;flex-shrink:0;margin:auto 0;
+  transform:translateY(110vh) rotate(-2deg);
 }
-#letterOverlay.on .letter-card{animation:letterUnfold 0.85s cubic-bezier(.2,.9,.25,1.04) forwards;}
-@keyframes letterUnfold{
-  from{transform:scaleY(0.045) scaleX(0.92);}
-  to{transform:scaleY(1) scaleX(1);}
+#letterOverlay.on .letter-card{animation:letterSlideUp 0.9s cubic-bezier(.2,.8,.2,1) forwards;}
+@keyframes letterSlideUp{
+  from{transform:translateY(110vh) rotate(-2deg);}
+  to{transform:translateY(0) rotate(-0.6deg);}
 }
-#letterOverlay.out .letter-card{animation:letterFold 0.5s ease-in forwards;}
-@keyframes letterFold{
-  from{transform:scaleY(1) scaleX(1);}
-  to{transform:scaleY(0.045) scaleX(0.92);}
+#letterOverlay.out .letter-card{animation:letterSlideDown 0.7s ease-in forwards;}
+@keyframes letterSlideDown{
+  from{transform:translateY(0) rotate(-0.6deg);}
+  to{transform:translateY(110vh) rotate(3deg);}
 }
 .letter-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none;}
 .letter-body{
