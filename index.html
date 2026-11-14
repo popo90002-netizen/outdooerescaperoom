@@ -1342,12 +1342,12 @@ async function play(){
     for(const p of ps){ p.classList.add('on'); if(!skip && !p.classList.contains('gap')) await wait(p.classList.contains('hand')?LINE_MS*1.4:LINE_MS); }
     skip=false;
     if(i<SCENES.length-1){
+      // 글이 다 나오면(탭으로 건너뛰었든 자연히 다 나왔든) 바로 종이 접힘 시작
       const c=$('ni-curl');
-      await tapOrTime(HOLD_MS);          // 한번 탭 -> 종이 모서리가 접히기 시작
       c.classList.add('on');
       await wait(2400);                   // 접히는 모션이 끝날 때까지 대기
       c.classList.add('breath');
-      await tapOrTime(HOLD_MS);          // 한번 더 탭 -> 다음 장면으로
+      await tapOrTime(HOLD_MS);          // 한번 탭 -> 다음 장면으로
       c.classList.remove('on','breath');
     }
   }
@@ -1647,7 +1647,7 @@ window.NCIIntro={ start(cb){ if(running) return; running=true; onDone=cb||null; 
 
 <script>
 // ===== 이미지 프리로드 (로딩 속도 편차 방지) =====
-const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v7.webp','mystorage_background.webp','icon_play.webp','icon_pause.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp?v=2','report_submit_btn.webp','report_tile.webp','map_icon2.png','case_cover.jpg','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file09_cafe.jpg','file10_blank_membership.jpg','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file06_explain1.jpg','file04_explain1.jpg','file09_explain1.png','hint_collapse_btn.webp','hint_expand_btn.webp','file07_explain1.jpg','file07_explain2.jpg','file07_explain3.jpg','file05_explain1.jpg','file06_explain2.jpg','file06_qr_result.png','file08_explain1.jpg'];
+const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.webp','chat_header_N05.webp','chat_header_N24.webp','chat_header_N32.webp','chat_header_infoguk.webp','chat_tile.webp','code_input_bar2.webp','code_modal_bg.webp','code_slot.webp','code_slot_filled.webp','code_unlock_btn.webp','file_locked.webp','file_unlocked.webp','hint_header.webp','hint_open_btn.webp','hint_tile.webp','incidentlog_bottom.webp','incidentlog_header.webp','incidentlog_tile.webp','msg_card_read.webp','msg_card_unread.webp','msg_title_0_v2.webp','msg_title_1_v2.webp','msg_title_2_v2.webp','msg_title_3_v2.webp','myprofile_NCI_SYS.webp','myprofile_background.webp','myprofile_confidential_sticker.webp','myprofile_mystorage_button_v7.webp','mystorage_background.webp','icon_play.webp','icon_pause.webp','profile_card_v2.webp','report_bottom.webp','report_header.webp?v=2','report_submit_btn.webp','report_tile.webp','map_icon2.png','case_cover.jpg','script_view_btn.webp','voice_log_bar.webp','msg_bottom_cap.webp','msg_header_generic.webp','msg_paper_border_tile.webp','report_view_btn.webp','file01_streetlight.jpg','file04_heart.jpg?v=7','file09_cafe.jpg','file10_blank_membership.jpg','file01_explain1.jpg','file01_explain2.jpg','file01_explain3.jpg','file02_explain1.jpg','file02_explain2.jpg','file03_explain1.jpg','file03_explain2.jpg','file03_explain3.jpg','file03_explain4.jpg','file03_explain5.jpg','file06_explain1.jpg','file04_explain1.jpg','file09_explain1.png','hint_collapse_btn.webp','hint_expand_btn.webp','file07_explain1.jpg','file07_explain2.jpg','file07_explain3.jpg','file05_explain1.jpg','file06_explain2.jpg','file06_qr_result.png','file08_explain1.jpg','file12_explain1.jpg','file12_explain2.jpg'];
 (function preloadAssets(){
   const btn=document.getElementById('splashBtn');
   const total=ASSET_LIST.length;
@@ -1833,7 +1833,11 @@ const files = [
    answer:'9725A785',unlockCode:'390-94',unlockSeparator:{char:'-',after:3},answerLen:5,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 15</div><div>NCI 정보국으로부터 위치 정보를 얻어 연남동 390-94에 도착했다.<br><br>도착하자마자 나를 지켜보고 있었다는 듯이 아래처럼 문자가 왔다.<br><div style="margin-top:10px;padding:10px 12px;border-left:3px solid #8a5a10;background:rgba(138,90,16,0.08);font-style:italic;color:#5a4428;"><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">"우리는 빈자리에 진실을 남긴다."</span><br>— BLANK</div><br>주변을 살펴보니 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">전신주 하나가 눈에 띈다.</span><br><br>BLANK로부터 받은 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">KIT-G와 문자 내용</span>을 이용하면 다음 정보를 얻을 수 있을 것 같다.</div></div>
 `,
-   hints:['전신주에서 전구 그림이 있는 표식을 찾아 KIT-G와 대응해보세요.<br>전구 그림 기준으로 숫자 읽는 순서를 확인해 보세요.','칸 안에 주황색 선은 디지털 숫자 또는 알파벳의 일부입니다. 선 이외의 비어 있는 선을 채우면 정답이 완성됩니다.'],answerText:'정답: 9725A785'},
+   hints:['전신주에서 전구 그림이 있는 표식을 찾아 KIT-G와 대응해보세요.<br>전구 그림 기준으로 숫자 읽는 순서를 확인해 보세요.','칸 안에 주황색 선은 디지털 숫자 또는 알파벳의 일부입니다. 선 이외의 비어 있는 선을 채우면 정답이 완성됩니다.'],
+   answerText:`<div style="display:flex;gap:4px;margin-bottom:8px;">
+    <img src="assets/file12_explain1.jpg" style="width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file12_explain1.jpg')">
+    <img src="assets/file12_explain2.jpg" style="width:50%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file12_explain2.jpg')">
+   </div>정답: 9725A785`},
 
   // #14 FILE_13
   {num:14,name:'FILE_13',sub:'모나리자 — 그래피티',icon:'🎨',unlocked:false,
