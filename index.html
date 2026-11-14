@@ -1342,10 +1342,13 @@ async function play(){
     for(const p of ps){ p.classList.add('on'); if(!skip && !p.classList.contains('gap')) await wait(p.classList.contains('hand')?LINE_MS*1.4:LINE_MS); }
     skip=false;
     if(i<SCENES.length-1){
-      const c=$('ni-curl'); let bt;
-      const curlT=setTimeout(()=>{ c.classList.add('on'); bt=setTimeout(()=>c.classList.add('breath'),2400); },900);  // 글 끝나고 0.9초 뒤 천천히 접힘
-      await tapOrTime(HOLD_MS);
-      clearTimeout(curlT); clearTimeout(bt); c.classList.remove('on','breath');
+      const c=$('ni-curl');
+      await tapOrTime(HOLD_MS);          // 한번 탭 -> 종이 모서리가 접히기 시작
+      c.classList.add('on');
+      await wait(2400);                   // 접히는 모션이 끝날 때까지 대기
+      c.classList.add('breath');
+      await tapOrTime(HOLD_MS);          // 한번 더 탭 -> 다음 장면으로
+      c.classList.remove('on','breath');
     }
   }
   await wait(600);
