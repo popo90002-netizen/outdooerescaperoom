@@ -1108,6 +1108,256 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 </style>
 </head>
 <body>
+<!-- ================= NCI INTRO 시작 (이 블록 통째로 붙여넣기) ================= -->
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+#nciIntro{position:fixed;inset:0;z-index:9999;background:#120e0a;font-family:'Noto Sans KR',sans-serif;color:#2a211a;transition:opacity .8s ease}
+#nciIntro *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#nciIntro.ni-out{opacity:0;pointer-events:none}
+  #nciIntro{ --paper:#f1e7d2; --paper2:#e6d7b8; --ink:#2a211a; --muted:#7a6447; --red:#a3241c; --kraft:#c9a873; }
+  #nciIntro .frame{position:fixed;inset:0;display:flex;justify-content:center;padding:1.4vh 3vw}
+  #nciIntro .sheet{position:relative;width:100%;max-width:460px;height:100%;container-type:inline-size;
+    background:var(--paper);border-radius:6px;box-shadow:0 0 0 1px #0005,0 14px 40px #000c;overflow:hidden;
+    background-image:
+      radial-gradient(ellipse at 15% 8%,#fff8 0,transparent 45%),
+      radial-gradient(ellipse at 90% 95%,#b8975f30 0,transparent 55%),
+      radial-gradient(circle at 80% 30%,#a0804a14 0,transparent 20%),
+      repeating-linear-gradient(0deg,#0000 0 3px,#00000006 3px 4px);
+    display:flex;flex-direction:column}
+  #nciIntro /* 종이 위 클립 */
+  .sheet .clip{position:absolute;right:7cqw;top:-1.5cqw;width:7cqw;transform:rotate(12deg);z-index:3}
+  #nciIntro .head{display:flex;justify-content:space-between;align-items:flex-end;padding:6.5cqw 7cqw 3.5cqw;border-bottom:1.5px solid #cdb994;margin:0 5cqw}
+  #nciIntro .head .scene{font:700 3.3cqw 'Courier Prime';letter-spacing:.14em;color:var(--muted)}
+  #nciIntro .head .scene b{display:block;font:700 5.6cqw 'Noto Sans KR';letter-spacing:.02em;color:var(--ink);margin-top:1.2cqw}
+  #nciIntro .head .num{font:700 4.2cqw 'Courier Prime';letter-spacing:.1em;color:var(--red)}
+  #nciIntro .head .num span{color:var(--muted)}
+  #nciIntro .prop{position:relative;flex:0 0 44%;display:flex;align-items:center;justify-content:center}
+  #nciIntro .prop svg,#nciIntro .prop .memo{position:absolute;max-width:76%;max-height:88%;opacity:0;transform:translateY(14px) scale(.97);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  #nciIntro .prop .on{opacity:1;transform:none}
+  #nciIntro .text{flex:1;padding:2cqw 6.5cqw 0;font:400 clamp(14px,4cqw,18px)/1.85 'Noto Sans KR';word-break:keep-all}
+  #nciIntro .text p{opacity:0;transform:translateY(6px);filter:blur(3px);transition:opacity .9s ease,transform .9s ease,filter .9s ease;min-height:1.85em}
+  #nciIntro .text p.on{opacity:1;transform:none;filter:none}
+  #nciIntro .text p.em{font-weight:700}
+  #nciIntro .text p.hand{font:400 clamp(22px,6.6cqw,30px)/1.35 'Nanum Pen Script';color:#233a6b;padding-left:3cqw}
+  #nciIntro .text p.gap{min-height:.9em}
+  #nciIntro .foot{display:flex;align-items:center;justify-content:space-between;padding:0 7cqw 6cqw}
+  #nciIntro .dots{display:flex;gap:2cqw}
+  #nciIntro .dots i{width:2cqw;height:2cqw;border-radius:50%;background:#cdb994;transition:background .4s,transform .4s}
+  #nciIntro .dots i.on{background:var(--red);transform:scale(1.2)}
+  #nciIntro .stampmini{font:700 3cqw 'Courier Prime';letter-spacing:.2em;color:#a3241c99;border:1.5px solid #a3241c66;padding:.6cqw 2cqw;transform:rotate(-4deg)}
+  #nciIntro .start{position:absolute;left:50%;bottom:16cqw;transform:translateX(-50%) translateY(10px);opacity:0;pointer-events:none;
+    background:#2b2a28;color:#f1e7d2;border:none;border-radius:8cqw;padding:4cqw 11cqw;font:700 4.3cqw 'Noto Sans KR';letter-spacing:.1em;
+    box-shadow:0 6px 16px #0006;transition:opacity .8s,transform .8s;white-space:nowrap}
+  #nciIntro .start.on{opacity:1;pointer-events:auto;transform:translateX(-50%);animation:ni_pulse 1.8s ease-in-out infinite}
+  #nciIntro .start:active{transform:translateX(-50%) scale(.96)}
+  @keyframes ni_pulse{0%,100%{box-shadow:0 6px 16px #0006,0 0 0 0 #a3241c66}50%{box-shadow:0 6px 16px #0006,0 0 0 9px #a3241c00}}
+  #nciIntro /* 장면 전환: 서류 넘기기 */
+  .sheet.ni_turn{animation:ni_turn .7s ease}
+  @keyframes ni_turn{0%{transform:none}40%{transform:translateX(-3%) rotate(-1deg);opacity:.0}60%{transform:translateX(3%) rotate(1deg);opacity:0}100%{transform:none;opacity:1}}
+  #nciIntro /* 메모 소품 */
+  .memo{width:62%;aspect-ratio:1/.82;background:#fbf6e4;box-shadow:2px 6px 14px #0004;padding:6cqw 5cqw;transform-origin:50% 0;
+    background-image:repeating-linear-gradient(0deg,#0000 0 6.4cqw,#9fb8d655 6.4cqw calc(6.4cqw + 1px));background-position:0 4.6cqw;
+    clip-path:polygon(0 3%,8% 0,18% 2%,30% 0,42% 2.5%,55% .5%,66% 2%,78% 0,90% 2%,100% .5%,100% 100%,0 100%)}
+  #nciIntro .memo.on{transform:rotate(-3deg)}
+  #nciIntro .memo .tape{position:absolute;left:36%;top:-2cqw;width:28%;height:6cqw;background:#e8dcae99}
+  #nciIntro .memo .scrib{font:400 6cqw/6.4cqw 'Nanum Pen Script';color:#233a6b;opacity:.75}
+  #nciIntro /* 다음 장면 신호: 오른쪽 아래 종이 귀퉁이가 살짝 들리며 숨쉬듯 움직임 + 안내 문구 */
+  .hint{position:absolute;left:0;right:0;bottom:15cqw;text-align:center;font:700 2.9cqw 'Courier Prime';letter-spacing:.3em;color:var(--red);opacity:0;transition:opacity .6s}
+  #nciIntro .hint.on{opacity:1;animation:ni_blink 1.6s ease-in-out infinite}
+  #nciIntro .ni_curl{position:absolute;right:0;bottom:0;width:0;height:0;z-index:4;pointer-events:none;transition:width .5s,height .5s;
+    background:linear-gradient(315deg,#120e0a 0 49%,#d9c69f 50%,#efe2c4 62%,#c9b48a 100%);box-shadow:-3px -3px 8px #0003;border-radius:0 0 6px 0}
+  #nciIntro .ni_curl.on{width:11cqw;height:11cqw;animation:ni_curl 1.6s ease-in-out infinite}
+  @keyframes ni_curl{0%,100%{width:9cqw;height:9cqw}50%{width:13cqw;height:13cqw}}
+  @keyframes ni_blink{50%{opacity:.3}}
+</style>
+<div id="nciIntro" style="display:none">
+<div class="frame">
+  <div class="sheet" id="ni-sheet">
+    <svg class="clip" viewBox="0 0 24 60"><path d="M8 52V12a6 6 0 0 1 12 0v38a9 9 0 0 1-18 0V18" fill="none" stroke="#8d8d8d" stroke-width="2.4" stroke-linecap="round"/></svg>
+
+    <div class="head">
+      <div class="scene" id="ni-sceneLbl">SCENE 01<b id="ni-sceneTitle">의문의 택배</b></div>
+      <div class="num" id="ni-num">01 <span>/ 04</span></div>
+    </div>
+
+    <div class="prop" id="ni-prop">
+      <!-- 01 택배 상자 -->
+      <svg id="ni-p1" viewBox="0 0 220 180">
+        <ellipse cx="110" cy="166" rx="88" ry="9" fill="#0002"/>
+        <path d="M20 58l90-34 90 34v82l-90 34-90-34z" fill="#c9a873"/>
+        <path d="M20 58l90 34v82l-90-34z" fill="#b8945d"/>
+        <path d="M110 92l90-34v82l-90 34z" fill="#d6b783"/>
+        <path d="M20 58l90 34 90-34" fill="none" stroke="#9a7745" stroke-width="1.2"/>
+        <path d="M110 92v82" stroke="#9a7745" stroke-width="1.2"/>
+        <path d="M65 41l90 34v14l-90-34z" fill="#e2d2a8" opacity=".85"/>
+        <!-- 송장 -->
+        <g transform="matrix(1 -.38 0 1 122 112)">
+          <rect width="62" height="44" fill="#f7f2e6" stroke="#b9a988"/>
+          <rect x="5" y="6" width="34" height="3" fill="#bbb"/><rect x="5" y="12" width="24" height="3" fill="#bbb"/>
+          <text x="31" y="36" text-anchor="middle" font-family="Courier Prime" font-weight="700" font-size="14" fill="#2a211a">N07</text>
+        </g>
+        <!-- 알 수 없는 문양 -->
+        <g transform="matrix(1 .38 0 1 44 92)" opacity=".85">
+          <circle cx="22" cy="22" r="17" fill="none" stroke="#7a1d16" stroke-width="2"/>
+          <circle cx="22" cy="22" r="11" fill="none" stroke="#7a1d16" stroke-width="1.2"/>
+          <path d="M22 9l3.5 9.5H35l-7.8 5.8 3 9.5L22 28l-8.2 5.8 3-9.5L9 18.5h9.5z" fill="#7a1d16"/>
+        </g>
+      </svg>
+
+      <!-- 02 잠긴 파일철 -->
+      <svg id="ni-p2" viewBox="0 0 220 180">
+        <ellipse cx="110" cy="168" rx="90" ry="8" fill="#0002"/>
+        <rect x="40" y="40" width="140" height="118" rx="4" fill="#b8935a" transform="rotate(-6 110 100)"/>
+        <rect x="34" y="34" width="140" height="118" rx="4" fill="#c9a873" transform="rotate(3 110 100)"/>
+        <path d="M30 40h50l8 -10h60l8 10h34v118H30z" fill="#d8bb86"/>
+        <rect x="48" y="58" width="120" height="86" fill="#f4ecd8"/>
+        <rect x="58" y="70" width="70" height="4" fill="#c9bba0"/><rect x="58" y="80" width="90" height="4" fill="#c9bba0"/><rect x="58" y="90" width="56" height="4" fill="#c9bba0"/>
+        <rect x="58" y="104" width="44" height="7" fill="#2a211a"/><rect x="106" y="104" width="30" height="7" fill="#2a211a"/>
+        <g transform="rotate(-12 150 66)"><rect x="112" y="56" width="78" height="22" fill="none" stroke="#a3241c" stroke-width="2.5"/>
+          <text x="151" y="72" text-anchor="middle" font-family="Courier Prime" font-weight="700" font-size="12" fill="#a3241c" letter-spacing="1">CLASSIFIED</text></g>
+        <g transform="translate(150 112)"><path d="M6 12V7a8 8 0 0 1 16 0v5" fill="none" stroke="#1d1a17" stroke-width="4"/><rect x="0" y="11" width="28" height="24" rx="3" fill="#1d1a17"/><circle cx="14" cy="21" r="3" fill="#d8bb86"/><rect x="12.6" y="22" width="2.8" height="7" fill="#d8bb86"/></g>
+      </svg>
+
+      <!-- 03 메모 -->
+      <div class="memo" id="ni-p3"><i class="tape"></i><div class="scrib">N07 —<br>~~~ ~~ ~~~<br>~~ ~~~~ ~~</div></div>
+
+      <!-- 04 홍대 밤거리 -->
+      <svg id="ni-p4" viewBox="0 0 220 180">
+        <defs>
+          <radialGradient id="ni-glow" cx="50%" cy="0%" r="80%"><stop offset="0" stop-color="#f5d48a" stop-opacity=".75"/><stop offset="1" stop-color="#f5d48a" stop-opacity="0"/></radialGradient>
+          <linearGradient id="ni-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2f3d"/><stop offset="1" stop-color="#4a4352"/></linearGradient>
+        </defs>
+        <rect x="10" y="8" width="200" height="164" rx="4" fill="url(#ni-sky)"/>
+        <g fill="#191a22">
+          <rect x="10" y="62" width="38" height="110"/><rect x="44" y="40" width="30" height="132"/><rect x="72" y="76" width="34" height="96"/>
+          <rect x="150" y="50" width="36" height="122"/><rect x="182" y="84" width="28" height="88"/>
+        </g>
+        <g fill="#f3c86b" opacity=".75">
+          <rect x="18" y="74" width="5" height="6"/><rect x="30" y="92" width="5" height="6"/><rect x="52" y="52" width="5" height="6"/><rect x="60" y="70" width="5" height="6"/>
+          <rect x="80" y="90" width="5" height="6"/><rect x="158" y="62" width="5" height="6"/><rect x="170" y="80" width="5" height="6"/><rect x="190" y="98" width="5" height="6"/>
+        </g>
+        <path d="M10 152h200v20H10z" fill="#23232c"/>
+        <path d="M118 150l-40 22h84z" fill="url(#ni-glow)" opacity=".7"/>
+        <path d="M128 48v104" stroke="#111" stroke-width="3"/><path d="M128 50h-14" stroke="#111" stroke-width="3"/>
+        <path d="M108 52h12l-2 5h-8z" fill="#111"/>
+        <path d="M104 57h20l30 95H74z" fill="url(#ni-glow)" opacity=".55"/>
+        <!-- 걸어가는 사람 -->
+        <g transform="translate(96 118)" fill="#0e0e14"><circle cx="8" cy="4" r="4.2"/><path d="M3 9h10l2 16-3 1-2-9-2 18H5l-1-18-2 9-2-1z"/></g>
+        <rect x="10" y="8" width="200" height="164" rx="4" fill="none" stroke="#0005"/>
+      </svg>
+    </div>
+
+    <div class="text" id="ni-text"></div>
+
+    <div class="foot">
+      <div class="dots" id="ni-dots"><i></i><i></i><i></i><i></i></div>
+      <div class="stampmini">NCI · CASE N07</div>
+    </div>
+
+    <button class="start" id="ni-start">수사 시작</button>
+    <div class="hint" id="ni-hint">TAP ▶ 다음</div>
+    <div class="curl" id="ni-curl"></div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+/* ==================== 대본 ==================== */
+// cls: 'em' 굵게 / 'hand' 손글씨(메모) / 'gap' 빈 줄
+const SCENES = [
+  { title:'의문의 택배', lines:[
+    {t:'어느 날, 내 앞으로 낯선 택배가 도착했다.'},
+    {t:'보낸 사람의 이름도, 연락처도 없다.'},
+    {cls:'gap'},
+    {t:'상자 겉면에는 알 수 없는 기관의 문양과'},
+    {t:'‘N07’이라는 글자만 적혀 있다.', cls:'em'},
+  ]},
+  { title:'사라진 요원', lines:[
+    {t:'상자 안에는 NCI라는 비밀 기관의 수사 자료와'},
+    {t:'암호로 잠긴 파일들이 들어 있었다.'},
+    {cls:'gap'},
+    {t:'자료의 주인은 정체불명의 약물을 추적하다'},
+    {t:'갑자기 실종된 요원, N07.', cls:'em'},
+  ]},
+  { title:'마지막 부탁', lines:[
+    {t:'서류 곳곳에는 풀리지 않은 암호와'},
+    {t:'누군가 급하게 남긴 흔적들이 가득했다.'},
+    {t:'그리고 자료 사이에서 발견한 짧은 메모.'},
+    {cls:'gap'},
+    {t:'“기록을 끝까지 따라가라.', cls:'hand'},
+    {t:'진실은 그 끝에 있다.”', cls:'hand'},
+  ]},
+  { title:'수사의 시작', lines:[
+    {t:'왜 이 자료가 나에게 도착했는지는 알 수 없다.'},
+    {t:'하지만 이상하게도 그냥 덮어둘 수가 없었다.'},
+    {cls:'gap'},
+    {t:'누군가가 마지막 희망을 걸고 남긴 기록.'},
+    {t:'나는 N07이 끝내지 못한 수사를', cls:'em'},
+    {t:'이어가기로 결심한다.', cls:'em'},
+  ]},
+];
+const LINE_MS = 1100;       // 줄 사이 간격
+const HOLD_MS = 20000;      // 장면 다 나오고 클릭 없으면 이 시간 뒤 자동으로 다음 장면 (20초)
+
+/* ==================== 유틸 ==================== */
+const $=id=>document.getElementById(id);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const pad=n=>String(n).padStart(2,'0');
+let actx;
+function rustle(){ // 종이 넘기는 소리 (파일 없이 생성)
+  try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); if(actx.state==='suspended') actx.resume();
+    const len=actx.sampleRate*.35|0, b=actx.createBuffer(1,len,actx.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<len;i++){ const env=Math.sin(Math.PI*i/len)**2; d[i]=(Math.random()*2-1)*env*(.6+.4*Math.random()); }
+    const s=actx.createBufferSource(); s.buffer=b; const f=actx.createBiquadFilter(); f.type='highpass'; f.frequency.value=1800;
+    const g=actx.createGain(); g.gain.value=.12; s.connect(f).connect(g).connect(actx.destination); s.start();
+  }catch(e){}
+}
+
+/* 탭: 진행 중이면 남은 줄 즉시 표시, 다 나왔으면 다음 장면 */
+let skip=false, waitTap=null;
+$('ni-sheet').addEventListener('click',e=>{
+  if(e.target.id==='ni-start') return;
+  rustle();
+  if(waitTap){ const f=waitTap; waitTap=null; f(); } else skip=true;
+});
+function tapOrTime(ms){ return new Promise(r=>{ const t=setTimeout(()=>{waitTap=null;r();},ms); waitTap=()=>{clearTimeout(t);r();}; }); }
+
+/* ==================== 진행 ==================== */
+async function play(){
+  for(let i=0;i<SCENES.length;i++){
+    const sc=SCENES[i];
+    if(i>0){ $('ni-sheet').classList.remove('turn'); void $('ni-sheet').offsetWidth; $('ni-sheet').classList.add('turn'); await wait(330); }
+    // 헤더/점/소품
+    $('ni-sceneLbl').firstChild.nodeValue='SCENE '+pad(i+1);
+    $('ni-sceneTitle').textContent=sc.title;
+    $('ni-num').firstChild.nodeValue=pad(i+1)+' ';
+    [...$('ni-dots').children].forEach((d,k)=>d.classList.toggle('on',k===i));
+    ['ni-p1','ni-p2','ni-p3','ni-p4'].forEach((id,k)=>$(id).classList.toggle('on',k===i));
+    // 문장
+    const box=$('ni-text'); box.innerHTML='';
+    const ps=sc.lines.map(l=>{ const p=document.createElement('p'); if(l.cls) p.className=l.cls; p.textContent=l.t||''; box.appendChild(p); return p; });
+    await wait(500); skip=false;
+    for(const p of ps){ p.classList.add('on'); if(!skip && !p.classList.contains('gap')) await wait(p.classList.contains('hand')?LINE_MS*1.4:LINE_MS); }
+    skip=false;
+    if(i<SCENES.length-1){ $('ni-hint').classList.add('on'); $('ni-curl').classList.add('on'); await tapOrTime(HOLD_MS); $('ni-hint').classList.remove('on'); $('ni-curl').classList.remove('on'); }
+  }
+  await wait(600);
+  $('ni-start').classList.add('on');
+}
+$('ni-start').addEventListener('click',()=>{ rustle(); finish(); });
+
+/* ===== 외부에서 쓰는 함수 =====
+   NCIIntro.start(콜백)  : 인트로 시작. [수사 시작] 누르면 인트로가 사라지고 콜백 실행
+*/
+let onDone=null, running=false;
+function finish(){ const root=$('nciIntro'); root.classList.add('ni-out'); setTimeout(()=>{ root.style.display='none'; if(onDone) onDone(); },800); }
+window.NCIIntro={ start(cb){ if(running) return; running=true; onDone=cb||null; const r=$('nciIntro'); r.style.display=''; r.classList.remove('ni-out'); play(); } };
+
+})();
+</script>
+<!-- ================= NCI INTRO 끝 ================= -->
+<script>NCIIntro.start();</script>
+
 <div class="scanline paper-hide"></div>
 <div class="blackout" id="blackout"></div>
 <div class="scan-auth" id="scanAuth"></div>
