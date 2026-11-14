@@ -50,6 +50,15 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   backface-visibility:hidden;
   transition:transform 0.85s cubic-bezier(.45,0,.2,1), box-shadow 0.85s;
 }
+#s0.cover-flip-active .splash-screen,
+#s0.cover-flip-active .splash-cover-img,
+#s0.cover-flip-active .splash-btn{
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+#s0.cover-flip-active .splash-btn{
+  animation:none;
+}
 #s0.cover-flip-active.flip-open .splash-screen{
   transform:rotateY(-115deg);
   box-shadow:40px 0 70px rgba(0,0,0,0.75);
