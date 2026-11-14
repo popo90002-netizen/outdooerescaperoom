@@ -834,6 +834,13 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
   top:10px;right:10px;width:34px;height:34px;color:transparent;
   background:transparent;border:none;
 }
+.hint-map-btn{display:none;}
+.hint-modal .hint-map-btn{
+  display:block;position:absolute;top:9px;right:52px;width:32px;height:32px;
+  background:url('assets/map_icon.png') center/cover no-repeat;
+  border:none;border-radius:50%;cursor:pointer;padding:0;
+}
+.hint-map-btn:active{transform:scale(0.92);}
 .hint-modal .modal-sub{
   font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#3a2a1a;
   letter-spacing:0.3px;line-height:1.5;
@@ -1343,6 +1350,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 <div class="modal-bg" id="modalHint">
 <div class="modal" id="hintModalBox">
 <button class="modal-close" onclick="closeModal('modalHint')">✕</button>
+<button class="hint-map-btn" id="hintMapBtn" onclick="openHintMap()"></button>
 <h3>💡 HINT</h3>
 <div class="modal-sub" id="hintModalSub">힌트를 단계별로 열어보세요</div>
 <div id="hintContent"></div>
@@ -1424,6 +1432,7 @@ const ASSET_LIST=['call_phone_icon.webp','hint_emoticon.webp','camera_emoticon.w
 const files = [
   // #2 FILE_01
   {num:2,name:'FILE_01',sub:'경의선숲길 — 기둥',icon:'📄',unlocked:true,
+   mapImage:'assets/file01_map.jpg',
    answer:'102',unlockCode:null,answerLen:3,answerPrefix:'AB-',
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 05. 31</div><div><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등에 숫자가 새겨져 있어 위치 파악</span>하기 좋을 것 같다.<br>임무 수행중 생길 수 있는 만일의 상황에 대비해 찍어두었다.</div></div><div style="border-bottom:1px solid #c8b89a;padding-bottom:12px;margin-bottom:14px;"><img class="detail-photo" style="margin:10px 0 0;" src="assets/file01_streetlight.jpg" alt="경의선숲길 가로등" onclick="openPhotoZoom('assets/file01_streetlight.jpg')"></div>`,
    hints:['사진 속 가로등 주변 지형지물을 보고 해당 장소의 가로등을 찾으세요.','가로등은 홍대입구역 3번 출구 근처에 위치합니다.'],
@@ -1435,6 +1444,7 @@ const files = [
 
   // #3 FILE_02
   {num:3,name:'FILE_02',sub:'숲길 우체통',icon:'📷',unlocked:false,
+   mapImage:'assets/file02_map.jpg',
    answer:'NEON',unlockCode:'102',unlockPrefix:'AB-',answerLen:4,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 03</div><div>홍대 일대, 밤마다 약에 취한 무리들.<br>특이한 점으로는 무리 중 한 명이 항상 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-091</span> 옆 우체통 앞에 선다.<br>아무래도 조사해볼 필요가 있는것 같다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 21</div><div>무리에 자연스럽게 접근, 며칠을 함께 어울리며, 술 몇잔에 입이 풀렸다.</div>
@@ -1456,6 +1466,7 @@ const files = [
 
   // #4 FILE_03
   {num:4,name:'FILE_03',sub:'NEONSIGN — 레시피',icon:'🎵',unlocked:false,
+   mapImage:'assets/file03_map.jpg',
    answer:'NULL-Z',unlockCode:'NEON',answerLen:1,answerPrefix:'NULL-',
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 24</div><div>우체통에서 왼쪽으로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">10m정도 떨어진 곳</span>에 5분 정원 도시 NEONSIGN이 보였다.<br>해당 장소에서 잠복 중, 약속 시간 무렵, 마스크를 쓴 누군가가 나타났다.<br>눈썹이 희미한 특이한 외모, 주변을 살피는 살짝 불안해보이는 눈빛 — 유통자가 맞아 보인다.<br><br>몇 마디 나누다 낌새를 눈치챘는지 갑자기 도주.<br>제압을 시도했으나 예상보다 거셌다.<br><br>제압 직전, 인파 속으로 사라졌다. 추격은 실패.<br><br>— 몸싸움 도중 그자가 떨어뜨린 것이 있었다. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-B]</span><br>제조법 같아 보이는 그림, 분석이 필요하다.</div></div>`,
    hints:['KIT-B에서 보이는 그림과 색이 일치하는 것을 NEONSIGN에서 찾으세요.','KIT-B 그림에 써있는 알파벳은 해당 그림 사이즈 크기를 의미합니다.<br>S : Small, M : Medium, L : Large.'],
@@ -1469,6 +1480,7 @@ const files = [
 
   // #5 FILE_04
   {num:5,name:'FILE_04',sub:'하트 조형물 — 꽃',icon:'📷',unlocked:false,
+   mapImage:'assets/file04_map.jpg',
    answer:'ROSE',unlockCode:'NULL-Z',unlockSeparator:{char:'-',after:4},answerLen:5,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 25</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>오늘 N32로부터 메세지와 함께 사진이 왔다.</div></div>
@@ -2232,6 +2244,14 @@ function closeMissionZoom(){
 function openPhotoZoom(src){
   document.getElementById('photoZoomImg').src=src;
   document.getElementById('photoZoomBg').classList.add('on');
+}
+function openHintMap(){
+  const t = currentHintTarget;
+  if(t && t.mapImage){
+    openPhotoZoom(t.mapImage);
+  } else {
+    showLockToast('🗺️ 지도 필요 없음');
+  }
 }
 function closePhotoZoom(){
   document.getElementById('photoZoomBg').classList.remove('on');
