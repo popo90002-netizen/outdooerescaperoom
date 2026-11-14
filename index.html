@@ -1322,7 +1322,7 @@ $('ni-sheet').addEventListener('click',()=>{
   rustle();
   if(waitTap){ const f=waitTap; waitTap=null; f(); } else skip=true;
 });
-function tapOrTime(ms){ return new Promise(r=>{ const t=setTimeout(()=>{waitTap=null;r();},ms); waitTap=()=>{clearTimeout(t);r();}; }); }
+function tapOrTime(ms){ return new Promise(r=>{ const t=setTimeout(()=>{waitTap=null;r(false);},ms); waitTap=()=>{clearTimeout(t);r(true);}; }); }
 
 /* ==================== 진행 ==================== */
 async function play(){
@@ -1338,8 +1338,14 @@ async function play(){
     // 문장
     const box=$('ni-text'); box.innerHTML='';
     const ps=sc.lines.map(l=>{ const p=document.createElement('p'); if(l.cls) p.className=l.cls; p.textContent=l.t||''; box.appendChild(p); return p; });
-    await wait(500); skip=false;
-    for(const p of ps){ p.classList.add('on'); if(!skip && !p.classList.contains('gap')) await wait(p.classList.contains('hand')?LINE_MS*1.4:LINE_MS); }
+    skip=false;
+    await wait(500);  // 이 사이에 탭해도 skip이 유지되어 바로 전체 표시됨
+    for(const p of ps){
+      p.classList.add('on');
+      if(skip || p.classList.contains('gap')) continue;
+      const tapped = await tapOrTime(p.classList.contains('hand')?LINE_MS*1.4:LINE_MS);
+      if(tapped) skip=true;  // 탭하면 그 즉시 이 줄까지만 보여주고 나머지는 바로 전부 표시
+    }
     skip=false;
     // 글이 다 나오면(탭으로 건너뛰었든 자연히 다 나왔든) 바로 종이 접힘 시작 — 마지막 장면도 동일
     const c=$('ni-curl');
