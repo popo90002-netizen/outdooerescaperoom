@@ -1341,17 +1341,14 @@ async function play(){
     await wait(500); skip=false;
     for(const p of ps){ p.classList.add('on'); if(!skip && !p.classList.contains('gap')) await wait(p.classList.contains('hand')?LINE_MS*1.4:LINE_MS); }
     skip=false;
-    if(i<SCENES.length-1){
-      // 글이 다 나오면(탭으로 건너뛰었든 자연히 다 나왔든) 바로 종이 접힘 시작
-      const c=$('ni-curl');
-      c.classList.add('on');
-      await wait(2400);                   // 접히는 모션이 끝날 때까지 대기
-      c.classList.add('breath');
-      await tapOrTime(HOLD_MS);          // 한번 탭 -> 다음 장면으로
-      c.classList.remove('on','breath');
-    }
+    // 글이 다 나오면(탭으로 건너뛰었든 자연히 다 나왔든) 바로 종이 접힘 시작 — 마지막 장면도 동일
+    const c=$('ni-curl');
+    c.classList.add('on');
+    const breathT=setTimeout(()=>c.classList.add('breath'),2400);  // 접히는 중에도 탭하면 바로 다음으로
+    await tapOrTime(HOLD_MS);          // 한번 탭 -> 다음 장면(혹은 인트로 종료)으로
+    clearTimeout(breathT);
+    c.classList.remove('on','breath');
   }
-  await wait(600);
   finish();
 }
 
