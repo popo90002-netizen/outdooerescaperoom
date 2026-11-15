@@ -1805,7 +1805,10 @@ const files = [
    mapImage:'assets/file09_map.jpg',
    answer:'BLANK',unlockCode:'FADE',answerLen:3,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 10</div><div>주변을 살피던 중 카페 하나가 눈에 들어왔다.<br>창가에 같은 복장에 마스크를 쓴 무리들.<br>사진을 찍어 확대해보니 — 왼쪽 어깨에 동일한 마크가 찍혀있다.<br><br>저놈들이다.<br><br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">카페 폴브</span> 근처 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등</span>에 같은 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">마크</span>가 붙어 있다.<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">현장분석 카메라</span>로 확인해봐야겠다.</div></div>
-   <img class="detail-photo" src="assets/file09_cafe.jpg" alt="카페 파파라치 사진" onclick="openPhotoZoom('assets/file09_cafe.jpg')">`,
+   <div style="position:relative;">
+    <img class="detail-photo" style="margin:10px 0 0;" src="assets/file09_cafe.jpg" alt="카페 파파라치 사진" onclick="zoomFile09Photo()">
+    <div id="file09ZoomBadge" style="position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(20,15,10,0.85);color:#e8d8b0;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:1px;padding:7px 14px;border-radius:17px;display:flex;align-items:center;gap:6px;pointer-events:none;box-shadow:0 2px 6px rgba(0,0,0,0.4);">🔍 눌러서 확대</div>
+   </div>`,
    hints:['카페 폴브 연남점을 찾아가 사진에 표시된 가로등을 확인하세요.','현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 가로등에 있는 마크를 스캔하세요.<br><button onclick="openPhotoZoom(\'assets/file09_explain1.png\')" style="margin-top:6px;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;"><img src="assets/camera_emoticon.webp" style="width:14px;height:14px;vertical-align:middle;border-radius:50%;margin-right:3px;">카메라 인식 불가 시 확인</button>'],
    answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
     <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
@@ -2501,6 +2504,12 @@ function openPhotoZoom(src){
   document.getElementById('photoZoomImg').src=src;
   document.getElementById('photoZoomBg').classList.add('on');
 }
+function zoomFile09Photo(){
+  openPhotoZoom('assets/file09_cafe.jpg');
+  try{localStorage.setItem('file09PhotoZoomed','1');}catch(e){}
+  const badge=document.getElementById('file09ZoomBadge');
+  if(badge)badge.style.display='none';
+}
 function openHintMap(){
   const t = currentHintTarget;
   if(t && t.mapImage){
@@ -2520,6 +2529,10 @@ function openDetail(idx){
   document.getElementById('detailTitle').textContent=f.name;
   document.getElementById('detailNum').textContent=`#${f.num}`;
   document.getElementById('detailContent').innerHTML=f.content;
+  if(f.num===10){
+    let seen=false; try{seen=!!localStorage.getItem('file09PhotoZoomed');}catch(e){}
+    if(seen){const badge=document.getElementById('file09ZoomBadge');if(badge)badge.style.display='none';}
+  }
   goTo('s7');
   if(f.isTypewriter){
     const targetId=f.num===15?'typewriterTarget':'typewriterTarget2';
