@@ -1070,11 +1070,11 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s8 .report-input::placeholder{color:#a89878;}
 #s8 .report-divider{background:linear-gradient(90deg,transparent,#c8b89a,transparent);}
-#s8 .report-btn-row{display:flex;align-items:center;gap:10px;margin:10px 0 18px;}
+#s8 .report-btn-row{display:flex;align-items:stretch;gap:10px;margin:10px 0 18px;}
 #s8 .report-save-btn{
   flex:1;background:#4a3a24;border:1px solid #8a6a20;color:#e8d8b0;
   font-family:'Share Tech Mono',monospace;font-size:16px;letter-spacing:1px;
-  border-radius:18px;cursor:pointer;padding:9px 8px;
+  border-radius:18px;cursor:pointer;padding:12px 8px;
 }
 #s8 .report-submit-btn{
   display:block;background:url('assets/report_submit_btn.webp') center/100% 100% no-repeat;
@@ -1722,7 +1722,7 @@ const files = [
   {num:4,name:'FILE_03',sub:'NEONSIGN — 레시피',icon:'🎵',unlocked:false,
    mapImage:'assets/file03_map.jpg',
    answer:'NULL-Z',unlockCode:'NEON',answerLen:1,answerPrefix:'NULL-',
-   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 24</div><div>우체통을 바라보는 방향에서 왼쪽으로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">20m정도 떨어진 곳</span>에 '5분 정원 도시 서울' NEONSIGN이 보였다.<br>해당 장소에서 잠복 중, 약속 시간 무렵, 마스크를 쓴 누군가가 나타났다.<br>눈썹이 희미한 특이한 외모, 주변을 살피는 살짝 불안해보이는 눈빛 — 유통자가 맞아 보인다.<br><br>몇 마디 나누다 낌새를 눈치챘는지 갑자기 도주.<br>제압을 시도했으나 예상보다 거셌다.<br><br>제압 직전, 인파 속으로 사라졌다. 추격은 실패.<br><br>— 몸싸움 도중 그자가 떨어뜨린 것이 있었다. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-B]</span><br>제조법 같아 보이는 그림, 분석이 필요하다.</div></div>`,
+   content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 24</div><div>우체통을 바라보는 방향에서 왼쪽으로 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">20m정도 떨어진 곳</span>에 '5분 정원 도시 서울' NEONSIGN이 보였다.<br><br>해당 장소에서 잠복 중, 약속 시간 무렵, 마스크를 쓴 누군가가 나타났다.<br>눈썹이 희미한 특이한 외모, 주변을 살피는 살짝 불안해보이는 눈빛 — 유통자가 맞아 보인다.<br><br>몇 마디 나누다 낌새를 눈치챘는지 갑자기 도주.<br>제압을 시도했으나 예상보다 거셌다.<br><br>제압 직전, 인파 속으로 사라졌다. 추격은 실패.<br><br>— 몸싸움 도중 그자가 떨어뜨린 것이 있었다.<br><br>제조법 같아 보이는 그림<span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">[KIT-B]</span> , 분석이 필요하다.</div></div>`,
    hints:['KIT-B에서 보이는 그림과 색이 일치하는 것을 NEONSIGN에서 찾으세요.','KIT-B 그림에 써있는 알파벳은 해당 그림 사이즈 크기를 의미합니다.<br>S : Small, M : Medium, L : Large.'],
    answerText:`<div style="display:flex;gap:4px;">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><img src="assets/file03_explain1.jpg" style="width:100%;border-radius:4px;cursor:zoom-in;" onclick="openPhotoZoom('assets/file03_explain1.jpg')"><span style="font-size:18px;font-weight:bold;color:#000;">N</span></div>
