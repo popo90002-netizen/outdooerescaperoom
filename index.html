@@ -1070,9 +1070,15 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s8 .report-input::placeholder{color:#a89878;}
 #s8 .report-divider{background:linear-gradient(90deg,transparent,#c8b89a,transparent);}
+#s8 .report-btn-row{display:flex;align-items:stretch;gap:10px;margin:10px 0 18px;}
+#s8 .report-save-btn{
+  flex:1;background:transparent;border:1.5px solid #8a6a20;color:#5a4428;
+  font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;
+  border-radius:6px;cursor:pointer;
+}
 #s8 .report-submit-btn{
   display:block;background:url('assets/report_submit_btn.webp') center/100% 100% no-repeat;
-  border:none;color:transparent;aspect-ratio:860/191;height:auto;max-width:220px;margin:10px auto 18px;
+  border:none;color:transparent;aspect-ratio:860/191;height:auto;max-width:220px;margin:0;flex-shrink:0;
   filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
   transition:transform 0.08s ease, filter 0.08s ease;
 }
@@ -1527,7 +1533,10 @@ window.NCIIntro={ start(cb){ if(running) return; running=true; onDone=cb||null; 
   <div class="report-field"><div class="report-field-label">도어락 코드</div><input class="report-input" id="rDoorCode" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-divider"></div>
   <div id="reportResult"></div>
-  <button class="report-submit-btn" onclick="submitReport()">▶ 최종 보고서 제출</button></div>
+  <div class="report-btn-row">
+   <button class="report-save-btn" onclick="saveReportDraft()">💾 임시저장</button>
+   <button class="report-submit-btn" onclick="submitReport()">▶ 최종 보고서 제출</button>
+  </div></div>
 <div class="report-footer">수사관 N07 &nbsp;|&nbsp; NCI 극비 문서 &nbsp;|&nbsp; 무단 열람 금지</div>
 <div class="report-bottom-cap"></div>
 </div>
@@ -3111,7 +3120,27 @@ function closeLetterOverlay(){
 }
 
 // ===== 최종 보고서 =====
-function renderReport(){}
+const REPORT_FIELD_IDS=['rDrug','rMat1','rMat2','rColor','rOrg','rBoss','rTower','rDoorCode'];
+function renderReport(){
+  try{
+    const raw=localStorage.getItem('nciReportDraft');
+    if(!raw)return;
+    const draft=JSON.parse(raw);
+    REPORT_FIELD_IDS.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el&&draft[id]!==undefined)el.value=draft[id];
+    });
+  }catch(e){}
+}
+function saveReportDraft(){
+  const draft={};
+  REPORT_FIELD_IDS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)draft[id]=el.value;
+  });
+  try{localStorage.setItem('nciReportDraft',JSON.stringify(draft));}catch(e){}
+  showLockToast('💾 임시저장 완료');
+}
 function submitReport(){
   const answers=[
     {id:'rDrug',label:'약물 명칭',correct:['NULL-Z','NULLZ']},
