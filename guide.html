@@ -4,340 +4,378 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no, email=no, address=no">
-<title>플레이 가이드 | 문서 N07-013</title>
-<meta name="description" content="문서 N07-013 야외 방탈출 플레이 가이드 — 어디서부터 풀어야 하는지, 힌트와 지도 보는 법, 주의사항.">
-<meta name="theme-color" content="#f1e7d2">
+<title>플레이 안내 | 문서 N07-013</title>
+<meta name="description" content="문서 N07-013 야외 방탈출 플레이 안내 — 출발 전 꼭 확인해주세요.">
+<meta name="theme-color" content="#2b2a28">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#efe6d3; --card:#fbf7ee; --line:#d9c9a8; --line2:#e8dcc4;
-  --ink:#2a211a; --sub:#6b5a45; --muted:#93806a;
-  --red:#a3241c; --redbg:#f6e3dc; --yellow:#ffe680; --blue:#2c4a7c; --bluebg:#e4ebf5;
-  --green:#2f6b3a; --greenbg:#e2efdf;
-  --kr:'Noto Sans KR',sans-serif; --mono:'Courier Prime',monospace;
+  --paper:#f1e7d2; --paper2:#e6d7b8; --card:#fbf7ee; --line:#d6c5a2;
+  --ink:#2a211a; --sub:#6b5a45; --muted:#93806a; --dark:#2b2a28;
+  --red:#a3241c; --redbg:#f4e0d8; --yellow:#ffe27a; --blue:#233a6b; --bluebg:#e3e9f2;
+  --kr:'Noto Sans KR',sans-serif; --mono:'Courier Prime',monospace; --hand:'Nanum Pen Script',cursive;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-body{background:var(--bg);color:var(--ink);font-family:var(--kr);font-size:16px;line-height:1.75;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;}
+html,body{height:100%;}
+body{background:#1a1612;color:var(--ink);font-family:var(--kr);font-size:16px;line-height:1.75;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;}
 img{display:block;max-width:100%;}
-a{color:inherit;}
 b,strong{font-weight:700;}
-.wrap{max-width:680px;margin:0 auto;padding:0 16px;}
 
-/* 상단 */
-.top{position:sticky;top:0;z-index:20;background:#efe6d3ee;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:52px;}
-.top-t{font-weight:700;font-size:15px;}
-.top-t span{font-family:var(--mono);color:var(--red);margin-right:6px;}
-.btn-sm{font-size:13px;font-weight:700;background:var(--ink);color:#fff;text-decoration:none;padding:7px 14px;border-radius:20px;}
+.app{max-width:480px;margin:0 auto;height:100vh;height:100dvh;display:flex;flex-direction:column;
+  background:var(--paper);
+  background-image:
+    radial-gradient(ellipse at 15% 5%,#fff8 0,transparent 45%),
+    radial-gradient(ellipse at 90% 95%,#b8975f30 0,transparent 55%),
+    repeating-linear-gradient(0deg,#0000 0 31px,#7a644716 31px 32px);
+  box-shadow:0 0 40px #0008;}
 
-header.hero{padding:34px 0 8px;}
-.hero h1{font-size:clamp(28px,7vw,36px);font-weight:900;line-height:1.3;letter-spacing:-.02em;}
-.hero p{color:var(--sub);margin-top:8px;}
+/* 헤더 */
+.head{flex-shrink:0;background:var(--dark);color:#f1e7d2;}
+.head-bar{display:flex;align-items:center;height:52px;padding:0 8px;}
+.head-bar button{width:40px;height:40px;background:none;border:none;color:#f1e7d2;font-size:22px;cursor:pointer;border-radius:50%;}
+.head-bar button:disabled{opacity:.25;cursor:default;}
+.head-t{flex:1;text-align:center;font-weight:700;font-size:16px;letter-spacing:.04em;}
+.prog-wrap{padding:14px 22px 0;background:transparent;}
+.prog{height:8px;border-radius:8px;background:#d9c9a6;overflow:hidden;}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5a4630,#a3241c);border-radius:8px;transition:width .4s ease;}
+.prog-n{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;}
 
-/* 3줄 요약 */
-.tldr{margin:24px 0 8px;background:var(--ink);color:#f6efe0;border-radius:14px;padding:20px 20px 18px;}
-.tldr-t{font-size:13px;font-weight:700;color:#e8c78a;margin-bottom:10px;}
-.tldr ol{list-style:none;counter-reset:t;display:grid;gap:10px;}
-.tldr li{counter-increment:t;display:flex;gap:10px;font-size:15px;line-height:1.6;}
-.tldr li::before{content:counter(t);flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#e8c78a;color:var(--ink);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:2px;}
-.tldr b{color:#fff;background:linear-gradient(transparent 60%,#a3241caa 60%);}
-
-/* 목차 */
-.toc{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 4px;}
-.toc a{font-size:13px;font-weight:500;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:5px 12px;color:var(--sub);}
-.toc a:hover{border-color:var(--ink);color:var(--ink);}
-
-/* 섹션 */
-section{padding:44px 0 8px;scroll-margin-top:56px;}
-.sec-n{font-family:var(--mono);font-size:13px;color:var(--red);}
-h2{font-size:clamp(22px,5.6vw,26px);font-weight:900;line-height:1.35;letter-spacing:-.01em;margin:2px 0 14px;}
-h3{font-size:17px;font-weight:700;margin:26px 0 8px;}
-p + p{margin-top:10px;}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;}
+/* 본문 */
+.body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 22px 28px;}
+.step{display:none;animation:in .35s ease;}
+.step.on{display:block;}
+@keyframes in{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.step-k{font-family:var(--mono);font-size:13px;color:var(--red);letter-spacing:.08em;}
+h2{font-size:26px;font-weight:900;line-height:1.3;letter-spacing:-.01em;margin:2px 0 16px;}
+.lead{font-size:17px;}
+p + p{margin-top:8px;}
 .hl{background:linear-gradient(transparent 55%,var(--yellow) 55%);}
+.mark{background:var(--redbg);color:var(--red);font-weight:700;padding:0 4px;border-radius:3px;}
 .kbd{display:inline-block;font-size:13px;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:6px;padding:0 7px;line-height:1.7;white-space:nowrap;}
 
-/* 스크린샷 + 번호 표시 */
-.figrow{display:grid;grid-template-columns:1fr;gap:18px;align-items:start;margin-top:14px;}
-.shot{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px #0002,0 10px 24px #3a2a1a2a;background:#222;max-width:340px;margin:0 auto;width:100%;}
+/* 리스트 */
+.ol{list-style:none;counter-reset:o;display:grid;gap:14px;margin-top:18px;}
+.ol li{counter-increment:o;display:flex;gap:12px;font-size:16px;}
+.ol li::before{content:counter(o);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--dark);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.ol li small{display:block;color:var(--sub);font-size:15px;}
+.checks{list-style:none;display:grid;gap:12px;margin-top:18px;}
+.checks li{display:flex;gap:12px;align-items:flex-start;font-size:17px;font-weight:500;}
+.checks li::before{content:'✓';flex-shrink:0;width:28px;height:28px;border-radius:7px;background:var(--red);color:#fff;font-size:17px;font-weight:900;display:flex;align-items:center;justify-content:center;}
+.checks li small{display:block;color:var(--sub);font-size:14px;font-weight:400;}
+.warns{list-style:none;display:grid;gap:10px;margin-top:16px;}
+.warns li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 44px;position:relative;font-size:15px;color:var(--sub);}
+.warns li::before{content:'!';position:absolute;left:13px;top:14px;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.warns li b{display:block;color:var(--ink);font-size:16px;}
+
+.note{border-radius:12px;padding:12px 14px;font-size:15px;margin-top:16px;display:flex;gap:10px;}
+.note .ic{flex-shrink:0;}
+.note.tip{background:var(--bluebg);color:#1f3558;}
+.note.warn{background:var(--redbg);color:#6e1b14;}
+
+/* 표지 / 카드 */
+.cover{width:min(52%,230px);height:auto;margin:10px auto 26px;transform:rotate(-2deg);box-shadow:0 16px 30px #3a2a1a55;border-radius:3px;}
+.hand{font-family:var(--hand);font-size:26px;line-height:1.35;color:var(--blue);}
+.info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 16px;margin:6px 0 18px;box-shadow:0 6px 16px #3a2a1a1a;}
+.info-h{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.14em;text-align:center;padding:10px 0 6px;border-bottom:1.5px solid var(--line);}
+.info-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line);font-size:16px;}
+.info-row:last-child{border-bottom:none;}
+.info-row .ic{width:28px;text-align:center;font-size:19px;flex-shrink:0;}
+.info-row small{display:block;font-size:13px;color:var(--muted);}
+.big-place{background:var(--dark);color:#f1e7d2;border-radius:14px;padding:22px 18px;text-align:center;margin:6px 0 4px;}
+.big-place small{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:#c9a873;}
+.big-place b{display:block;font-size:24px;font-weight:900;margin-top:4px;}
+
+/* 스크린샷 */
+.shot{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px #0002,0 10px 22px #3a2a1a33;background:#222;width:min(74%,320px);margin:4px auto 18px;}
+.shot.full{width:100%;}
 .shot img{width:100%;height:auto;}
-.mk{position:absolute;border:3px solid var(--red);border-radius:10px;box-shadow:0 0 0 3px #fff8;}
+.mk{position:absolute;border:3px solid var(--red);border-radius:10px;box-shadow:0 0 0 3px #fff9;}
 .mk i{position:absolute;top:-13px;left:-13px;width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-style:normal;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px #0005;}
 .mk.r i{left:auto;right:-13px;}
 .mk.round{border-radius:50%;}
 .legend{list-style:none;display:grid;gap:12px;}
-.legend li{display:flex;gap:10px;}
-.legend li .n{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:2px;}
-.legend li > div > b{display:block;}
-.legend li span{color:var(--sub);font-size:15px;}
+.legend li{display:flex;gap:10px;font-size:15px;color:var(--sub);}
+.legend li .n{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.legend li > div > b{display:block;color:var(--ink);font-size:16px;}
 
-/* 흐름 */
-.flow{display:grid;gap:10px;margin-top:14px;}
-.flow-step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;position:relative;}
-.flow-step + .flow-step::before{content:'';position:absolute;left:31px;top:-11px;width:2px;height:10px;background:var(--line);}
-.flow-n{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;}
-.flow-step > div > b{display:block;font-size:16px;}
-.flow-step span{color:var(--sub);font-size:15px;}
-.flow-loop{text-align:center;font-size:14px;font-weight:700;color:var(--red);background:var(--redbg);border-radius:10px;padding:10px;}
+/* 반복 흐름 */
+.loop{display:grid;gap:8px;margin-top:16px;}
+.loop div{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;color:var(--sub);}
+.loop div b{display:block;color:var(--ink);font-size:16px;}
+.loop div .n{flex-shrink:0;font-family:var(--mono);font-size:20px;color:var(--red);width:30px;}
+.loop .again{justify-content:center;background:var(--redbg);border-color:transparent;color:var(--red);font-weight:700;}
 
-/* 박스 */
-.note{border-radius:12px;padding:14px 16px;font-size:15px;margin-top:14px;display:flex;gap:10px;}
-.note .ic{flex-shrink:0;font-size:18px;line-height:1.5;}
-.note.tip{background:var(--bluebg);color:#1f3558;}
-.note.warn{background:var(--redbg);color:#6e1b14;}
-.note.ok{background:var(--greenbg);color:#21492a;}
+.feat{display:grid;gap:10px;margin-top:4px;}
+.feat div{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;color:var(--sub);}
+.feat .fi{flex-shrink:0;width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.feat .fi img{width:30px;height:30px;}
+.feat strong{display:block;color:var(--ink);font-size:16px;}
 
-/* 기능 */
-.feat{display:grid;gap:12px;margin-top:14px;}
-.feat .card{display:flex;gap:14px;align-items:flex-start;}
-.feat-ic{flex-shrink:0;width:46px;height:46px;border-radius:12px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.feat-ic img{width:34px;height:34px;object-fit:contain;}
-.feat .card > div > b{display:block;font-size:16px;}
-.feat span{color:var(--sub);font-size:15px;}
+/* 마지막 */
+.go{display:flex;align-items:center;justify-content:center;gap:10px;margin:24px auto 0;width:100%;background:var(--red);color:#fff;text-decoration:none;font-weight:900;font-size:18px;letter-spacing:.06em;padding:18px;border-radius:14px;box-shadow:0 6px 16px #a3241c55;animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 6px 16px #a3241c55,0 0 0 0 #a3241c55}50%{box-shadow:0 6px 16px #a3241c55,0 0 0 9px #a3241c00}}
 
-/* 주의사항 */
-.checks{list-style:none;display:grid;gap:10px;margin-top:14px;}
-.checks li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px 13px 46px;position:relative;font-size:15px;}
-.checks li::before{content:'!';position:absolute;left:14px;top:14px;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;}
-.checks li > b{display:block;font-size:16px;margin-bottom:2px;}
-.checks li span{color:var(--sub);}
-
-/* FAQ */
-details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:10px;}
-summary{cursor:pointer;list-style:none;padding:14px 44px 14px 16px;font-weight:700;position:relative;}
-summary::-webkit-details-marker{display:none;}
-summary::after{content:'+';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--muted);font-weight:400;}
-details[open] summary::after{content:'−';}
-details .a{padding:0 16px 16px;color:var(--sub);font-size:15px;}
-
-/* 하단 */
-.end{padding:50px 0 60px;text-align:center;}
-.end p{color:var(--sub);margin-bottom:16px;}
-.btn-play{display:inline-flex;align-items:center;gap:10px;background:#2b2a28;color:#f1e7d2;text-decoration:none;font-weight:700;font-size:17px;letter-spacing:.06em;padding:16px 40px;border-radius:40px;box-shadow:0 6px 16px #0004;}
-.btn-play:active{transform:scale(.97);}
-footer{text-align:center;font-size:12px;color:var(--muted);padding:0 0 calc(30px + env(safe-area-inset-bottom));}
-
-@media (min-width:720px){
-  .figrow{grid-template-columns:300px 1fr;gap:28px;}
-  .figrow .shot{margin:0;}
-  .feat{grid-template-columns:1fr 1fr;}
-}
+/* 하단 버튼 */
+.foot{flex-shrink:0;display:flex;gap:10px;padding:12px 18px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#efe4cc;}
+.foot button{height:56px;border-radius:14px;font-family:var(--kr);font-size:18px;font-weight:700;cursor:pointer;transition:transform .1s;}
+.foot button:active{transform:scale(.98);}
+.btn-prev{width:64px;flex-shrink:0;background:var(--card);border:2px solid var(--line);color:var(--sub);}
+.btn-prev:disabled{opacity:.35;cursor:default;}
+.btn-next{flex:1;background:var(--dark);border:none;color:#f1e7d2;letter-spacing:.1em;}
+.foot.last .btn-next{background:var(--card);color:var(--ink);border:2px solid var(--line);}
 </style>
 </head>
 <body>
+<div class="app">
 
-<div class="top">
-  <div class="wrap">
-    <div class="top-t"><span>N07-013</span>플레이 가이드</div>
-    <a class="btn-sm" href="https://popo90002-netizen.github.io/outdooerescaperoom/">게임 시작</a>
+  <header class="head">
+    <div class="head-bar">
+      <button id="topPrev" aria-label="이전">‹</button>
+      <div class="head-t">플레이 안내</div>
+      <button id="topMenu" aria-label="처음으로" title="처음으로">⟲</button>
+    </div>
+  </header>
+  <div class="prog-wrap">
+    <div class="prog"><i id="progBar"></i></div>
+    <div class="prog-n"><span id="stepLabel">STEP 0</span><span id="stepCount">1 / 10</span></div>
   </div>
+
+  <main class="body" id="body">
+
+    <!-- 0 -->
+    <section class="step" data-k="START">
+      <img class="cover" src="assets/case_cover.jpg" alt="문서 N07-013 표지" width="860" height="1146">
+      <p class="lead">안녕하세요, <b>문서 N07-013</b> 수사 요원님.</p>
+      <p class="lead">성공적인 수사를 위한 안내사항을 전달드립니다.</p>
+      <p class="lead" style="margin-top:14px"><span class="mark">출발 전, 꼭 확인해주세요!</span></p>
+    </section>
+
+    <!-- 1 -->
+    <section class="step" data-k="STEP 1">
+      <div class="step-k">STEP 1</div>
+      <h2>플레이 정보</h2>
+      <div class="info">
+        <div class="info-h">CASE INFO · N07-013</div>
+        <div class="info-row"><span class="ic">📍</span><div>서울 마포구 홍대·연남 일대<small>경의선숲길 주변 야외</small></div></div>
+        <div class="info-row" data-cfg="time"><span class="ic">⏱️</span><div data-v></div></div>
+        <div class="info-row" data-cfg="distance"><span class="ic">👟</span><div data-v></div></div>
+        <div class="info-row" data-cfg="age"><span class="ic">👤</span><div data-v></div></div>
+        <div class="info-row"><span class="ic">📱</span><div>스마트폰 1대로 진행<small>앱 설치 없이 인터넷 브라우저에서 플레이</small></div></div>
+        <div class="info-row"><span class="ic">🔒</span><div>잠긴 파일 13개 + 숨겨진 파일</div></div>
+      </div>
+      <p>실제 거리를 걸으며 단서를 찾고, 암호를 풀어 파일을 하나씩 여는 야외 방탈출이에요.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="step" data-k="STEP 2">
+      <div class="step-k">STEP 2</div>
+      <h2>준비물 챙기기</h2>
+      <p>계속 걸으면서 휴대폰을 보는 게임이에요.<br>원활한 수사를 위해 준비해주세요.</p>
+      <ul class="checks">
+        <li><div>충전된 휴대폰 + 보조배터리<small>화면을 계속 켜고 이동해요</small></div></li>
+        <li><div>모바일 데이터<small>와이파이 없이 야외에서 접속해요</small></div></li>
+        <li><div>이어폰<small>음성 기록을 길에서 듣기 편해요</small></div></li>
+        <li><div>편한 신발과 가벼운 짐</div></li>
+        <li><div>밝은 시간대<small>작은 글씨·그림을 찾아야 해서 어두우면 어려워요</small></div></li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section class="step" data-k="STEP 3">
+      <div class="step-k">STEP 3</div>
+      <h2>시작 장소로 이동</h2>
+      <div class="big-place"><small>START POINT</small><b>홍대입구역 3번 출구</b></div>
+      <ol class="ol">
+        <li><div>시작 장소에 도착하면 게임에 접속해요.<small>크롬 또는 사파리 브라우저를 추천해요.</small></div></li>
+        <li><div>로딩이 100%가 되면 <b>[수사 시작]</b>을 눌러요.</div></li>
+        <li><div>짧은 오프닝 이야기가 나와요.<small>화면을 탭하면 다음 장면으로 넘어가요.</small></div></li>
+      </ol>
+    </section>
+
+    <!-- 4 -->
+    <section class="step" data-k="STEP 4">
+      <div class="step-k">STEP 4</div>
+      <h2>첫 화면은 <span class="hl">프로필 화면</span>이에요</h2>
+      <div class="shot" data-h="700">
+        <img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400">
+        <div class="mk" data-b="17,77,353,119"><i>1</i></div>
+        <div class="mk" data-b="17,258,355,354"><i>2</i></div>
+        <div class="mk" data-b="188,619,185,62"><i>3</i></div>
+      </div>
+      <ul class="legend">
+        <li><div class="n">1</div><div><b>미션</b>이번 수사의 최종 목표예요.</div></li>
+        <li><div class="n">2</div><div><b>메시지</b>다른 요원과 주고받는 메시지예요. 나중에 답장할 일이 생겨요.</div></li>
+        <li><div class="n">3</div><div><b>MY STORAGE 열람</b>문제(파일)는 전부 여기 들어 있어요. <b style="display:inline;color:var(--red)">이 버튼을 눌러 시작!</b></div></li>
+      </ul>
+    </section>
+
+    <!-- 5 -->
+    <section class="step" data-k="STEP 5">
+      <div class="step-k">STEP 5</div>
+      <h2><span class="hl">FILE_01</span>부터 시작하세요</h2>
+      <div class="shot" data-h="691">
+        <img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382">
+        <div class="mk" data-b="19,145,82,114"><i>1</i></div>
+        <div class="mk r" data-b="109,145,82,114"><i>2</i></div>
+      </div>
+      <ul class="legend">
+        <li><div class="n">1</div><div><b>FILE_01 — 여기서부터!</b>처음엔 이 파일만 열려 있어요. 눌러서 읽어보세요.</div></li>
+        <li><div class="n">2</div><div><b>잠긴 파일</b>앞 파일을 풀어야 열려요. <b style="display:inline">순서대로만</b> 열 수 있어요.</div></li>
+      </ul>
+      <div class="note warn"><span class="ic">⚠️</span><span>“이전 파일을 먼저 해제하세요”가 뜨면, 가장 최근에 연 파일의 <b>바로 다음</b> 파일을 눌러주세요.</span></div>
+    </section>
+
+    <!-- 6 -->
+    <section class="step" data-k="STEP 6">
+      <div class="step-k">STEP 6</div>
+      <h2>문제 푸는 방법</h2>
+      <p>모든 파일이 같은 방식으로 반복돼요.</p>
+      <div class="loop">
+        <div><span class="n">01</span><span><b>열린 파일 읽기</b><span class="hl">노란 형광펜</span>이 핵심 단서예요</span></div>
+        <div><span class="n">02</span><span><b>현장으로 이동</b>파일 속 장소를 찾아가요</span></div>
+        <div><span class="n">03</span><span><b>현장에서 답 찾기</b>표지판·조형물·벽화 속에 답이 있어요</span></div>
+        <div><span class="n">04</span><span><b>다음 파일에 답 입력</b>그 답이 다음 파일의 잠금 코드예요</span></div>
+        <div class="again">↻ 새로 열린 파일로 다시 01부터</div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="step" data-k="STEP 7">
+      <div class="step-k">STEP 7</div>
+      <h2>잠금 코드 입력</h2>
+      <p>MY STORAGE로 돌아가 <b>다음 잠긴 파일</b>을 누르면 입력창이 떠요.</p>
+      <div class="shot full" data-h="305" style="margin-top:14px">
+        <img src="assets/guide/g5_code.webp" alt="잠금 코드 입력 창" width="780" height="610">
+        <div class="mk" data-b="47,107,295,40"><i>1</i></div>
+        <div class="mk" data-b="47,155,295,38"><i>2</i></div>
+      </div>
+      <ul class="legend">
+        <li><div class="n">1</div><div><b>칸 수 = 입력할 글자 수</b><span class="kbd">AB-</span>처럼 이미 적힌 부분은 <b style="display:inline">빼고</b> 나머지만 입력해요.</div></li>
+        <li><div class="n">2</div><div><b>입력 후 [UNLOCK]</b>영어는 대문자·소문자 상관없어요.</div></li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section class="step" data-k="STEP 8">
+      <div class="step-k">STEP 8</div>
+      <h2>막히면 <span class="hl">💡 힌트</span>, 길은 <span class="hl">🗺️ 지도</span></h2>
+      <p>파일을 열면 화면 <b>오른쪽 아래</b>에 💡 버튼이 생겨요.</p>
+      <div class="shot full" data-h="210" style="margin-top:14px">
+        <img src="assets/guide/g4_hint.webp" alt="힌트 창" width="780" height="420">
+        <div class="mk r" data-b="300,64,48,48"><i>1</i></div>
+        <div class="mk r" data-b="261,128,81,35"><i>2</i></div>
+      </div>
+      <ul class="legend">
+        <li><div class="n">1</div><div><b>지도 아이콘</b>힌트 창 오른쪽 위. 이 파일의 장소 지도가 열려요. <b style="display:inline;color:var(--red)">지도는 여기에만 있어요.</b></div></li>
+        <li><div class="n">2</div><div><b>[열기]</b>힌트가 한 단계씩 열려요. 끝까지 열면 정답과 해설도 볼 수 있어요.</div></li>
+      </ul>
+      <div class="note tip"><span class="ic">💡</span><span>힌트는 <b>지금 열어 둔 파일</b>의 문제에 대한 거예요. FILE_01은 지도가 없으니 시작 장소 주변에서 사진 속 장소를 찾아보세요.</span></div>
+    </section>
+
+    <!-- 9 -->
+    <section class="step" data-k="STEP 9">
+      <div class="step-k">STEP 9</div>
+      <h2>이런 기능도 있어요</h2>
+      <div class="feat">
+        <div><span class="fi">💬</span><span><strong>메시지 답장</strong>파일에서 메시지를 보내라고 하면, 프로필 화면 → 해당 메시지 → 맨 아래 입력창에 답을 보내요.</span></div>
+        <div><span class="fi"><img src="assets/camera_emoticon.webp" alt=""></span><span><strong>현장분석 카메라</strong>MY STORAGE 왼쪽 아래 빨간 버튼. 파일에서 쓰라고 할 때만 사용하고, 카메라 권한은 ‘허용’해주세요.</span></div>
+        <div><span class="fi">📋</span><span><strong>최종보고서</strong>MY STORAGE 아래 [최종보고서 열람]. 알아낸 정보를 미리 적고 임시저장할 수 있어요.</span></div>
+        <div><span class="fi">🎧</span><span><strong>음성 기록</strong>들을 수 없는 상황이면 [스크립트 보기]로 글로 읽을 수 있어요.</span></div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="step" data-k="STEP 10">
+      <div class="step-k">STEP 10</div>
+      <h2>주의사항</h2>
+      <ul class="warns">
+        <li><b>새로고침·창 닫기 금지</b>진행 상황이 사라질 수 있어요. 뒤로 갈 땐 게임 화면 왼쪽 위 <span class="kbd">←</span>를 눌러주세요.</li>
+        <li><b>걸을 땐 화면 보지 않기</b>차도·골목에서는 멈춰서 확인해주세요.</li>
+        <li><b>주변에 피해 주지 않기</b>가게·주택가 근처 장소가 있어요. 시설물은 만지거나 떼지 말고, 큰 소리는 삼가주세요.</li>
+        <li><b>정답은 현장에 있어요</b>검색보다 주변을 천천히 둘러보세요.</li>
+      </ul>
+    </section>
+
+    <!-- 11 -->
+    <section class="step" data-k="GO">
+      <div class="step-k">FINAL</div>
+      <h2>수사 개시</h2>
+      <ol class="ol">
+        <li><div><b>홍대입구역 3번 출구</b>로 이동해요.</div></li>
+        <li><div>아래 버튼으로 게임에 접속해요.</div></li>
+        <li><div>프로필 화면 → <b>[MY STORAGE 열람]</b> → <b>FILE_01</b>부터!</div></li>
+      </ol>
+      <p class="hand" style="margin-top:22px;text-align:center">“기록을 끝까지 따라가라.<br>진실은 그 끝에 있다.”</p>
+      <a class="go" href="https://popo90002-netizen.github.io/outdooerescaperoom/">▶ 게임 접속하기</a>
+    </section>
+
+  </main>
+
+  <footer class="foot" id="foot">
+    <button class="btn-prev" id="prev" aria-label="이전">‹</button>
+    <button class="btn-next" id="next">다음</button>
+  </footer>
 </div>
-
-<main class="wrap">
-
-<header class="hero">
-  <h1>시작 전에<br>이것만 알고 가세요</h1>
-  <p>게임 화면 구성, 푸는 순서, 힌트·지도 보는 법을 정리했어요.</p>
-
-  <div class="tldr">
-    <div class="tldr-t">3줄 요약</div>
-    <ol>
-      <li><span><b>MY STORAGE</b>의 <b>FILE_01</b>부터 순서대로 풀어요.</span></li>
-      <li><span>열린 파일의 단서로 현장에서 답을 찾고, 그 답을 <b>다음 파일의 잠금 코드</b>로 입력해요.</span></li>
-      <li><span>막히면 파일 화면 오른쪽 아래 <b>💡 버튼</b>. 다음 장소 <b>지도</b>도 힌트 창 안에 있어요.</span></li>
-    </ol>
-  </div>
-
-  <nav class="toc">
-    <a href="#start">1. 시작하기</a>
-    <a href="#screens">2. 화면 구성</a>
-    <a href="#how">3. 푸는 방법</a>
-    <a href="#hint">4. 힌트·지도</a>
-    <a href="#etc">5. 기타 기능</a>
-    <a href="#caution">6. 주의사항</a>
-    <a href="#faq">7. 자주 묻는 질문</a>
-  </nav>
-</header>
-
-<!-- 1 -->
-<section id="start">
-  <div class="sec-n">01</div>
-  <h2>시작하기</h2>
-  <div class="flow">
-    <div class="flow-step"><div class="flow-n">1</div><div><b>게임 접속 후 [수사 시작]</b><span>로딩이 100%가 되면 버튼이 눌려요.</span></div></div>
-    <div class="flow-step"><div class="flow-n">2</div><div><b>오프닝 이야기</b><span>화면을 탭하면 다음 장면으로 넘어가요. 4장면이 끝나면 게임 화면으로 들어가요.</span></div></div>
-    <div class="flow-step"><div class="flow-n">3</div><div><b>요원 프로필 화면 도착</b><span>여기가 <b>첫 화면(홈)</b>이에요. 아래쪽 <b>[MY STORAGE 열람]</b>을 눌러 문제를 풀러 가요.</span></div></div>
-  </div>
-  <div class="note tip"><span class="ic">📍</span><span><b>출발 장소:</b> 홍대입구역 3번 출구 근처에서 시작하면 편해요.</span></div>
-</section>
-
-<!-- 2 -->
-<section id="screens">
-  <div class="sec-n">02</div>
-  <h2>화면 구성</h2>
-  <p>게임은 크게 <b>프로필 화면</b>과 <b>MY STORAGE(파일 보관함)</b> 두 곳을 오가며 진행돼요.</p>
-
-  <h3>① 프로필 화면 (홈)</h3>
-  <div class="figrow">
-    <div class="shot" data-h="700">
-      <img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400">
-      <div class="mk" data-b="17,77,353,119"><i>1</i></div>
-      <div class="mk" data-b="17,258,355,354"><i>2</i></div>
-      <div class="mk" data-b="188,619,185,62"><i>3</i></div>
-    </div>
-    <ul class="legend">
-      <li><div class="n">1</div><div><b>미션</b><span>이번 수사의 최종 목표예요. 누르면 크게 볼 수 있어요.</span></div></li>
-      <li><div class="n">2</div><div><b>메시지</b><span>다른 요원들과 주고받는 메시지. 진행 중에 <b>답장을 보내야 하는 순간</b>이 와요.</span></div></li>
-      <li><div class="n">3</div><div><b>MY STORAGE 열람</b><span>문제(파일)가 들어 있는 보관함으로 이동해요. <b>실제 문제 풀이는 여기서 시작</b>해요.</span></div></li>
-    </ul>
-  </div>
-
-  <h3>② MY STORAGE (파일 보관함)</h3>
-  <div class="figrow">
-    <div class="shot" data-h="691">
-      <img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382">
-      <div class="mk" data-b="19,145,82,114"><i>1</i></div>
-      <div class="mk r" data-b="109,145,82,114"><i>2</i></div>
-      <div class="mk round" data-b="23,626,48,48"><i>3</i></div>
-      <div class="mk r" data-b="105,619,220,55"><i>4</i></div>
-    </div>
-    <ul class="legend">
-      <li><div class="n">1</div><div><b>FILE_01 — 여기서부터 시작!</b><span>처음에는 이 파일만 열려 있어요. 눌러서 내용을 읽어 보세요.</span></div></li>
-      <li><div class="n">2</div><div><b>잠긴 파일</b><span>앞 파일에서 얻은 답(코드)을 입력해야 열려요. <b>순서대로만</b> 열 수 있어요.</span></div></li>
-      <li><div class="n">3</div><div><b>현장분석 카메라</b><span>파일에서 카메라를 쓰라고 할 때만 사용해요.</span></div></li>
-      <li><div class="n">4</div><div><b>최종보고서</b><span>수사하며 알아낸 정보를 마지막에 입력해 제출해요.</span></div></li>
-    </ul>
-  </div>
-  <div class="note warn"><span class="ic">⚠️</span><span>오른쪽 위 <b>UNLOCKED 1 / 13</b>은 지금까지 연 파일 수예요. 아직 안 연 파일을 누르면 <b>“이전 파일을 먼저 해제하세요”</b>가 떠요. 바로 앞 파일부터 풀어 주세요.</span></div>
-</section>
-
-<!-- 3 -->
-<section id="how">
-  <div class="sec-n">03</div>
-  <h2>문제 푸는 방법</h2>
-  <p>모든 파일은 같은 방식으로 반복돼요.</p>
-  <div class="flow">
-    <div class="flow-step"><div class="flow-n">1</div><div><b>열린 파일을 읽는다</b><span>사건 일지, 사진, 음성 기록을 확인해요. <span class="hl">노란 형광펜</span> 부분이 핵심 단서예요.</span></div></div>
-    <div class="flow-step"><div class="flow-n">2</div><div><b>현장으로 이동한다</b><span>파일 속 장소를 찾아가요. 위치가 헷갈리면 힌트 창의 지도를 열어요.</span></div></div>
-    <div class="flow-step"><div class="flow-n">3</div><div><b>현장에서 답을 찾는다</b><span>표지판, 조형물, 벽화 등 실제 거리에 있는 것에서 답이 나와요.</span></div></div>
-    <div class="flow-step"><div class="flow-n">4</div><div><b>다음 파일에 코드 입력</b><span>MY STORAGE로 돌아가 <b>바로 다음 잠긴 파일</b>을 누르고 답을 입력하면 열려요.</span></div></div>
-    <div class="flow-loop">↻ 새로 열린 파일로 1번부터 반복</div>
-  </div>
-
-  <h3>파일 화면</h3>
-  <div class="figrow">
-    <div class="shot" data-h="844">
-      <img src="assets/guide/g3_file.webp" alt="파일 상세 화면" width="780" height="1688">
-      <div class="mk" data-b="31,167,282,29"><i>1</i></div>
-      <div class="mk round r" data-b="326,776,48,48"><i>2</i></div>
-    </div>
-    <ul class="legend">
-      <li><div class="n">1</div><div><b>형광펜 표시</b><span>문제를 푸는 데 꼭 필요한 정보예요. 아래로 스크롤하면 사진·음성이 더 있을 수 있어요.</span></div></li>
-      <li><div class="n">2</div><div><b>💡 힌트 버튼</b><span>파일 화면 오른쪽 아래에 있어요. 힌트와 지도를 볼 수 있어요.</span></div></li>
-    </ul>
-  </div>
-
-  <h3>잠금 코드 입력</h3>
-  <div class="figrow">
-    <div class="shot" data-h="305">
-      <img src="assets/guide/g5_code.webp" alt="잠금 해제 코드 입력 창" width="780" height="610">
-      <div class="mk" data-b="47,107,295,40"><i>1</i></div>
-      <div class="mk" data-b="47,155,295,38"><i>2</i></div>
-    </div>
-    <ul class="legend">
-      <li><div class="n">1</div><div><b>칸 수 = 글자 수</b><span>앞에 <span class="kbd">AB-</span>처럼 이미 적힌 부분은 <b>빼고</b> 나머지만 입력해요.</span></div></li>
-      <li><div class="n">2</div><div><b>코드 입력 후 [UNLOCK]</b><span>영어는 대문자·소문자 상관없어요.</span></div></li>
-    </ul>
-  </div>
-</section>
-
-<!-- 4 -->
-<section id="hint">
-  <div class="sec-n">04</div>
-  <h2>힌트 · 지도 보는 법</h2>
-  <div class="figrow">
-    <div class="shot" data-h="210">
-      <img src="assets/guide/g4_hint.webp" alt="힌트 창" width="780" height="420">
-      <div class="mk r" data-b="300,64,48,48"><i>1</i></div>
-      <div class="mk r" data-b="261,128,81,35"><i>2</i></div>
-    </div>
-    <ul class="legend">
-      <li><div class="n">1</div><div><b>🗺️ 지도 아이콘</b><span>힌트 창 오른쪽 위. 누르면 <b>이 파일의 장소 지도</b>가 열려요. 지도는 따로 메뉴가 없고 <b>여기에만</b> 있어요.</span></div></li>
-      <li><div class="n">2</div><div><b>[열기]</b><span>힌트를 한 단계씩 열어요. 힌트를 다 열면 마지막에 <b>정답 및 해설</b>도 볼 수 있어요.</span></div></li>
-    </ul>
-  </div>
-  <div class="note tip"><span class="ic">💡</span><span>힌트는 <b>지금 보고 있는 파일</b>의 문제에 대한 힌트예요. 다른 파일의 힌트를 보려면 그 파일을 열고 💡를 눌러 주세요.</span></div>
-  <div class="note tip"><span class="ic">🗺️</span><span>FILE_01은 지도가 없어요. 홍대입구역 3번 출구 근처에서 사진 속 장소를 찾아보세요.</span></div>
-</section>
-
-<!-- 5 -->
-<section id="etc">
-  <div class="sec-n">05</div>
-  <h2>그 밖의 기능</h2>
-  <div class="feat">
-    <div class="card"><div class="feat-ic">💬</div><div><b>메시지 답장</b><span>파일에서 “메시지로 알려줘라”는 내용이 나오면, <b>프로필 화면 → 해당 메시지</b>를 열고 아래 입력창에 답을 보내요.</span></div></div>
-    <div class="card"><div class="feat-ic"><img src="assets/camera_emoticon.webp" alt=""></div><div><b>현장분석 카메라</b><span>MY STORAGE 왼쪽 아래 빨간 버튼. 새 창이 열리고 <b>카메라 권한</b>을 물어보면 ‘허용’을 눌러 주세요.</span></div></div>
-    <div class="card"><div class="feat-ic">📋</div><div><b>최종보고서</b><span>MY STORAGE 아래 [최종보고서 열람]. 중간에 알아낸 내용을 미리 적고 <b>임시저장</b>해 둘 수 있어요.</span></div></div>
-    <div class="card"><div class="feat-ic">🎧</div><div><b>음성 기록</b><span>일부 파일에 음성 파일이 있어요. 재생이 어려우면 <b>스크립트 보기</b>로 글로 읽을 수 있어요.</span></div></div>
-  </div>
-  <div class="figrow" style="margin-top:18px">
-    <div class="shot" data-h="680">
-      <img src="assets/guide/g6_msg.webp" alt="메시지 답장 화면" width="780" height="1360">
-      <div class="mk" data-b="9,586,371,73"><i>1</i></div>
-    </div>
-    <ul class="legend">
-      <li><div class="n">1</div><div><b>답장 입력창</b><span>메시지 화면 맨 아래. 답을 적고 [전송]을 누르면 상대가 답해 줘요.</span></div></li>
-    </ul>
-  </div>
-</section>
-
-<!-- 6 -->
-<section id="caution">
-  <div class="sec-n">06</div>
-  <h2>주의사항</h2>
-  <ul class="checks">
-    <li><b>새로고침·창 닫기 금지</b><span>브라우저를 새로고침하거나 창을 닫으면 진행 상황이 사라질 수 있어요. 뒤로 갈 때는 게임 화면 왼쪽 위 <span class="kbd">←</span>를 눌러 주세요.</span></li>
-    <li><b>안전 먼저</b><span>걸으면서 화면을 보지 말고, 차도·골목에서는 멈춰서 확인해 주세요.</span></li>
-    <li><b>주변에 방해되지 않게</b><span>가게·주택가 근처 장소가 있어요. 시설물을 만지거나 떼어내지 말고, 큰 소리는 삼가 주세요.</span></li>
-    <li><b>배터리·데이터 확인</b><span>계속 화면을 켜고 이동해요. 충전된 휴대폰(보조배터리 추천)과 데이터가 필요해요.</span></li>
-    <li><b>이어폰 챙기기</b><span>음성 기록을 길거리에서 듣기 편해요.</span></li>
-    <li><b>밝을 때 플레이 추천</b><span>현장의 작은 글씨나 그림을 찾아야 해서 어두우면 어려워요.</span></li>
-  </ul>
-</section>
-
-<!-- 7 -->
-<section id="faq">
-  <div class="sec-n">07</div>
-  <h2>자주 묻는 질문</h2>
-  <details><summary>어떤 문제부터 풀어야 하나요?</summary><div class="a">MY STORAGE의 <b>FILE_01</b>부터예요. 처음에는 FILE_01만 열려 있고, 이 파일을 풀면 나오는 답으로 FILE_02를 열 수 있어요.</div></details>
-  <details><summary>잠긴 파일을 눌렀는데 “이전 파일을 먼저 해제하세요”가 떠요.</summary><div class="a">파일은 순서대로만 열려요. 가장 마지막으로 연 파일의 <b>바로 다음 파일</b>을 눌러 주세요.</div></details>
-  <details><summary>코드를 맞게 넣은 것 같은데 안 열려요.</summary><div class="a">앞에 이미 적힌 글자(예: <span class="kbd">AB-</span>)는 빼고 입력했는지 확인해 주세요. 칸 수와 글자 수가 같아야 해요. 그래도 안 되면 앞 파일의 💡 힌트에서 정답을 확인할 수 있어요.</div></details>
-  <details><summary>다음 장소가 어디인지 모르겠어요.</summary><div class="a">지금 열려 있는 파일에서 💡 버튼 → 힌트 창 오른쪽 위 <b>🗺️ 지도 아이콘</b>을 눌러 주세요.</div></details>
-  <details><summary>힌트 버튼이 안 보여요.</summary><div class="a">💡 버튼은 <b>파일을 열었을 때만</b> 나타나요. 프로필 화면이나 MY STORAGE 화면에는 없어요.</div></details>
-  <details><summary>현장분석 카메라가 안 켜져요.</summary><div class="a">새 창에서 카메라 권한을 ‘허용’해야 해요. 이미 거부했다면 브라우저 설정에서 카메라 권한을 다시 켜 주세요.</div></details>
-</section>
-
-<div class="end">
-  <p>준비됐으면 FILE_01부터 시작해 보세요!</p>
-  <a class="btn-play" href="https://popo90002-netizen.github.io/outdooerescaperoom/">▶ 게임 시작</a>
-</div>
-
-</main>
-<footer>문서 N07-013 · 플레이 가이드</footer>
 
 <script>
-// 스크린샷 위 번호 표시 위치 (원본 화면 390px 기준 좌표 → %)
+/* ===== 운영자 설정: 값을 비워두면 해당 줄이 표시되지 않아요 ===== */
+const CONFIG = {
+  time: '',      // 예: '약 2~3시간 (오후 4시 이전 시작 추천)'
+  distance: '',  // 예: '약 3km 도보 이동 · 오르막 거의 없음'
+  age: ''        // 예: '중학생 이상 (초등학생은 보호자와 함께)'
+};
+document.querySelectorAll('[data-cfg]').forEach(r=>{
+  const v=CONFIG[r.dataset.cfg];
+  if(!v){ r.remove(); return; }
+  r.querySelector('[data-v]').textContent=v;
+});
+
+/* 스크린샷 위 번호 표시 (원본 390px 기준 좌표 → %) */
 document.querySelectorAll('.shot').forEach(s=>{
   const H=+s.dataset.h, W=390;
   s.querySelectorAll('.mk').forEach(m=>{
     const [x,y,w,h]=m.dataset.b.split(',').map(Number);
-    m.style.left=(x/W*100)+'%'; m.style.top=(y/H*100)+'%';
-    m.style.width=(w/W*100)+'%'; m.style.height=(h/H*100)+'%';
+    Object.assign(m.style,{left:x/W*100+'%',top:y/H*100+'%',width:w/W*100+'%',height:h/H*100+'%'});
   });
 });
+
+/* 단계 넘기기 */
+const steps=[...document.querySelectorAll('.step')];
+const N=steps.length;
+const $=id=>document.getElementById(id);
+let cur=0;
+function show(i,push){
+  cur=Math.max(0,Math.min(N-1,i));
+  steps.forEach((s,k)=>s.classList.toggle('on',k===cur));
+  $('progBar').style.width=((cur+1)/N*100)+'%';
+  $('stepLabel').textContent=steps[cur].dataset.k;
+  $('stepCount').textContent=(cur+1)+' / '+N;
+  $('prev').disabled=$('topPrev').disabled=cur===0;
+  const last=cur===N-1;
+  $('next').textContent=last?'처음부터 다시 보기':(cur===0?'시작하기':'다음');
+  $('foot').classList.toggle('last',last);
+  $('body').scrollTop=0;
+  if(push!==false) try{history.replaceState(null,'','#'+cur);}catch(e){}
+}
+$('next').onclick=()=>show(cur===N-1?0:cur+1);
+$('prev').onclick=$('topPrev').onclick=()=>show(cur-1);
+$('topMenu').onclick=()=>show(0);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight') show(cur+1);
+  if(e.key==='ArrowLeft') show(cur-1);
+});
+// 좌우 스와이프
+let sx=null,sy=null;
+$('body').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+$('body').addEventListener('touchend',e=>{
+  if(sx===null)return;
+  const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5) show(cur+(dx<0?1:-1));
+  sx=null;
+},{passive:true});
+show(parseInt(location.hash.slice(1))||0,false);
 </script>
 </body>
 </html>
