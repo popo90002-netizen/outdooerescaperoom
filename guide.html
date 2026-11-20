@@ -322,9 +322,9 @@ p + p{margin-top:8px;}
 <script>
 /* ===== 운영자 설정: 값을 비워두면 해당 줄이 표시되지 않아요 ===== */
 const CONFIG = {
-  time: '',      // 예: '약 2~3시간 (오후 4시 이전 시작 추천)'
-  distance: '',  // 예: '약 3km 도보 이동 · 오르막 거의 없음'
-  age: ''        // 예: '중학생 이상 (초등학생은 보호자와 함께)'
+  time: '약 2시간 (순수 플레이 기준 · 중간에 쉬었다 와도 OK)',
+  distance: '약 2~3km 도보 이동',
+  age: '중학생 이상'
 };
 document.querySelectorAll('[data-cfg]').forEach(r=>{
   const v=CONFIG[r.dataset.cfg];
