@@ -80,7 +80,7 @@ h2{font-size:24px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .warns li b{display:block;color:var(--ink);font-size:16px;}
 
 /* 게임 화면 뷰어 */
-.phone{position:relative;height:min(52dvh,500px);aspect-ratio:390/844;margin:0 auto 16px;border-radius:20px;overflow:hidden;border:5px solid var(--dark);background:#1b1713;box-shadow:0 12px 26px #3a2a1a44;}
+.phone{position:relative;height:min(50dvh,500px);aspect-ratio:390/844;margin:0 auto 16px;border-radius:20px;overflow:hidden;border:5px solid var(--dark);background:#1b1713;box-shadow:0 12px 26px #3a2a1a44;}
 .phone .base{position:absolute;left:0;top:0;width:100%;height:auto;}
 .phone .dim{position:absolute;inset:0;background:#000a;}
 .phone .modal{position:absolute;border-radius:8px;box-shadow:0 8px 20px #000a;}
@@ -88,6 +88,21 @@ h2{font-size:24px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .phone .spot.round{border-radius:50%;}
 .phone .spot::after{content:'';position:absolute;inset:-4px;border:3px solid var(--amber);border-radius:inherit;animation:ring 1.4s ease-out infinite;}
 @keyframes ring{0%{transform:scale(.97);opacity:1}100%{transform:scale(1.15);opacity:0}}
+.phone{cursor:pointer;touch-action:manipulation;}
+.phone.shake{animation:shake .35s;}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.phone .finger{position:absolute;font-size:26px;pointer-events:none;animation:tap 1.2s ease-in-out infinite;filter:drop-shadow(0 2px 3px #0008);}
+@keyframes tap{0%,100%{transform:translate(0,0)}50%{transform:translate(-3px,-7px)}}
+.phone .flash{position:absolute;inset:0;background:var(--amber);opacity:0;pointer-events:none;}
+.phone .flash.on{animation:flash .5s;}
+@keyframes flash{0%{opacity:.45}100%{opacity:0}}
+.phone .toast{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);background:#16130ff0;color:#fff;font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:9px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;z-index:3;}
+.phone .toast.on{opacity:1;}
+.phone .toast.ok{background:#1e3a22f0;}
+.phone .code-in{position:absolute;border:2px solid var(--amber);background:#fffdf6;border-radius:3px;font:700 14px var(--mono);text-align:center;letter-spacing:.3em;color:var(--ink);outline:none;z-index:2;padding:0;}
+.act{display:flex;align-items:center;justify-content:center;gap:6px;margin:-6px auto 14px;width:max-content;max-width:100%;background:var(--dark);color:#f1e7d2;font-size:13.5px;font-weight:700;padding:6px 14px;border-radius:20px;}
+.act.done{background:#2f6b3a;}
+.foot.tap .btn-next{background:var(--card);color:var(--muted);border:2px solid var(--line);font-size:15px;}
 .gd h2{font-size:21px;margin-bottom:6px;}
 .gd .desc{font-size:15.5px;}
 
@@ -173,53 +188,53 @@ h2{font-size:24px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
       </ul>
     </section>
 
-    <!-- ===== PART 2. 게임 가이드 ===== -->
-    <section class="step gd" data-part="game" data-img="g1_profile" data-spot="188,619,185,62">
+    <!-- ===== PART 2. 게임 가이드 (직접 눌러보기) ===== -->
+    <section class="step gd" data-part="game" data-img="g1_profile" data-spot="188,619,185,62" data-act="[MY STORAGE 열람]을 눌러보세요">
       <div class="step-k">게임 가이드 1</div>
       <h2>첫 화면에서 <span class="hl">[MY STORAGE 열람]</span></h2>
       <p class="desc">게임에 들어가면 프로필 화면이 먼저 나와요. 문제(파일)는 전부 <b>MY STORAGE</b> 안에 있어요.</p>
     </section>
 
-    <section class="step gd" data-part="game" data-img="g2_storage" data-spot="19,145,82,114">
+    <section class="step gd" data-part="game" data-img="g2_storage" data-spot="19,145,82,114" data-alt="109,145,82,114" data-alt-msg="🔒 이전 파일을 먼저 해제하세요" data-act="FILE_01을 눌러보세요">
       <div class="step-k">게임 가이드 2</div>
       <h2><span class="hl">FILE_01</span>부터 시작</h2>
-      <p class="desc">처음엔 FILE_01만 열려 있어요. 파일은 <b>순서대로만</b> 열려서, 앞 파일을 풀어야 다음 파일을 열 수 있어요.</p>
+      <p class="desc">처음엔 FILE_01만 열려 있어요. 파일은 <b>순서대로만</b> 열려요. (잠긴 FILE_02를 눌러보면 어떻게 되는지도 확인해보세요)</p>
     </section>
 
-    <section class="step gd" data-part="game" data-img="g3_file" data-spot="31,167,282,29">
+    <section class="step gd" data-part="game" data-img="g3_file" data-spot="31,167,282,29" data-act="형광펜 부분을 눌러보세요">
       <div class="step-k">게임 가이드 3</div>
       <h2>형광펜 단서 → 현장에서 답 찾기</h2>
       <p class="desc"><span class="hl">노란 형광펜</span>이 핵심 단서예요. 그 장소에 가서 찾은 답이 <b>다음 파일의 잠금 코드</b>예요.</p>
     </section>
 
-    <section class="step gd" data-part="game" data-img="g2_storage" data-modal="code" data-spot="50,427,291,34">
+    <section class="step gd" data-part="game" data-img="g2_storage" data-modal="code" data-spot="50,427,291,34" data-code="007" data-act="연습 코드 007을 입력해보세요">
       <div class="step-k">게임 가이드 4</div>
       <h2>다음 파일을 눌러 코드 입력</h2>
       <p class="desc"><span class="kbd">AB-</span>처럼 이미 적힌 부분은 <b>빼고</b> 입력해요. 영어는 대소문자 상관없어요.</p>
     </section>
 
-    <section class="step gd" data-part="game" data-img="g3_file" data-spot="326,776,48,48" data-round="1">
+    <section class="step gd" data-part="game" data-img="g3_file" data-spot="326,776,48,48" data-round="1" data-act="💡 버튼을 눌러보세요">
       <div class="step-k">게임 가이드 5</div>
       <h2>막히면 오른쪽 아래 💡</h2>
       <p class="desc">파일을 열었을 때만 보여요. 힌트를 한 단계씩 열 수 있고, 끝까지 열면 정답과 해설도 볼 수 있어요.</p>
     </section>
 
-    <section class="step gd" data-part="game" data-img="g3_file" data-modal="hint" data-spot="303,388,42,42">
+    <section class="step gd" data-part="game" data-img="g3_file" data-modal="hint" data-spot="303,388,42,42" data-act="지도 아이콘을 눌러보세요">
       <div class="step-k">게임 가이드 6</div>
       <h2>지도는 힌트 창 오른쪽 위</h2>
       <p class="desc">다음 장소가 헷갈리면 이 아이콘을 눌러요. <b>지도는 여기에만</b> 있어요. FILE_01은 지도 없이 시작 장소 근처예요.</p>
     </section>
 
-    <section class="step gd" data-part="game" data-img="g6_msg" data-spot="9,586,371,73">
+    <section class="step gd" data-part="game" data-img="g6_msg" data-spot="9,586,371,73" data-act="입력창을 눌러보세요">
       <div class="step-k">게임 가이드 7</div>
       <h2>메시지로 답장하기</h2>
       <p class="desc">파일에서 메시지를 보내라고 하면, 프로필 화면 → 해당 메시지 → <b>맨 아래 입력창</b>에 답을 보내요.</p>
     </section>
 
-    <section class="step gd" data-part="game" data-img="g2_storage" data-spot="23,626,48,48" data-round="1" data-spot2="105,619,220,55">
+    <section class="step gd" data-part="game" data-img="g2_storage" data-spot="23,626,48,48" data-round="1" data-act="빨간 카메라를 눌러보세요">
       <div class="step-k">게임 가이드 8</div>
       <h2>카메라와 최종보고서</h2>
-      <p class="desc"><b>빨간 카메라</b>는 파일에서 쓰라고 할 때만 사용해요(권한 ‘허용’). <b>최종보고서</b>에는 마지막에 알아낸 정보를 입력해요. 임시저장도 돼요.</p>
+      <p class="desc"><b>빨간 카메라</b>는 파일에서 쓰라고 할 때만 사용해요(권한 ‘허용’). 옆의 <b>최종보고서</b>에는 마지막에 알아낸 정보를 입력해요.</p>
     </section>
 
     <section class="step" data-part="game">
@@ -248,23 +263,63 @@ const W=390,H=844;
 const MODALS={hint:{src:'m_hint',b:[25,336.6,340,170.8]},code:{src:'m_code',b:[25,287.9,340,268.2]}};
 const pct=b=>({left:b[0]/W*100+'%',top:b[1]/H*100+'%',width:b[2]/W*100+'%',height:b[3]/H*100+'%'});
 
-// 게임 가이드 단계마다 화면 만들기
+// 게임 가이드 단계마다 화면 만들기 (표시된 곳을 눌러야 다음으로)
+const box=v=>v.split(',').map(Number);
+const inBox=(x,y,b,pad=8)=>x>=b[0]-pad&&x<=b[0]+b[2]+pad&&y>=b[1]-pad&&y<=b[1]+b[3]+pad;
 document.querySelectorAll('.step[data-img]').forEach(s=>{
+  const d=s.dataset;
   const ph=document.createElement('div'); ph.className='phone';
-  const img=new Image(); img.className='base'; img.alt=''; img.src='assets/guide/'+s.dataset.img+'.webp'; img.loading='lazy';
+  const img=new Image(); img.className='base'; img.alt=''; img.src='assets/guide/'+d.img+'.webp';
   ph.appendChild(img);
-  if(s.dataset.modal){
-    const m=MODALS[s.dataset.modal];
-    const d=document.createElement('div'); d.className='dim'; ph.appendChild(d);
+  if(d.modal){
+    const m=MODALS[d.modal];
+    const dm=document.createElement('div'); dm.className='dim'; ph.appendChild(dm);
     const mi=new Image(); mi.className='modal'; mi.alt=''; mi.src='assets/guide/'+m.src+'.webp'; Object.assign(mi.style,pct(m.b)); ph.appendChild(mi);
   }
-  [s.dataset.spot,s.dataset.spot2].filter(Boolean).forEach((v,i)=>{
-    const sp=document.createElement('div'); sp.className='spot'+(i===0&&s.dataset.round?' round':'');
-    Object.assign(sp.style,pct(v.split(',').map(Number)));
-    if(i>0) sp.style.boxShadow='none';
-    ph.appendChild(sp);
+  const sb=box(d.spot);
+  const sp=document.createElement('div'); sp.className='spot'+(d.round?' round':''); Object.assign(sp.style,pct(sb)); ph.appendChild(sp);
+  let input=null;
+  if(d.code){
+    input=document.createElement('input'); input.className='code-in'; input.maxLength=d.code.length;
+    input.setAttribute('inputmode','numeric'); input.autocomplete='off'; input.setAttribute('aria-label','연습 코드 입력');
+    Object.assign(input.style,pct([sb[0]+2,sb[1]+2,sb[2]-4,sb[3]-4])); ph.appendChild(input);
+  } else {
+    const fg=document.createElement('div'); fg.className='finger'; fg.textContent='👆';
+    Object.assign(fg.style,{left:(sb[0]+sb[2]/2-8)/W*100+'%',top:(sb[1]+sb[3]-6)/H*100+'%'}); ph.appendChild(fg);
+  }
+  const fl=document.createElement('div'); fl.className='flash'; ph.appendChild(fl);
+  const ts=document.createElement('div'); ts.className='toast'; ph.appendChild(ts);
+  const act=document.createElement('div'); act.className='act'; act.textContent='👆 '+d.act;
+  s.insertBefore(ph,s.querySelector('.step-k')); s.insertBefore(act,s.querySelector('.step-k'));
+
+  const toast=(m,ok)=>{ts.textContent=m;ts.classList.toggle('ok',!!ok);ts.classList.add('on');clearTimeout(ts._h);ts._h=setTimeout(()=>ts.classList.remove('on'),1200);};
+  const wrong=m=>{ph.classList.remove('shake');void ph.offsetWidth;ph.classList.add('shake');toast(m);};
+  let busy=false;
+  const pass=m=>{
+    if(busy)return; busy=true;
+    fl.classList.remove('on');void fl.offsetWidth;fl.classList.add('on');
+    act.textContent='✓ 잘했어요'; act.classList.add('done');
+    if(m) toast(m,true);
+    setTimeout(()=>{busy=false;act.textContent='👆 '+d.act;act.classList.remove('done');show(cur+1);},m?800:550);
+  };
+  s._focus=()=>{ if(input){input.value='';setTimeout(()=>input.focus({preventScroll:true}),300);} };
+  ph.addEventListener('click',e=>{
+    if(e.target===input) return;
+    const r=ph.getBoundingClientRect(), x=(e.clientX-r.left)/r.width*W, y=(e.clientY-r.top)/r.height*H;
+    if(input){ input.focus(); return; }
+    if(inBox(x,y,sb)) return pass();
+    if(d.alt && inBox(x,y,box(d.alt),0)) return wrong(d.altMsg);
+    wrong('밝게 표시된 곳을 눌러보세요');
   });
-  s.insertBefore(ph,s.querySelector('.step-k'));
+  if(input){
+    const check=()=>{
+      const v=input.value.trim().toUpperCase().replace(/^AB-?/,'');
+      if(v===d.code){ input.blur(); pass('🔓 FILE_02 잠금 해제'); }
+      else { wrong(v.length!==d.code.length?'칸 수('+d.code.length+'자리)를 확인하세요':'코드가 맞지 않아요'); input.select(); }
+    };
+    input.addEventListener('input',()=>{ if(input.value.length===d.code.length) setTimeout(check,150); });
+    input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.isComposing){e.preventDefault();check();} });
+  }
 });
 
 const steps=[...document.querySelectorAll('.step')], N=steps.length;
@@ -283,6 +338,10 @@ function show(i){
   const last=cur===N-1, next=steps[cur+1];
   $('next').textContent=last?'처음으로':(cur===0?'시작하기':(next&&next.dataset.part!==part?'게임 가이드 보기 ›':'다음'));
   $('foot').classList.toggle('last',last);
+  const tapStep=!!steps[cur].dataset.img;
+  $('foot').classList.toggle('tap',tapStep);
+  if(tapStep) $('next').textContent='건너뛰기 ›';
+  if(steps[cur]._focus) steps[cur]._focus();
   $('body').scrollTop=0;
   try{history.replaceState(null,'','#'+cur);}catch(e){}
 }
