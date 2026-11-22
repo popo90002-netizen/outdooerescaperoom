@@ -111,6 +111,24 @@ h2{font-size:24px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .recap li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:15px;color:var(--sub);}
 .recap li b{color:var(--ink);}
 
+
+/* ===== 게임 가이드: 화면 꽉 채우기 ===== */
+.app.imm .tabs,.app.imm .prog-wrap,.app.imm .foot{display:none;}
+.app.imm .body{padding:0;overflow:hidden;position:relative;background:#1b1713;}
+.app.imm .step.gd.on{height:100%;position:relative;display:flex;justify-content:center;animation:none;}
+.gd .phone{height:100%;max-width:100%;aspect-ratio:390/844;margin:0;border:none;border-radius:0;box-shadow:none;}
+.gd .cap{position:absolute;left:10px;right:10px;z-index:5;background:#fbf7eef5;border:1px solid var(--line);border-radius:16px;padding:12px 14px 12px;box-shadow:0 10px 26px #0007;transition:top .3s,bottom .3s;}
+.gd .cap.top{top:10px;}
+.gd .cap.bottom{bottom:calc(10px + env(safe-area-inset-bottom));}
+.gd .cap-row{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.gd .cap-row .step-k{font-size:12px;}
+.gd .cap-row .skip{margin-left:auto;background:none;border:none;color:var(--muted);font-family:var(--kr);font-size:13px;font-weight:700;cursor:pointer;padding:2px 0 2px 8px;}
+.gd .cap h2{font-size:18px;margin:0 0 4px;}
+.gd .cap .desc{font-size:14px;line-height:1.6;}
+.gd .cap .act{margin:10px 0 0;width:100%;font-size:13.5px;}
+.gd .cap .bar{height:3px;background:#e3d6ba;border-radius:3px;margin-top:10px;overflow:hidden;}
+.gd .cap .bar i{display:block;height:100%;background:var(--red);}
+
 /* 하단 */
 .foot{flex-shrink:0;display:flex;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#efe4cc;}
 .foot button{height:54px;border-radius:14px;font-family:var(--kr);font-size:17px;font-weight:700;cursor:pointer;}
@@ -290,7 +308,16 @@ document.querySelectorAll('.step[data-img]').forEach(s=>{
   const fl=document.createElement('div'); fl.className='flash'; ph.appendChild(fl);
   const ts=document.createElement('div'); ts.className='toast'; ph.appendChild(ts);
   const act=document.createElement('div'); act.className='act'; act.textContent='👆 '+d.act;
-  s.insertBefore(ph,s.querySelector('.step-k')); s.insertBefore(act,s.querySelector('.step-k'));
+  // 설명 카드: 눌러야 할 곳을 가리지 않게 위/아래 배치
+  const cap=document.createElement('div'); cap.className='cap '+((sb[1]+sb[3]/2)>H*0.5?'top':'bottom');
+  const row=document.createElement('div'); row.className='cap-row';
+  const k=s.querySelector('.step-k'), h=s.querySelector('h2'), ds=s.querySelector('.desc');
+  const skip=document.createElement('button'); skip.className='skip'; skip.type='button'; skip.textContent='건너뛰기 ›';
+  skip.onclick=e=>{e.stopPropagation();show(cur+1);};
+  row.append(k,skip); cap.append(row,h,ds,act);
+  const bar=document.createElement('div'); bar.className='bar'; bar.innerHTML='<i></i>'; cap.appendChild(bar);
+  s._bar=bar.firstChild;
+  s.append(ph,cap);
 
   const toast=(m,ok)=>{ts.textContent=m;ts.classList.toggle('ok',!!ok);ts.classList.add('on');clearTimeout(ts._h);ts._h=setTimeout(()=>ts.classList.remove('on'),1200);};
   const wrong=m=>{ph.classList.remove('shake');void ph.offsetWidth;ph.classList.add('shake');toast(m);};
@@ -339,6 +366,9 @@ function show(i){
   $('next').textContent=last?'처음으로':(cur===0?'시작하기':(next&&next.dataset.part!==part?'게임 가이드 보기 ›':'다음'));
   $('foot').classList.toggle('last',last);
   const tapStep=!!steps[cur].dataset.img;
+  document.querySelector('.app').classList.toggle('imm',tapStep);
+  if(steps[cur]._bar) steps[cur]._bar.style.width=((idx+1)/inPart.length*100)+'%';
+  const kk=steps[cur].querySelector('.step-k'); if(tapStep&&kk) kk.textContent='게임 가이드 '+(idx+1)+' / '+(inPart.length-1);
   $('foot').classList.toggle('tap',tapStep);
   if(tapStep) $('next').textContent='건너뛰기 ›';
   if(steps[cur]._focus) steps[cur]._focus();
