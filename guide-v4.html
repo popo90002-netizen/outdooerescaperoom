@@ -50,7 +50,8 @@ button{font-family:inherit;cursor:pointer;}
 .card::-webkit-scrollbar{display:none;}
 .card.on{transform:none;opacity:1;}
 .card:nth-child(odd){--r:-1deg}.card:nth-child(even){--r:1deg}
-.card .no{position:absolute;right:14px;top:12px;font:700 12px var(--mono);color:var(--muted);letter-spacing:.06em;}
+.card .no{position:absolute;right:16px;top:16px;font:700 12px var(--mono);color:var(--muted);letter-spacing:.06em;z-index:2;}
+.card .no b{color:var(--ink);}
 .card .tape{position:absolute;left:50%;top:-1px;width:70px;height:16px;transform:translateX(-50%);background:#e8dcae;opacity:.8;}
 .k{font:700 12px var(--mono);color:var(--red);letter-spacing:.08em;}
 h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:2px 0 14px;}
@@ -149,7 +150,6 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
     <button data-ch="go">출발</button>
   </div>
   <div class="tray">
-    <div class="page"><b id="pn">01</b> <span>/ <span id="pt">12</span></span></div>
     <div class="track" id="track">
 
       <article class="card cover-card" data-ch="before"><span class="tape"></span>
@@ -285,7 +285,7 @@ document.querySelectorAll('.shot').forEach(s=>{
 const track=document.getElementById('track'), cards=[...track.children], N=cards.length;
 const tabs=[...document.querySelectorAll('#tabs button')];
 const $=id=>document.getElementById(id);
-$('pt').textContent=String(N).padStart(2,'0');
+cards.forEach((c,i)=>{const n=document.createElement('span');n.className='no';n.innerHTML='<b>'+String(i+1).padStart(2,'0')+'</b> / '+String(N).padStart(2,'0');c.appendChild(n);});
 let cur=-1;
 function current(){
   const c=track.scrollLeft+track.clientWidth/2;
@@ -297,7 +297,6 @@ function update(){
   const i=current(); if(i===cur) return; cur=i;
   cards.forEach((el,k)=>el.classList.toggle('on',k===i));
   tabs.forEach(t=>t.classList.toggle('on',t.dataset.ch===cards[i].dataset.ch));
-  $('pn').textContent=String(i+1).padStart(2,'0');
   $('prev').disabled=i===0;
   $('next').textContent=i===N-1?'처음으로':(i===0?'시작하기':'다음');
   $('next').classList.toggle('last',i===N-1);
