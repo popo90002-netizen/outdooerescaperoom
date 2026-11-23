@@ -119,6 +119,9 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .card.g .shot.tall{flex:1 1 0;min-height:180px;width:auto;max-width:100%;aspect-ratio:var(--ar);margin:0 auto;}
 .card.g .shot.tall img{height:100%;width:100%;}
 .card.g .desc,.card.g .legend{flex-shrink:0;}
+.mini{display:flex;flex-wrap:wrap;gap:6px 12px;margin-bottom:10px;font-size:13.5px;font-weight:700;flex-shrink:0;}
+.mini span{display:flex;align-items:center;gap:5px;}
+.mini i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;}
 /* 하단 */
 .bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
 .bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
@@ -194,10 +197,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 
       <article class="card g" data-ch="game"><span class="tape"></span>
         <div class="k">HOW TO 2</div><h2><span class="hl">FILE_01</span>부터 시작</h2>
-        <ul class="legend" style="margin-bottom:14px">
-          <li><div class="n">1</div><div><b>FILE_01 — 여기서부터!</b>처음엔 이 파일만 열려 있어요.</div></li>
-          <li><div class="n">2</div><div><b>잠긴 파일</b>앞 파일을 풀어야 열려요. 순서대로만!</div></li>
-        </ul>
+        <div class="mini"><span><i>1</i>여기서부터!</span><span><i>2</i>잠긴 파일은 순서대로</span></div>
         <div class="shot tall" data-h="691" style="--ar:390/691"><img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382"><div class="mk" data-b="19,145,82,114"><i>1</i></div><div class="mk r" data-b="109,145,82,114"><i>2</i></div></div>
       </article>
 
