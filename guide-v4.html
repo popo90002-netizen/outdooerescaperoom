@@ -113,8 +113,14 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .recap li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;background:#f4ead333;}
 
 /* 하단: 쪽수 + 작은 화살표 */
-.bottom{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px calc(14px + env(safe-area-inset-bottom));}
-.page{font:700 14px var(--mono);color:var(--ink);background:var(--paper);border-radius:20px;padding:6px 12px;}
+.bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
+.bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
+.bottom button:active{transform:scale(.98);}
+.btn-prev{width:60px;flex-shrink:0;background:#eadcbf;border:2px solid #b9a27a;color:var(--sub);font-size:22px!important;}
+.btn-prev:disabled{opacity:.35;}
+.btn-next{flex:1;background:var(--dark);border:none;color:var(--paper);letter-spacing:.06em;box-shadow:0 4px 10px #0003;}
+.btn-next.last{background:#eadcbf;color:var(--ink);border:2px solid #b9a27a;}
+.page{font:700 13px var(--mono);color:var(--ink);background:var(--paper);border-radius:20px;padding:4px 11px;}
 .page span{color:var(--muted);}
 .arrows{display:flex;gap:8px;}
 .arrows button{width:46px;height:46px;border-radius:50%;border:none;background:var(--dark);color:var(--paper);font-size:20px;box-shadow:0 4px 10px #0004;transition:opacity .2s,transform .1s;}
@@ -124,7 +130,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 </head>
 <body>
 <div class="app">
-  <div class="top"><b>플레이 안내</b><small>N07-013</small></div>
+  <div class="top"><b>플레이 안내</b><div class="page"><b id="pn">01</b> <span>/ <span id="pt">12</span></span></div></div>
   <div class="tabs" id="tabs">
     <button data-ch="before" class="on">출발 전</button>
     <button data-ch="game">게임 방법</button>
@@ -251,8 +257,8 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 
     </div>
     <div class="bottom">
-      <div class="page"><b id="pn">01</b> <span>/ <span id="pt">12</span></span></div>
-      <div class="arrows"><button id="prev" aria-label="이전">‹</button><button id="next" aria-label="다음">›</button></div>
+      <button class="btn-prev" id="prev" aria-label="이전">‹</button>
+      <button class="btn-next" id="next">다음</button>
     </div>
   </div>
 </div>
@@ -283,12 +289,14 @@ function update(){
   cards.forEach((el,k)=>el.classList.toggle('on',k===i));
   tabs.forEach(t=>t.classList.toggle('on',t.dataset.ch===cards[i].dataset.ch));
   $('pn').textContent=String(i+1).padStart(2,'0');
-  $('prev').disabled=i===0; $('next').disabled=i===N-1;
+  $('prev').disabled=i===0;
+  $('next').textContent=i===N-1?'처음으로':(i===0?'시작하기':'다음');
+  $('next').classList.toggle('last',i===N-1);
   try{history.replaceState(null,'','#'+i);}catch(e){}
 }
 const go=i=>{const el=cards[Math.max(0,Math.min(N-1,i))];track.scrollTo({left:el.offsetLeft-(track.clientWidth-el.offsetWidth)/2,behavior:'smooth'});};
 track.addEventListener('scroll',()=>requestAnimationFrame(update),{passive:true});
-$('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur+1);
+$('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur===N-1?0:cur+1);
 tabs.forEach(t=>t.onclick=()=>go(cards.findIndex(c=>c.dataset.ch===t.dataset.ch)));
 cards.forEach((c,i)=>c.addEventListener('click',e=>{if(i!==cur&&!e.target.closest('a')){e.preventDefault();go(i);}}));
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
