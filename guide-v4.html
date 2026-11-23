@@ -30,7 +30,7 @@ button{font-family:inherit;cursor:pointer;}
 .top b{font-size:16px;}
 .top small{font:700 11px var(--mono);letter-spacing:.14em;color:var(--kraft);}
 /* 서류철 인덱스 탭 */
-.tabs{flex-shrink:0;display:flex;gap:4px;padding:14px 14px 0;align-items:flex-end;}
+.tabs{flex-shrink:0;display:flex;gap:4px;padding:calc(10px + env(safe-area-inset-top)) 14px 0;align-items:flex-end;}
 .tabs button{flex:1;border:none;border-radius:10px 10px 0 0;background:#4a4137;color:#b8a888;font-size:13px;font-weight:700;padding:8px 4px 7px;transition:all .25s;transform:translateY(5px);}
 .tabs button.on{background:var(--kraft);color:var(--ink);transform:none;padding-bottom:12px;}
 .tray{flex:1;min-height:0;background:var(--kraft);border-radius:0 0 0 0;position:relative;display:flex;flex-direction:column;
@@ -122,6 +122,8 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .mini{display:flex;flex-wrap:wrap;gap:6px 12px;margin-bottom:10px;font-size:13.5px;font-weight:700;flex-shrink:0;}
 .mini span{display:flex;align-items:center;gap:5px;}
 .mini i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;}
+.tray > .page{position:absolute;top:28px;right:calc(5% + 26px);z-index:3;font:700 12px var(--mono);color:var(--muted);background:none;padding:0;pointer-events:none;}
+.tray > .page b{color:var(--ink);}
 /* 하단 */
 .bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
 .bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
@@ -140,7 +142,6 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 </head>
 <body>
 <div class="app">
-  <div class="top"><b>플레이 안내</b><div class="page"><b id="pn">01</b> <span>/ <span id="pt">12</span></span></div></div>
   <div class="tabs" id="tabs">
     <button data-ch="before" class="on">출발 전</button>
     <button data-ch="game">게임 방법</button>
@@ -148,6 +149,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
     <button data-ch="go">출발</button>
   </div>
   <div class="tray">
+    <div class="page"><b id="pn">01</b> <span>/ <span id="pt">12</span></span></div>
     <div class="track" id="track">
 
       <article class="card cover-card" data-ch="before"><span class="tape"></span>
