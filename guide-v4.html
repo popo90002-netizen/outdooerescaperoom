@@ -37,16 +37,16 @@ button{font-family:inherit;cursor:pointer;}
   background-image:repeating-linear-gradient(90deg,#0000 0 3px,#00000008 3px 4px);}
 
 /* 카드 트랙 */
-.track{flex:1;min-height:0;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:16px 7%;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+.track{flex:1;min-height:0;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:16px 5%;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
 .track::-webkit-scrollbar{display:none;}
-.card{flex:0 0 86%;scroll-snap-align:center;scroll-snap-stop:always;border-radius:4px;position:relative;overflow-y:auto;scrollbar-width:none;
+.card{flex:0 0 90%;scroll-snap-align:center;scroll-snap-stop:always;border-radius:4px;position:relative;overflow-y:auto;scrollbar-width:none;
   padding:26px 20px 24px;transition:transform .35s,opacity .35s;transform:scale(.94) rotate(var(--r,0deg));opacity:.55;
-  background-color:#eadcbf;
+  background-color:#f3eadb;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .12  0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse at 22% 12%,#f7eed8cc 0,transparent 50%),
-    radial-gradient(circle at 82% 78%,#b08a5226 0,transparent 22%),
-    radial-gradient(ellipse at 50% 50%,transparent 58%,#9b7a4a40 100%);
-  box-shadow:inset 0 0 0 1px #8a6a3a22,inset 0 0 30px #8a6a3a2a,0 10px 26px #3a2a1a66;}
+    radial-gradient(ellipse at 22% 12%,#fbf5e8d9 0,transparent 55%),
+    radial-gradient(circle at 82% 78%,#b08a521a 0,transparent 22%),
+    radial-gradient(ellipse at 50% 50%,transparent 62%,#9b7a4a2e 100%);
+  box-shadow:inset 0 0 0 1px #8a6a3a22,inset 0 0 26px #8a6a3a1f,0 10px 26px #3a2a1a66;}
 .card::-webkit-scrollbar{display:none;}
 .card.on{transform:none;opacity:1;}
 .card:nth-child(odd){--r:-1deg}.card:nth-child(even){--r:1deg}
@@ -85,7 +85,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .note.tip{background:var(--bluebg);color:#1f3558;}
 
 /* 스크린샷 */
-.shot{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px #0002,0 6px 14px #3a2a1a33;background:#222;width:70%;margin:0 auto 14px;}
+.shot{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px #0002,0 6px 14px #3a2a1a33;background:#222;width:100%;margin:0 auto 14px;}
 .shot.full{width:100%;}
 .shot img{width:100%;height:auto;}
 .mk{position:absolute;border:3px solid var(--red);border-radius:9px;box-shadow:0 0 0 2px #fff9;}
@@ -112,7 +112,14 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .recap{list-style:none;display:grid;gap:7px;}
 .recap li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;background:#f4ead333;}
 
-/* 하단: 쪽수 + 작은 화살표 */
+
+/* 세로로 긴 게임 화면: 카드에 남은 높이를 꽉 채우되 잘리지 않게 */
+.card.g{display:flex;flex-direction:column;padding:22px 16px 16px;}
+.card.g h2{margin-bottom:8px;}
+.card.g .shot.tall{flex:1 1 0;min-height:180px;width:auto;max-width:100%;aspect-ratio:var(--ar);margin:0 auto;}
+.card.g .shot.tall img{height:100%;width:100%;}
+.card.g .desc,.card.g .legend{flex-shrink:0;}
+/* 하단 */
 .bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
 .bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
 .bottom button:active{transform:scale(.98);}
@@ -179,19 +186,19 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
         </ol>
       </article>
 
-      <article class="card" data-ch="game"><span class="tape"></span>
+      <article class="card g" data-ch="game"><span class="tape"></span>
         <div class="k">HOW TO 1</div><h2>첫 화면에서 <span class="hl">[MY STORAGE 열람]</span></h2>
-        <div class="shot" data-h="700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk" data-b="188,619,185,62"><i>!</i></div></div>
-        <p class="desc">게임에 들어가면 프로필 화면이 먼저 나와요. <b>문제(파일)는 전부 MY STORAGE 안</b>에 있어요.</p>
+        <p class="desc" style="margin-bottom:10px">문제(파일)는 전부 <b>MY STORAGE 안</b>에 있어요.</p>
+        <div class="shot tall" data-h="700" style="--ar:390/700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk" data-b="188,619,185,62"><i>!</i></div></div>
       </article>
 
-      <article class="card" data-ch="game"><span class="tape"></span>
+      <article class="card g" data-ch="game"><span class="tape"></span>
         <div class="k">HOW TO 2</div><h2><span class="hl">FILE_01</span>부터 시작</h2>
-        <div class="shot" data-h="691"><img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382"><div class="mk" data-b="19,145,82,114"><i>1</i></div><div class="mk r" data-b="109,145,82,114"><i>2</i></div></div>
-        <ul class="legend">
+        <ul class="legend" style="margin-bottom:14px">
           <li><div class="n">1</div><div><b>FILE_01 — 여기서부터!</b>처음엔 이 파일만 열려 있어요.</div></li>
           <li><div class="n">2</div><div><b>잠긴 파일</b>앞 파일을 풀어야 열려요. 순서대로만!</div></li>
         </ul>
+        <div class="shot tall" data-h="691" style="--ar:390/691"><img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382"><div class="mk" data-b="19,145,82,114"><i>1</i></div><div class="mk r" data-b="109,145,82,114"><i>2</i></div></div>
       </article>
 
       <article class="card" data-ch="game"><span class="tape"></span>
