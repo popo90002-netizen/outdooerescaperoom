@@ -122,6 +122,15 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .mini{display:flex;flex-wrap:wrap;gap:6px 12px;margin-bottom:10px;font-size:13.5px;font-weight:700;flex-shrink:0;}
 .mini span{display:flex;align-items:center;gap:5px;}
 .mini i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;}
+.crop{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 0 0 1px #0002,0 6px 14px #3a2a1a33;background:#222;cursor:zoom-in;flex-shrink:0;}
+.crop-in{position:absolute;left:0;width:100%;}
+.crop .shot{width:100%;margin:0;border-radius:0;box-shadow:none;}
+.zoom{position:absolute;right:8px;bottom:8px;background:#2b2a28d9;color:#f1e7d2;font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:14px;pointer-events:none;}
+.lightbox{position:fixed;inset:0;z-index:50;background:#000d;display:none;align-items:center;justify-content:center;padding:16px;}
+.lightbox.on{display:flex;}
+.lightbox .lb-in{position:relative;height:100%;max-height:92vh;aspect-ratio:390/var(--lh);max-width:100%;}
+.lightbox .shot{width:100%;margin:0;}
+.lightbox .x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:none;background:#f1e7d2;color:#2a211a;font-size:20px;font-weight:900;z-index:2;}
 /* 하단 */
 .bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
 .bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
@@ -192,13 +201,13 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
       <article class="card g" data-ch="game"><span class="tape"></span>
         <div class="k">HOW TO 1</div><h2>첫 화면에서 <span class="hl">[MY STORAGE 열람]</span></h2>
         <p class="desc" style="margin-bottom:10px">문제(파일)는 전부 <b>MY STORAGE 안</b>에 있어요.</p>
-        <div class="shot tall" data-h="700" style="--ar:390/700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk" data-b="188,619,185,62"><i>!</i></div></div>
+        <div class="crop" style="aspect-ratio:390/470"><div class="crop-in" style="top:-48.9362%"><div class="shot" data-h="700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk" data-b="188,619,185,62"><i>!</i></div></div></div><span class="zoom">⤢ 전체 화면</span></div>
       </article>
 
       <article class="card g" data-ch="game"><span class="tape"></span>
         <div class="k">HOW TO 2</div><h2><span class="hl">FILE_01</span>부터 시작</h2>
         <div class="mini"><span><i>1</i>여기서부터!</span><span><i>2</i>잠긴 파일은 순서대로</span></div>
-        <div class="shot tall" data-h="691" style="--ar:390/691"><img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382"><div class="mk" data-b="19,145,82,114"><i>1</i></div><div class="mk r" data-b="109,145,82,114"><i>2</i></div></div>
+        <div class="crop" style="aspect-ratio:390/450"><div class="crop-in" style="top:-15.5556%"><div class="shot" data-h="691"><img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382"><div class="mk" data-b="19,145,82,114"><i>1</i></div><div class="mk r" data-b="109,145,82,114"><i>2</i></div></div></div><span class="zoom">⤢ 전체 화면</span></div>
       </article>
 
       <article class="card" data-ch="game"><span class="tape"></span>
@@ -269,6 +278,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
     </div>
   </div>
 </div>
+<div class="lightbox" id="lb"><button class="x" aria-label="닫기">✕</button><div class="lb-in" id="lbIn"></div></div>
 
 <script>
 /* 스크린샷 표시 위치 */
@@ -307,6 +317,16 @@ $('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur===N-1?0:cur+1);
 tabs.forEach(t=>t.onclick=()=>go(cards.findIndex(c=>c.dataset.ch===t.dataset.ch)));
 cards.forEach((c,i)=>c.addEventListener('click',e=>{if(i!==cur&&!e.target.closest('a')){e.preventDefault();go(i);}}));
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+
+/* 탭하면 전체 화면 */
+const lb=document.getElementById('lb'), lbIn=document.getElementById('lbIn');
+document.querySelectorAll('.crop').forEach(c=>c.addEventListener('click',e=>{
+  if(!c.closest('.card').classList.contains('on')) return;
+  e.stopPropagation();
+  const shot=c.querySelector('.shot').cloneNode(true);
+  lbIn.style.setProperty('--lh',shot.dataset.h); lbIn.innerHTML=''; lbIn.appendChild(shot); lb.classList.add('on');
+}));
+lb.addEventListener('click',()=>lb.classList.remove('on'));
 const start=parseInt(location.hash.slice(1))||0;
 requestAnimationFrame(()=>{const el=cards[start]||cards[0];track.scrollLeft=el.offsetLeft-(track.clientWidth-el.offsetWidth)/2;update();});
 </script>
