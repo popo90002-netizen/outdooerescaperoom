@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>한눈에 보는 플레이 방법 | 문서 N07-013</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+body{background:var(--bg2);}
+.poster{max-width:440px;margin:0 auto;min-height:100vh;min-height:100dvh;background:#fff;padding:22px 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;}
+.head{display:flex;justify-content:space-between;align-items:flex-end;}
+.head h1{font-size:22px;font-weight:900;line-height:1.25;}
+.head small{display:block;font-size:12px;font-weight:700;color:var(--accent);}
+.start{background:var(--ink);color:#fff;border-radius:14px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.start b{font-size:17px;}
+.start span{font-size:12px;color:#bbb;}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.facts div{background:var(--bg2);border-radius:10px;padding:8px 4px;text-align:center;font-size:12px;color:var(--sub);line-height:1.4;}
+.facts b{display:block;font-size:14px;color:var(--ink);}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:start;gap:4px;}
+.flow .st{text-align:center;}
+.flow .shot{border-radius:8px;}
+.flow .lb{font-size:12px;font-weight:700;margin-top:6px;line-height:1.35;}
+.flow .lb span{display:block;font-weight:400;color:var(--muted);font-size:11px;}
+.arrow{font-size:16px;color:var(--muted);padding-top:38px;}
+.loop{background:var(--accent-bg);color:var(--accent);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:700;text-align:center;line-height:1.5;}
+.loop span{display:block;font-weight:500;color:#7a2a22;font-size:13px;}
+.tips{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.tip{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--sub);line-height:1.5;}
+.tip b{display:block;font-size:14px;color:var(--ink);}
+.tip.full{grid-column:1/-1;display:flex;gap:10px;align-items:center;}
+.tip.full .shot{width:46%;flex-shrink:0;border-radius:8px;}
+.warn{font-size:13px;color:var(--sub);line-height:1.6;border-top:1px solid var(--line);padding-top:10px;}
+.warn b{color:var(--accent);}
+.poster .btn-play{margin-top:auto;}
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="head"><h1><small>문서 N07-013</small>한눈에 보는 플레이 방법</h1></div>
+
+  <div class="start"><div><span>출발 장소</span><br><b>📍 홍대입구역 3번 출구</b></div></div>
+  <div class="facts"><div><b>약 2시간</b>휴식 가능</div><div><b>2~3km</b>도보</div><div><b>중학생+</b>권장</div></div>
+
+  <div class="flow">
+    <div class="st"><div class="shot" data-h="700"><img src="../assets/guide/g1_profile.webp" alt="" width="780" height="1400"><div class="mk" data-b="188,619,185,62"></div></div><div class="lb">① 첫 화면<span>MY STORAGE 열람</span></div></div>
+    <div class="arrow">→</div>
+    <div class="st"><div class="shot" data-h="691"><img src="../assets/guide/g2_storage.webp" alt="" width="780" height="1382"><div class="mk" data-b="19,145,82,114"></div></div><div class="lb">② FILE_01<span>여기서부터</span></div></div>
+    <div class="arrow">→</div>
+    <div class="st"><div class="shot" data-h="844"><img src="../assets/guide/g3_file.webp" alt="" width="780" height="1688"><div class="mk" data-b="31,167,282,29"></div></div><div class="lb">③ 형광펜 단서<span>현장에서 답 찾기</span></div></div>
+  </div>
+
+  <div class="loop">↻ 찾은 답 = 다음 파일의 잠금 코드<span>다음 파일을 누르고 입력 → 열리면 ③부터 반복</span></div>
+
+  <div class="tips">
+    <div class="tip full"><div class="shot" data-w="340" data-h="170.8"><img src="../assets/guide/m_hint.webp" alt="" width="680" height="341"><div class="mk" data-b="278,51,42,42"></div></div><div><b>💡 힌트 · 🗺 지도</b>파일 화면 오른쪽 아래 💡 → 힌트 창 오른쪽 위 지도</div></div>
+    <div class="tip"><b>코드 입력</b><span class="kbd">AB-</span>는 빼고, 대소문자 무관</div>
+    <div class="tip"><b>메시지·카메라</b>답장은 프로필 → 메시지, 카메라는 STORAGE 왼쪽 아래</div>
+  </div>
+
+  <div class="warn"><b>주의</b> 새로고침·창 닫기 금지 · 뒤로 가기는 게임 안 ← 사용 · 걸을 땐 화면 보지 않기 · 보조배터리 필수</div>
+
+  <a class="btn-play" href="https://popo90002-netizen.github.io/outdooerescaperoom/">게임 시작 ▶</a>
+</div>
+<script src="common.js"></script>
+</body>
+</html>

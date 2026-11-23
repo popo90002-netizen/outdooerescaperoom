@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<title>플레이 안내 | 문서 N07-013</title>
+<meta name="description" content="문서 N07-013 야외 방탈출 플레이 안내 — 출발 전 확인사항과 게임 화면 가이드.">
+<meta name="theme-color" content="#2b2a28">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1e7d2; --card:#fbf7ee; --line:#d6c5a2;
+  --ink:#2a211a; --sub:#6b5a45; --muted:#93806a; --dark:#2b2a28;
+  --red:#a3241c; --redbg:#f4e0d8; --yellow:#ffe27a; --amber:#e8c060;
+  --kr:'Noto Sans KR',sans-serif; --mono:'Courier Prime',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:#1a1612;color:var(--ink);font-family:var(--kr);font-size:16px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;}
+img{display:block;max-width:100%;}
+b,strong{font-weight:700;}
+
+.app{max-width:480px;margin:0 auto;height:100vh;height:100dvh;display:flex;flex-direction:column;
+  background:var(--paper);
+  background-image:radial-gradient(ellipse at 15% 5%,#fff8 0,transparent 45%),radial-gradient(ellipse at 90% 95%,#b8975f30 0,transparent 55%);
+  box-shadow:0 0 40px #0008;}
+
+/* 헤더 */
+.head{flex-shrink:0;background:var(--dark);color:#f1e7d2;}
+.head-bar{display:flex;align-items:center;height:50px;padding:0 6px;}
+.head-bar button{width:40px;height:40px;background:none;border:none;color:#f1e7d2;font-size:22px;cursor:pointer;border-radius:50%;}
+.head-bar button:disabled{opacity:.25;cursor:default;}
+.head-t{flex:1;text-align:center;font-weight:700;font-size:16px;}
+.tabs{display:flex;gap:6px;padding:12px 20px 0;}
+.tabs button{flex:1;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-family:var(--kr);font-size:14px;font-weight:700;cursor:pointer;}
+.tabs button.on{background:var(--dark);border-color:var(--dark);color:#f1e7d2;}
+.prog-wrap{padding:10px 20px 0;}
+.prog{height:6px;border-radius:6px;background:#d9c9a6;overflow:hidden;}
+.prog i{display:block;height:100%;width:0;background:var(--red);border-radius:6px;transition:width .35s ease;}
+.prog-n{text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:4px;}
+
+/* 본문 */
+.body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 20px 24px;}
+.step{display:none;animation:in .3s ease;}
+.step.on{display:block;}
+@keyframes in{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+.step-k{font-family:var(--mono);font-size:13px;color:var(--red);}
+h2{font-size:24px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:2px 0 14px;}
+.desc{font-size:16px;color:var(--sub);}
+.desc b{color:var(--ink);}
+.hl{background:linear-gradient(transparent 55%,var(--yellow) 55%);}
+.kbd{display:inline-block;font-size:13px;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:6px;padding:0 7px;line-height:1.7;white-space:nowrap;}
+
+/* 출발 전 */
+.cover{width:min(48%,210px);height:auto;margin:8px auto 22px;transform:rotate(-2deg);box-shadow:0 14px 28px #3a2a1a55;border-radius:3px;}
+.lead{font-size:17px;}
+.mark{display:inline-block;background:var(--redbg);color:var(--red);font-weight:700;padding:2px 8px;border-radius:4px;margin-top:12px;}
+.info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px;}
+.info-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line);}
+.info-row:last-child{border-bottom:none;}
+.info-row .ic{width:26px;text-align:center;font-size:19px;flex-shrink:0;}
+.info-row small{display:block;font-size:13px;color:var(--muted);}
+.checks{list-style:none;display:grid;gap:12px;}
+.checks li{display:flex;gap:12px;align-items:flex-start;font-size:17px;font-weight:500;}
+.checks li::before{content:'✓';flex-shrink:0;width:26px;height:26px;border-radius:7px;background:var(--red);color:#fff;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.checks li small{display:block;color:var(--sub);font-size:14px;font-weight:400;}
+.place{background:var(--dark);color:#f1e7d2;border-radius:14px;padding:20px 18px;text-align:center;margin-bottom:18px;}
+.place small{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:#c9a873;}
+.place b{display:block;font-size:24px;font-weight:900;margin-top:2px;}
+.ol{list-style:none;counter-reset:o;display:grid;gap:12px;}
+.ol li{counter-increment:o;display:flex;gap:12px;}
+.ol li::before{content:counter(o);flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--dark);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.ol li small{display:block;color:var(--sub);font-size:14px;}
+.warns{list-style:none;display:grid;gap:10px;}
+.warns li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 44px;position:relative;font-size:15px;color:var(--sub);}
+.warns li::before{content:'!';position:absolute;left:13px;top:14px;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.warns li b{display:block;color:var(--ink);font-size:16px;}
+
+/* 게임 화면 뷰어 */
+.phone{position:relative;height:min(50dvh,500px);aspect-ratio:390/844;margin:0 auto 16px;border-radius:20px;overflow:hidden;border:5px solid var(--dark);background:#1b1713;box-shadow:0 12px 26px #3a2a1a44;}
+.phone .base{position:absolute;left:0;top:0;width:100%;height:auto;}
+.phone .dim{position:absolute;inset:0;background:#000a;}
+.phone .modal{position:absolute;border-radius:8px;box-shadow:0 8px 20px #000a;}
+.phone .spot{position:absolute;border-radius:8px;box-shadow:0 0 0 2000px rgba(10,8,6,.55);}
+.phone .spot.round{border-radius:50%;}
+.phone .spot::after{content:'';position:absolute;inset:-4px;border:3px solid var(--amber);border-radius:inherit;animation:ring 1.4s ease-out infinite;}
+@keyframes ring{0%{transform:scale(.97);opacity:1}100%{transform:scale(1.15);opacity:0}}
+.phone{cursor:pointer;touch-action:manipulation;}
+.phone.shake{animation:shake .35s;}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.phone .finger{position:absolute;font-size:26px;pointer-events:none;animation:tap 1.2s ease-in-out infinite;filter:drop-shadow(0 2px 3px #0008);}
+@keyframes tap{0%,100%{transform:translate(0,0)}50%{transform:translate(-3px,-7px)}}
+.phone .flash{position:absolute;inset:0;background:var(--amber);opacity:0;pointer-events:none;}
+.phone .flash.on{animation:flash .5s;}
+@keyframes flash{0%{opacity:.45}100%{opacity:0}}
+.phone .toast{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);background:#16130ff0;color:#fff;font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:9px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;z-index:3;}
+.phone .toast.on{opacity:1;}
+.phone .toast.ok{background:#1e3a22f0;}
+.phone .code-in{position:absolute;border:2px solid var(--amber);background:#fffdf6;border-radius:3px;font:700 14px var(--mono);text-align:center;letter-spacing:.3em;color:var(--ink);outline:none;z-index:2;padding:0;}
+.act{display:flex;align-items:center;justify-content:center;gap:6px;margin:-6px auto 14px;width:max-content;max-width:100%;background:var(--dark);color:#f1e7d2;font-size:13.5px;font-weight:700;padding:6px 14px;border-radius:20px;}
+.act.done{background:#2f6b3a;}
+.foot.tap .btn-next{background:var(--card);color:var(--muted);border:2px solid var(--line);font-size:15px;}
+.gd h2{font-size:21px;margin-bottom:6px;}
+.gd .desc{font-size:15.5px;}
+
+.go{display:flex;align-items:center;justify-content:center;width:100%;margin-top:22px;height:58px;background:var(--red);color:#fff;text-decoration:none;font-weight:900;font-size:18px;letter-spacing:.04em;border-radius:14px;box-shadow:0 6px 16px #a3241c55;}
+.recap{list-style:none;display:grid;gap:8px;margin-top:4px;}
+.recap li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:15px;color:var(--sub);}
+.recap li b{color:var(--ink);}
+
+
+/* ===== 게임 가이드: 화면 꽉 채우기 ===== */
+.app.imm .tabs,.app.imm .prog-wrap,.app.imm .foot{display:none;}
+.app.imm .body{padding:0;overflow:hidden;position:relative;background:#1b1713;}
+.app.imm .step.gd.on{height:100%;position:relative;display:flex;justify-content:center;animation:none;}
+.gd .phone{height:100%;max-width:100%;aspect-ratio:390/844;margin:0;border:none;border-radius:0;box-shadow:none;}
+.gd .cap{position:absolute;left:10px;right:10px;z-index:5;background:#fbf7eef5;border:1px solid var(--line);border-radius:16px;padding:12px 14px 12px;box-shadow:0 10px 26px #0007;transition:top .3s,bottom .3s;}
+.gd .cap.top{top:10px;}
+.gd .cap.bottom{bottom:calc(10px + env(safe-area-inset-bottom));}
+.gd .cap-row{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.gd .cap-row .step-k{font-size:12px;}
+.gd .cap-row .skip{margin-left:auto;background:none;border:none;color:var(--muted);font-family:var(--kr);font-size:13px;font-weight:700;cursor:pointer;padding:2px 0 2px 8px;}
+.gd .cap h2{font-size:18px;margin:0 0 4px;}
+.gd .cap .desc{font-size:14px;line-height:1.6;}
+.gd .cap .act{margin:10px 0 0;width:100%;font-size:13.5px;}
+.gd .cap .bar{height:3px;background:#e3d6ba;border-radius:3px;margin-top:10px;overflow:hidden;}
+.gd .cap .bar i{display:block;height:100%;background:var(--red);}
+
+/* 하단 */
+.foot{flex-shrink:0;display:flex;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#efe4cc;}
+.foot button{height:54px;border-radius:14px;font-family:var(--kr);font-size:17px;font-weight:700;cursor:pointer;}
+.btn-prev{width:60px;flex-shrink:0;background:var(--card);border:2px solid var(--line);color:var(--sub);}
+.btn-prev:disabled{opacity:.35;cursor:default;}
+.btn-next{flex:1;background:var(--dark);border:none;color:#f1e7d2;letter-spacing:.06em;}
+.foot.last .btn-next{background:var(--card);color:var(--ink);border:2px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="head">
+    <div class="head-bar">
+      <button id="topPrev" aria-label="이전">‹</button>
+      <div class="head-t">플레이 안내</div>
+      <button id="topHome" aria-label="처음으로" title="처음으로">⟲</button>
+    </div>
+  </header>
+  <div class="tabs"><button data-part="before" class="on">출발 전 확인</button><button data-part="game">게임 가이드</button></div>
+  <div class="prog-wrap"><div class="prog"><i id="progBar"></i></div><div class="prog-n" id="stepCount"></div></div>
+
+  <main class="body" id="body">
+
+    <!-- ===== PART 1. 출발 전 확인 ===== -->
+    <section class="step" data-part="before">
+      <img class="cover" src="assets/case_cover.jpg" alt="문서 N07-013 표지" width="860" height="1146">
+      <p class="lead"><b>문서 N07-013</b> 플레이 안내입니다.</p>
+      <p class="lead">출발 전 확인사항과 게임 화면 사용법을 차례로 알려드릴게요.</p>
+      <span class="mark">출발 전, 꼭 확인해주세요!</span>
+    </section>
+
+    <section class="step" data-part="before">
+      <div class="step-k">출발 전 확인 1</div>
+      <h2>플레이 정보</h2>
+      <div class="info">
+        <div class="info-row"><span class="ic">📍</span><div>서울 마포구 홍대·연남 일대<small>경의선숲길 주변 야외</small></div></div>
+        <div class="info-row"><span class="ic">⏱️</span><div>약 2시간<small>순수 플레이 기준 · 중간에 쉬었다 와도 OK</small></div></div>
+        <div class="info-row"><span class="ic">👟</span><div>약 2~3km 도보 이동</div></div>
+        <div class="info-row"><span class="ic">👤</span><div>중학생 이상</div></div>
+        <div class="info-row"><span class="ic">📱</span><div>스마트폰 1대로 진행<small>앱 설치 없이 브라우저(크롬·사파리)에서 플레이</small></div></div>
+      </div>
+    </section>
+
+    <section class="step" data-part="before">
+      <div class="step-k">출발 전 확인 2</div>
+      <h2>준비물</h2>
+      <ul class="checks">
+        <li><div>충전된 휴대폰 + 보조배터리<small>화면을 계속 켜고 이동해요</small></div></li>
+        <li><div>모바일 데이터<small>와이파이 없이 야외에서 접속해요</small></div></li>
+        <li><div>이어폰<small>음성 기록을 길에서 듣기 편해요</small></div></li>
+        <li><div>편한 신발과 가벼운 짐</div></li>
+        <li><div>밝은 시간대<small>작은 글씨·그림을 찾아야 해서 어두우면 어려워요</small></div></li>
+      </ul>
+    </section>
+
+    <section class="step" data-part="before">
+      <div class="step-k">출발 전 확인 3</div>
+      <h2>시작 장소</h2>
+      <div class="place"><small>START</small><b>홍대입구역 3번 출구</b></div>
+      <ol class="ol">
+        <li><div>도착하면 게임에 접속해요.</div></li>
+        <li><div>로딩이 100%가 되면 <b>[수사 시작]</b>을 눌러요.</div></li>
+        <li><div>짧은 오프닝이 나와요.<small>화면을 탭하면 다음 장면으로 넘어가요.</small></div></li>
+      </ol>
+    </section>
+
+    <section class="step" data-part="before">
+      <div class="step-k">출발 전 확인 4</div>
+      <h2>주의사항</h2>
+      <ul class="warns">
+        <li><b>새로고침·창 닫기 금지</b>진행 상황이 사라질 수 있어요.</li>
+        <li><b>뒤로 가기는 게임 안의 ←</b>브라우저 뒤로 가기 대신 게임 화면 왼쪽 위 <span class="kbd">←</span>를 눌러주세요.</li>
+        <li><b>걸을 땐 화면 보지 않기</b>차도·골목에서는 멈춰서 확인해주세요.</li>
+        <li><b>주변에 피해 주지 않기</b>가게·주택가 근처 장소가 있어요. 시설물은 만지거나 떼지 마세요.</li>
+      </ul>
+    </section>
+
+    <!-- ===== PART 2. 게임 가이드 (직접 눌러보기) ===== -->
+    <section class="step gd" data-part="game" data-img="g1_profile" data-spot="188,619,185,62" data-act="[MY STORAGE 열람]을 눌러보세요">
+      <div class="step-k">게임 가이드 1</div>
+      <h2>첫 화면에서 <span class="hl">[MY STORAGE 열람]</span></h2>
+      <p class="desc">게임에 들어가면 프로필 화면이 먼저 나와요. 문제(파일)는 전부 <b>MY STORAGE</b> 안에 있어요.</p>
+    </section>
+
+    <section class="step gd" data-part="game" data-img="g2_storage" data-spot="19,145,82,114" data-alt="109,145,82,114" data-alt-msg="🔒 이전 파일을 먼저 해제하세요" data-act="FILE_01을 눌러보세요">
+      <div class="step-k">게임 가이드 2</div>
+      <h2><span class="hl">FILE_01</span>부터 시작</h2>
+      <p class="desc">처음엔 FILE_01만 열려 있어요. 파일은 <b>순서대로만</b> 열려요. (잠긴 FILE_02를 눌러보면 어떻게 되는지도 확인해보세요)</p>
+    </section>
+
+    <section class="step gd" data-part="game" data-img="g3_file" data-spot="31,167,282,29" data-act="형광펜 부분을 눌러보세요">
+      <div class="step-k">게임 가이드 3</div>
+      <h2>형광펜 단서 → 현장에서 답 찾기</h2>
+      <p class="desc"><span class="hl">노란 형광펜</span>이 핵심 단서예요. 그 장소에 가서 찾은 답이 <b>다음 파일의 잠금 코드</b>예요.</p>
+    </section>
+
+    <section class="step gd" data-part="game" data-img="g2_storage" data-modal="code" data-spot="50,427,291,34" data-code="007" data-act="연습 코드 007을 입력해보세요">
+      <div class="step-k">게임 가이드 4</div>
+      <h2>다음 파일을 눌러 코드 입력</h2>
+      <p class="desc"><span class="kbd">AB-</span>처럼 이미 적힌 부분은 <b>빼고</b> 입력해요. 영어는 대소문자 상관없어요.</p>
+    </section>
+
+    <section class="step gd" data-part="game" data-img="g3_file" data-spot="326,776,48,48" data-round="1" data-act="💡 버튼을 눌러보세요">
+      <div class="step-k">게임 가이드 5</div>
+      <h2>막히면 오른쪽 아래 💡</h2>
+      <p class="desc">파일을 열었을 때만 보여요. 힌트를 한 단계씩 열 수 있고, 끝까지 열면 정답과 해설도 볼 수 있어요.</p>
+    </section>
+
+    <section class="step gd" data-part="game" data-img="g3_file" data-modal="hint" data-spot="303,388,42,42" data-act="지도 아이콘을 눌러보세요">
+      <div class="step-k">게임 가이드 6</div>
+      <h2>지도는 힌트 창 오른쪽 위</h2>
+      <p class="desc">다음 장소가 헷갈리면 이 아이콘을 눌러요. <b>지도는 여기에만</b> 있어요. FILE_01은 지도 없이 시작 장소 근처예요.</p>
+    </section>
+
+    <section class="step gd" data-part="game" data-img="g6_msg" data-spot="9,586,371,73" data-act="입력창을 눌러보세요">
+      <div class="step-k">게임 가이드 7</div>
+      <h2>메시지로 답장하기</h2>
+      <p class="desc">파일에서 메시지를 보내라고 하면, 프로필 화면 → 해당 메시지 → <b>맨 아래 입력창</b>에 답을 보내요.</p>
+    </section>
+
+    <section class="step gd" data-part="game" data-img="g2_storage" data-spot="23,626,48,48" data-round="1" data-act="빨간 카메라를 눌러보세요">
+      <div class="step-k">게임 가이드 8</div>
+      <h2>카메라와 최종보고서</h2>
+      <p class="desc"><b>빨간 카메라</b>는 파일에서 쓰라고 할 때만 사용해요(권한 ‘허용’). 옆의 <b>최종보고서</b>에는 마지막에 알아낸 정보를 입력해요.</p>
+    </section>
+
+    <section class="step" data-part="game">
+      <div class="step-k">준비 완료</div>
+      <h2>이제 출발하세요</h2>
+      <ul class="recap">
+        <li>📍 <b>홍대입구역 3번 출구</b>에서 접속</li>
+        <li>📂 <b>[MY STORAGE 열람] → FILE_01</b>부터</li>
+        <li>💡 막히면 파일 화면 오른쪽 아래, 🗺️ 지도는 힌트 창 안</li>
+        <li>⚠️ 새로고침·창 닫기 금지</li>
+      </ul>
+      <a class="go" href="https://popo90002-netizen.github.io/outdooerescaperoom/">▶ 게임 시작</a>
+    </section>
+
+  </main>
+
+  <footer class="foot" id="foot">
+    <button class="btn-prev" id="prev" aria-label="이전">‹</button>
+    <button class="btn-next" id="next">다음</button>
+  </footer>
+</div>
+
+<script>
+/* 게임 화면 좌표: 실제 화면 390×844 기준 */
+const W=390,H=844;
+const MODALS={hint:{src:'m_hint',b:[25,336.6,340,170.8]},code:{src:'m_code',b:[25,287.9,340,268.2]}};
+const pct=b=>({left:b[0]/W*100+'%',top:b[1]/H*100+'%',width:b[2]/W*100+'%',height:b[3]/H*100+'%'});
+
+// 게임 가이드 단계마다 화면 만들기 (표시된 곳을 눌러야 다음으로)
+const box=v=>v.split(',').map(Number);
+const inBox=(x,y,b,pad=8)=>x>=b[0]-pad&&x<=b[0]+b[2]+pad&&y>=b[1]-pad&&y<=b[1]+b[3]+pad;
+document.querySelectorAll('.step[data-img]').forEach(s=>{
+  const d=s.dataset;
+  const ph=document.createElement('div'); ph.className='phone';
+  const img=new Image(); img.className='base'; img.alt=''; img.src='assets/guide/'+d.img+'.webp';
+  ph.appendChild(img);
+  if(d.modal){
+    const m=MODALS[d.modal];
+    const dm=document.createElement('div'); dm.className='dim'; ph.appendChild(dm);
+    const mi=new Image(); mi.className='modal'; mi.alt=''; mi.src='assets/guide/'+m.src+'.webp'; Object.assign(mi.style,pct(m.b)); ph.appendChild(mi);
+  }
+  const sb=box(d.spot);
+  const sp=document.createElement('div'); sp.className='spot'+(d.round?' round':''); Object.assign(sp.style,pct(sb)); ph.appendChild(sp);
+  let input=null;
+  if(d.code){
+    input=document.createElement('input'); input.className='code-in'; input.maxLength=d.code.length;
+    input.setAttribute('inputmode','numeric'); input.autocomplete='off'; input.setAttribute('aria-label','연습 코드 입력');
+    Object.assign(input.style,pct([sb[0]+2,sb[1]+2,sb[2]-4,sb[3]-4])); ph.appendChild(input);
+  } else {
+    const fg=document.createElement('div'); fg.className='finger'; fg.textContent='👆';
+    Object.assign(fg.style,{left:(sb[0]+sb[2]/2-8)/W*100+'%',top:(sb[1]+sb[3]-6)/H*100+'%'}); ph.appendChild(fg);
+  }
+  const fl=document.createElement('div'); fl.className='flash'; ph.appendChild(fl);
+  const ts=document.createElement('div'); ts.className='toast'; ph.appendChild(ts);
+  const act=document.createElement('div'); act.className='act'; act.textContent='👆 '+d.act;
+  // 설명 카드: 눌러야 할 곳을 가리지 않게 위/아래 배치
+  const cap=document.createElement('div'); cap.className='cap '+((sb[1]+sb[3]/2)>H*0.5?'top':'bottom');
+  const row=document.createElement('div'); row.className='cap-row';
+  const k=s.querySelector('.step-k'), h=s.querySelector('h2'), ds=s.querySelector('.desc');
+  const skip=document.createElement('button'); skip.className='skip'; skip.type='button'; skip.textContent='건너뛰기 ›';
+  skip.onclick=e=>{e.stopPropagation();show(cur+1);};
+  row.append(k,skip); cap.append(row,h,ds,act);
+  const bar=document.createElement('div'); bar.className='bar'; bar.innerHTML='<i></i>'; cap.appendChild(bar);
+  s._bar=bar.firstChild;
+  s.append(ph,cap);
+
+  const toast=(m,ok)=>{ts.textContent=m;ts.classList.toggle('ok',!!ok);ts.classList.add('on');clearTimeout(ts._h);ts._h=setTimeout(()=>ts.classList.remove('on'),1200);};
+  const wrong=m=>{ph.classList.remove('shake');void ph.offsetWidth;ph.classList.add('shake');toast(m);};
+  let busy=false;
+  const pass=m=>{
+    if(busy)return; busy=true;
+    fl.classList.remove('on');void fl.offsetWidth;fl.classList.add('on');
+    act.textContent='✓ 잘했어요'; act.classList.add('done');
+    if(m) toast(m,true);
+    setTimeout(()=>{busy=false;act.textContent='👆 '+d.act;act.classList.remove('done');show(cur+1);},m?800:550);
+  };
+  s._focus=()=>{ if(input){input.value='';setTimeout(()=>input.focus({preventScroll:true}),300);} };
+  ph.addEventListener('click',e=>{
+    if(e.target===input) return;
+    const r=ph.getBoundingClientRect(), x=(e.clientX-r.left)/r.width*W, y=(e.clientY-r.top)/r.height*H;
+    if(input){ input.focus(); return; }
+    if(inBox(x,y,sb)) return pass();
+    if(d.alt && inBox(x,y,box(d.alt),0)) return wrong(d.altMsg);
+    wrong('밝게 표시된 곳을 눌러보세요');
+  });
+  if(input){
+    const check=()=>{
+      const v=input.value.trim().toUpperCase().replace(/^AB-?/,'');
+      if(v===d.code){ input.blur(); pass('🔓 FILE_02 잠금 해제'); }
+      else { wrong(v.length!==d.code.length?'칸 수('+d.code.length+'자리)를 확인하세요':'코드가 맞지 않아요'); input.select(); }
+    };
+    input.addEventListener('input',()=>{ if(input.value.length===d.code.length) setTimeout(check,150); });
+    input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.isComposing){e.preventDefault();check();} });
+  }
+});
+
+const steps=[...document.querySelectorAll('.step')], N=steps.length;
+const $=id=>document.getElementById(id);
+const tabs=[...document.querySelectorAll('.tabs button')];
+let cur=0;
+function show(i){
+  cur=Math.max(0,Math.min(N-1,i));
+  steps.forEach((s,k)=>s.classList.toggle('on',k===cur));
+  const part=steps[cur].dataset.part;
+  tabs.forEach(t=>t.classList.toggle('on',t.dataset.part===part));
+  const inPart=steps.filter(s=>s.dataset.part===part), idx=inPart.indexOf(steps[cur]);
+  $('progBar').style.width=((cur+1)/N*100)+'%';
+  $('stepCount').textContent=(idx+1)+' / '+inPart.length;
+  $('prev').disabled=$('topPrev').disabled=cur===0;
+  const last=cur===N-1, next=steps[cur+1];
+  $('next').textContent=last?'처음으로':(cur===0?'시작하기':(next&&next.dataset.part!==part?'게임 가이드 보기 ›':'다음'));
+  $('foot').classList.toggle('last',last);
+  const tapStep=!!steps[cur].dataset.img;
+  document.querySelector('.app').classList.toggle('imm',tapStep);
+  if(steps[cur]._bar) steps[cur]._bar.style.width=((idx+1)/inPart.length*100)+'%';
+  const kk=steps[cur].querySelector('.step-k'); if(tapStep&&kk) kk.textContent='게임 가이드 '+(idx+1)+' / '+(inPart.length-1);
+  $('foot').classList.toggle('tap',tapStep);
+  if(tapStep) $('next').textContent='건너뛰기 ›';
+  if(steps[cur]._focus) steps[cur]._focus();
+  $('body').scrollTop=0;
+  try{history.replaceState(null,'','#'+cur);}catch(e){}
+}
+$('next').onclick=()=>show(cur===N-1?0:cur+1);
+$('prev').onclick=$('topPrev').onclick=()=>show(cur-1);
+$('topHome').onclick=()=>show(0);
+tabs.forEach(t=>t.onclick=()=>show(steps.findIndex(s=>s.dataset.part===t.dataset.part)));
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1);});
+let sx=null,sy=null;
+$('body').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+$('body').addEventListener('touchend',e=>{
+  if(sx===null)return;
+  const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5) show(cur+(dx<0?1:-1));
+  sx=null;
+},{passive:true});
+show(parseInt(location.hash.slice(1))||0);
+</script>
+</body>
+</html>

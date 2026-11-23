@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>플레이 방법 | 문서 N07-013</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+html,body{height:100%;}
+body{background:var(--bg2);display:flex;flex-direction:column;overflow:hidden;}
+.top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px;max-width:520px;width:100%;margin:0 auto;}
+.top b{font-size:15px;}
+.top span{font-size:13px;color:var(--muted);}
+.track{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.track::-webkit-scrollbar{display:none;}
+.card-slot{flex:0 0 100%;scroll-snap-align:center;display:flex;justify-content:center;padding:8px 20px;min-height:0;}
+.card{width:100%;max-width:480px;background:#fff;border-radius:20px;border:1px solid var(--line);box-shadow:0 8px 24px #0000000f;padding:26px 22px;display:flex;flex-direction:column;overflow:hidden;}
+.tag{display:inline-block;align-self:flex-start;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-bg);border-radius:20px;padding:3px 10px;}
+.card h2{font-size:24px;font-weight:900;line-height:1.35;margin:12px 0 8px;}
+.card p{color:var(--sub);font-size:15.5px;}
+.card .fig{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;margin-top:16px;}
+.card .shot{max-height:100%;height:100%;aspect-ratio:var(--ar);width:auto;max-width:100%;}
+.card .shot img{height:100%;width:100%;object-fit:cover;object-position:top;}
+.cover{justify-content:center;text-align:center;}
+.cover h2{font-size:30px;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px;}
+.chips span{font-size:14px;background:var(--bg2);border-radius:20px;padding:6px 12px;}
+.list{list-style:none;margin-top:14px;display:grid;gap:10px;}
+.list li{background:var(--bg2);border-radius:12px;padding:12px 14px;font-size:15px;color:var(--sub);}
+.list li b{color:var(--ink);display:block;}
+.bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px calc(16px + env(safe-area-inset-bottom));max-width:520px;width:100%;margin:0 auto;}
+.dots{display:flex;gap:6px;}
+.dots i{width:7px;height:7px;border-radius:4px;background:#cfcac0;transition:all .3s;}
+.dots i.on{width:20px;background:var(--ink);}
+.nav{display:flex;gap:8px;}
+.nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer;}
+.nav button:disabled{opacity:.3;}
+.card .btn-play{margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="top"><b>플레이 방법</b><span id="cnt">1 / 8</span></div>
+<div class="track" id="track">
+
+  <div class="card-slot"><div class="card cover">
+    <div class="tag" style="align-self:center">문서 N07-013</div>
+    <h2>시작 전에<br>1분만 보고 가세요</h2>
+    <p>옆으로 넘겨보세요 →</p>
+    <div class="chips"><span>⏱ 약 2시간</span><span>👟 2~3km</span><span>👤 중학생 이상</span></div>
+  </div></div>
+
+  <div class="card-slot"><div class="card">
+    <div class="tag">STEP 1</div>
+    <h2>홍대입구역 3번 출구에서 접속</h2>
+    <p>[수사 시작] → 오프닝은 탭해서 넘겨요.</p>
+    <ul class="list">
+      <li><b>추천 브라우저</b>크롬, 사파리</li>
+      <li><b>준비물</b>보조배터리, 데이터, 이어폰</li>
+    </ul>
+  </div></div>
+
+  <div class="card-slot"><div class="card">
+    <div class="tag">STEP 2</div>
+    <h2>[MY STORAGE 열람] 누르기</h2>
+    <p>문제는 전부 MY STORAGE 안에 있어요.</p>
+    <div class="fig"><div class="shot" data-h="700" style="--ar:390/700"><img src="../assets/guide/g1_profile.webp" alt="" width="780" height="1400"><div class="mk" data-b="188,619,185,62"><i>!</i></div></div></div>
+  </div></div>
+
+  <div class="card-slot"><div class="card">
+    <div class="tag">STEP 3</div>
+    <h2>FILE_01부터 순서대로</h2>
+    <p>처음엔 FILE_01만 열려 있어요.</p>
+    <div class="fig"><div class="shot" data-h="691" style="--ar:390/691"><img src="../assets/guide/g2_storage.webp" alt="" width="780" height="1382"><div class="mk" data-b="19,145,82,114"><i>!</i></div></div></div>
+  </div></div>
+
+  <div class="card-slot"><div class="card">
+    <div class="tag">STEP 4</div>
+    <h2>형광펜 단서 → 현장에서 답</h2>
+    <p>찾은 답이 <b>다음 파일의 잠금 코드</b>예요.</p>
+    <div class="fig"><div class="shot" data-h="844" style="--ar:390/844"><img src="../assets/guide/g3_file.webp" alt="" width="780" height="1688"><div class="mk" data-b="31,167,282,29"><i>!</i></div></div></div>
+  </div></div>
+
+  <div class="card-slot"><div class="card">
+    <div class="tag">STEP 5</div>
+    <h2>다음 파일에 코드 입력</h2>
+    <p><span class="kbd">AB-</span>처럼 적힌 부분은 빼고, 대소문자는 상관없어요.</p>
+    <div class="fig"><div class="shot" data-w="340" data-h="268.2" style="--ar:340/268.2;height:auto;width:100%"><img src="../assets/guide/m_code.webp" alt="" width="680" height="537"><div class="mk" data-b="22,137,297,38"><i>!</i></div></div></div>
+  </div></div>
+
+  <div class="card-slot"><div class="card">
+    <div class="tag">STEP 6</div>
+    <h2>막히면 💡, 지도는 힌트 창 안에</h2>
+    <p>파일 화면 오른쪽 아래 💡 → 힌트 창 오른쪽 위 지도 아이콘.</p>
+    <div class="fig"><div class="shot" data-w="340" data-h="170.8" style="--ar:340/170.8;height:auto;width:100%"><img src="../assets/guide/m_hint.webp" alt="" width="680" height="341"><div class="mk" data-b="278,51,42,42"><i>!</i></div></div></div>
+  </div></div>
+
+  <div class="card-slot"><div class="card">
+    <div class="tag" style="background:var(--ink);color:#fff">꼭 지켜주세요</div>
+    <h2>주의사항</h2>
+    <ul class="list">
+      <li><b>새로고침·창 닫기 금지</b>진행 상황이 사라질 수 있어요.</li>
+      <li><b>뒤로 가기는 게임 안의 ←</b>브라우저 뒤로 가기 대신 사용해요.</li>
+      <li><b>걸을 땐 앞을 보기</b>확인은 멈춰서 해주세요.</li>
+    </ul>
+    <a class="btn-play" href="https://popo90002-netizen.github.io/outdooerescaperoom/">게임 시작 ▶</a>
+  </div></div>
+
+</div>
+<div class="bottom">
+  <div class="dots" id="dots"></div>
+  <div class="nav"><button id="prev" aria-label="이전">‹</button><button id="next" aria-label="다음">›</button></div>
+</div>
+<script src="common.js"></script>
+<script>
+const track=document.getElementById('track'), slots=[...track.children], N=slots.length;
+const dots=document.getElementById('dots'); slots.forEach(()=>dots.appendChild(document.createElement('i')));
+let cur=0;
+function update(){
+  cur=Math.round(track.scrollLeft/track.clientWidth);
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));
+  document.getElementById('cnt').textContent=(cur+1)+' / '+N;
+  document.getElementById('prev').disabled=cur===0; document.getElementById('next').disabled=cur===N-1;
+}
+track.addEventListener('scroll',()=>requestAnimationFrame(update));
+const go=i=>track.scrollTo({left:i*track.clientWidth,behavior:'smooth'});
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+update();
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<title>신입 요원 현장 훈련 | 문서 N07-013</title>
+<meta name="description" content="실제 게임 화면을 직접 눌러보며 1분 만에 플레이 방법을 익히는 훈련 모드.">
+<meta name="theme-color" content="#14110e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#14110e; --paper:#f1e7d2; --paper2:#e6d7b8; --card:#fbf7ee; --line:#d6c5a2;
+  --ink:#2a211a; --sub:#6b5a45; --muted:#93806a;
+  --red:#a3241c; --red2:#d23a2e; --amber:#e8c060; --blue:#233a6b;
+  --kr:'Noto Sans KR',sans-serif; --mono:'Courier Prime',monospace; --hand:'Nanum Pen Script',cursive;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--desk);color:var(--paper);font-family:var(--kr);word-break:keep-all;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(ellipse at 50% 0%,#2a2017 0,transparent 65%);}
+button{font-family:inherit;cursor:pointer;}
+img{display:block;}
+
+.view{position:fixed;inset:0;display:none;}
+.view.on{display:flex;}
+
+/* ===== 인트로 ===== */
+#intro{flex-direction:column;align-items:center;justify-content:center;padding:24px 20px calc(24px + env(safe-area-inset-bottom));overflow-y:auto;}
+.intro-in{width:100%;max-width:400px;}
+.badge-row{display:flex;align-items:center;gap:10px;font:700 12px var(--mono);letter-spacing:.2em;color:var(--amber);}
+.badge-row::after{content:'';flex:1;height:1px;background:#e8c06055;}
+.intro h1{font-size:clamp(32px,9vw,40px);font-weight:900;line-height:1.2;margin:14px 0 10px;letter-spacing:-.02em;}
+.intro h1 em{font-style:normal;color:var(--red2);}
+.intro .sub{color:#b8a888;font-size:16px;line-height:1.7;}
+.timer{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font:700 13px var(--mono);color:var(--paper);border:1px solid #5a4a3a;border-radius:20px;padding:4px 12px;}
+.timer i{width:7px;height:7px;border-radius:50%;background:var(--red2);animation:blink 1s infinite;}
+@keyframes blink{50%{opacity:.15}}
+.tasks{list-style:none;margin:24px 0 28px;border-top:1px dashed #5a4a3a;}
+.tasks li{display:flex;gap:12px;align-items:center;padding:12px 2px;border-bottom:1px dashed #5a4a3a;font-size:15px;color:#d9ccb2;}
+.tasks li span{font:700 12px var(--mono);color:var(--amber);width:34px;flex-shrink:0;}
+.btn-main{width:100%;height:58px;border:none;border-radius:14px;background:var(--paper);color:var(--ink);font-size:18px;font-weight:900;letter-spacing:.06em;box-shadow:0 8px 20px #0008;}
+.btn-main:active{transform:scale(.98);}
+.btn-skip{display:block;margin:16px auto 0;background:none;border:none;color:#9a8a72;font-size:14px;text-decoration:underline;text-underline-offset:3px;}
+
+/* ===== 훈련 (폰 화면) ===== */
+#train{align-items:center;justify-content:center;}
+.stage{position:relative;width:min(100vw,430px,calc(100dvh * 390 / 844));aspect-ratio:390/844;background:#1b1713;overflow:hidden;user-select:none;-webkit-user-select:none;}
+@media (min-width:500px){.stage{border-radius:28px;box-shadow:0 0 0 10px #2b2622,0 30px 60px #000c;height:min(844px,calc(100dvh - 40px));width:auto;}}
+.layer{position:absolute;inset:0;}
+.base{position:absolute;left:0;top:0;width:100%;height:auto;}
+.dim{position:absolute;inset:0;background:#000a;opacity:0;transition:opacity .3s;}
+.dim.on{opacity:1;}
+.modal-img{position:absolute;border-radius:10px;box-shadow:0 10px 30px #000a;opacity:0;transform:scale(.96);transition:opacity .3s,transform .3s;}
+.modal-img.on{opacity:1;transform:none;}
+
+/* 스포트라이트 */
+.spot{position:absolute;border-radius:12px;box-shadow:0 0 0 2000px rgba(10,8,6,.62);transition:all .45s cubic-bezier(.2,.8,.2,1);pointer-events:none;opacity:0;}
+.spot.on{opacity:1;}
+.spot.round{border-radius:50%;}
+.spot::after{content:'';position:absolute;inset:-6px;border:3px solid var(--amber);border-radius:inherit;animation:ring 1.4s ease-out infinite;}
+.spot.info::after{border-color:#fff8;animation:none;}
+@keyframes ring{0%{transform:scale(.96);opacity:1}100%{transform:scale(1.18);opacity:0}}
+.finger{position:absolute;font-size:30px;pointer-events:none;transition:all .45s cubic-bezier(.2,.8,.2,1);animation:tap 1.2s ease-in-out infinite;filter:drop-shadow(0 3px 4px #0008);opacity:0;}
+.finger.on{opacity:1;}
+@keyframes tap{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,-8px)}}
+
+/* 입력 오버레이 */
+.code-in{position:absolute;display:none;border:none;background:#fffdf6;border:2px solid var(--amber);border-radius:4px;font:700 18px var(--mono);text-align:center;letter-spacing:.3em;color:var(--ink);outline:none;}
+.code-in.on{display:block;}
+
+/* HQ 무전 카드 */
+.hq{position:absolute;left:10px;right:10px;background:#16130fef;color:var(--paper);border:1px solid #5a4a3a;border-radius:16px;padding:14px 16px 14px;box-shadow:0 12px 30px #000c;transition:top .45s cubic-bezier(.2,.8,.2,1),bottom .45s cubic-bezier(.2,.8,.2,1),opacity .3s;z-index:5;backdrop-filter:blur(4px);}
+.hq.bottom{bottom:calc(12px + env(safe-area-inset-bottom));top:auto;}
+.hq.top{top:calc(12px + env(safe-area-inset-top));bottom:auto;}
+.hq-h{display:flex;align-items:center;gap:8px;font:700 11px var(--mono);letter-spacing:.16em;color:var(--amber);margin-bottom:6px;}
+.hq-h i{width:7px;height:7px;border-radius:50%;background:var(--red2);animation:blink 1s infinite;}
+.hq-h .cnt{margin-left:auto;color:#8a7a62;letter-spacing:.06em;}
+.hq-t{font-size:15.5px;line-height:1.65;min-height:3.3em;}
+.hq-t b{color:var(--amber);font-weight:700;}
+.hq-t .hl{background:linear-gradient(transparent 55%,#e8c06066 55%);}
+.hq-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px;}
+.hq-act{font:700 12px var(--mono);color:#8a7a62;letter-spacing:.06em;}
+.hq-btn{background:var(--paper);color:var(--ink);border:none;border-radius:10px;padding:9px 18px;font-size:14px;font-weight:900;}
+.hq-btn[hidden]{display:none;}
+.prog{position:absolute;left:0;right:0;top:0;height:3px;background:#0005;z-index:6;}
+.prog i{display:block;height:100%;background:var(--amber);width:0;transition:width .4s;}
+
+/* 토스트 & 흔들기 */
+.toast{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.9);background:#16130ff2;color:#fff;border:1px solid #5a4a3a;padding:12px 18px;border-radius:12px;font-size:15px;font-weight:700;white-space:nowrap;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:8;}
+.toast.on{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.toast.ok{background:#1e3a22f2;border-color:#3f7a46;}
+.shake{animation:shake .35s;}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.flash{position:absolute;inset:0;background:#e8c060;opacity:0;pointer-events:none;z-index:7;}
+.flash.on{animation:flash .6s;}
+@keyframes flash{0%{opacity:.5}100%{opacity:0}}
+
+/* ===== 수료증 ===== */
+#done{flex-direction:column;align-items:center;padding:20px 16px calc(20px + env(safe-area-inset-bottom));overflow-y:auto;}
+.cert{position:relative;width:100%;max-width:400px;background:var(--paper);color:var(--ink);border-radius:4px;padding:28px 22px 24px;margin-top:10px;box-shadow:0 20px 50px #000c;
+  background-image:radial-gradient(ellipse at 15% 8%,#fff8 0,transparent 45%),repeating-linear-gradient(0deg,#0000 0 3px,#00000006 3px 4px);
+  animation:drop .6s cubic-bezier(.2,.8,.2,1);}
+@keyframes drop{from{opacity:0;transform:translateY(-20px) rotate(-2deg)}to{opacity:1;transform:none}}
+.cert-top{display:flex;justify-content:space-between;font:700 11px var(--mono);letter-spacing:.16em;color:var(--muted);border-bottom:1.5px solid var(--line);padding-bottom:10px;}
+.cert-top b{color:var(--red);}
+.cert h2{font-size:26px;font-weight:900;margin:16px 0 4px;}
+.cert .who{font-size:14px;color:var(--sub);}
+.stamp{position:absolute;right:16px;top:52px;font:700 14px var(--mono);letter-spacing:.16em;color:var(--red);border:3px solid var(--red);border-radius:6px;padding:6px 10px;transform:rotate(-12deg) scale(1.6);opacity:0;}
+.stamp.on{animation:stamp .4s .5s forwards;}
+@keyframes stamp{to{transform:rotate(-12deg) scale(1);opacity:.85}}
+.orders{margin:18px 0 6px;border-top:1.5px solid var(--ink);}
+.orders div{display:flex;border-bottom:1px solid var(--line);font-size:15px;}
+.orders dt{width:78px;flex-shrink:0;font:700 11px var(--mono);letter-spacing:.1em;color:var(--muted);padding:12px 0;border-right:1px solid var(--line);}
+.orders dd{padding:9px 12px;}
+.orders dd small{display:block;font-size:12.5px;color:var(--muted);}
+.remind{list-style:none;margin-top:14px;display:grid;gap:6px;}
+.remind li{font-size:14px;color:var(--sub);padding-left:18px;position:relative;}
+.remind li::before{content:'!';position:absolute;left:0;top:1px;font:700 13px var(--mono);color:var(--red);}
+.sign{font-family:var(--hand);font-size:24px;color:var(--blue);text-align:right;margin-top:12px;}
+.go{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:400px;margin-top:18px;height:60px;border-radius:14px;background:var(--red);color:#fff;text-decoration:none;font-size:18px;font-weight:900;letter-spacing:.06em;box-shadow:0 8px 20px #a3241c66;}
+.links{display:flex;gap:18px;justify-content:center;margin-top:14px;}
+.links a,.links button{background:none;border:none;color:#9a8a72;font-size:14px;text-decoration:underline;text-underline-offset:3px;}
+</style>
+</head>
+<body>
+
+<!-- ===== 인트로 ===== -->
+<section class="view on" id="intro">
+  <div class="intro-in intro">
+    <div class="badge-row">NCI TRAINING</div>
+    <h1>신입 요원<br><em>현장 훈련</em></h1>
+    <p class="sub">출동 전에 실제 게임 화면을<br>직접 눌러보며 익혀요.</p>
+    <div class="timer"><i></i>약 1분</div>
+    <ul class="tasks">
+      <li><span>T-01</span>문제가 들어 있는 곳 찾기</li>
+      <li><span>T-02</span>첫 번째 파일 열기</li>
+      <li><span>T-03</span>힌트와 지도 찾기</li>
+      <li><span>T-04</span>잠금 코드 입력해보기</li>
+      <li><span>T-05</span>메시지·카메라 위치 확인</li>
+    </ul>
+    <button class="btn-main" id="startBtn">훈련 시작</button>
+    <button class="btn-skip" id="skipBtn">훈련 건너뛰고 출동 정보만 보기</button>
+  </div>
+</section>
+
+<!-- ===== 훈련 ===== -->
+<section class="view" id="train">
+  <div class="stage" id="stage">
+    <div class="prog"><i id="prog"></i></div>
+    <div class="layer" id="layer">
+      <img class="base" id="base" src="assets/guide/g1_profile.webp" alt="">
+      <div class="dim" id="dim"></div>
+      <img class="modal-img" id="mHint" src="assets/guide/m_hint.webp" alt="">
+      <img class="modal-img" id="mCode" src="assets/guide/m_code.webp" alt="">
+      <input class="code-in" id="codeIn" inputmode="numeric" maxlength="3" autocomplete="off" aria-label="훈련 코드 입력">
+    </div>
+    <div class="spot" id="spot"></div>
+    <div class="finger" id="finger">👆</div>
+    <div class="flash" id="flash"></div>
+    <div class="toast" id="toast"></div>
+    <div class="hq bottom" id="hq">
+      <div class="hq-h"><i></i>HQ ▸ 신입 요원<span class="cnt" id="cnt"></span></div>
+      <div class="hq-t" id="hqText"></div>
+      <div class="hq-row"><span class="hq-act" id="hqAct"></span><button class="hq-btn" id="hqBtn" hidden>다음 ›</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 수료 ===== -->
+<section class="view" id="done">
+  <div class="cert">
+    <div class="cert-top"><span>NCI · 출동 명령서</span><b>N07-013</b></div>
+    <h2 id="certTitle">현장 훈련 수료</h2>
+    <div class="who" id="certWho">아래 정보를 확인하고 출동하세요.</div>
+    <div class="stamp" id="stamp">PASSED</div>
+    <dl class="orders">
+      <div><dt>집결지</dt><dd><b>홍대입구역 3번 출구</b></dd></div>
+      <div><dt>소요</dt><dd>약 2시간<small>순수 플레이 기준 · 중간에 쉬었다 와도 OK</small></dd></div>
+      <div><dt>이동</dt><dd>약 2~3km 도보</dd></div>
+      <div><dt>대상</dt><dd>중학생 이상</dd></div>
+      <div><dt>준비물</dt><dd>충전된 휴대폰·보조배터리, 데이터, 이어폰, 편한 신발</dd></div>
+      <div><dt>첫 임무</dt><dd>[MY STORAGE 열람] → <b>FILE_01</b></dd></div>
+    </dl>
+    <ul class="remind">
+      <li>새로고침·창 닫기는 하지 마세요. 진행 상황이 사라질 수 있어요.</li>
+      <li>걸을 땐 화면 대신 앞을 보고, 확인은 멈춰서 해주세요.</li>
+      <li>막히면 파일 화면 오른쪽 아래 💡, 지도는 힌트 창 안에.</li>
+    </ul>
+    <div class="sign">— NCI 본부</div>
+  </div>
+  <a class="go" href="https://popo90002-netizen.github.io/outdooerescaperoom/">▶ 출동 (게임 접속)</a>
+  <div class="links"><button id="againBtn">훈련 다시 하기</button><a href="guide.html">글로 된 안내 보기</a></div>
+</section>
+
+<script>
+/* 좌표는 실제 게임 화면(390×844) 기준 */
+const W=390,H=844;
+const MODAL_HINT=[25,336.6,340,170.8], MODAL_CODE=[25,287.9,340,268.2];
+const TRAIN_CODE='007';
+
+const STEPS=[
+  {img:'g1_profile', spot:null, card:'bottom', btn:true,
+   t:'요원님, 출동 전 1분 훈련을 시작할게요.<br>게임에 접속하면 처음 나오는 화면이 바로 이 <b>프로필 화면</b>이에요.'},
+  {img:'g1_profile', spot:[188,619,185,62], card:'top', tap:true, act:'버튼을 눌러보세요',
+   t:'문제(파일)는 전부 <b>MY STORAGE</b> 안에 있어요.<br>아래 <span class="hl">[MY STORAGE 열람]</span> 버튼을 눌러보세요.'},
+  {img:'g2_storage', spot:[19,145,82,114], card:'bottom', tap:true, act:'FILE_01을 눌러보세요',
+   alt:[{b:[109,145,82,114],msg:'🔒 이전 파일을 먼저 해제하세요',say:'잠긴 파일은 <b>순서대로만</b> 열려요. 지금은 <b>FILE_01</b>부터!'}],
+   t:'처음엔 <b>FILE_01</b>만 열려 있어요.<br>여기가 출발점이에요. 눌러서 열어보세요.'},
+  {img:'g3_file', spot:[31,167,282,29], info:true, card:'bottom', btn:true,
+   t:'파일을 읽다가 <span class="hl">노란 형광펜</span>을 찾으세요. 그게 핵심 단서예요.<br>단서를 들고 <b>실제 장소</b>로 가서 답을 찾으면 돼요.'},
+  {img:'g3_file', spot:[326,776,48,48], round:true, card:'top', tap:true, act:'💡를 눌러보세요',
+   t:'현장에서 막히면? 파일 화면 <b>오른쪽 아래 💡</b> 버튼을 눌러보세요.'},
+  {img:'g3_file', modal:'hint', spot:[303,388,42,42], card:'bottom', tap:true, act:'지도 아이콘을 눌러보세요',
+   t:'힌트 창이에요. 다음 장소가 헷갈리면 <b>오른쪽 위 지도 아이콘</b>!<br><span class="hl">지도는 여기에만</span> 있어요. 눌러보세요.'},
+  {img:'g3_file', modal:'hint', spot:[261,448,81,35], info:true, card:'bottom', btn:true,
+   t:'좋아요. 실제 게임에선 이때 장소 지도가 떠요.<br><b>[열기]</b>를 누르면 힌트가 한 단계씩 열리고, 끝까지 열면 정답과 해설도 볼 수 있어요.'},
+  {img:'g2_storage', modal:'code', spot:[50,427,291,34], card:'top', code:true, act:'훈련 코드: 007',
+   t:'현장에서 찾은 답은 <b>다음 파일의 잠금 코드</b>예요.<br><b>AB-</b>는 이미 적혀 있으니 빼고, 훈련 코드 <span class="hl">007</span>을 입력해보세요.'},
+  {img:'g6_msg', spot:[9,586,371,73], card:'top', tap:true, act:'입력창을 눌러보세요',
+   t:'가끔 다른 요원에게 <b>메시지로 답</b>을 보내야 해요.<br>프로필 화면 → 메시지 → 맨 아래 <b>입력창</b>이에요.'},
+  {img:'g2_storage', spot:[23,626,48,48], round:true, card:'top', tap:true, act:'카메라를 눌러보세요',
+   t:'마지막! 파일에서 카메라를 쓰라고 하면 MY STORAGE 왼쪽 아래 <b>빨간 카메라</b>.<br>카메라 권한은 ‘허용’해주세요.'},
+];
+
+const $=id=>document.getElementById(id);
+const views={intro:$('intro'),train:$('train'),done:$('done')};
+function view(n){Object.entries(views).forEach(([k,v])=>v.classList.toggle('on',k===n));}
+let cur=0, busy=false, typer=null;
+
+function pct(b){return {left:b[0]/W*100+'%',top:b[1]/H*100+'%',width:b[2]/W*100+'%',height:b[3]/H*100+'%'};}
+function inBox(px,py,b,pad=8){return px>=b[0]-pad&&px<=b[0]+b[2]+pad&&py>=b[1]-pad&&py<=b[1]+b[3]+pad;}
+
+Object.assign($('mHint').style,pct(MODAL_HINT));
+Object.assign($('mCode').style,pct(MODAL_CODE));
+Object.assign($('codeIn').style,pct([52,429,287,30]));
+
+function type(html){
+  clearInterval(typer);
+  const el=$('hqText'); el.innerHTML=html;
+  // 글자 단위 등장 (태그 유지)
+  const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
+  const nodes=[];let n;while(n=walker.nextNode()){nodes.push([n,n.textContent]);n.textContent='';}
+  let i=0,j=0;
+  typer=setInterval(()=>{
+    if(i>=nodes.length){clearInterval(typer);return;}
+    const [node,full]=nodes[i];
+    j+=2; node.textContent=full.slice(0,j);
+    if(j>=full.length){i++;j=0;}
+  },18);
+}
+function finishType(){
+  clearInterval(typer);
+}
+
+function go(i){
+  cur=i;
+  if(cur>=STEPS.length){return finish();}
+  const s=STEPS[cur];
+  $('base').src='assets/guide/'+s.img+'.webp';
+  $('dim').classList.toggle('on',!!s.modal);
+  $('mHint').classList.toggle('on',s.modal==='hint');
+  $('mCode').classList.toggle('on',s.modal==='code');
+  const ci=$('codeIn'); ci.classList.toggle('on',!!s.code); ci.value='';
+  const spot=$('spot'), fg=$('finger');
+  if(s.spot){
+    Object.assign(spot.style,pct(s.spot));
+    spot.classList.add('on'); spot.classList.toggle('round',!!s.round); spot.classList.toggle('info',!!s.info);
+  } else spot.classList.remove('on');
+  if(s.spot && (s.tap)){
+    const b=s.spot;
+    Object.assign(fg.style,{left:(b[0]+b[2]/2-6)/W*100+'%',top:(b[1]+b[3]-4)/H*100+'%'});
+    fg.classList.add('on');
+  } else fg.classList.remove('on');
+  const hq=$('hq'); hq.className='hq '+s.card;
+  $('hqBtn').hidden=!s.btn;
+  $('hqBtn').textContent=s.code?'확인 ›':'다음 ›';
+  if(s.code) $('hqBtn').hidden=false;
+  $('hqAct').textContent=s.act?'▸ '+s.act:'';
+  $('cnt').textContent=(cur+1)+' / '+STEPS.length;
+  $('prog').style.width=(cur/STEPS.length*100)+'%';
+  type(s.t);
+  if(s.code) setTimeout(()=>ci.focus({preventScroll:true}),400);
+}
+
+function toast(msg,ok){
+  const t=$('toast'); t.textContent=msg; t.classList.toggle('ok',!!ok); t.classList.add('on');
+  clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('on'),1300);
+}
+function wrong(msg){
+  const st=$('stage'); st.classList.remove('shake'); void st.offsetWidth; st.classList.add('shake');
+  if(msg) toast(msg);
+}
+function success(msg){
+  if(busy) return; busy=true;
+  const f=$('flash'); f.classList.remove('on'); void f.offsetWidth; f.classList.add('on');
+  if(msg) toast(msg,true);
+  setTimeout(()=>{busy=false;go(cur+1);},msg?750:350);
+}
+
+$('stage').addEventListener('click',e=>{
+  if(busy) return;
+  if(e.target.closest('.hq')||e.target===$('codeIn')) return;
+  const s=STEPS[cur]; if(!s) return;
+  const r=$('stage').getBoundingClientRect();
+  const px=(e.clientX-r.left)/r.width*W, py=(e.clientY-r.top)/r.height*H;
+  if(s.tap){
+    if(inBox(px,py,s.spot)) return success(s.okMsg||null);
+    const alt=(s.alt||[]).find(a=>inBox(px,py,a.b,0));
+    if(alt){ wrong(alt.msg); if(alt.say) type(alt.say+'<br><span style="color:#8a7a62">'+s.t.split('<br>')[0]+'</span>'); return; }
+    wrong('표시된 곳을 눌러보세요');
+  } else if(s.code){
+    $('codeIn').focus({preventScroll:true});
+  }
+});
+function checkCode(){
+  const v=$('codeIn').value.trim().toUpperCase().replace(/^AB-?/,'');
+  if(v===TRAIN_CODE){ $('codeIn').blur(); success('🔓 FILE_02 잠금 해제'); }
+  else{ wrong(v.length!==3?'칸 수(3자리)를 확인하세요':'코드가 맞지 않아요'); $('codeIn').select(); }
+}
+$('codeIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();checkCode();}});
+$('codeIn').addEventListener('input',e=>{if(e.target.value.length===3) setTimeout(checkCode,150);});
+$('hqBtn').addEventListener('click',()=>{
+  const s=STEPS[cur];
+  if(s.code) return checkCode();
+  success();
+});
+
+function finish(){
+  $('prog').style.width='100%';
+  $('certTitle').textContent='현장 훈련 수료';
+  $('certWho').textContent='신입 요원님, 출동 준비 완료! 아래 정보를 확인하세요.';
+  view('done'); const st=$('stamp'); st.style.display=''; st.classList.remove('on'); void st.offsetWidth; st.classList.add('on');
+  try{localStorage.setItem('nciTrainingDone','1');}catch(e){}
+}
+$('startBtn').onclick=()=>{view('train');go(0);};
+$('skipBtn').onclick=()=>{
+  $('certTitle').textContent='출동 명령서';
+  $('certWho').textContent='훈련 없이 바로 출동해요. 아래 정보를 꼭 확인하세요.';
+  $('stamp').style.display='none';
+  view('done');
+};
+$('againBtn').onclick=()=>{view('train');go(0);};
+
+// 이미지 미리 불러오기
+['g1_profile','g2_storage','g3_file','g6_msg'].forEach(n=>{const i=new Image();i.src='assets/guide/'+n+'.webp';});
+</script>
+</body>
+</html>
