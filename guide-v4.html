@@ -117,7 +117,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 /* 세로로 긴 게임 화면: 카드에 남은 높이를 꽉 채우되 잘리지 않게 */
 .card.g{display:flex;flex-direction:column;padding:22px 16px 16px;}
 .card.g h2{margin-bottom:8px;}
-.card.g .shot.tall{flex:1 1 0;min-height:180px;width:auto;max-width:82%;aspect-ratio:var(--ar);margin:0 auto;}
+.card.g .shot.tall{flex:0 1 auto;height:min(54vh,470px);min-height:180px;width:auto;max-width:100%;aspect-ratio:var(--ar);margin:0 auto;}
 .card.g .shot.tall img{height:100%;width:100%;}
 .card.g .desc,.card.g .legend{flex-shrink:0;}
 .mini{display:flex;flex-wrap:wrap;gap:6px 12px;margin-bottom:10px;font-size:13.5px;font-weight:700;flex-shrink:0;}
