@@ -125,6 +125,8 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .mini i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;}
 .tray > .page{position:absolute;top:28px;right:calc(5% + 26px);z-index:3;font:700 12px var(--mono);color:var(--muted);background:none;padding:0;pointer-events:none;}
 .tray > .page b{color:var(--ink);}
+.mk.spot{box-shadow:0 0 0 2px #fff9,0 0 0 2000px rgba(12,9,6,.55);animation:spotPulse 1.6s ease-in-out infinite;}
+@keyframes spotPulse{0%,100%{border-color:var(--red)}50%{border-color:#ffd36a}}
 /* 하단 */
 .bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
 .bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
@@ -194,7 +196,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
       <article class="card g" data-ch="game"><span class="tape"></span>
         <div class="k">HOW TO 1</div><h2>첫 화면 → <span class="hl">MY STORAGE</span></h2>
         <div class="mini"><span><i>!</i>[MY STORAGE 열람] 누르기</span></div>
-        <div class="shot tall" data-h="700" style="--ar:390/700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk" data-b="188,619,185,62"><i>!</i></div></div>
+        <div class="shot tall" data-h="700" style="--ar:390/700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk spot" data-b="188,619,185,62"><i>!</i></div></div>
       </article>
 
       <article class="card g" data-ch="game"><span class="tape"></span>
