@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<title>플레이 가이드 | 문서 N07-013</title>
+<meta name="description" content="문서 N07-013 야외 방탈출 플레이 가이드">
+<meta name="theme-color" content="#f1e7d2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1e7d2; --paper2:#e8dcc2; --card:#fbf7ee; --line:#d6c5a2;
+  --ink:#2a211a; --sub:#6b5a45; --muted:#93806a; --dark:#2b2a28;
+  --red:#a3241c; --redbg:#f4e0d8; --green:#2f6b3a; --greenbg:#e2efdf; --yellow:#ffe27a; --amber:#e8c060;
+  --kr:'Noto Sans KR',sans-serif; --mono:'Courier Prime',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip;}
+body{background:var(--paper);color:var(--ink);font-family:var(--kr);font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+img{display:block;max-width:100%;}
+b,strong{font-weight:700;}
+button{font-family:inherit;}
+.wrap{max-width:560px;margin:0 auto;padding:0 18px;}
+.hl{background:linear-gradient(transparent 58%,var(--yellow) 58%);}
+.kbd{display:inline-block;font-size:.85em;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:6px;padding:0 6px;line-height:1.7;white-space:nowrap;}
+.sec{padding:64px 0 8px;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 12px var(--mono);letter-spacing:.12em;color:var(--red);}
+.eyebrow::before{content:'';width:18px;height:2px;background:var(--red);}
+.h2{font-size:clamp(26px,7vw,32px);font-weight:900;line-height:1.25;letter-spacing:-.02em;margin:8px 0 18px;}
+
+/* 등장 효과 */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1);}
+.rv.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}*{animation:none!important;}}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:40px 0 70px;position:relative;}
+.hero .tag{display:inline-block;font:700 12px var(--mono);letter-spacing:.12em;background:var(--dark);color:var(--paper);padding:5px 10px;border-radius:6px;}
+.hero h1{font-size:clamp(40px,12vw,58px);font-weight:900;line-height:1.08;letter-spacing:-.03em;margin:18px 0 14px;}
+.hero h1 em{font-style:normal;color:var(--red);}
+.hero p{font-size:17px;color:var(--sub);}
+.hero-cover{position:absolute;right:-30px;top:12%;width:46%;max-width:230px;height:auto;transform:rotate(9deg);box-shadow:0 18px 36px #3a2a1a55;border-radius:3px;z-index:-1;opacity:.95;}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
+.toc a{text-decoration:none;font-size:14px;font-weight:700;background:var(--card);border:1.5px solid var(--ink);border-radius:30px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s;}
+.toc a:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink);}
+.scroll-cue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:13px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;}
+.scroll-cue i{width:2px;height:28px;background:linear-gradient(var(--muted),transparent);animation:cue 1.6s ease-in-out infinite;}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== 벤토 그리드 ===== */
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tile{background:var(--card);border:1.5px solid var(--ink);border-radius:18px;padding:16px;box-shadow:4px 4px 0 var(--ink);position:relative;overflow:hidden;}
+.tile small{display:block;font:700 11px var(--mono);letter-spacing:.1em;color:var(--muted);}
+.tile .big{font-size:30px;font-weight:900;line-height:1.15;letter-spacing:-.02em;margin-top:6px;}
+.tile .big span{font-size:16px;font-weight:700;margin-left:2px;}
+.tile p{font-size:13px;color:var(--sub);margin-top:4px;line-height:1.5;}
+.tile .emo{position:absolute;right:12px;top:10px;font-size:24px;}
+.tile.wide{grid-column:1/-1;}
+.tile.dark{background:var(--dark);color:var(--paper);}
+.tile.dark small{color:#c9a873;}
+.tile.dark p{color:#cbbd9f;}
+.tile.red{background:var(--red);color:#fff;}
+.tile.red small,.tile.red p{color:#f6d6d0;}
+
+/* ===== 준비물 체크 ===== */
+.kit{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.chk{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;transition:all .2s;position:relative;color:var(--ink);}
+.chk .e{font-size:26px;line-height:1;}
+.chk b{font-size:15px;}
+.chk span{font-size:12.5px;color:var(--muted);line-height:1.4;}
+.chk::after{content:'';position:absolute;right:12px;top:12px;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);background:#fff;transition:all .2s;}
+.chk.on{border-color:var(--green);background:var(--greenbg);}
+.chk.on::after{background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;border-color:var(--green);}
+.chk:active{transform:scale(.97);}
+.kit-state{margin-top:14px;display:flex;align-items:center;justify-content:space-between;background:var(--card);border-radius:14px;padding:12px 16px;font-size:14px;color:var(--sub);border:1.5px dashed var(--line);transition:all .3s;}
+.kit-state b{font:700 18px var(--mono);color:var(--ink);}
+.kit-state.done{background:var(--green);border:1.5px solid var(--green);color:#fff;}
+.kit-state.done b{color:#fff;}
+
+/* ===== 시작 장소 ===== */
+.start{display:flex;align-items:stretch;gap:12px;}
+.exit{flex-shrink:0;width:104px;border-radius:18px;background:#f5a623;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);}
+.exit b{font-size:58px;line-height:1;font-weight:900;}
+.exit span{font-size:12px;font-weight:700;}
+.start-txt{flex:1;background:var(--card);border:1.5px solid var(--ink);border-radius:18px;padding:16px;box-shadow:4px 4px 0 var(--ink);}
+.start-txt small{font:700 11px var(--mono);letter-spacing:.1em;color:var(--muted);}
+.start-txt h3{font-size:21px;font-weight:900;margin:2px 0 6px;}
+.start-txt p{font-size:14px;color:var(--sub);}
+.how{list-style:none;margin-top:16px;display:grid;gap:8px;counter-reset:h;}
+.how li{counter-increment:h;display:flex;gap:12px;align-items:center;font-size:15px;}
+.how li::before{content:counter(h);width:26px;height:26px;border-radius:50%;background:var(--dark);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* ===== 게임 가이드 (스크롤에 따라 화면이 바뀜) ===== */
+.story{position:relative;}
+.sticky{position:sticky;top:0;height:64vh;height:64svh;display:flex;align-items:center;justify-content:center;z-index:2;
+  background:linear-gradient(var(--paper) 88%,transparent);padding:14px 0 10px;}
+.phone{position:relative;height:100%;aspect-ratio:390/844;border-radius:22px;overflow:hidden;border:5px solid var(--dark);background:#1b1713;box-shadow:0 16px 32px #3a2a1a44;}
+.phone .base{position:absolute;left:0;top:0;width:100%;height:auto;transition:opacity .3s;}
+.phone .dim{position:absolute;inset:0;background:#000a;opacity:0;transition:opacity .3s;}
+.phone .dim.on{opacity:1;}
+.phone .modal{position:absolute;border-radius:8px;box-shadow:0 8px 20px #000a;opacity:0;transform:scale(.96);transition:opacity .3s,transform .3s;}
+.phone .modal.on{opacity:1;transform:none;}
+.phone .spot{position:absolute;border-radius:8px;box-shadow:0 0 0 2000px rgba(10,8,6,.5);transition:all .45s cubic-bezier(.2,.8,.2,1);}
+.phone .spot.round{border-radius:50%;}
+.phone .spot::after{content:'';position:absolute;inset:-4px;border:3px solid var(--amber);border-radius:inherit;animation:ring 1.4s ease-out infinite;}
+@keyframes ring{0%{transform:scale(.97);opacity:1}100%{transform:scale(1.15);opacity:0}}
+.step-no{position:absolute;right:calc(50% - 50vw + 18px);top:16px;font:700 13px var(--mono);color:var(--muted);}
+.beats{position:relative;z-index:1;padding-bottom:20vh;}
+.beat{min-height:60vh;display:flex;align-items:flex-start;padding-top:4vh;}
+.beat-card{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:16px 18px;width:100%;opacity:.35;transform:scale(.97);transition:all .35s;}
+.beat.on .beat-card{opacity:1;transform:none;border-color:var(--ink);box-shadow:4px 4px 0 var(--ink);}
+.beat-card .n{font:700 12px var(--mono);color:var(--red);}
+.beat-card h3{font-size:19px;font-weight:900;line-height:1.35;margin:2px 0 6px;}
+.beat-card p{font-size:14.5px;color:var(--sub);}
+
+/* ===== Do / Don't ===== */
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.dd-col{border-radius:18px;padding:14px;border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);}
+.dd-col.do{background:var(--greenbg);}
+.dd-col.dont{background:var(--redbg);}
+.dd-col h3{font-size:15px;font-weight:900;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.dd-col ul{list-style:none;display:grid;gap:10px;}
+.dd-col li{font-size:13.5px;line-height:1.5;color:var(--ink);background:#ffffffa0;border-radius:10px;padding:8px 10px;}
+.dd-col li b{display:block;font-size:14px;}
+
+/* ===== 마무리 ===== */
+.final{padding:70px 0 110px;text-align:center;}
+.final h2{font-size:30px;font-weight:900;line-height:1.25;letter-spacing:-.02em;}
+.final p{color:var(--sub);margin:8px 0 22px;}
+.recap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:26px;}
+.recap span{font-size:13.5px;font-weight:700;background:var(--card);border:1.5px solid var(--line);border-radius:30px;padding:6px 12px;}
+.go{display:flex;align-items:center;justify-content:center;gap:10px;height:62px;border-radius:18px;background:var(--red);color:#fff;text-decoration:none;font-size:19px;font-weight:900;border:1.5px solid var(--ink);box-shadow:5px 5px 0 var(--ink);transition:transform .12s,box-shadow .12s;}
+.go:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--ink);}
+
+/* 떠 있는 시작 버튼 */
+.fab{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translate(-50%,120px);z-index:20;display:flex;align-items:center;gap:8px;background:var(--dark);color:var(--paper);text-decoration:none;font-size:14px;font-weight:700;padding:11px 18px;border-radius:30px;box-shadow:0 8px 20px #0005;transition:transform .35s cubic-bezier(.2,.8,.2,1);}
+.fab.show{transform:translate(-50%,0);}
+
+@media (min-width:860px){
+  .wrap.wide{max-width:960px;}
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .sticky{height:100vh;background:none;}
+  .phone{height:min(78vh,720px);}
+  .beats{padding:20vh 0 30vh;}
+  .beat{min-height:70vh;align-items:center;padding:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="wrap hero">
+  <img class="hero-cover" src="assets/case_cover.jpg" alt="" width="860" height="1146">
+  <div class="rv"><span class="tag">문서 N07-013</span></div>
+  <h1 class="rv">출발 전<br><em>3분</em> 가이드</h1>
+  <p class="rv">이것만 알면 길 잃지 않고<br>끝까지 플레이할 수 있어요.</p>
+  <nav class="toc rv">
+    <a href="#info">🗂 플레이 정보</a>
+    <a href="#kit">🎒 준비물</a>
+    <a href="#start">📍 시작 장소</a>
+    <a href="#guide">📱 게임 화면</a>
+    <a href="#rules">⚠️ 주의사항</a>
+  </nav>
+  <div class="scroll-cue">스크롤<i></i></div>
+</header>
+
+<!-- 플레이 정보 -->
+<section class="wrap sec" id="info">
+  <span class="eyebrow rv">PLAY INFO</span>
+  <h2 class="h2 rv">한눈에 보는 플레이 정보</h2>
+  <div class="bento">
+    <div class="tile wide dark rv"><span class="emo">📍</span><small>WHERE</small><div class="big">홍대 · 연남 일대</div><p>경의선숲길 주변 야외에서 진행해요</p></div>
+    <div class="tile rv"><span class="emo">⏱️</span><small>TIME</small><div class="big">2<span>시간</span></div><p>순수 플레이 기준<br>중간에 쉬었다 와도 OK</p></div>
+    <div class="tile rv"><span class="emo">👟</span><small>WALK</small><div class="big">2~3<span>km</span></div><p>천천히 걸어서 이동해요</p></div>
+    <div class="tile red rv"><span class="emo">👤</span><small>AGE</small><div class="big">중학생<span>+</span></div><p>초등학생은 보호자와 함께</p></div>
+    <div class="tile rv"><span class="emo">📱</span><small>DEVICE</small><div class="big">폰 1대</div><p>앱 설치 없이<br>크롬·사파리로</p></div>
+  </div>
+</section>
+
+<!-- 준비물 -->
+<section class="wrap sec" id="kit">
+  <span class="eyebrow rv">CHECKLIST</span>
+  <h2 class="h2 rv">챙겼는지 눌러서 확인해보세요</h2>
+  <div class="kit">
+    <button class="chk rv" type="button"><span class="e">🔋</span><b>보조배터리</b><span>화면을 계속 켜고 다녀요</span></button>
+    <button class="chk rv" type="button"><span class="e">📶</span><b>모바일 데이터</b><span>야외에서 계속 접속해요</span></button>
+    <button class="chk rv" type="button"><span class="e">🎧</span><b>이어폰</b><span>음성 기록 듣기용</span></button>
+    <button class="chk rv" type="button"><span class="e">👟</span><b>편한 신발</b><span>2~3km 걸어요</span></button>
+    <button class="chk rv" type="button"><span class="e">☀️</span><b>밝은 시간</b><span>작은 글씨를 찾아야 해요</span></button>
+    <button class="chk rv" type="button"><span class="e">🎒</span><b>가벼운 짐</b><span>두 손이 자유롭게</span></button>
+  </div>
+  <div class="kit-state rv" id="kitState"><span id="kitMsg">아직 준비 중이에요</span><b id="kitCnt">0 / 6</b></div>
+</section>
+
+<!-- 시작 장소 -->
+<section class="wrap sec" id="start">
+  <span class="eyebrow rv">START</span>
+  <h2 class="h2 rv">여기서 시작해요</h2>
+  <div class="start rv">
+    <div class="exit"><b>3</b><span>번 출구</span></div>
+    <div class="start-txt"><small>HONGIK UNIV. STN.</small><h3>홍대입구역</h3><p>도착하면 게임에 접속하세요.</p></div>
+  </div>
+  <ol class="how">
+    <li class="rv">로딩 100% → <b>[수사 시작]</b></li>
+    <li class="rv">오프닝은 화면을 탭해서 넘기기</li>
+    <li class="rv">첫 화면이 나오면 아래 가이드대로!</li>
+  </ol>
+</section>
+
+<!-- 게임 가이드 -->
+<section class="sec" id="guide">
+  <div class="wrap"><span class="eyebrow rv">HOW TO PLAY</span><h2 class="h2 rv">스크롤하면서<br>게임 화면을 따라가 보세요</h2></div>
+  <div class="wrap wide story">
+    <div class="sticky"><div class="phone" id="phone">
+      <img class="base" id="pBase" src="assets/guide/g1_profile.webp" alt="게임 화면">
+      <div class="dim" id="pDim"></div>
+      <img class="modal" id="pHint" src="assets/guide/m_hint.webp" alt="">
+      <img class="modal" id="pCode" src="assets/guide/m_code.webp" alt="">
+      <div class="spot" id="pSpot"></div>
+    </div></div>
+    <div class="beats">
+      <div class="beat" data-img="g1_profile" data-spot="188,619,185,62"><div class="beat-card"><div class="n">01</div><h3>첫 화면에서 <span class="hl">[MY STORAGE 열람]</span></h3><p>프로필 화면이 먼저 나와요. 문제(파일)는 전부 MY STORAGE 안에 있어요.</p></div></div>
+      <div class="beat" data-img="g2_storage" data-spot="19,145,82,114"><div class="beat-card"><div class="n">02</div><h3><span class="hl">FILE_01</span>부터 시작</h3><p>처음엔 FILE_01만 열려 있어요. 파일은 <b>순서대로만</b> 열려요.</p></div></div>
+      <div class="beat" data-img="g3_file" data-spot="31,167,282,29"><div class="beat-card"><div class="n">03</div><h3>형광펜 = 핵심 단서</h3><p>그 장소에 가서 찾은 답이 <b>다음 파일의 잠금 코드</b>예요.</p></div></div>
+      <div class="beat" data-img="g2_storage" data-modal="code" data-spot="50,427,291,34"><div class="beat-card"><div class="n">04</div><h3>다음 파일을 눌러 코드 입력</h3><p><span class="kbd">AB-</span>처럼 적힌 부분은 빼고 입력해요. 대소문자는 상관없어요.</p></div></div>
+      <div class="beat" data-img="g3_file" data-spot="326,776,48,48" data-round="1"><div class="beat-card"><div class="n">05</div><h3>막히면 오른쪽 아래 💡</h3><p>파일을 열었을 때만 보여요. 끝까지 열면 정답과 해설도 볼 수 있어요.</p></div></div>
+      <div class="beat" data-img="g3_file" data-modal="hint" data-spot="303,388,42,42"><div class="beat-card"><div class="n">06</div><h3>지도는 힌트 창 오른쪽 위</h3><p>다음 장소가 헷갈리면 여기! <b>지도는 이곳에만</b> 있어요.</p></div></div>
+      <div class="beat" data-img="g6_msg" data-spot="9,586,371,73"><div class="beat-card"><div class="n">07</div><h3>메시지로 답장하기</h3><p>파일에서 메시지를 보내라고 하면, 해당 메시지 맨 아래 입력창에 답을 보내요.</p></div></div>
+      <div class="beat" data-img="g2_storage" data-spot="23,626,48,48" data-round="1"><div class="beat-card"><div class="n">08</div><h3>카메라 · 최종보고서</h3><p>카메라는 파일에서 쓰라고 할 때만(권한 ‘허용’). 최종보고서엔 마지막에 알아낸 정보를 입력해요.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 주의사항 -->
+<section class="wrap sec" id="rules">
+  <span class="eyebrow rv">RULES</span>
+  <h2 class="h2 rv">이것만은 꼭!</h2>
+  <div class="dd">
+    <div class="dd-col do rv"><h3>⭕ 이렇게</h3><ul>
+      <li><b>게임 안 ← 사용</b>뒤로 갈 땐 왼쪽 위 화살표</li>
+      <li><b>멈춰서 확인</b>화면은 멈춘 뒤에</li>
+      <li><b>💡 힌트 활용</b>막히면 부담 없이</li>
+    </ul></div>
+    <div class="dd-col dont rv"><h3>❌ 이건 안 돼요</h3><ul>
+      <li><b>새로고침·창 닫기</b>진행이 사라질 수 있어요</li>
+      <li><b>걸으며 화면 보기</b>차도·골목 주의</li>
+      <li><b>시설물 훼손</b>만지거나 떼지 않기</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 마무리 -->
+<section class="wrap final" id="end">
+  <h2 class="rv">준비 끝!<br>이제 출발해요</h2>
+  <p class="rv">기억할 건 딱 세 가지</p>
+  <div class="recap rv"><span>📍 홍대입구역 3번 출구</span><span>📂 FILE_01부터</span><span>💡 막히면 힌트</span></div>
+  <a class="go rv" href="https://popo90002-netizen.github.io/outdooerescaperoom/">게임 시작하기 →</a>
+</section>
+
+<a class="fab" id="fab" href="https://popo90002-netizen.github.io/outdooerescaperoom/">▶ 게임 시작</a>
+
+<script>
+/* 등장 효과 */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%6)*50+'ms';io.observe(el);});
+
+/* 준비물 체크 */
+const chks=[...document.querySelectorAll('.chk')];
+function kit(){
+  const n=chks.filter(c=>c.classList.contains('on')).length, all=n===chks.length;
+  document.getElementById('kitCnt').textContent=n+' / '+chks.length;
+  document.getElementById('kitMsg').textContent=all?'🎉 준비 완료! 출발해도 좋아요':(n?'좋아요, 계속 체크해보세요':'아직 준비 중이에요');
+  document.getElementById('kitState').classList.toggle('done',all);
+  try{localStorage.setItem('n07kit',JSON.stringify(chks.map(c=>c.classList.contains('on'))));}catch(e){}
+}
+try{const s=JSON.parse(localStorage.getItem('n07kit')||'[]');s.forEach((v,i)=>v&&chks[i]&&chks[i].classList.add('on'));}catch(e){}
+chks.forEach(c=>c.addEventListener('click',()=>{c.classList.toggle('on');if(navigator.vibrate)try{navigator.vibrate(10)}catch(e){};kit();}));
+kit();
+
+/* 스크롤에 따라 바뀌는 게임 화면 */
+const W=390,H=844;
+const pct=b=>({left:b[0]/W*100+'%',top:b[1]/H*100+'%',width:b[2]/W*100+'%',height:b[3]/H*100+'%'});
+const $=id=>document.getElementById(id);
+Object.assign($('pHint').style,pct([25,336.6,340,170.8]));
+Object.assign($('pCode').style,pct([25,287.9,340,268.2]));
+const beats=[...document.querySelectorAll('.beat')];
+function setBeat(b){
+  beats.forEach(x=>x.classList.toggle('on',x===b));
+  const d=b.dataset, src='assets/guide/'+d.img+'.webp';
+  if(!$('pBase').src.endsWith(src)) $('pBase').src=src;
+  $('pDim').classList.toggle('on',!!d.modal);
+  $('pHint').classList.toggle('on',d.modal==='hint');
+  $('pCode').classList.toggle('on',d.modal==='code');
+  Object.assign($('pSpot').style,pct(d.spot.split(',').map(Number)));
+  $('pSpot').classList.toggle('round',!!d.round);
+}
+const bo=new IntersectionObserver(es=>{
+  const vis=es.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+  if(vis) setBeat(vis.target);
+},{rootMargin:'-64% 0px -20% 0px',threshold:[0,.01]});
+beats.forEach(b=>bo.observe(b));
+setBeat(beats[0]);
+['g1_profile','g2_storage','g3_file','g6_msg'].forEach(n=>{const i=new Image();i.src='assets/guide/'+n+'.webp';});
+
+/* 떠 있는 시작 버튼: 처음 화면을 지나고, 마지막 버튼이 보이기 전까지 */
+const fab=$('fab'), heroEl=document.querySelector('.hero'), endEl=$('end');
+function fabState(){
+  const pastHero=heroEl.getBoundingClientRect().bottom<0;
+  const atEnd=endEl.getBoundingClientRect().top<innerHeight*0.8;
+  fab.classList.toggle('show',pastHero&&!atEnd);
+}
+addEventListener('scroll',fabState,{passive:true}); fabState();
+</script>
+</body>
+</html>

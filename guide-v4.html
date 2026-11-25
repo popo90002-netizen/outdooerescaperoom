@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<title>플레이 안내 | 문서 N07-013</title>
+<meta name="theme-color" content="#2b2a28">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#2b2620; --paper:#f1e7d2; --card:#eadcbf; --line:#c4ad84; --kraft:#c9a873;
+  --ink:#2a211a; --sub:#6b5a45; --muted:#93806a; --dark:#2b2a28;
+  --red:#a3241c; --redbg:#f4e0d8; --yellow:#ffe27a; --bluebg:#e3e9f2;
+  --kr:'Noto Sans KR',sans-serif; --mono:'Courier Prime',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--desk);color:var(--ink);font-family:var(--kr);font-size:15.5px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;
+  background-image:radial-gradient(ellipse at 50% 0%,#3a3128 0,transparent 70%);}
+img{display:block;max-width:100%;}
+b,strong{font-weight:700;}
+button{font-family:inherit;cursor:pointer;}
+.app{max-width:520px;margin:0 auto;height:100vh;height:100dvh;display:flex;flex-direction:column;}
+
+/* 상단 */
+.top{flex-shrink:0;padding:14px 18px 0;color:var(--paper);display:flex;align-items:center;justify-content:space-between;}
+.top b{font-size:16px;}
+.top small{font:700 11px var(--mono);letter-spacing:.14em;color:var(--kraft);}
+/* 서류철 인덱스 탭 */
+.tabs{flex-shrink:0;display:flex;gap:4px;padding:calc(10px + env(safe-area-inset-top)) 14px 0;align-items:flex-end;}
+.tabs button{flex:1;border:none;border-radius:10px 10px 0 0;background:#4a4137;color:#b8a888;font-size:13px;font-weight:700;padding:8px 4px 7px;transition:all .25s;transform:translateY(5px);}
+.tabs button.on{background:var(--kraft);color:var(--ink);transform:none;padding-bottom:12px;}
+.tray{flex:1;min-height:0;background:var(--kraft);border-radius:0 0 0 0;position:relative;display:flex;flex-direction:column;
+  background-image:repeating-linear-gradient(90deg,#0000 0 3px,#00000008 3px 4px);}
+
+/* 카드 트랙 */
+.track{flex:1;min-height:0;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:16px 5%;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+.track::-webkit-scrollbar{display:none;}
+.card{flex:0 0 90%;scroll-snap-align:center;scroll-snap-stop:always;border-radius:4px;position:relative;overflow-y:auto;scrollbar-width:none;
+  padding:26px 20px 24px;transition:transform .35s,opacity .35s;transform:scale(.94) rotate(var(--r,0deg));opacity:.55;
+  background-color:#f3eadb;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .12  0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 22% 12%,#fbf5e8d9 0,transparent 55%),
+    radial-gradient(circle at 82% 78%,#b08a521a 0,transparent 22%),
+    radial-gradient(ellipse at 50% 50%,transparent 62%,#9b7a4a2e 100%);
+  box-shadow:inset 0 0 0 1px #8a6a3a22,inset 0 0 26px #8a6a3a1f,0 10px 26px #3a2a1a66;}
+.card::-webkit-scrollbar{display:none;}
+.card.on{transform:none;opacity:1;}
+.card:nth-child(odd){--r:-1deg}.card:nth-child(even){--r:1deg}
+.card .no{position:absolute;right:16px;top:16px;font:700 12px var(--mono);color:var(--muted);letter-spacing:.06em;z-index:2;}
+.card .no b{color:var(--ink);}
+.card .tape{position:absolute;left:50%;top:-1px;width:70px;height:16px;transform:translateX(-50%);background:#e8dcae;opacity:.8;}
+.k{font:700 12px var(--mono);color:var(--red);letter-spacing:.08em;}
+h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:2px 0 14px;}
+.desc{color:var(--sub);}
+.hl{background:linear-gradient(transparent 55%,var(--yellow) 55%);}
+.kbd{display:inline-block;font-size:12.5px;font-weight:700;border:1px solid #b9a27a;background:#f3e8cf;border-radius:6px;padding:0 6px;line-height:1.7;white-space:nowrap;}
+
+/* 커버 카드 */
+.cover-card{display:flex;flex-direction:column;justify-content:center;text-align:center;}
+.cover-card img{width:52%;height:auto;margin:0 auto 18px;transform:rotate(-2deg);box-shadow:0 10px 20px #3a2a1a44;border-radius:3px;}
+.cover-card h2{margin-bottom:6px;}
+.swipe-hint{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;font-weight:700;color:var(--red);animation:nudge 1.6s ease-in-out infinite;}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+
+/* 공통 블록 */
+.rows{display:grid;gap:0;border-top:1.5px solid var(--ink);}
+.rows div{display:flex;gap:12px;align-items:center;padding:11px 2px;border-bottom:1px dashed var(--line);}
+.rows .ic{width:24px;text-align:center;font-size:18px;flex-shrink:0;}
+.rows small{display:block;font-size:12.5px;color:var(--muted);}
+.checks{list-style:none;display:grid;gap:11px;}
+.checks li{display:flex;gap:11px;align-items:flex-start;font-weight:500;}
+.checks li::before{content:'✓';flex-shrink:0;width:24px;height:24px;border-radius:6px;background:var(--red);color:#fff;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.checks li small{display:block;color:var(--sub);font-size:13px;font-weight:400;}
+.place{background:var(--dark);color:var(--paper);border-radius:12px;padding:18px;text-align:center;margin-bottom:16px;}
+.place small{display:block;font:700 11px var(--mono);letter-spacing:.16em;color:var(--kraft);}
+.place b{display:block;font-size:22px;font-weight:900;}
+.ol{list-style:none;counter-reset:o;display:grid;gap:10px;}
+.ol li{counter-increment:o;display:flex;gap:11px;}
+.ol li::before{content:counter(o);flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--dark);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.ol li small{display:block;color:var(--sub);font-size:13px;}
+.note{border-radius:10px;padding:10px 12px;font-size:13.5px;margin-top:14px;background:var(--redbg);color:#6e1b14;}
+.note.tip{background:var(--bluebg);color:#1f3558;}
+
+/* 스크린샷 */
+.shot{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px #0002,0 6px 14px #3a2a1a33;background:#222;width:100%;margin:0 auto 14px;}
+.shot.full{width:100%;}
+.shot img{width:100%;height:auto;}
+.mk{position:absolute;border:3px solid var(--red);border-radius:9px;box-shadow:0 0 0 2px #fff9;}
+.mk.round{border-radius:50%;}
+.mk i{position:absolute;top:-12px;left:-12px;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-style:normal;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;}
+.mk.r i{left:auto;right:-12px;}
+.legend{list-style:none;display:grid;gap:9px;font-size:14px;color:var(--sub);}
+.legend li{display:flex;gap:9px;}
+.legend .n{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.legend li > div > b{display:block;color:var(--ink);font-size:15px;}
+.loop{display:grid;gap:7px;}
+.loop div{display:flex;gap:11px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--sub);background:#f4ead333;}
+.loop div b{display:block;color:var(--ink);font-size:15px;}
+.loop .n{font:700 18px var(--mono);color:var(--red);width:26px;flex-shrink:0;}
+.loop .again{justify-content:center;background:var(--redbg);border-color:transparent;color:var(--red);font-weight:700;}
+.feat{display:grid;gap:8px;}
+.feat div{display:flex;gap:11px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--sub);background:#f4ead333;}
+.feat .fi{font-size:20px;flex-shrink:0;}
+.feat strong{display:block;color:var(--ink);font-size:15px;}
+.warns{list-style:none;display:grid;gap:8px;}
+.warns li{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:10px 12px;font-size:13.5px;color:var(--sub);background:#f4ead333;}
+.warns li b{display:block;color:var(--ink);font-size:15px;}
+.go{display:flex;align-items:center;justify-content:center;width:100%;margin-top:18px;height:56px;background:var(--red);color:#fff;text-decoration:none;font-weight:900;font-size:17px;border-radius:12px;box-shadow:0 6px 14px #a3241c55;}
+.recap{list-style:none;display:grid;gap:7px;}
+.recap li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;background:#f4ead333;}
+
+
+/* 세로로 긴 게임 화면: 카드에 남은 높이를 꽉 채우되 잘리지 않게 */
+.card.g{display:flex;flex-direction:column;padding:22px 16px 16px;}
+.card.g h2{margin-bottom:8px;}
+.card.g .shot.tall{flex:0 1 auto;height:min(54vh,470px);min-height:180px;width:auto;max-width:100%;aspect-ratio:var(--ar);margin:0 auto;}
+.card.g .shot.tall img{height:100%;width:100%;}
+.card.g .desc,.card.g .legend{flex-shrink:0;}
+.mini{display:flex;flex-wrap:wrap;gap:6px 12px;margin-bottom:10px;font-size:13.5px;font-weight:700;flex-shrink:0;}
+.mini span{display:flex;align-items:center;gap:5px;}
+.mini i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;}
+.tray > .page{position:absolute;top:28px;right:calc(5% + 26px);z-index:3;font:700 12px var(--mono);color:var(--muted);background:none;padding:0;pointer-events:none;}
+.tray > .page b{color:var(--ink);}
+.mk.spot{box-shadow:0 0 0 2px #fff9,0 0 0 2000px rgba(12,9,6,.55);animation:spotPulse 1.6s ease-in-out infinite;}
+@keyframes spotPulse{0%,100%{border-color:var(--red)}50%{border-color:#ffd36a}}
+.mk.hole{border:none;border-radius:12px;box-shadow:0 0 0 2000px rgba(12,9,6,.55);}
+/* 하단 */
+.bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
+.bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
+.bottom button:active{transform:scale(.98);}
+.btn-prev{width:60px;flex-shrink:0;background:#eadcbf;border:2px solid #b9a27a;color:var(--sub);font-size:22px!important;}
+.btn-prev:disabled{opacity:.35;}
+.btn-next{flex:1;background:var(--dark);border:none;color:var(--paper);letter-spacing:.06em;box-shadow:0 4px 10px #0003;}
+.btn-next.last{background:#eadcbf;color:var(--ink);border:2px solid #b9a27a;}
+.page{font:700 13px var(--mono);color:var(--ink);background:var(--paper);border-radius:20px;padding:4px 11px;}
+.page span{color:var(--muted);}
+.arrows{display:flex;gap:8px;}
+.arrows button{width:46px;height:46px;border-radius:50%;border:none;background:var(--dark);color:var(--paper);font-size:20px;box-shadow:0 4px 10px #0004;transition:opacity .2s,transform .1s;}
+.arrows button:active{transform:scale(.93);}
+.arrows button:disabled{opacity:.25;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="tabs" id="tabs">
+    <button data-ch="before" class="on">시작 전</button>
+    <button data-ch="game">게임 방법</button>
+    <button data-ch="rule">주의사항</button>
+    <button data-ch="go">시작</button>
+  </div>
+  <div class="tray">
+    <div class="track" id="track">
+
+      <article class="card cover-card" data-ch="before"><span class="tape"></span>
+        <img src="assets/case_cover.jpg" alt="문서 N07-013 표지" width="860" height="1146">
+        <h2>시작 전에<br>꼭 확인해주세요</h2>
+        <p class="desc">시작 준비부터 게임 화면 사용법까지<br>카드를 넘기며 확인하세요.</p>
+        <div><span class="swipe-hint">옆으로 넘기기 →</span></div>
+      </article>
+
+      <article class="card" data-ch="before"><span class="tape"></span>
+        <div class="k">PLAY INFO</div><h2>플레이 정보</h2>
+        <div class="rows">
+          <div><span class="ic">📍</span><span>홍대·연남 일대<small>경의선숲길 주변 야외</small></span></div>
+          <div><span class="ic">⏱️</span><span>약 2시간<small>순수 플레이 기준 · 중간에 쉬었다 와도 OK</small></span></div>
+          <div><span class="ic">👟</span><span>약 2~3km 도보 이동</span></div>
+          <div><span class="ic">👤</span><span>중학생 이상<small>초등학생은 보호자와 함께</small></span></div>
+          <div><span class="ic">📱</span><span>스마트폰 1대<small>앱 설치 없이 크롬·사파리에서</small></span></div>
+        </div>
+      </article>
+
+      <article class="card" data-ch="before"><span class="tape"></span>
+        <div class="k">CHECKLIST</div><h2>준비물</h2>
+        <ul class="checks">
+          <li><div>충전된 휴대폰 + 보조배터리<small>화면을 계속 켜고 이동해요</small></div></li>
+          <li><div>모바일 데이터<small>야외에서 계속 접속해요</small></div></li>
+          <li><div>이어폰<small>음성 기록 듣기용</small></div></li>
+          <li><div>편한 신발과 가벼운 짐</div></li>
+          <li><div>밝은 시간대<small>작은 글씨·그림을 찾아야 해요</small></div></li>
+        </ul>
+      </article>
+
+      <article class="card" data-ch="before"><span class="tape"></span>
+        <div class="k">START</div><h2>시작 장소</h2>
+        <div class="place"><small>START POINT</small><b>홍대입구역 3번 출구</b></div>
+        <ol class="ol">
+          <li><div>도착하면 게임에 접속해요.</div></li>
+          <li><div>로딩 100% → <b>[수사 시작]</b></div></li>
+          <li><div>오프닝은 화면을 탭해서 넘겨요.</div></li>
+        </ol>
+      </article>
+
+      <article class="card g" data-ch="game"><span class="tape"></span>
+        <div class="k">HOW TO 1</div><h2>첫 화면 → <span class="hl">MY STORAGE</span></h2>
+        <div class="mini"><span><i>!</i>[MY STORAGE 열람] 누르기</span></div>
+        <div class="shot tall" data-h="700" style="--ar:390/700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk spot" data-b="188,619,185,62"><i>!</i></div></div>
+      </article>
+
+      <article class="card g" data-ch="game"><span class="tape"></span>
+        <div class="k">HOW TO 2</div><h2><span class="hl">FILE_01</span>부터 시작</h2>
+        <div class="mini"><span><i>1</i>여기서부터!</span><span><i>2</i>잠긴 파일은 순서대로</span></div>
+        <div class="shot tall" data-h="691" style="--ar:390/691"><img src="assets/guide/g2_storage.webp" alt="MY STORAGE 화면" width="780" height="1382"><div class="mk hole" data-b="15,141,180,122"></div><div class="mk" data-b="19,145,82,114"><i>1</i></div><div class="mk r" data-b="109,145,82,114"><i>2</i></div></div>
+      </article>
+
+      <article class="card" data-ch="game"><span class="tape"></span>
+        <div class="k">HOW TO 3</div><h2>문제 푸는 순서</h2>
+        <div class="loop">
+          <div><span class="n">01</span><span><b>열린 파일 읽기</b><span class="hl">노란 형광펜</span>이 핵심 단서</span></div>
+          <div><span class="n">02</span><span><b>현장으로 이동</b>파일 속 장소를 찾아가요</span></div>
+          <div><span class="n">03</span><span><b>현장에서 답 찾기</b>표지판·조형물·벽화 속에</span></div>
+          <div><span class="n">04</span><span><b>다음 파일에 입력</b>답 = 다음 파일의 잠금 코드</span></div>
+          <div class="again">↻ 새로 열린 파일로 다시 01부터</div>
+        </div>
+      </article>
+
+      <article class="card" data-ch="game"><span class="tape"></span>
+        <div class="k">HOW TO 4</div><h2>잠금 코드 입력</h2>
+        <div class="shot full" data-w="340" data-h="268.2"><img src="assets/guide/m_code.webp" alt="코드 입력 창" width="680" height="537"><div class="mk" data-b="22,89,297,40"><i>1</i></div><div class="mk" data-b="22,137,297,38"><i>2</i></div></div>
+        <ul class="legend">
+          <li><div class="n">1</div><div><b>칸 수 = 글자 수</b><span class="kbd">AB-</span>처럼 적힌 부분은 빼고 입력</div></li>
+          <li><div class="n">2</div><div><b>입력 후 [UNLOCK]</b>영어는 대소문자 상관없어요</div></li>
+        </ul>
+      </article>
+
+      <article class="card" data-ch="game"><span class="tape"></span>
+        <div class="k">HOW TO 5</div><h2>막히면 💡, 길은 🗺️</h2>
+        <p class="desc" style="margin-bottom:12px">파일을 열면 화면 <b>오른쪽 아래에 💡</b>가 생겨요.</p>
+        <div class="shot full" data-w="340" data-h="170.8"><img src="assets/guide/m_hint.webp" alt="힌트 창" width="680" height="341"><div class="mk r" data-b="278,51,42,42"><i>1</i></div><div class="mk r" data-b="236,111.8,81,35"><i>2</i></div></div>
+        <ul class="legend">
+          <li><div class="n">1</div><div><b>지도 아이콘</b>힌트 창 오른쪽 위. <b style="display:inline;color:var(--red)">지도는 여기에만!</b></div></li>
+          <li><div class="n">2</div><div><b>[열기]</b>힌트를 한 단계씩. 끝까지 열면 정답·해설</div></li>
+        </ul>
+      </article>
+
+      <article class="card" data-ch="game"><span class="tape"></span>
+        <div class="k">HOW TO 6</div><h2>이런 기능도 있어요</h2>
+        <div class="feat">
+          <div><span class="fi">💬</span><span><strong>메시지 답장</strong>프로필 화면 → 메시지 → 맨 아래 입력창</span></div>
+          <div><span class="fi">📸</span><span><strong>현장분석 카메라</strong>MY STORAGE 왼쪽 아래 빨간 버튼 (권한 ‘허용’)</span></div>
+          <div><span class="fi">📋</span><span><strong>최종보고서</strong>알아낸 정보를 입력, 임시저장 가능</span></div>
+          <div><span class="fi">🎧</span><span><strong>음성 기록</strong>못 들으면 [스크립트 보기]</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-ch="rule"><span class="tape"></span>
+        <div class="k">RULES</div><h2>주의사항</h2>
+        <ul class="warns">
+          <li><b>새로고침·창 닫기 금지</b>진행 상황이 사라질 수 있어요.</li>
+          <li><b>뒤로 가기는 게임 안의 ←</b>브라우저 뒤로 가기 대신 사용해요.</li>
+          <li><b>걸을 땐 화면 보지 않기</b>차도·골목에서는 멈춰서 확인해요.</li>
+          <li><b>주변에 피해 주지 않기</b>시설물은 만지거나 떼지 마세요.</li>
+        </ul>
+      </article>
+
+      <article class="card" data-ch="go"><span class="tape"></span>
+        <div class="k">READY</div><h2>이제 시작하세요</h2>
+        <ul class="recap">
+          <li>📍 <b>홍대입구역 3번 출구</b>에서 접속</li>
+          <li>📂 <b>[MY STORAGE 열람] → FILE_01</b>부터</li>
+          <li>💡 막히면 파일 화면 오른쪽 아래</li>
+          <li>⚠️ 새로고침·창 닫기 금지</li>
+        </ul>
+        <a class="go" href="https://popo90002-netizen.github.io/outdooerescaperoom/">▶ 게임 시작</a>
+      </article>
+
+    </div>
+    <div class="bottom">
+      <button class="btn-prev" id="prev" aria-label="이전">‹</button>
+      <button class="btn-next" id="next">다음</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* 스크린샷 표시 위치 */
+document.querySelectorAll('.shot').forEach(s=>{
+  const W=+(s.dataset.w||390), H=+s.dataset.h;
+  s.querySelectorAll('.mk').forEach(m=>{
+    const [x,y,w,h]=m.dataset.b.split(',').map(Number);
+    Object.assign(m.style,{left:x/W*100+'%',top:y/H*100+'%',width:w/W*100+'%',height:h/H*100+'%'});
+  });
+});
+/* 카드 넘기기 */
+const track=document.getElementById('track'), cards=[...track.children], N=cards.length;
+const tabs=[...document.querySelectorAll('#tabs button')];
+const $=id=>document.getElementById(id);
+cards.forEach((c,i)=>{const n=document.createElement('span');n.className='no';n.innerHTML='<b>'+String(i+1).padStart(2,'0')+'</b> / '+String(N).padStart(2,'0');c.appendChild(n);});
+let cur=-1;
+function current(){
+  const c=track.scrollLeft+track.clientWidth/2;
+  let best=0,bd=1e9;
+  cards.forEach((el,i)=>{const d=Math.abs(el.offsetLeft+el.offsetWidth/2-c);if(d<bd){bd=d;best=i;}});
+  return best;
+}
+function update(){
+  const i=current(); if(i===cur) return; cur=i;
+  cards.forEach((el,k)=>el.classList.toggle('on',k===i));
+  tabs.forEach(t=>t.classList.toggle('on',t.dataset.ch===cards[i].dataset.ch));
+  $('prev').disabled=i===0;
+  $('next').textContent=i===N-1?'처음으로':(i===0?'시작하기':'다음');
+  $('next').classList.toggle('last',i===N-1);
+  try{history.replaceState(null,'','#'+i);}catch(e){}
+}
+const go=i=>{const el=cards[Math.max(0,Math.min(N-1,i))];track.scrollTo({left:el.offsetLeft-(track.clientWidth-el.offsetWidth)/2,behavior:'smooth'});};
+track.addEventListener('scroll',()=>requestAnimationFrame(update),{passive:true});
+$('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur===N-1?0:cur+1);
+tabs.forEach(t=>t.onclick=()=>go(cards.findIndex(c=>c.dataset.ch===t.dataset.ch)));
+cards.forEach((c,i)=>c.addEventListener('click',e=>{if(i!==cur&&!e.target.closest('a')){e.preventDefault();go(i);}}));
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+const start=parseInt(location.hash.slice(1))||0;
+requestAnimationFrame(()=>{const el=cards[start]||cards[0];track.scrollLeft=el.offsetLeft-(track.clientWidth-el.offsetWidth)/2;update();});
+</script>
+</body>
+</html>
