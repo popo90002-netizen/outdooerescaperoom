@@ -1866,22 +1866,22 @@ const files = [
    hints:['NCI 정보국으로 받은 위치의 건물 주변에서 검정색으로 칠해져있는 얼굴 그래피티를 찾으세요.','히든 심볼의 정체를 그래피티 분석 질문에 답하세요.'],answerText:'정답: MONALISA'},
 
   // #15 FILE_14 — 가챠샵 (HIDDEN)
-  {num:15,name:'FILE_14',sub:'가챠오션 연남점',icon:'🎰',unlocked:true,hidden:true,
+  {num:15,name:'FILE_14',sub:'탈출 — 대피소로',icon:'🏃',unlocked:true,hidden:true,
    isTypewriter:true,typed:false,
    typewriterText:'기억이 돌아오고 있다.\n\n저 얼굴이다.\n눈썹이 없는 검은 생머리의 여자.\n\n내가 이곳에서 히든심볼을 보고 있을 때,\n멀리서 나를 지켜보다가\n순식간에 뒤에서 나를 제압했다.\n\n아무래도 이곳을 빨리 벗어나는게 좋겠다.\n내 기억이 맞다면, 사건 파일 키트 안쪽에\n대피소 주소를 적어 놨다.\n\n일단 그곳으로 대피를 해볼까.',
    content:`<div id="gacha-content"><div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div>
-   <button id="gachaArrivalBtn" onclick="revealGachaArrival()" style="display:none;margin-top:14px;width:100%;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:12px;border-radius:4px;cursor:pointer;">가챠오션 연남점에 도착하셨습니까?</button>
-   </div></div>
-   <div id="gacha-arrival" style="display:none;">
-   <div class="detail-section" style="margin-top:14px;border:1px solid #b8a888;background:#f6efe1;padding:14px;">
-   <div style="color:#8a5a10;font-size:11px;letter-spacing:2px;margin-bottom:10px;font-family:'Noto Sans KR',sans-serif;font-weight:700;">▶ 가챠오션 연남점 도착</div>
-   <div style="font-size:13px;color:#3a2a1a;margin-bottom:14px;font-family:'Noto Sans KR',sans-serif;">모나리자 그림이 있는 가챠머신 앞.<br>코인을 넣고 캡슐을 뽑은 후 시험관 두 개를 혼합하라.<br>나온 색깔을 선택하라.</div>
-   <div style="display:flex;gap:10px;justify-content:center;">
-   <button onclick="selectColor('RED')" style="flex:1;padding:14px 8px;background:#f6e3e3;border:2px solid #c23a3a;color:#8a2020;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;border-radius:4px;">🔴 RED</button>
-   <button onclick="selectColor('BLUE')" style="flex:1;padding:14px 8px;background:#e3eaf6;border:2px solid #2a5ac2;color:#1a3a8a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;border-radius:4px;">🔵 BLUE</button>
-   <button onclick="selectColor('YELLOW')" style="flex:1;padding:14px 8px;background:#f6f0e3;border:2px solid #c2a22a;color:#8a6a10;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;border-radius:4px;">🟡 YELLOW</button>
-   </div></div></div>`,
-   hints:['가챠오션 연남점을 찾아가세요.','모나리자 그림이 있는 가챠머신에 코인을 투입하세요.'],answerText:''},
+   <div id="addrEntryBox" style="display:none;margin-top:16px;padding:14px;border:1px solid #b8a888;background:#f6efe1;border-radius:4px;">
+   <div style="color:#8a5a10;font-size:11px;letter-spacing:2px;margin-bottom:10px;font-family:'Noto Sans KR',sans-serif;font-weight:700;">▶ 주소 입력</div>
+   <div id="addrCellRow" onclick="document.getElementById('addrHiddenInput').focus()" style="display:flex;align-items:center;gap:6px;cursor:pointer;flex-wrap:wrap;">
+   <span style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#3a2a1a;font-weight:700;margin-right:4px;">동교동</span>
+   <span id="addrCells" style="display:inline-flex;gap:4px;"></span>
+   </div>
+   <div id="addrError" style="font-size:11px;color:#a02020;margin-top:8px;min-height:14px;"></div>
+   </div>
+   <div id="typewriterTarget3" style="margin-top:4px;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div>
+   <input id="addrHiddenInput" type="tel" inputmode="numeric" maxlength="5" autocomplete="off" style="position:absolute;opacity:0;width:1px;height:1px;border:none;pointer-events:none;" />
+   </div></div>`,
+   hints:['사건 파일 키트 안쪽을 다시 확인해보세요.','대피소 주소의 번지수를 입력해보세요. (동교동 ○○○-○○)'],answerText:''},
 
   // #16 FILE_15 — 본거지 (HIDDEN)
   {num:16,name:'FILE_15',sub:'본거지 — 최종 보고',icon:'🏢',unlocked:true,hidden:true,
@@ -2541,26 +2541,26 @@ function openDetail(idx){
     if(f.typed&&f.savedText){
       target.textContent=f.savedText;
       if(f.num===15){
-        if(f.gachaRevealed){
-          const arr=document.getElementById('gacha-arrival');
-          if(arr)arr.style.display='block';
-          if(f.colorSelected){
-            arr.querySelectorAll('button').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
-          }
-        }else{
-          const btn=document.getElementById('gachaArrivalBtn');
-          if(btn)btn.style.display='block';
+        const box=document.getElementById('addrEntryBox');
+        if(box)box.style.display='block';
+        renderAddrCells(f.addrDigits||'');
+        initAddrInput();
+        if(f.addrSolved){
+          const inp=document.getElementById('addrHiddenInput');
+          if(inp)inp.disabled=true;
+          const t3=document.getElementById('typewriterTarget3');
+          if(t3)t3.textContent=f.savedText3||'';
         }
       }
     }else if(!f.typed){
       f.typed=true;
       f.savedText=f.typewriterText;
-      if(f.num===15) f.arrivalShown=true;
       saveGameState();
       typewriterEffect(target,f.typewriterText,()=>{
         if(f.num===15){
-          const btn=document.getElementById('gachaArrivalBtn');
-          if(btn)btn.style.display='block';
+          const box=document.getElementById('addrEntryBox');
+          if(box){box.style.display='block';renderAddrCells('');}
+          initAddrInput();
         }
       });
     }
@@ -2830,7 +2830,7 @@ const AUTOSAVE_ENABLED = false;
 function saveGameState(){
   if(!AUTOSAVE_ENABLED) return;
   const state={
-    files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,gachaRevealed:f.gachaRevealed||false,savedText:f.savedText||''})),
+    files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,addrDigits:f.addrDigits||'',addrSolved:f.addrSolved||false,savedText:f.savedText||'',savedText3:f.savedText3||''})),
     messages:messages.map(m=>({id:m.id,read:m.read,new:m.new,thread:m.thread,answered:m.answered||false,waitingForAnswer:m.waitingForAnswer||false,waitingForChoice:m.waitingForChoice||false,choiceMade:m.choiceMade||false,inactive:m.inactive||false,infoStage:m.infoStage||null})),
     memoryTriggered:window.memoryTriggered||false
   };
@@ -2847,8 +2847,8 @@ function loadGameState(){
       if(!f)return;
       f.unlocked=saved.unlocked;f.hidden=saved.hidden;
       f.hintsRevealed=saved.hintsRevealed||0;f.answerRevealed=saved.answerRevealed||false;f.explainRevealed=saved.explainRevealed||false;
-      f.typed=saved.typed||false;f.colorSelected=saved.colorSelected||false;
-      f.arrivalShown=saved.arrivalShown||false;f.gachaRevealed=saved.gachaRevealed||false;f.savedText=saved.savedText||'';
+      f.typed=saved.typed||false;f.addrDigits=saved.addrDigits||'';
+      f.addrSolved=saved.addrSolved||false;f.savedText=saved.savedText||'';f.savedText3=saved.savedText3||'';
     });
     if(state.messages){
       state.messages.forEach(saved=>{
@@ -3000,36 +3000,53 @@ function typewriterEffect(element,text,callback){
   type();
 }
 
-function revealGachaArrival(){
-  const f=files[currentDetailIdx];
-  if(f){f.gachaRevealed=true;saveGameState();}
-  const btn=document.getElementById('gachaArrivalBtn');
-  if(btn)btn.style.display='none';
-  const arr=document.getElementById('gacha-arrival');
-  if(arr){arr.style.display='block';arr.scrollIntoView({behavior:'smooth'});}
-}
-
-// ===== 색깔 선택 (가챠샵) =====
-function selectColor(color){
-  if(color==='BLUE'){
-    const gachaFile=files.find(f=>f.num===15);
-    if(gachaFile){gachaFile.colorSelected=true;saveGameState();}
-    const ending=files.find(f=>f.num===16);
-    if(ending)ending.hidden=false;
-    saveGameState();renderInventory();
-    document.querySelectorAll('#gacha-arrival button').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
-    const msg=document.createElement('div');
-    msg.style.cssText='margin-top:10px;text-align:center;font-size:11px;color:#8ada8a;letter-spacing:1px;';
-    msg.textContent='✓ 파란색 선택 완료 — FILE_14 열람 가능';
-    document.querySelector('#gacha-arrival > div')?.appendChild(msg);
-    setTimeout(()=>{goTo('s6');setTimeout(()=>{const endIdx=files.indexOf(ending);if(endIdx>=0)openDetail(endIdx);},600);},1200);
-  }else{
-    const el=document.querySelector('#gacha-arrival > div');if(!el)return;
-    const msg=document.createElement('div');
-    msg.style.cssText='margin-top:12px;padding:10px;background:#1a0808;border:1px solid #5a2020;font-size:11px;color:#cc6644;text-align:center;';
-    msg.textContent=color==='RED'?'빨간색.. 뭔가 다르다. 다시 확인해보자.':'노란색.. 이건 아닌 것 같다.';
-    el.appendChild(msg);setTimeout(()=>msg.remove(),2000);
+// ===== 대피소 주소 입력 (동교동 147-39) =====
+const SHELTER_ADDR='14739';
+function renderAddrCells(digits){
+  const wrap=document.getElementById('addrCells');
+  if(!wrap)return;
+  digits=digits||'';
+  wrap.innerHTML='';
+  for(let i=0;i<5;i++){
+    if(i===3){
+      const dash=document.createElement('span');
+      dash.textContent='-';
+      dash.style.cssText='font-family:VT323,monospace;font-size:20px;color:#8a5a10;margin:0 2px;align-self:center;';
+      wrap.appendChild(dash);
+    }
+    const c=document.createElement('div');
+    const val=digits[i];
+    c.style.cssText='width:26px;height:34px;background:#fff;border:2px solid '+(val?'#8a5a10':'#b8a888')+';border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:VT323,monospace;font-size:19px;color:#3a2a1a;';
+    c.textContent=val||'_';
+    wrap.appendChild(c);
   }
+}
+function initAddrInput(){
+  const inp=document.getElementById('addrHiddenInput');
+  if(!inp)return;
+  inp.addEventListener('input',()=>{
+    const f=files[currentDetailIdx];
+    if(!f||f.num!==15)return;
+    const digits=inp.value.replace(/\D/g,'').slice(0,5);
+    inp.value=digits;
+    f.addrDigits=digits;
+    renderAddrCells(digits);
+    if(digits.length===5){
+      if(digits===SHELTER_ADDR){
+        inp.disabled=true;
+        f.addrSolved=true;saveGameState();
+        const t3=document.getElementById('typewriterTarget3');
+        if(t3)typewriterEffect(t3,'대피소 앞에 도착했다.',()=>{f.savedText3='대피소 앞에 도착했다.';saveGameState();});
+      }else{
+        const err=document.getElementById('addrError');
+        if(err)err.textContent='주소가 일치하지 않습니다.';
+        setTimeout(()=>{
+          inp.value='';f.addrDigits='';renderAddrCells('');
+          if(err)err.textContent='';
+        },900);
+      }
+    }
+  });
 }
 
 // ===== 봉인된 편지 =====
