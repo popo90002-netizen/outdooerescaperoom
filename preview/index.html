@@ -1899,6 +1899,10 @@ const files = [
 const DEV_UNLOCK_ALL = false;
 if(DEV_UNLOCK_ALL) files.forEach(f => { f.unlocked = true; f.hidden = false; });
 
+// ===== 프리뷰 테스트용: FILE_14(번호 15)까지 미리 열어둠 =====
+const DEV_UNLOCK_UPTO = 15;
+if(DEV_UNLOCK_UPTO) files.forEach(f => { if(f.num<=DEV_UNLOCK_UPTO){ f.unlocked = true; f.hidden = false; } });
+
 // ===== 메시지 데이터 =====
 const messages = [
   // N24 — 생존, 암구어 시스템
@@ -2977,7 +2981,7 @@ function runMemoryText(){
     const gachaFile=files.find(f=>f.num===15);
     if(gachaFile)gachaFile.hidden=false;
     saveGameState();renderInventory();renderMessages();
-    const lt=document.getElementById('lockToast');
+    const lt=document.getElementById('unlockToast');
     lt.textContent='📁 새로운 파일 발견 — FILE_14';
     lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
     setTimeout(()=>lt.classList.remove('show'),2500);
@@ -3036,7 +3040,21 @@ function initAddrInput(){
         inp.disabled=true;
         f.addrSolved=true;saveGameState();
         const t3=document.getElementById('typewriterTarget3');
-        if(t3)typewriterEffect(t3,'대피소 앞에 도착했다.',()=>{f.savedText3='대피소 앞에 도착했다.';saveGameState();});
+        if(t3)typewriterEffect(t3,'대피소 앞에 도착했다.',()=>{
+          f.savedText3='대피소 앞에 도착했다.';saveGameState();
+          const next=files.find(x=>x.num===16);
+          if(next){
+            next.hidden=false;saveGameState();renderInventory();
+            const lt=document.getElementById('unlockToast');
+            lt.textContent='📁 새로운 파일 발견 — '+next.name;
+            lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
+            setTimeout(()=>lt.classList.remove('show'),2500);
+            setTimeout(()=>{
+              goTo('s6');
+              setTimeout(()=>{const idx=files.indexOf(next);if(idx>=0)openDetail(idx);},600);
+            },1800);
+          }
+        });
       }else{
         const err=document.getElementById('addrError');
         if(err)err.textContent='주소가 일치하지 않습니다.';
