@@ -3187,8 +3187,11 @@ function saveReportDraft(){
   setTimeout(()=>toast.classList.remove('show'), 2100);
 }
 function submitReport(){
+  const materialSet=['장미','ROSE','로즈','대왕참나무','참나무'];
   const answers=[
     {id:'rDrug',label:'약물 명칭',correct:['NULL-Z','NULLZ']},
+    {id:'rMat1',label:'주 재료 ①',correct:materialSet},
+    {id:'rMat2',label:'주 재료 ②',correct:materialSet},
     {id:'rColor',label:'물약 색깔',correct:['BLUE','파랑','파란색']},
     {id:'rOrg',label:'조직 명칭',correct:['BLANK']},
     {id:'rBoss',label:'히든 심볼',correct:['모나리자','MONALISA']},
@@ -3203,21 +3206,6 @@ function submitReport(){
     if(isCorrect){el.style.borderBottomColor='#4a8a3a';el.style.color='#3a6a2a';}
     else{el.style.borderBottomColor='#a02020';el.style.color='#a02020';allCorrect=false;wrongList.push(a.label);}
   });
-  // 주 재료 ①/②: 어느 칸에 뭐가 들어가든 (장미/로즈 + 대왕참나무/참나무) 조합이면 정답 처리
-  const norm=s=>s.toUpperCase().replace(/\s+/g,' ');
-  const roseSet=['장미','ROSE','로즈'].map(norm);
-  const oakSet=['대왕참나무','참나무'].map(norm);
-  const matEl1=document.getElementById('rMat1'), matEl2=document.getElementById('rMat2');
-  if(matEl1 && matEl2){
-    const mv1=norm(matEl1.value.trim()), mv2=norm(matEl2.value.trim());
-    const isRose=v=>roseSet.includes(v), isOak=v=>oakSet.includes(v);
-    const matOk=(isRose(mv1)&&isOak(mv2))||(isOak(mv1)&&isRose(mv2));
-    [matEl1,matEl2].forEach(el=>{
-      if(matOk){el.style.borderBottomColor='#4a8a3a';el.style.color='#3a6a2a';}
-      else{el.style.borderBottomColor='#a02020';el.style.color='#a02020';}
-    });
-    if(!matOk){allCorrect=false;wrongList.push('주 재료 ①/②');}
-  }
   const resultEl=document.getElementById('reportResult');
   if(allCorrect){
     resultEl.innerHTML=`
