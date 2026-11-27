@@ -1646,8 +1646,8 @@ window.NCIIntro={ start(cb){ if(running) return; running=true; onDone=cb||null; 
 <div class="modal-bg" id="modalMonalisa">
 <div class="modal monalisa-modal">
 <button class="modal-close" onclick="closeModal('modalMonalisa')">✕</button>
-<h3>🔍 그래피티 분석</h3>
-<div class="modal-sub">히든 심볼의 그림이 나타내는 인물은?</div>
+<h3>🔍 히든심볼 분석</h3>
+<div class="modal-sub">그림이 나타내는 인물은?</div>
 <input type="text" class="code-input" id="monalisaInput" placeholder="정답 입력..." autocomplete="off" onkeydown="if(event.key==='Enter'&&!event.isComposing)submitMonalisa()">
 <button class="modal-submit" onclick="submitMonalisa()">▶ 확인</button>
 <div class="modal-error" id="monalisaError"></div>
@@ -1738,7 +1738,7 @@ const files = [
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 25</div><div>"NULL-Z" 그들이 거래하는 약물의 이름이다.<br>무슨 재료로 만드는지는 아직 모르지만..</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 06. 29</div><div>오늘 아침 N32로부터 메세지와 함께 사진이 왔다.</div></div>
    <img class="detail-photo" src="assets/file04_heart.jpg?v=7" alt="하트 조형물" onclick="openPhotoZoom('assets/file04_heart.jpg?v=7')">
-   <div class="detail-section"><div>사진의 이 조형물.. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-078</span> 근처에서 봤던 기억이 있다.<br>N32가 요청 했었던 조형물 근처 재료를 확인해봐야겠다.<br>확인이 어렵다면 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">현장분석 카메라</span>로 스캔하자.</div></div>`,
+   <div class="detail-section"><div>사진의 이 조형물.. <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">가로등 AB-078</span> 근처에서 봤던 기억이 있다.<br>N32가 요청 했었던 조형물 주변에 보이는 재료를 확인해봐야겠다.<br>확인이 어렵다면 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">현장분석 카메라</span>로 스캔하자.</div></div>`,
    hints:['MYSTORAGE 화면에서 현장 분석 카메라(<img src="assets/camera_emoticon.webp" style="width:16px;height:16px;vertical-align:middle;border-radius:50%;">)를 켜서 조형물을 스캔합니다.<br><button onclick="openPhotoZoom(\'assets/file04_explain1.jpg\')" style="margin-top:6px;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;"><img src="assets/camera_emoticon.webp" style="width:14px;height:14px;vertical-align:middle;border-radius:50%;margin-right:3px;">카메라 인식 불가 시 확인</button>'],
    answerText:`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
     <img src="assets/camera_emoticon.webp" style="width:36px;height:36px;border-radius:50%;">
@@ -1838,7 +1838,6 @@ const files = [
 
   // #12 FILE_11
   {num:12,name:'FILE_11',sub:'전봇대 — 가입 인증 2',icon:'📷',unlocked:false,
-   mapImage:'assets/file11_map.jpg',
    answer:'390-94',unlockCode:'9726R513',answerLen:8,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 14</div><div>9726R513.. 이게 뭘 뜻하는거지?<br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">NCI 정보국</span>에 물어보고 싶지만 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">금일의 암구호</span>가 필요해보인다.<br>NCI 본부에서 근무하는 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">N24에게 연락</span>하면 알려줄 것이다.<br><br>★ N24하고 나와의 신원확인을 위해 정해놓은 암구호.<br>도어 / 제로<br><br><span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">NCI 정보국으로부터 알아낸 정보가 답의 실마리가 될 것 같다.</span></div></div>`,
    hints:['암구호 도어 / 제로를 이용하여 N24에게 메세지를 보냅니다.<br><button onclick="toggleScript(\'file11PasswordInfo\')" style="margin-top:6px;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;">🗣️ 암구호란?</button><div class="script-box" id="file11PasswordInfo" style="margin-top:6px;background:rgba(138,90,16,0.08);border-left:3px solid #8a5a10;color:#5a4428;padding:9px;font-size:12px;line-height:1.6;">암구호란? 적과 아군을 구분하기 위한 비밀 신호 체계, 한쪽이 약속된 말을 던지면, 상대는 그에 맞는 답을 돌려줘야 한다.</div>','N24로부터 얻은 금일의 암구호를 NCI 정보국에 메세지를 보냅니다.','퍼즐로 완성된 9726R513을 NCI 정보국에 전달해 위치 정보를 얻습니다.'],answerText:`<div style="margin-bottom:12px;"><div class="detail-section-title" style="font-size:11px;">▶ N24와의 대화</div>
@@ -1868,26 +1867,26 @@ const files = [
    isMemoryTrigger:true,
    content:`<div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 16</div><div>9725A785 역시나 전신주 번호가 나왔다.<br>전신주의 고유번호를 위치 정보로 사용하고 있다니..<br>전신주 번호를 알게되면 NCI에게 물어봐서 위치를 파악할 필요가 있겠다.</div></div>
    <div class="detail-section"><div class="detail-section-title">▶ 사건 일지 — 2025. 07. 17</div><div>NCI가 알려준 두번째 전신주의 위치로 도착하니, <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">수상한 얼굴 그래피티</span>가 보인다. 이게 <span style="background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;">히든심볼</span>인걸까?<br>그래피티를 보고있으니 왠지모르게 갑자기 소름이 돋는다.<br><br>저 멀리 누군가 나를 쳐다보는거 같은데 기분탓인가..</div></div>
-   <button onclick="openMonalisaModal()" style="background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 그래피티 분석</button>`,
-   hints:['NCI 정보국으로 받은 위치의 건물 주변에서 검정색으로 칠해져있는 얼굴 그래피티를 찾으세요.','히든 심볼의 정체를 그래피티 분석 질문에 답하세요.'],answerText:'정답: MONALISA'},
+   <button onclick="openMonalisaModal()" style="background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;margin-top:4px;">🔍 히든심볼 분석</button>`,
+   hints:['NCI 정보국으로 받은 위치의 건물 주변에서 검정색으로 칠해져있는 얼굴 그래피티를 찾으세요.','히든 심볼의 정체를 히든심볼 분석 질문에 답하세요.'],answerText:'정답: MONALISA'},
 
   // #15 FILE_14 — 가챠샵 (HIDDEN)
-  {num:15,name:'FILE_14',sub:'가챠오션 연남점',icon:'🎰',unlocked:true,hidden:true,
+  {num:15,name:'FILE_14',sub:'탈출 — 대피소로',icon:'🏃',unlocked:true,hidden:true,
    isTypewriter:true,typed:false,
-   typewriterText:'기억이 돌아오고 있다.\n\n저 얼굴이다.\n눈썹이 없는 검은 생머리의 여자.\n\n기억이 났다. 전부.\n지금 가지고 있는 코인으로\n가챠오션 연남점에서 물약을 얻을 수 있다.\n\n가챠오션으로 수상한 가챠머신을 찾아\n샘플을 확보해야한다.\n\n지금 바로 가보자.',
+   typewriterText:'기억이 돌아오고 있다.\n\n저 얼굴이다.\n눈썹이 없는 검은 생머리의 여자.\n\n내가 이곳에서 히든심볼을 보고 있을 때,\n멀리서 나를 지켜보다가\n순식간에 뒤에서 나를 제압했다.\n\n아무래도 이곳을 빨리 벗어나는게 좋겠다.\n내 기억이 맞다면, 사건 파일 키트 안쪽에\n대피소 주소를 적어 놨다.\n\n일단 그곳으로 대피를 해볼까.',
    content:`<div id="gacha-content"><div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div>
-   <button id="gachaArrivalBtn" onclick="revealGachaArrival()" style="display:none;margin-top:14px;width:100%;background:#3a2a10;border:1px solid #8a6a20;color:#e8d8b0;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:12px;border-radius:4px;cursor:pointer;">가챠오션 연남점에 도착하셨습니까?</button>
-   </div></div>
-   <div id="gacha-arrival" style="display:none;">
-   <div class="detail-section" style="margin-top:14px;border:1px solid #b8a888;background:#f6efe1;padding:14px;">
-   <div style="color:#8a5a10;font-size:11px;letter-spacing:2px;margin-bottom:10px;font-family:'Noto Sans KR',sans-serif;font-weight:700;">▶ 가챠오션 연남점 도착</div>
-   <div style="font-size:13px;color:#3a2a1a;margin-bottom:14px;font-family:'Noto Sans KR',sans-serif;">모나리자 그림이 있는 가챠머신 앞.<br>코인을 넣고 캡슐을 뽑은 후 시험관 두 개를 혼합하라.<br>나온 색깔을 선택하라.</div>
-   <div style="display:flex;gap:10px;justify-content:center;">
-   <button onclick="selectColor('RED')" style="flex:1;padding:14px 8px;background:#f6e3e3;border:2px solid #c23a3a;color:#8a2020;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;border-radius:4px;">🔴 RED</button>
-   <button onclick="selectColor('BLUE')" style="flex:1;padding:14px 8px;background:#e3eaf6;border:2px solid #2a5ac2;color:#1a3a8a;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;border-radius:4px;">🔵 BLUE</button>
-   <button onclick="selectColor('YELLOW')" style="flex:1;padding:14px 8px;background:#f6f0e3;border:2px solid #c2a22a;color:#8a6a10;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;border-radius:4px;">🟡 YELLOW</button>
-   </div></div></div>`,
-   hints:['가챠오션 연남점을 찾아가세요.','모나리자 그림이 있는 가챠머신에 코인을 투입하세요.'],answerText:''},
+   <div id="addrEntryBox" style="display:none;margin-top:16px;padding:14px;border:1px solid #b8a888;background:#f6efe1;border-radius:4px;">
+   <div style="color:#8a5a10;font-size:11px;letter-spacing:2px;margin-bottom:10px;font-family:'Noto Sans KR',sans-serif;font-weight:700;">▶ 주소 입력</div>
+   <div id="addrCellRow" onclick="document.getElementById('addrHiddenInput').focus()" style="display:flex;align-items:center;gap:6px;cursor:pointer;flex-wrap:wrap;">
+   <span style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#3a2a1a;font-weight:700;margin-right:4px;">동교동</span>
+   <span id="addrCells" style="display:inline-flex;gap:4px;"></span>
+   </div>
+   <div id="addrError" style="font-size:11px;color:#a02020;margin-top:8px;min-height:14px;"></div>
+   </div>
+   <div id="typewriterTarget3" style="margin-top:4px;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div>
+   <input id="addrHiddenInput" type="tel" inputmode="numeric" maxlength="5" autocomplete="off" style="position:absolute;opacity:0;width:1px;height:1px;border:none;pointer-events:none;" />
+   </div></div>`,
+   hints:['사건 파일 키트 안쪽을 다시 확인해보세요.','대피소 주소의 번지수를 입력해보세요. (동교동 ○○○-○○)'],answerText:''},
 
   // #16 FILE_15 — 본거지 (HIDDEN)
   {num:16,name:'FILE_15',sub:'본거지 — 최종 보고',icon:'🏢',unlocked:true,hidden:true,
@@ -2224,7 +2223,7 @@ function sendReply(){
         pushThreadMsg(m, 'them', '신원 확인 중..');
         openMessage(currentMessageIdx);
         setTimeout(()=>{
-          pushThreadMsg(m, 'them', "현재 N07 요원이 맡고 있는 임무를 기반으로 정보 전달 드립니다.<br><br>BLANK는 현재 수도권 일대에서 불법 활동 중인 조직입니다.<br>주로 유통하는 약물로는 NULL-Z로 알려져 있습니다.<br>소량 복용 시에는 5분 전까지의 기억이 삭제되며, 잠시 동안 환각 효과가 나타납니다.<br>그러나, 과다 복용 시 사망하게 되지만, 이 사실에 대해 소비자에게 명시하지 않고 있습니다.<br>뇌를 연상시키는 마크를 사용하며, 조직 요원들은 공통적으로 눈썹이 없는 것이 특징입니다.<br><br>또한, 그들은 전신주를 기반으로 위치를 공유하며,<br>전신주 번호는 숫자와 영어를 포함한 8글자로 표현됩니다.<br><span style=\"background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;\">전신주 번호를 알려주시면 위치를 조회해 알려드리겠습니다.</span>");
+          pushThreadMsg(m, 'them', "현재 N07 요원이 맡고 있는 임무를 기반으로 정보 전달 드립니다.<br><br>BLANK는 현재 수도권 일대에서 불법 활동 중인 조직입니다.<br>주로 유통하는 약물로는 NULL-Z로 알려져 있습니다.<br>소량 복용 시에는 5분 전까지의 기억이 삭제되며, 잠시 동안 환각 효과가 나타납니다.<br>그러나, 과다 복용 시 사망하게 되지만, 이 사실에 대해 소비자에게 명시하지 않고 있습니다.<br>뇌를 연상시키는 마크를 사용하며, 조직 요원들은 공통적으로 눈썹이 없는 것이 특징입니다.<br><br>또한, 그들은 전신주를 기반으로 위치를 공유하며,<br>전신주 번호는 <span style=\"background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;\">숫자와 영어를 포함한 8글자로 표현</span>됩니다.<br><span style=\"background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;\">전신주 번호를 알려주시면 위치를 조회해 알려드리겠습니다.</span>");
           m.infoStage = 'awaiting_pole';
           openMessage(currentMessageIdx);
         }, 1600);
@@ -2265,14 +2264,14 @@ function chooseN24(choice){
     pushThreadMsg(m, 'me', '나도 모르겠어, 일단 자세한 이야기는 나중에 하자.');
     openMessage(currentMessageIdx);
     setTimeout(()=>{
-      pushThreadMsg(m, 'them', "그래, 일단 정보국에 보고하는게 좋을거야.<br>혹시 모를까봐 알려준다. 금일 암구호는 '실종 / 도마'야.");
+      pushThreadMsg(m, 'them', "그래, 일단 정보국에 보고하는게 좋을거야.<br>혹시 모를까봐 알려준다. 금일 암구호는 <span style=\"background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;\">'실종 / 도마'</span>야.");
       openMessage(currentMessageIdx);
     }, 600);
   } else {
     pushThreadMsg(m, 'me', '됐고, 정보국에 연락 하려는데 금일 암구호가 필요해.');
     openMessage(currentMessageIdx);
     setTimeout(()=>{
-      pushThreadMsg(m, 'them', "하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 '실종 / 도마'야, 자세한건 나중에 얘기하자.");
+      pushThreadMsg(m, 'them', "하하, 역시 용건부터 말하는게 너답다.<br>금일 암구호는 <span style=\"background:rgba(255,221,0,0.4);padding:0 2px;border-radius:2px;\">'실종 / 도마'</span>야, 자세한건 나중에 얘기하자.");
       openMessage(currentMessageIdx);
     }, 600);
   }
@@ -2547,26 +2546,26 @@ function openDetail(idx){
     if(f.typed&&f.savedText){
       target.textContent=f.savedText;
       if(f.num===15){
-        if(f.gachaRevealed){
-          const arr=document.getElementById('gacha-arrival');
-          if(arr)arr.style.display='block';
-          if(f.colorSelected){
-            arr.querySelectorAll('button').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
-          }
-        }else{
-          const btn=document.getElementById('gachaArrivalBtn');
-          if(btn)btn.style.display='block';
+        const box=document.getElementById('addrEntryBox');
+        if(box)box.style.display='block';
+        renderAddrCells(f.addrDigits||'');
+        initAddrInput();
+        if(f.addrSolved){
+          const inp=document.getElementById('addrHiddenInput');
+          if(inp)inp.disabled=true;
+          const t3=document.getElementById('typewriterTarget3');
+          if(t3)t3.textContent=f.savedText3||'';
         }
       }
     }else if(!f.typed){
       f.typed=true;
       f.savedText=f.typewriterText;
-      if(f.num===15) f.arrivalShown=true;
       saveGameState();
       typewriterEffect(target,f.typewriterText,()=>{
         if(f.num===15){
-          const btn=document.getElementById('gachaArrivalBtn');
-          if(btn)btn.style.display='block';
+          const box=document.getElementById('addrEntryBox');
+          if(box){box.style.display='block';renderAddrCells('');}
+          initAddrInput();
         }
       });
     }
@@ -2836,7 +2835,7 @@ const AUTOSAVE_ENABLED = false;
 function saveGameState(){
   if(!AUTOSAVE_ENABLED) return;
   const state={
-    files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,colorSelected:f.colorSelected||false,arrivalShown:f.arrivalShown||false,gachaRevealed:f.gachaRevealed||false,savedText:f.savedText||''})),
+    files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,addrDigits:f.addrDigits||'',addrSolved:f.addrSolved||false,savedText:f.savedText||'',savedText3:f.savedText3||''})),
     messages:messages.map(m=>({id:m.id,read:m.read,new:m.new,thread:m.thread,answered:m.answered||false,waitingForAnswer:m.waitingForAnswer||false,waitingForChoice:m.waitingForChoice||false,choiceMade:m.choiceMade||false,inactive:m.inactive||false,infoStage:m.infoStage||null})),
     memoryTriggered:window.memoryTriggered||false
   };
@@ -2853,8 +2852,8 @@ function loadGameState(){
       if(!f)return;
       f.unlocked=saved.unlocked;f.hidden=saved.hidden;
       f.hintsRevealed=saved.hintsRevealed||0;f.answerRevealed=saved.answerRevealed||false;f.explainRevealed=saved.explainRevealed||false;
-      f.typed=saved.typed||false;f.colorSelected=saved.colorSelected||false;
-      f.arrivalShown=saved.arrivalShown||false;f.gachaRevealed=saved.gachaRevealed||false;f.savedText=saved.savedText||'';
+      f.typed=saved.typed||false;f.addrDigits=saved.addrDigits||'';
+      f.addrSolved=saved.addrSolved||false;f.savedText=saved.savedText||'';f.savedText3=saved.savedText3||'';
     });
     if(state.messages){
       state.messages.forEach(saved=>{
@@ -2983,7 +2982,7 @@ function runMemoryText(){
     const gachaFile=files.find(f=>f.num===15);
     if(gachaFile)gachaFile.hidden=false;
     saveGameState();renderInventory();renderMessages();
-    const lt=document.getElementById('lockToast');
+    const lt=document.getElementById('unlockToast');
     lt.textContent='📁 새로운 파일 발견 — FILE_14';
     lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
     setTimeout(()=>lt.classList.remove('show'),2500);
@@ -3006,36 +3005,67 @@ function typewriterEffect(element,text,callback){
   type();
 }
 
-function revealGachaArrival(){
-  const f=files[currentDetailIdx];
-  if(f){f.gachaRevealed=true;saveGameState();}
-  const btn=document.getElementById('gachaArrivalBtn');
-  if(btn)btn.style.display='none';
-  const arr=document.getElementById('gacha-arrival');
-  if(arr){arr.style.display='block';arr.scrollIntoView({behavior:'smooth'});}
-}
-
-// ===== 색깔 선택 (가챠샵) =====
-function selectColor(color){
-  if(color==='BLUE'){
-    const gachaFile=files.find(f=>f.num===15);
-    if(gachaFile){gachaFile.colorSelected=true;saveGameState();}
-    const ending=files.find(f=>f.num===16);
-    if(ending)ending.hidden=false;
-    saveGameState();renderInventory();
-    document.querySelectorAll('#gacha-arrival button').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
-    const msg=document.createElement('div');
-    msg.style.cssText='margin-top:10px;text-align:center;font-size:11px;color:#8ada8a;letter-spacing:1px;';
-    msg.textContent='✓ 파란색 선택 완료 — FILE_14 열람 가능';
-    document.querySelector('#gacha-arrival > div')?.appendChild(msg);
-    setTimeout(()=>{goTo('s6');setTimeout(()=>{const endIdx=files.indexOf(ending);if(endIdx>=0)openDetail(endIdx);},600);},1200);
-  }else{
-    const el=document.querySelector('#gacha-arrival > div');if(!el)return;
-    const msg=document.createElement('div');
-    msg.style.cssText='margin-top:12px;padding:10px;background:#1a0808;border:1px solid #5a2020;font-size:11px;color:#cc6644;text-align:center;';
-    msg.textContent=color==='RED'?'빨간색.. 뭔가 다르다. 다시 확인해보자.':'노란색.. 이건 아닌 것 같다.';
-    el.appendChild(msg);setTimeout(()=>msg.remove(),2000);
+// ===== 대피소 주소 입력 (동교동 147-39) =====
+const SHELTER_ADDR='14739';
+function renderAddrCells(digits){
+  const wrap=document.getElementById('addrCells');
+  if(!wrap)return;
+  digits=digits||'';
+  wrap.innerHTML='';
+  for(let i=0;i<5;i++){
+    if(i===3){
+      const dash=document.createElement('span');
+      dash.textContent='-';
+      dash.style.cssText='font-family:VT323,monospace;font-size:20px;color:#8a5a10;margin:0 2px;align-self:center;';
+      wrap.appendChild(dash);
+    }
+    const c=document.createElement('div');
+    const val=digits[i];
+    c.style.cssText='width:26px;height:34px;background:#fff;border:2px solid '+(val?'#8a5a10':'#b8a888')+';border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:VT323,monospace;font-size:19px;color:#3a2a1a;';
+    c.textContent=val||'_';
+    wrap.appendChild(c);
   }
+}
+function initAddrInput(){
+  const inp=document.getElementById('addrHiddenInput');
+  if(!inp)return;
+  inp.addEventListener('input',()=>{
+    const f=files[currentDetailIdx];
+    if(!f||f.num!==15)return;
+    const digits=inp.value.replace(/\D/g,'').slice(0,5);
+    inp.value=digits;
+    f.addrDigits=digits;
+    renderAddrCells(digits);
+    if(digits.length===5){
+      if(digits===SHELTER_ADDR){
+        inp.disabled=true;
+        f.addrSolved=true;saveGameState();
+        const t3=document.getElementById('typewriterTarget3');
+        if(t3)typewriterEffect(t3,'대피소 앞에 도착했다.',()=>{
+          f.savedText3='대피소 앞에 도착했다.';saveGameState();
+          const next=files.find(x=>x.num===16);
+          if(next){
+            next.hidden=false;saveGameState();renderInventory();
+            const lt=document.getElementById('unlockToast');
+            lt.textContent='📁 새로운 파일 발견 — '+next.name;
+            lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
+            setTimeout(()=>lt.classList.remove('show'),2500);
+            setTimeout(()=>{
+              goTo('s6');
+              setTimeout(()=>{const idx=files.indexOf(next);if(idx>=0)openDetail(idx);},600);
+            },1800);
+          }
+        });
+      }else{
+        const err=document.getElementById('addrError');
+        if(err)err.textContent='주소가 일치하지 않습니다.';
+        setTimeout(()=>{
+          inp.value='';f.addrDigits='';renderAddrCells('');
+          if(err)err.textContent='';
+        },900);
+      }
+    }
+  });
 }
 
 // ===== 봉인된 편지 =====
@@ -3159,8 +3189,6 @@ function saveReportDraft(){
 function submitReport(){
   const answers=[
     {id:'rDrug',label:'약물 명칭',correct:['NULL-Z','NULLZ']},
-    {id:'rMat1',label:'주 재료 ①',correct:['장미','ROSE','로즈']},
-    {id:'rMat2',label:'주 재료 ②',correct:['대왕참나무','참나무']},
     {id:'rColor',label:'물약 색깔',correct:['BLUE','파랑','파란색']},
     {id:'rOrg',label:'조직 명칭',correct:['BLANK']},
     {id:'rBoss',label:'히든 심볼',correct:['모나리자','MONALISA']},
@@ -3175,6 +3203,21 @@ function submitReport(){
     if(isCorrect){el.style.borderBottomColor='#4a8a3a';el.style.color='#3a6a2a';}
     else{el.style.borderBottomColor='#a02020';el.style.color='#a02020';allCorrect=false;wrongList.push(a.label);}
   });
+  // 주 재료 ①/②: 어느 칸에 뭐가 들어가든 (장미/로즈 + 대왕참나무/참나무) 조합이면 정답 처리
+  const norm=s=>s.toUpperCase().replace(/\s+/g,' ');
+  const roseSet=['장미','ROSE','로즈'].map(norm);
+  const oakSet=['대왕참나무','참나무'].map(norm);
+  const matEl1=document.getElementById('rMat1'), matEl2=document.getElementById('rMat2');
+  if(matEl1 && matEl2){
+    const mv1=norm(matEl1.value.trim()), mv2=norm(matEl2.value.trim());
+    const isRose=v=>roseSet.includes(v), isOak=v=>oakSet.includes(v);
+    const matOk=(isRose(mv1)&&isOak(mv2))||(isOak(mv1)&&isRose(mv2));
+    [matEl1,matEl2].forEach(el=>{
+      if(matOk){el.style.borderBottomColor='#4a8a3a';el.style.color='#3a6a2a';}
+      else{el.style.borderBottomColor='#a02020';el.style.color='#a02020';}
+    });
+    if(!matOk){allCorrect=false;wrongList.push('주 재료 ①/②');}
+  }
   const resultEl=document.getElementById('reportResult');
   if(allCorrect){
     resultEl.innerHTML=`
