@@ -1374,7 +1374,23 @@ window.NCIIntro={ start(cb){ if(running) return; running=true; onDone=cb||null; 
 })();
 </script>
 <!-- ================= NCI INTRO 끝 ================= -->
-<script>NCIIntro.start();</script>
+<script>
+(function(){
+  let isReload=false;
+  try{
+    const navEntries=performance.getEntriesByType('navigation');
+    isReload = navEntries.length>0 ? navEntries[0].type==='reload' : (performance.navigation && performance.navigation.type===1);
+  }catch(e){}
+  let hasSave=false;
+  try{ hasSave = !!localStorage.getItem('nciGameState'); }catch(e){}
+  if(isReload && hasSave){
+    const root=document.getElementById('nciIntro');
+    if(root) root.style.display='none';
+  }else{
+    NCIIntro.start();
+  }
+})();
+</script>
 
 <div class="scanline paper-hide"></div>
 <div class="blackout" id="blackout"></div>
@@ -1997,6 +2013,7 @@ function goTo(id, addHistory=true){
   if(id==='s8') renderReport();
   // 모든 내부 스크롤 초기화
   document.querySelectorAll('.msg-list, .detail-content, .report-body, .storage-screen').forEach(el => { el.scrollTop = 0; });
+  if(typeof saveGameState==='function') saveGameState();
 }
 
 function goBack(){
@@ -2837,7 +2854,10 @@ function saveGameState(){
   const state={
     files:files.map(f=>({num:f.num,unlocked:f.unlocked,hidden:f.hidden||false,hintsRevealed:f.hintsRevealed||0,answerRevealed:f.answerRevealed||false,explainRevealed:f.explainRevealed||false,typed:f.typed||false,addrDigits:f.addrDigits||'',addrSolved:f.addrSolved||false,savedText:f.savedText||'',savedText3:f.savedText3||''})),
     messages:messages.map(m=>({id:m.id,read:m.read,new:m.new,thread:m.thread,answered:m.answered||false,waitingForAnswer:m.waitingForAnswer||false,waitingForChoice:m.waitingForChoice||false,choiceMade:m.choiceMade||false,inactive:m.inactive||false,infoStage:m.infoStage||null})),
-    memoryTriggered:window.memoryTriggered||false
+    memoryTriggered:window.memoryTriggered||false,
+    history:(typeof history!=='undefined')?history:['s0'],
+    currentDetailIdx:(typeof currentDetailIdx!=='undefined')?currentDetailIdx:null,
+    currentMessageIdx:(typeof currentMessageIdx!=='undefined')?currentMessageIdx:null
   };
   try{localStorage.setItem('nciGameState',JSON.stringify(state));}catch(e){}
 }
@@ -2867,6 +2887,9 @@ function loadGameState(){
       });
     }
     window.memoryTriggered=state.memoryTriggered||false;
+    if(Array.isArray(state.history) && state.history.length) window.__restoreHistory=state.history;
+    if(typeof state.currentDetailIdx==='number') window.__restoreDetailIdx=state.currentDetailIdx;
+    if(typeof state.currentMessageIdx==='number') window.__restoreMessageIdx=state.currentMessageIdx;
   }catch(e){}
 }
 function resetGameState(){
@@ -3281,6 +3304,18 @@ if(__isReload){
 }
 renderMessages();
 renderInventory();
+// 새로고침으로 복원된 경우, 마지막으로 보고 있던 화면으로 바로 이동
+if(__isReload && window.__restoreHistory){
+  history = window.__restoreHistory;
+  const lastScreen = history[history.length-1];
+  if(lastScreen==='s7' && typeof window.__restoreDetailIdx==='number' && files[window.__restoreDetailIdx]){
+    openDetail(window.__restoreDetailIdx);
+  }else if(lastScreen==='s5' && typeof window.__restoreMessageIdx==='number' && messages[window.__restoreMessageIdx]){
+    openMessage(window.__restoreMessageIdx);
+  }else if(lastScreen && document.getElementById(lastScreen)){
+    goTo(lastScreen, false);
+  }
+}
 </script>
 </body>
 </html>
