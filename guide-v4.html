@@ -303,7 +303,6 @@ function update(){
   $('prev').disabled=i===0;
   $('next').textContent=i===N-1?'처음으로':(i===0?'시작하기':'다음');
   $('next').classList.toggle('last',i===N-1);
-  try{history.replaceState(null,'','#'+i);}catch(e){}
 }
 const go=i=>{const el=cards[Math.max(0,Math.min(N-1,i))];track.scrollTo({left:el.offsetLeft-(track.clientWidth-el.offsetWidth)/2,behavior:'smooth'});};
 track.addEventListener('scroll',()=>requestAnimationFrame(update),{passive:true});
@@ -311,7 +310,9 @@ $('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur===N-1?0:cur+1);
 tabs.forEach(t=>t.onclick=()=>go(cards.findIndex(c=>c.dataset.ch===t.dataset.ch)));
 cards.forEach((c,i)=>c.addEventListener('click',e=>{if(i!==cur&&!e.target.closest('a')){e.preventDefault();go(i);}}));
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
-const start=parseInt(location.hash.slice(1))||0;
+const start=0; // 링크를 열면 항상 첫 카드부터
+try{if(location.hash)history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+if('scrollRestoration' in history) history.scrollRestoration='manual';
 requestAnimationFrame(()=>{const el=cards[start]||cards[0];track.scrollLeft=el.offsetLeft-(track.clientWidth-el.offsetWidth)/2;update();});
 </script>
 </body>
