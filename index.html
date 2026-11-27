@@ -2829,8 +2829,8 @@ function enterSystem(){
 }
 
 
-// 개발 중에는 오토세이브(진행상황 저장/불러오기)를 꺼둠 — 실제 유포 시 true로 변경
-const AUTOSAVE_ENABLED = false;
+// 새로고침 시에는 진행상황을 복원하고, 링크로 새로 들어온 경우에만 처음부터 시작
+const AUTOSAVE_ENABLED = true;
 
 function saveGameState(){
   if(!AUTOSAVE_ENABLED) return;
@@ -3266,10 +3266,19 @@ window.addEventListener('scroll', ()=>{
   }, true);
 })();
 
-// 초기화
+// 초기화 — 새로고침이면 기존 진행상황을 복원하고, 링크로 새로 들어온 경우엔 처음부터 시작
 files.forEach(f=>{f.hintsRevealed=0; f.answerRevealed=false; f.explainRevealed=false;});
-try{localStorage.removeItem('nciReportDraft');}catch(e){} // 새로고침/재시작 시 보고서 임시저장 초기화
-loadGameState();
+let __isReload=false;
+try{
+  const navEntries=performance.getEntriesByType('navigation');
+  __isReload = navEntries.length>0 ? navEntries[0].type==='reload' : (performance.navigation && performance.navigation.type===1);
+}catch(e){}
+if(__isReload){
+  loadGameState();
+}else{
+  try{localStorage.removeItem('nciGameState');}catch(e){}
+  try{localStorage.removeItem('nciReportDraft');}catch(e){}
+}
 renderMessages();
 renderInventory();
 </script>
