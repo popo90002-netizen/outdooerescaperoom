@@ -453,7 +453,7 @@ $('btnNext').addEventListener('click',async()=>{
   $('sc3').classList.add('on'); await wait(800); $('rule3').classList.add('on');
   await wait(1800);
   $('btnRestart').classList.add('show');
-  $('btnRestart').addEventListener('click', ()=>{ location.href='index.html'; });
+  $('btnRestart').addEventListener('click', ()=>{ if(history.length>1){ history.back(); } else { location.href='index.html'; } });
 },{once:true});
 </script>
 <canvas id="static"></canvas><div id="flash"></div>
