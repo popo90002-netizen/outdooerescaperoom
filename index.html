@@ -1537,7 +1537,7 @@ window.NCIIntro={ start(cb){ if(running) return; running=true; onDone=cb||null; 
 <div class="report-body">
   <div class="report-notice">수사 과정에서 획득한 정보를 직접 입력하여 보고서를 완성하라.</div>
   <div class="report-section-title">[ 약물 관련 ]</div>
-  <div class="report-field"><div class="report-field-label">약물 명칭</div><input class="report-input" id="rDrug" placeholder="입력하세요" autocomplete="off"></div>
+  <div class="report-field"><div class="report-field-label">물약 명칭</div><input class="report-input" id="rDrug" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">주 재료 ①</div><input class="report-input" id="rMat1" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">주 재료 ②</div><input class="report-input" id="rMat2" placeholder="입력하세요" autocomplete="off"></div>
   <div class="report-field"><div class="report-field-label">물약 색깔</div><input class="report-input" id="rColor" placeholder="입력하세요" autocomplete="off"></div>
@@ -3212,7 +3212,7 @@ function saveReportDraft(){
 function submitReport(){
   const materialSet=['장미','ROSE','로즈','대왕참나무'];
   const answers=[
-    {id:'rDrug',label:'약물 명칭',correct:['NULL-Z','NULLZ']},
+    {id:'rDrug',label:'물약 명칭',correct:['NULL-Z','NULLZ']},
     {id:'rMat1',label:'주 재료 ①',correct:materialSet},
     {id:'rMat2',label:'주 재료 ②',correct:materialSet},
     {id:'rColor',label:'물약 색깔',correct:['BLUE','파랑','파란색']},
