@@ -128,6 +128,9 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
 .mk.spot{box-shadow:0 0 0 2px #fff9,0 0 0 2000px rgba(12,9,6,.55);animation:spotPulse 1.6s ease-in-out infinite;}
 @keyframes spotPulse{0%,100%{border-color:var(--red)}50%{border-color:#ffd36a}}
 .mk.hole{border:none;border-radius:12px;box-shadow:0 0 0 2000px rgba(12,9,6,.55);}
+.tip{display:flex;gap:9px;align-items:center;margin-top:12px;padding:10px 12px;border-radius:10px;border:1px dashed #b9a27a;font-size:14px;color:var(--sub);line-height:1.5;flex-shrink:0;}
+.tip b{color:var(--ink);}
+.tip .e{font-size:17px;}
 /* 하단 */
 .bottom{flex-shrink:0;display:flex;gap:10px;padding:2px 16px calc(14px + env(safe-area-inset-bottom));}
 .bottom button{height:54px;border-radius:14px;font-size:17px;font-weight:700;transition:transform .1s,opacity .2s;}
@@ -198,6 +201,7 @@ h2{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-.01em;margin:
         <div class="k">HOW TO 1</div><h2>첫 화면 → <span class="hl">MY STORAGE</span></h2>
         <div class="mini"><span><i>!</i>[MY STORAGE 열람] 누르기</span></div>
         <div class="shot tall" data-h="700" style="--ar:390/700"><img src="assets/guide/g1_profile.webp" alt="프로필 화면" width="780" height="1400"><div class="mk spot" data-b="188,619,185,62"><i>!</i></div></div>
+              <div class="tip"><span class="e">💬</span><span><b>메시지</b>도 자유롭게 열어보고 대화해보세요.</span></div>
       </article>
 
       <article class="card g" data-ch="game"><span class="tape"></span>
