@@ -1888,6 +1888,7 @@ const files = [
 
   // #15 FILE_14 — 가챠샵 (HIDDEN)
   {num:15,name:'FILE_14',sub:'탈출 — 대피소로',icon:'🏃',unlocked:true,hidden:true,
+   answer:'147-39',
    isTypewriter:true,typed:false,
    typewriterText:'기억이 돌아오고 있다.\n\n저 얼굴이다.\n눈썹이 없는 검은 생머리의 여자.\n\n내가 이곳에서 히든심볼을 보고 있을 때,\n멀리서 나를 지켜보다가\n순식간에 뒤에서 나를 제압했다.\n\n아무래도 이곳을 빨리 벗어나는게 좋겠다.\n내 기억이 맞다면, 만일의 사태를 대비해\n사건 파일 키트 안쪽 깊은곳에 대피소 주소를 적어 놨다.\n\n일단 그곳으로 대피를 해볼까. 움직이자.',
    content:`<div id="gacha-content"><div class="detail-section"><div class="detail-section-title">▶ 현재 — 실시간 기록</div><div id="typewriterTarget" style="font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:17px;color:#3a2a1a;line-height:1.85;white-space:pre-line;"></div>
@@ -3073,10 +3074,6 @@ function initAddrInput(){
             lt.textContent='📁 새로운 파일 발견 — '+next.name;
             lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');
             setTimeout(()=>lt.classList.remove('show'),2500);
-            setTimeout(()=>{
-              goTo('s6');
-              setTimeout(()=>{const idx=files.indexOf(next);if(idx>=0)openDetail(idx);},600);
-            },1800);
           }
         });
       }else{
