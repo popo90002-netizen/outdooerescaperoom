@@ -1663,7 +1663,7 @@ window.NCIIntro={ start(cb){ if(running) return; running=true; onDone=cb||null; 
 <div class="modal monalisa-modal">
 <button class="modal-close" onclick="closeModal('modalMonalisa')">✕</button>
 <h3>🔍 히든심볼 분석</h3>
-<div class="modal-sub" style="text-align:center;">그림이 나타내는 인물은?</div>
+<div class="modal-sub">그림이 나타내는 인물은?</div>
 <input type="text" class="code-input" id="monalisaInput" placeholder="정답 입력..." autocomplete="off" onkeydown="if(event.key==='Enter'&&!event.isComposing)submitMonalisa()">
 <button class="modal-submit" onclick="submitMonalisa()">▶ 확인</button>
 <div class="modal-error" id="monalisaError"></div>
