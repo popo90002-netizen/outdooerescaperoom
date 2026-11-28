@@ -582,17 +582,22 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 /* ---- S6: MY STORAGE ---- */
 #s6 .storage-screen{
   background-color:#f9ead6;
+  padding:0 4.5% 10px;
+  position:relative;
+  z-index:0;
+  flex:none;
+  min-height:100%;
+}
+#s6 .storage-screen::before{
+  content:'';position:absolute;inset:0;
   box-sizing:border-box;
-  border-style:solid;
-  border-width:70px 0;
+  border-style:solid;border-width:70px 0;
   border-image-source:url('../assets/mystorage_background.webp');
   border-image-slice:150 0 150 0 fill;
   border-image-width:70px 0;
   border-image-repeat:stretch;
-  padding:0 4.5% 10px;
-  position:relative;
-  flex:none;
-  min-height:100%;
+  background-color:#f9ead6;
+  pointer-events:none;z-index:-1;
 }
 #s6 .placeholder-banner{display:none;}
 /* 헤더 영역(배경 이미지의 NCI/뒤로가기/MY STORAGE/구분선 부분)만큼 자리 확보 — 이미지 실측 비율(941:376) */
@@ -684,17 +689,22 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 #s4{flex:1;}
 #s4 .msg-screen{
   background-color:#f9ead6;
+  padding:1.5% 4.5% 22px;
+  position:relative;
+  z-index:0;
+  flex:none;
+  min-height:100%;
+}
+#s4 .msg-screen::before{
+  content:'';position:absolute;inset:0;
   box-sizing:border-box;
-  border-style:solid;
-  border-width:70px 0;
+  border-style:solid;border-width:70px 0;
   border-image-source:url('../assets/myprofile_background.webp');
   border-image-slice:150 0 150 0 fill;
   border-image-width:70px 0;
   border-image-repeat:stretch;
-  padding:1.5% 4.5% 22px;
-  position:relative;
-  flex:none;
-  min-height:100%;
+  background-color:#f9ead6;
+  pointer-events:none;z-index:-1;
 }
 .s4-header-imgs{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
 .s4-logo-img{width:48%;height:auto;display:block;}
