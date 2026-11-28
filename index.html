@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Pen+Script&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:none;}
+html,body{margin:0;padding:0;background:#0e1525;overscroll-behavior-y:none;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
 body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;}
 .device{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#0a0a0a;position:relative;display:flex;flex-direction:column;overflow-x:hidden;}
 
@@ -582,14 +582,21 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 /* ---- S6: MY STORAGE ---- */
 #s6 .storage-screen{
   background-color:#f9ead6;
-  background-image:url('assets/mystorage_background.webp'),url('assets/mystorage_background.webp');
-  background-repeat:no-repeat,no-repeat;
-  background-position:top center,bottom center;
-  background-size:100% auto,100% auto;
-  padding:0 4.5% 10px;
+  padding:0 4.5% 20px;
   position:relative;
+  z-index:0;
   flex:none;
-  min-height:100%;
+}
+#s6 .storage-screen::before{
+  content:'';position:absolute;inset:0;
+  box-sizing:border-box;
+  border-style:solid;border-width:70px 0;
+  border-image-source:url('assets/mystorage_background.webp');
+  border-image-slice:150 0 150 0 fill;
+  border-image-width:70px 0;
+  border-image-repeat:stretch;
+  background-color:#f9ead6;
+  pointer-events:none;z-index:-1;
 }
 #s6 .placeholder-banner{display:none;}
 /* 헤더 영역(배경 이미지의 NCI/뒤로가기/MY STORAGE/구분선 부분)만큼 자리 확보 — 이미지 실측 비율(941:376) */
@@ -600,12 +607,12 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s6 .storage-head h2{display:none;}
 #s6 .storage-progress{
-  margin:14px 5% 4px;text-align:right;
+  margin:14px 5% 6px;text-align:right;
   font-family:'Share Tech Mono',monospace;font-weight:bold;font-size:15px;color:#3a2a18;letter-spacing:0.5px;
 }
 #s6 .storage-progress span{color:#a02020;}
 .s6-back-overlay{
-  position:absolute;top:0;left:0;width:24%;height:100%;
+  position:absolute;top:0;left:0;width:17%;height:72%;
   background:transparent;border:none;cursor:pointer;z-index:20;padding:0;
 }
 #s6 .inv-grid-wrap{padding:2px 2px 0;}
@@ -664,7 +671,7 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s6 .slot.locked .slot-name{color:#4a3a24;}
 #s6 .slot-num{display:none;}
-#s6{flex:1;}
+#s6{flex:1;background-color:#f9ead6;}
 #s6 .report-nav-btn{
   background:url('assets/report_view_btn.webp') center/100% 100% no-repeat;
   border:none;color:transparent;aspect-ratio:880/220;height:auto;max-width:220px;
@@ -678,17 +685,24 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 
 /* ---- S4: 프로필/메시지 ---- */
-#s4{flex:1;}
+#s4{flex:1;background-color:#f9ead6;}
 #s4 .msg-screen{
   background-color:#f9ead6;
-  background-image:url('assets/myprofile_background.webp'),url('assets/myprofile_background.webp');
-  background-repeat:no-repeat,no-repeat;
-  background-position:top center,bottom center;
-  background-size:100% auto,100% auto;
   padding:1.5% 4.5% 22px;
   position:relative;
+  z-index:0;
   flex:none;
-  min-height:100%;
+}
+#s4 .msg-screen::before{
+  content:'';position:absolute;inset:0;
+  box-sizing:border-box;
+  border-style:solid;border-width:70px 0;
+  border-image-source:url('assets/myprofile_background.webp');
+  border-image-slice:150 0 150 0 fill;
+  border-image-width:70px 0;
+  border-image-repeat:stretch;
+  background-color:#f9ead6;
+  pointer-events:none;z-index:-1;
 }
 .s4-header-imgs{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
 .s4-logo-img{width:48%;height:auto;display:block;}
@@ -1064,15 +1078,22 @@ body{font-family:'Share Tech Mono',monospace;background:#0a0a0a;color:#c8c8c0;mi
 }
 #s8 .report-input::placeholder{color:#a89878;}
 #s8 .report-divider{background:linear-gradient(90deg,transparent,#c8b89a,transparent);}
-#s8 .report-btn-row{display:flex;align-items:stretch;gap:10px;margin:10px 0 18px;}
+#s8 .report-btn-row{display:flex;align-items:center;gap:10px;margin:10px 0 18px;}
 #s8 .report-save-btn{
-  flex:1;background:#4a3a24;border:1px solid #8a6a20;color:#e8d8b0;
-  font-family:'Share Tech Mono',monospace;font-size:16px;letter-spacing:1px;
-  border-radius:18px;cursor:pointer;padding:12px 8px;
+  display:block;background:url('assets/report_save_btn.webp') center/100% 100% no-repeat;
+  border:none;color:transparent;aspect-ratio:376/152;height:auto;margin:0;padding:0;
+  flex:0 0 auto;width:calc((100% - 10px) * 0.3544);
+  filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
+  transition:transform 0.08s ease, filter 0.08s ease;
+}
+#s8 .report-save-btn:active,#s8 .report-save-btn.press-active{
+  transform:scale(0.97) translateY(2px);
+  filter:drop-shadow(0 1px 1px rgba(40,25,10,0.3));
 }
 #s8 .report-submit-btn{
   display:block;background:url('assets/report_submit_btn.webp') center/100% 100% no-repeat;
-  border:none;color:transparent;aspect-ratio:860/191;height:auto;max-width:220px;margin:0;flex-shrink:0;
+  border:none;color:transparent;aspect-ratio:860/191;height:auto;margin:0;padding:0;
+  flex:0 0 auto;width:calc((100% - 10px) * 0.6456);
   filter:drop-shadow(0 3px 3px rgba(40,25,10,0.35));
   transition:transform 0.08s ease, filter 0.08s ease;
 }
